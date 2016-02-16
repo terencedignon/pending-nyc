@@ -1,0 +1,424 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+body {
+  /*padding: 20px;*/
+  background: white;
+  font-family: "arial"
+}
+
+.header-banner {
+  position: fixed;
+  top: 0;
+  left: 60px;
+  z-index: 999;
+  background: white;
+  margin-top: -30px;
+  margin-left: -40px;
+  padding-top: 80px;
+  padding-left: 80px;
+  width: 100%;
+  height: 30px;
+}
+
+.header-banner text {
+
+  x: 5%;
+  y: 80%;
+  font-family: "montserrat";
+  stroke: #222;
+  stroke-width: 3px;
+  font-size: 50px;
+  fill: #222;
+}
+
+.wrapper {
+  background: #fff;
+  display: fixed;
+  position: relative;
+}
+
+.header-search {
+  position: fixed;
+  background: #fff;
+  z-index: 9999;
+  top: 0;
+  left: 600px;
+}
+
+.header-search input {
+
+  top: 0;
+  z-index: 9999;
+  height: 15px;
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+  border: 1px solid transparent;
+  outline-width: 0;
+  margin-top: 14px;
+  margin-left: -120px;
+  padding: 10px;
+  padding-left: 20px;
+  width: 300px;
+  font-size: 20px;
+  border: 2px solid #222;
+  /*box-shadow: 2px 2px 5px 0 maroon;*/
+  font-family: "helvetica";
+}
+
+.header-search input:focus {
+  box-shadow: 2px 2px 5px 0px maroon;
+}
+
+.header-search i {
+  font-size: 30px;
+  padding-left: 20px;
+  color: #222;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  min-height: 400px;
+  display: flex;
+}
+
+
+
+
+/*
+.sidebar a:nth-child(2n+1) {
+  color: #fff;
+}*/
+
+.sidebar a:hover {
+  color: #000;
+}
+
+.main {
+  width: 100%;
+  margin-top: 100px;
+  padding: 20px;
+}
+
+.empty-image {
+  width: 500px;
+  height: 500px;
+  background: maroon;
+}
+
+.show-name {
+  color: #222;
+  font-family: "montserrat";
+  position: absolute;
+  width: 100%;
+  background: #fff;
+  top: 20px;
+}
+
+.show-container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  /*ckground: pink;*/
+}
+
+.show-holder {
+  height: 400px;
+  /*margin-top: -10px;*/
+  /*width: 700px;
+  height: 700px;*/
+  /*width: 500px;*/
+  /*background: pink;*/
+  overflow: hidden;
+  /*height: auto;*/
+  position: relative;
+}
+
+.show-image {
+  /*width: 800px;*/
+  height: 400px;
+  opacity: 1;
+  position: relative;
+  /*border: 5px solid maroon;*/
+  border-radius: 3%;
+}
+
+.drop-down {
+  left: -120px;
+  margin-top: 5px;
+  display: none;
+  position: absolute;
+  z-index: 9999;
+  background: white;
+  width: 100%;
+}
+
+.drop-down ul {
+  list-style: none;
+  margin-left: -10px;
+}
+
+.drop-down li {
+  padding-top: 5px;
+  /*border-bottom: 1px solid white;*/
+}
+
+.drop-down a {
+  font-weight: bold;
+  font-family: "montserrat";
+  color: #222;
+  text-decoration: none;
+}
+
+.show-row {
+  /*height: px;*/
+  width: 100%;
+  margin-bottom: 10px;
+  background: white;
+  display: flex;
+  flex-direction: row;
+}
+
+.show-info {
+  margin-right: 10px;
+  width: 300px;
+  height: 100px;
+  /*height: 500px;*/
+  position: fixed;
+  font-family: "montserrat";
+  /*height: auto;*/
+  /*font-weight: bold;*/
+  color: white;
+  background: #222;
+  z-index: 999999;
+  top: 0;
+  right: 20px;
+  opacity: 1;
+  /*box-shadow: 2px 2px 0 0 #f7f7f7;*/
+  /*padding: 10px;*/
+  padding: 0px 15px 15px 15px;
+  border-radius: 0 0 20px 0px;
+  /*margin-top: -10px;*/
+}
+
+.open {
+  color: green;
+}
+
+.closed {
+  color: brown;
+}
+
+.show-grade {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 99;
+}
+
+.show-grade img {
+  width: 100%;
+  border-radius: 0px 5px 5px 0px;
+  height: auto;
+}
+
+.chart {
+  /*background: #f7f7f7;*/
+  /*margin-top: -150px;*/
+  border-radius: 5%;
+  color: maroon;
+  width: 400px;
+  height: 400px;
+  /*box-shadow: 2px 2px 0 0 #f7f7f7;*/
+  /*position: absolute;*/
+}
+
+
+.comparison {
+  padding: 10px;
+
+}
+
+.overview {
+  margin-top: 10px;
+  font-family: "helvetica";
+  margin-bottom: 20px;
+  font-size: 17px;
+  /*box-shadow: 2px 2px 0 0 #f7f7f7;*/
+  padding: 5px;
+  /*font-size: 14px;*/
+  /*font-family: "montserrat";*/
+  /*margin-left: 100px;*/
+  /*border-bottom: 100px solid transparent;*/
+}
+
+.violations {
+  /*position: absolute;*/
+  z-index: 9;
+  margin-left: 20px;
+  border-radius: 2%;
+  height: 400px;
+  width: 500px;
+  overflow: scroll;
+  /*background: #f7f7f7;*/
+  color: #222;
+  font-size: 16px;
+  /*background: #f7f7f7;*/
+  /*margin-top: -150px;*/
+  font-family: "helvetica";
+  /*margin-left: 100px;*/
+  box-shadow: 2px 2px 0 0 #f7f7f7;
+}
+
+.violations ul {
+  list-style: none;
+}
+.violations li {
+  margin-top: 5px;
+  padding: 5px;
+  color: #222;
+  /*background: #f7f7f7;*/
+}
+
+.legend {
+  margin-top: -50px;
+  margin-left: 0px;
+  /*border: 1px solid #f7f7f7;*/
+  opacity: 0.5;
+  cursor: pointer;
+  background: #f7f7f7;
+}
+
+.legend:hover {
+  opacity: 0.75;
+}
+
+.legend > .range {
+  text-transform: uppercase;
+  color: #222;
+  font-family: "montserrat";
+  font-size: 20px;
+}
+
+.legend > .a {
+  text-transform: uppercase;
+  color: #0056ac;
+  font-family: "montserrat";
+  font-size: 40px;
+}
+
+.legend > .b {
+  font-family: "montserrat";
+  font-size: 40px;
+  color: #49ac42;
+    text-transform: uppercase;
+
+}
+
+.legend > .c {
+  color: #fa9828;
+    text-transform: uppercase;
+    font-family: "montserrat";
+    font-size: 40px;
+}
+
+.not-critical {
+  color: #222!important;
+  font-size: 15px;
+}
+
+.critical {
+  /*color: maroon!important;*/
+  font-weight: bold;
+}
+
+.store-name {
+  /*margin-right: -5plx*/
+  /*color: maroon;*/
+  border-radius: 2%;
+  text-transform: uppercase;
+  padding: 5px 5px 5px 0px;
+  /*background: maroon;*/
+  color: #222;
+  box-shadow: 2px 2px 0 0 #f7f7f7;
+  font-family: "montserrat";
+  font-size: 30px;
+}
+
+
+.show-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.compare-name {
+  /*background: #f7f7f7;*/
+  border-radius: 2%;
+  text-transform: uppercase;
+  padding: 5px 5px 5px 0px;
+  /*background: maroon;*/
+  color: #222;
+  box-shadow: 2px 2px 0 0 #f7f7f7;
+  font-family: "montserrat";
+  font-size: 20px;
+}
+
+.compare-name input {
+    top: 0;
+    z-index: 9999;
+    height: 5px;
+    background: #fff;
+    color: #000;
+    /*font-weight: bold;*/
+    border: 1px solid transparent;
+    outline-width: 0;
+    /*margin-top: -14px;*/
+    /*margin-left: -120px;*/
+    padding: 10px;
+    padding-left: 20px;
+    width: 250px;
+    margin-left: 10px;
+    /*margin-top: -5px;*/
+    font-size: 20px;
+    box-shadow: 2px 2px 0 0 #f7f7f7;
+    /*border: 2px solid #f7f7f7;*/
+    box-shadow: 2px 2px 5px 0 maroon;
+    font-family: "helvetica";
+}
+
+.fa-times {
+  color: red;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.header-banner {
+  cursor: pointer;
+}
+
+#map {
+  height: 500px;
+  width: 500px;
+}
+
+#street-view {
+  height: 500px;
+  width: 500px;
+}

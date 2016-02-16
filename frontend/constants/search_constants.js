@@ -1,0 +1,9 @@
+var SearchConstants = {
+  FETCH_SEARCH: "FETCH_SEARCH",
+  CLEAR_RESULTS: "CLEAR_RESULTS",
+  FETCH_COMPARISON: "FETCH_COMPARISON",
+  CLEAR_COMPARISON: "CLEAR_COMPARISON",
+  
+};
+
+module.exports = SearchConstants;

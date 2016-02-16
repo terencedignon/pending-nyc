@@ -1,0 +1,46 @@
+{
+  "name": "ishmael",
+  "version": "1.0.0",
+  "description": "[Heroku link][heroku]",
+  "main": "webpackage.config.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "dependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-react": "^6.3.13",
+    "chart.js": "^1.0.2",
+    "flux": "^2.1.1",
+    "history": "^1.17.0",
+    "react": "^0.14.6",
+    "react-addons-linked-state-mixin": "^0.14.2",
+    "react-chartjs": "^0.7.3",
+    "react-d3": "^0.4.0",
+    "react-dom": "^0.14.6",
+    "react-google-maps": "^4.7.2",
+    "react-router": "^1.0.3",
+    "webpack": "^1.12.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "postinstall": "./node_modules/.bin/webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "4.1.1",
+    "npm": "2.1.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terencedignon/ishmael.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/terencedignon/ishmael/issues"
+  },
+  "homepage": "https://github.com/terencedignon/ishmael#readme"
+}
