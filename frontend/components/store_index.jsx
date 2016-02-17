@@ -2,6 +2,7 @@ var React = require('react');
 var ApiUtil = require('../util/api_util.js');
 var StoreStore = require('../stores/store_store.js');
 var SearchActions = require('../actions/search_actions.js');
+var Map = require('./main_map.jsx');
 
 var StoreIndex = React.createClass({
   // getInitialState: function () {
@@ -25,9 +26,9 @@ var StoreIndex = React.createClass({
     // <rect/>
     // <input type="text"/>
     return (
-      <svg className="index-banner">
-        <text className="header-text">all time highest: </text>
-      </svg>
+      <div>
+        <Map />
+        </div>
    );
   }
 });

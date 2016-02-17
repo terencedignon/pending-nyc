@@ -93,7 +93,7 @@ body {
   background: #fff;
   z-index: 9999;
   top: 0;
-  left: 600px;
+  left: 400px;
 }
 
 .header-search input {
@@ -118,11 +118,12 @@ body {
 }
 
 .header-search input:focus {
-  box-shadow: 2px 2px 5px 0px maroon;
+  box-shadow: 2px 2px 5px 0px #eee;
 }
 
 .header-search i {
   font-size: 30px;
+  display: none;
   padding-left: 20px;
   color: #222;
 }
@@ -153,8 +154,8 @@ body {
 }
 
 .empty-image {
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 400px;
   background: maroon;
 }
 
@@ -398,8 +399,8 @@ body {
   /*background: maroon;*/
   color: #222;
   box-shadow: 2px 2px 0 0 #f7f7f7;
-  font-family: "montserrat";
-  font-size: 30px;
+  font-family: "lato";
+  font-size: 25px;
 }
 
 
@@ -408,8 +409,14 @@ body {
   flex-direction: row;
 }
 
+.comparison {
+  position: relative;
+
+}
 .compare-name {
   /*background: #f7f7f7;*/
+  /*position: fixed;*/
+  top: 0;
   border-radius: 2%;
   text-transform: uppercase;
   padding: 5px 5px 5px 0px;
@@ -422,6 +429,7 @@ body {
 
 .compare-name input {
     top: 0;
+    /*position: fixed;*/
     z-index: 9999;
     height: 5px;
     background: #fff;
@@ -437,10 +445,14 @@ body {
     margin-left: 10px;
     /*margin-top: -5px;*/
     font-size: 20px;
-    box-shadow: 2px 2px 0 0 #f7f7f7;
+    box-shadow: 2px 2px 0 0 #eee;
     /*border: 2px solid #f7f7f7;*/
-    box-shadow: 2px 2px 5px 0 maroon;
+    /*box-shadow: 2px 2px 5px 0 maroon;*/
     font-family: "helvetica";
+}
+
+.compare-name input:focus {
+  box-shadow: 2px 2px 2px 2px #eee;
 }
 
 .fa-times {
@@ -475,4 +487,26 @@ body {
 .material-icons {
   color: maroon;
   font-size: 30px;
+}
+
+#main-map {
+  width: 600px;
+  height: 400px;
+}
+
+
+.main-page-holder {
+  display: flex;
+  flex-direction: row;
+}
+
+.options {
+  padding: 10px;
+
+}
+
+.fa-sticky-note {
+  color: maroon;
+  opacity: 0.5;
+
 }

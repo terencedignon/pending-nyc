@@ -20,9 +20,19 @@ class Api::StoresController < ApplicationController
     @store = Store.find(params[:id])
   end
 
+  def filter
+    debugger
+    boro = Store.all.map { |store| store.boro }.uniq
+    zipcode = Store.all.map { |store| store.zipcode }.uniq
+    cuisine_type = Store.all.map { |store| store.cuisine_type}.uniq
+
+    object = { boro: boro, zipcode: zipcode, cuisine_type: cuisine_type}
+    render json: object
+  end
+
   def search
     search = params[:q]
-    search_result = Store.ransack(name_cont: search).result
+    search_result = Store.ransack(name_cont: search).result.includes(:calc)
     @stores = search_result
     render "api/stores/index"
   end

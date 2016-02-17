@@ -5,17 +5,17 @@ var MapStore = require('../stores/map_store.js');
 
 var Map = React.createClass({
   getInitialState: function () {
-    return { markers: [], newMarkers: []};
+    return { markers: [], newMarkers: [], cuisine_type: null};
   },
   componentDidMount: function () {
 
     this.storeListener = StoreStore.addListener(this._onStoreChange);
     this.mapListener = MapStore.addListener(this._onMapChange);
-    var coordinates = {lat: Number(this.props.lat), lng: Number(this.props.lng)};
-    map = new google.maps.Map(document.getElementById('map'), {
+    var coordinates = {lat: 40.7127, lng: -74.0059};
+    map = new google.maps.Map(document.getElementById('main-map'), {
       center: coordinates,
-
-      zoom: 16,
+      disableDefaultUI: true,
+      zoom: 12,
       styles: [
     {
         "featureType": "water",
@@ -165,19 +165,14 @@ var Map = React.createClass({
     });
 
   google.maps.event.addListener(map, 'tilesloaded', function () {
-    var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
+    var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.state.cuisine_type}
     ApiUtil.fetchMap(options);
   }.bind(this));
 
   google.maps.event.addListener(map, 'idle', function() {
-      clearInterval(this.mapInterval);
-      this.mapInterval = setInterval(function () {
-
-      var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
+      var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.state.cuisine_type}
       ApiUtil.fetchMap(options);
-      clearInterval(this.mapInterval)
-    }.bind(this), 1000);
-  }.bind(this));
+    }.bind(this));
 
   //
   // var panorama;
@@ -255,9 +250,14 @@ _onStoreChange: function () {
     // <div id="street-view"></div>
 
     return (
-      <div>
+      <div className="main-page-holder">
 
-    <div id="map"></div>
+    <div id="main-map"></div>
+    <div className="options">
+      <i className="fa fa-reply"></i>
+      <input type="checkbox" name="cuisine" value="American"/>American<br/>
+
+    </div>
     </div>
 
   );

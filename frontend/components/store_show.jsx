@@ -126,12 +126,12 @@ var StoreShow = React.createClass({
     var roaches = (calc.roaches > 0 ? Math.round((calc.roaches / calc.inspections) * 100) + "%" : "0")
 
     overview = <span>
-      <span className="store-name">{name} Overview </span><p/>{name} has an average score for all inspections is <strong> {calc.average}, or {this.translate(calc.average)} </strong><br/>
-      It's average score for surprise inspections is <strong>{calc.first_average}, or {this.translate(calc.first_average)}</strong><br/>
-
-  Of it's <strong>{calc.inspections}</strong> inspections,  <strong>{mice}</strong> found mice, <strong>{flies}</strong> found flies, and <strong>{roaches}</strong> found roaches.<br/>
-  It' worst inspection was <strong>{calc.worst}</strong> on <strong>{worstDate.toLocaleDateString()}</strong>.<br/>
-  It's best inspection was <strong>{calc.best}</strong> on <strong>{bestDate.toLocaleDateString()}</strong>.<br/>
+      <span className="store-name"><strong>{name}</strong> Overview</span><p/>
+      <i className="fa fa-sticky-note"></i> {name} has an average inspection score of <strong> {calc.average}</strong>, the equivalent of {this.translate(calc.average)} <br/>
+      <i className="fa fa-sticky-note"></i>  Its average score for unannounced inspections is <strong>{calc.first_average}</strong>, or {this.translate(calc.first_average)}<br/>
+      <i className="fa fa-sticky-note"></i> Of those <strong>{calc.inspections}</strong> inspections,  <strong>{mice}</strong> found mice, <strong>{flies}</strong> found flies, and <strong>{roaches}</strong> found roaches.<br/>
+      <i className="fa fa-sticky-note"></i> Its worst inspection was <strong>{calc.worst}</strong> on {worstDate.toDateString()}.<br/>
+      <i className="fa fa-sticky-note"></i> Its best inspection was <strong>{calc.best}</strong> on {bestDate.toDateString()}.<br/>
   </span>;
   return overview;
 
@@ -207,6 +207,9 @@ var StoreShow = React.createClass({
     <span className="b">B:</span> <span className="range">14-27 / </span>&nbsp;
       <span className="c">C:</span> <span className="range">28 and up </span></div>;
 
+        // <div className="violation-chart">
+        //   {circleChart}
+        // </div>
 
   return (
   <div className="show">
@@ -215,6 +218,9 @@ var StoreShow = React.createClass({
     </div>
     <div className="overview">
       {overview}
+    </div>
+    <div className="comparison">
+      <Comparison store={this.state.store}/>
     </div>
     <div className="show-header">
     <div className="compare">
@@ -236,15 +242,9 @@ var StoreShow = React.createClass({
       <div className="chart">
         {barChart}
       </div>
-      <div className="comparison">
-        <Comparison store={this.state.store}/>
-      </div>
 
     </div>
     <div className="show-row">
-  </div>
-  <div className="violation-chart">
-    {circleChart}
   </div>
   <div className="violations">
 

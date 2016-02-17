@@ -67,7 +67,7 @@ var Header = React.createClass({
        </svg>
        <div className="header-search">
          <input type="text" onChange={this.search} value={this.state.search} />
-         <i className="fa fa-question-circle"></i>
+         <i className="fa fa-question"></i>
          <div className="drop-down">
            <ul>
              {listedResults}

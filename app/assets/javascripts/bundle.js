@@ -24296,32 +24296,40 @@
 	      React.createElement(
 	        'span',
 	        { className: 'store-name' },
-	        name,
-	        ' Overview '
+	        React.createElement(
+	          'strong',
+	          null,
+	          name
+	        ),
+	        ' Overview'
 	      ),
 	      React.createElement('p', null),
+	      React.createElement('i', { className: 'fa fa-sticky-note' }),
+	      ' ',
 	      name,
-	      ' has an average score for all inspections is ',
+	      ' has an average inspection score of ',
 	      React.createElement(
 	        'strong',
 	        null,
 	        ' ',
-	        calc.average,
-	        ', or ',
-	        this.translate(calc.average),
-	        ' '
+	        calc.average
 	      ),
+	      ', the equivalent of ',
+	      this.translate(calc.average),
+	      ' ',
 	      React.createElement('br', null),
-	      'It\'s average score for surprise inspections is ',
+	      React.createElement('i', { className: 'fa fa-sticky-note' }),
+	      '  Its average score for unannounced inspections is ',
 	      React.createElement(
 	        'strong',
 	        null,
-	        calc.first_average,
-	        ', or ',
-	        this.translate(calc.first_average)
+	        calc.first_average
 	      ),
+	      ', or ',
+	      this.translate(calc.first_average),
 	      React.createElement('br', null),
-	      'Of it\'s ',
+	      React.createElement('i', { className: 'fa fa-sticky-note' }),
+	      ' Of those ',
 	      React.createElement(
 	        'strong',
 	        null,
@@ -24347,32 +24355,26 @@
 	      ),
 	      ' found roaches.',
 	      React.createElement('br', null),
-	      'It\' worst inspection was ',
+	      React.createElement('i', { className: 'fa fa-sticky-note' }),
+	      ' Its worst inspection was ',
 	      React.createElement(
 	        'strong',
 	        null,
 	        calc.worst
 	      ),
 	      ' on ',
-	      React.createElement(
-	        'strong',
-	        null,
-	        worstDate.toLocaleDateString()
-	      ),
+	      worstDate.toDateString(),
 	      '.',
 	      React.createElement('br', null),
-	      'It\'s best inspection was ',
+	      React.createElement('i', { className: 'fa fa-sticky-note' }),
+	      ' Its best inspection was ',
 	      React.createElement(
 	        'strong',
 	        null,
 	        calc.best
 	      ),
 	      ' on ',
-	      React.createElement(
-	        'strong',
-	        null,
-	        bestDate.toLocaleDateString()
-	      ),
+	      bestDate.toDateString(),
 	      '.',
 	      React.createElement('br', null)
 	    );
@@ -24503,6 +24505,10 @@
 	      )
 	    );
 
+	    // <div className="violation-chart">
+	    //   {circleChart}
+	    // </div>
+
 	    return React.createElement(
 	      'div',
 	      { className: 'show' },
@@ -24515,6 +24521,11 @@
 	        'div',
 	        { className: 'overview' },
 	        overview
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'comparison' },
+	        React.createElement(Comparison, { store: this.state.store })
 	      ),
 	      React.createElement(
 	        'div',
@@ -24548,19 +24559,9 @@
 	          'div',
 	          { className: 'chart' },
 	          barChart
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'comparison' },
-	          React.createElement(Comparison, { store: this.state.store })
 	        )
 	      ),
 	      React.createElement('div', { className: 'show-row' }),
-	      React.createElement(
-	        'div',
-	        { className: 'violation-chart' },
-	        circleChart
-	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'violations' },
@@ -24581,6 +24582,20 @@
 	var MapActions = __webpack_require__(254);
 
 	var ApiUtil = {
+
+	  fetchFilter: function () {
+	    $.ajax({
+	      method: "GET",
+	      url: "api/stores",
+	      data: { map_query: true, bounds: options.bounds, cuisine_type: options.cuisine_type },
+	      success: function (data) {
+	        MapActions.fetchMap(data);
+	      },
+	      error: function () {
+	        console.log("error in updateMap");
+	      }
+	    });
+	  },
 	  fetchMap: function (options) {
 	    $.ajax({
 	      method: "GET",
@@ -35290,6 +35305,7 @@
 	var ApiUtil = __webpack_require__(209);
 	var StoreStore = __webpack_require__(217);
 	var SearchActions = __webpack_require__(210);
+	var Map = __webpack_require__(255);
 
 	var StoreIndex = React.createClass({
 	  displayName: 'StoreIndex',
@@ -35314,13 +35330,9 @@
 	    // <rect/>
 	    // <input type="text"/>
 	    return React.createElement(
-	      'svg',
-	      { className: 'index-banner' },
-	      React.createElement(
-	        'text',
-	        { className: 'header-text' },
-	        'all time highest: '
-	      )
+	      'div',
+	      null,
+	      React.createElement(Map, null)
 	    );
 	  }
 	});
@@ -35458,7 +35470,7 @@
 	          'div',
 	          { className: 'header-search' },
 	          React.createElement('input', { type: 'text', onChange: this.search, value: this.state.search }),
-	          React.createElement('i', { className: 'fa fa-question-circle' }),
+	          React.createElement('i', { className: 'fa fa-question' }),
 	          React.createElement(
 	            'div',
 	            { className: 'drop-down' },
@@ -35657,7 +35669,7 @@
 
 	  render: function () {
 
-	    var input = React.createElement('input', { type: 'text', onChange: this.inputChange, value: this.state.query });
+	    var input = React.createElement('input', { type: 'text', placeholder: 'Restaraunt...', onChange: this.inputChange, value: this.state.query });
 	    var compare = React.createElement('div', null);
 	    var chart = React.createElement('div', null);
 	    if (this.state.comparison.name) {
@@ -35746,56 +35758,100 @@
 
 	            zoom: 16,
 	            styles: [{
-	                "featureType": "administrative",
-	                "elementType": "labels.text.fill",
+	                "featureType": "water",
+	                "elementType": "all",
 	                "stylers": [{
-	                    "color": "#444444"
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 100
+	                }, {
+	                    "visibility": "on"
 	                }]
 	            }, {
 	                "featureType": "landscape",
 	                "elementType": "all",
 	                "stylers": [{
-	                    "color": "#f2f2f2"
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 100
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "road",
+	                "elementType": "geometry",
+	                "stylers": [{
+	                    "hue": "#000000"
+	                }, {
+	                    "saturation": -100
+	                }, {
+	                    "lightness": -100
+	                }, {
+	                    "visibility": "simplified"
+	                }]
+	            }, {
+	                "featureType": "road",
+	                "elementType": "labels",
+	                "stylers": [{
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 100
+	                }, {
+	                    "visibility": "off"
 	                }]
 	            }, {
 	                "featureType": "poi",
 	                "elementType": "all",
 	                "stylers": [{
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 100
+	                }, {
 	                    "visibility": "off"
 	                }]
 	            }, {
-	                "featureType": "road",
+	                "featureType": "administrative",
 	                "elementType": "all",
 	                "stylers": [{
-	                    "saturation": -100
+	                    "hue": "#ffffff"
 	                }, {
-	                    "lightness": 45
-	                }]
-	            }, {
-	                "featureType": "road.highway",
-	                "elementType": "all",
-	                "stylers": [{
-	                    "visibility": "simplified"
-	                }]
-	            }, {
-	                "featureType": "road.arterial",
-	                "elementType": "labels.icon",
-	                "stylers": [{
+	                    "saturation": 0
+	                }, {
+	                    "lightness": 100
+	                }, {
 	                    "visibility": "off"
 	                }]
 	            }, {
 	                "featureType": "transit",
-	                "elementType": "all",
+	                "elementType": "geometry",
 	                "stylers": [{
-	                    "visibility": "off"
-	                }]
-	            }, {
-	                "featureType": "water",
-	                "elementType": "all",
-	                "stylers": [{
-	                    "color": "#46bcec"
+	                    "hue": "#000000"
+	                }, {
+	                    "saturation": 0
+	                }, {
+	                    "lightness": -100
 	                }, {
 	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "transit",
+	                "elementType": "labels",
+	                "stylers": [{
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": 0
+	                }, {
+	                    "lightness": 100
+	                }, {
+	                    "visibility": "off"
 	                }]
 	            }]
 	        });
@@ -35806,8 +35862,13 @@
 	        }.bind(this));
 
 	        google.maps.event.addListener(map, 'idle', function () {
-	            var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
-	            ApiUtil.fetchMap(options);
+	            clearInterval(this.mapInterval);
+	            this.mapInterval = setInterval(function () {
+
+	                var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
+	                ApiUtil.fetchMap(options);
+	                clearInterval(this.mapInterval);
+	            }.bind(this), 1000);
 	        }.bind(this));
 
 	        //
@@ -35844,7 +35905,7 @@
 	                text = "FFF";
 	            } else if (marker.calc.average <= 13) {
 	                grade = marker.calc.average;
-	                text = "0056ac";
+	                hex = "0056ac";
 	            } else if (marker.calc.average <= 27) {
 	                grade = marker.calc.average;
 	                hex = "49ac42";
@@ -35941,6 +36002,226 @@
 	};
 
 	module.exports = MapActions;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(5);
+	var StoreStore = __webpack_require__(217);
+	var ApiUtil = __webpack_require__(209);
+	var MapStore = __webpack_require__(252);
+
+	var Map = React.createClass({
+	    displayName: 'Map',
+
+	    getInitialState: function () {
+	        return { markers: [], newMarkers: [], cuisine_type: null };
+	    },
+	    componentDidMount: function () {
+
+	        this.storeListener = StoreStore.addListener(this._onStoreChange);
+	        this.mapListener = MapStore.addListener(this._onMapChange);
+	        var coordinates = { lat: 40.7127, lng: -74.0059 };
+	        map = new google.maps.Map(document.getElementById('main-map'), {
+	            center: coordinates,
+	            disableDefaultUI: true,
+	            zoom: 12,
+	            styles: [{
+	                "featureType": "water",
+	                "elementType": "all",
+	                "stylers": [{
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 100
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "landscape",
+	                "elementType": "all",
+	                "stylers": [{
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 100
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "road",
+	                "elementType": "geometry",
+	                "stylers": [{
+	                    "hue": "#000000"
+	                }, {
+	                    "saturation": -100
+	                }, {
+	                    "lightness": -100
+	                }, {
+	                    "visibility": "simplified"
+	                }]
+	            }, {
+	                "featureType": "road",
+	                "elementType": "labels",
+	                "stylers": [{
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 100
+	                }, {
+	                    "visibility": "off"
+	                }]
+	            }, {
+	                "featureType": "poi",
+	                "elementType": "all",
+	                "stylers": [{
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 100
+	                }, {
+	                    "visibility": "off"
+	                }]
+	            }, {
+	                "featureType": "administrative",
+	                "elementType": "all",
+	                "stylers": [{
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": 0
+	                }, {
+	                    "lightness": 100
+	                }, {
+	                    "visibility": "off"
+	                }]
+	            }, {
+	                "featureType": "transit",
+	                "elementType": "geometry",
+	                "stylers": [{
+	                    "hue": "#000000"
+	                }, {
+	                    "saturation": 0
+	                }, {
+	                    "lightness": -100
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "transit",
+	                "elementType": "labels",
+	                "stylers": [{
+	                    "hue": "#ffffff"
+	                }, {
+	                    "saturation": 0
+	                }, {
+	                    "lightness": 100
+	                }, {
+	                    "visibility": "off"
+	                }]
+	            }]
+	        });
+
+	        google.maps.event.addListener(map, 'tilesloaded', function () {
+	            var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.state.cuisine_type };
+	            ApiUtil.fetchMap(options);
+	        }.bind(this));
+
+	        google.maps.event.addListener(map, 'idle', function () {
+	            var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.state.cuisine_type };
+	            ApiUtil.fetchMap(options);
+	        }.bind(this));
+
+	        //
+	        // var panorama;
+	        // panorama = new google.maps.StreetViewPanorama(
+	        //   document.getElementById('street-view'),
+	        //   {
+	        //     position: coordinates,
+	        //     disableDefaultUI: true,
+	        //     streetViewControl: false,
+	        //     pov: {heading: 165, pitch: 0},
+	        //     zoom: 1
+	        //   });
+	    },
+
+	    componentWillUnmount: function () {
+	        this.storeListener.remove();
+	        this.mapListener.remove();
+	    },
+	    _onMapChange: function () {
+	        this.setState({ markers: [] });
+	        var newMarkers = [];
+
+	        MapStore.all().forEach(function (marker) {
+	            var grade;
+	            var hex;
+	            var text = "FFF";
+	            var shadow = "_withshadow";
+
+	            if (marker.camis === this.props.camis) {
+	                grade = marker.calc.average;
+	                hex = "FFF";
+	                shadow = "";
+	                text = "FFF";
+	            } else if (marker.calc.average <= 13) {
+	                grade = marker.calc.average;
+	                hex = "0056ac";
+	            } else if (marker.calc.average <= 27) {
+	                grade = marker.calc.average;
+	                hex = "49ac42";
+	            } else {
+	                grade = marker.calc.average;
+	                hex = "fa9828";
+	            }
+
+	            var coordinates = { lat: Number(marker.lat), lng: Number(marker.lng) };
+	            var newMarker = new google.maps.Marker({
+	                position: coordinates,
+	                map: map,
+	                icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter" + shadow + "&chld=" + grade + "|" + hex + "|" + text,
+	                title: marker.name
+	            });
+
+	            newMarkers.push(newMarker);
+	        }.bind(this));
+
+	        this.state.markers.forEach(function (marker) {
+	            marker.setMap(null);
+	        });
+
+	        this.setState({ markers: newMarkers });
+	    },
+	    _onStoreChange: function () {
+	        // this.setState({map: StoreStore.getMap()});
+
+	    },
+
+	    render: function () {
+	        // <div id="street-view"></div>
+
+	        return React.createElement(
+	            'div',
+	            { className: 'main-page-holder' },
+	            React.createElement('div', { id: 'main-map' }),
+	            React.createElement(
+	                'div',
+	                { className: 'options' },
+	                React.createElement('i', { className: 'fa fa-reply' }),
+	                React.createElement('input', { type: 'checkbox', name: 'cuisine', value: 'American' }),
+	                'American',
+	                React.createElement('br', null)
+	            )
+	        );
+	    }
+
+	});
+
+	module.exports = Map;
 
 /***/ }
 /******/ ]);

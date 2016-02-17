@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :stores, only: [:index, :show] do
       collection do
         get 'search'
+        get 'filter'
       end
     end
 
