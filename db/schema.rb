@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216051628) do
+ActiveRecord::Schema.define(version: 20160216160748) do
 
   create_table "calc", force: :cascade do |t|
     t.integer  "inspections"
@@ -65,17 +65,40 @@ ActiveRecord::Schema.define(version: 20160216051628) do
   add_index "inspections", ["inspection_date"], name: "index_inspections_on_inspection_date"
   add_index "inspections", ["store_id"], name: "index_inspections_on_store_id"
 
+  create_table "macro_calcs", force: :cascade do |t|
+    t.integer  "stores"
+    t.integer  "inspections"
+    t.integer  "violations"
+    t.integer  "critical"
+    t.integer  "mice"
+    t.integer  "flies"
+    t.integer  "roaches"
+    t.integer  "first_average"
+    t.integer  "average"
+    t.integer  "worst"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "name"
+    t.integer  "worst_id"
+    t.integer  "worst_average"
+    t.integer  "worst_average_id"
+    t.integer  "worst_first_average"
+    t.integer  "worst_first_average_id"
+  end
+
   create_table "stores", force: :cascade do |t|
-    t.string   "building",     default: ""
-    t.string   "name",         default: ""
-    t.integer  "camis",                     null: false
-    t.string   "phone",        default: ""
-    t.string   "street",       default: ""
-    t.integer  "zipcode",                   null: false
+    t.string   "building",                             default: ""
+    t.string   "name",                                 default: ""
+    t.integer  "camis",                                                   null: false
+    t.string   "phone",                                default: ""
+    t.string   "street",                               default: ""
+    t.integer  "zipcode",                                                 null: false
     t.string   "boro"
-    t.string   "cuisine_type", default: ""
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "cuisine_type",                         default: ""
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.decimal  "lng",          precision: 9, scale: 6, default: -74.0444
+    t.decimal  "lat",          precision: 9, scale: 6, default: 40.6892
   end
 
   add_index "stores", ["boro"], name: "index_stores_on_boro"

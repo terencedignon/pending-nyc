@@ -101,7 +101,7 @@ var Comparison = React.createClass({
     }
 
     var chart = <BarChart data={dataset} width={600} height={350} options={optionHash}/>;
-    debugger
+
     return chart;
   },
   resetComparison: function () {
@@ -111,13 +111,13 @@ var Comparison = React.createClass({
   },
 
   render: function () {
-    console.log(this.state.comparison);
+
 
     var input = <input type="text" onChange={this.inputChange} value={this.state.query}/>;
     var compare = <div/>;
     var chart = <div/>;
     if (this.state.comparison.name) {
-      debugger
+      
         chart = this.setUpChart();
        compare = <h3>{this.state.comparison.name}</h3>;
         input = <span>{this.state.comparison.name} <i onClick={this.resetComparison} className="fa fa-times"></i></span>;

@@ -4,6 +4,7 @@ var StoreStore = require('../stores/store_store.js');
 var BarChart = require("react-chartjs").Bar;
 var PieChart = require("react-chartjs").Pie;
 var Comparison = require('./comparison.jsx');
+var Map = require('./map.jsx');
 
 var StoreShow = React.createClass({
   getInitialState: function () {
@@ -23,8 +24,10 @@ var StoreShow = React.createClass({
   returnImage: function () {
     if (typeof this.state.yelp.image_url !== "undefined") {
       var url = this.state.yelp.image_url.replace("ms.jpg", "348s.jpg");
+
+
       return <img className="show-image" src={url} />;
-    } else {
+  } else {
       return <div className="empty-image"></div>;
     }
   },
@@ -125,7 +128,8 @@ var StoreShow = React.createClass({
     overview = <span>
       <span className="store-name">{name} Overview </span><p/>{name} has an average score for all inspections is <strong> {calc.average}, or {this.translate(calc.average)} </strong><br/>
       It's average score for surprise inspections is <strong>{calc.first_average}, or {this.translate(calc.first_average)}</strong><br/>
-    Of it's <strong>{calc.inspections}</strong> inspections,  <strong>{mice}</strong> found mice, <strong>{flies}</strong> found flies, and <strong>{roaches}</strong> found roaches.<br/>
+
+  Of it's <strong>{calc.inspections}</strong> inspections,  <strong>{mice}</strong> found mice, <strong>{flies}</strong> found flies, and <strong>{roaches}</strong> found roaches.<br/>
   It' worst inspection was <strong>{calc.worst}</strong> on <strong>{worstDate.toLocaleDateString()}</strong>.<br/>
   It's best inspection was <strong>{calc.best}</strong> on <strong>{bestDate.toLocaleDateString()}</strong>.<br/>
   </span>;
@@ -134,16 +138,19 @@ var StoreShow = React.createClass({
   },
 
   render: function () {
+
+
     var data;
     var circleChart = <div></div>;
     var barChart = <div></div>;
     var overview = <div></div>;
     var violations;
-
     var store = this.state.store;
 
     if (typeof this.state.store !== "undefined" && typeof this.state.store.inspections !== "undefined") {
       ///OVERVIEW
+
+      this.map = <Map key={Math.random()} camis={this.state.store.camis} cuisine_type={this.state.store.cuisine_type} name={this.state.store.name} lat={this.state.store.lat} lng={this.state.store.lng}/>;
       overview = this.createOverview();
 
       //VIOLATION LIST
@@ -151,11 +158,11 @@ var StoreShow = React.createClass({
       violations = this.state.store.inspections
       .map(function(inspection) {
         date = new Date(inspection.inspection_date);
-        return <ul><h3>{date.getMonth() + "/" + (date.getYear() + 1900) } </h3>{ inspection.violations.map(function(violation) {
+        return <ul key={Math.random()}><h3>{date.getMonth() + "/" + (date.getYear() + 1900) } </h3>{ inspection.violations.map(function(violation) {
           if (violation.critical) {
-          return <li className="critical">{violation.description.split(".")[0] + "."}</li>;
+          return <li key={Math.random()} className="critical">{violation.description.split(".")[0] + "."}</li>;
           } else {
-          return <li className="not-critical">{violation.description}</li>;
+          return <li key={Math.random()} className="not-critical">{violation.description}</li>;
           }
           }) }</ul>
         });
@@ -200,17 +207,14 @@ var StoreShow = React.createClass({
     <span className="b">B:</span> <span className="range">14-27 / </span>&nbsp;
       <span className="c">C:</span> <span className="range">28 and up </span></div>;
 
-  return (
 
+  return (
   <div className="show">
     <div className="legend">
       {legend}
     </div>
     <div className="overview">
       {overview}
-    </div>
-    <div className="comparison">
-      <Comparison store={this.state.store}/>
     </div>
     <div className="show-header">
     <div className="compare">
@@ -226,22 +230,26 @@ var StoreShow = React.createClass({
           {grade}
         </div>
       </div>
+      {this.map}
       </div>
     <div className="show-row">
       <div className="chart">
         {barChart}
       </div>
+      <div className="comparison">
+        <Comparison store={this.state.store}/>
+      </div>
 
     </div>
     <div className="show-row">
+  </div>
+  <div className="violation-chart">
+    {circleChart}
   </div>
   <div className="violations">
 
     {violations}
 
-  </div>
-  <div className="violation-chart">
-    {circleChart}
   </div>
   </div>
 

@@ -5,7 +5,7 @@ var SearchActions = require('../actions/search_actions.js');
 var History = require('react-router').History;
 
 var Header = React.createClass({
-  mixins: [History], 
+  mixins: [History],
   getInitialState: function () {
     return { search: "", results: [] };
   },
@@ -39,7 +39,7 @@ var Header = React.createClass({
     clearInterval(this.searchInterval);
     query = e.currentTarget.value;
     this.setState({ search: query })
-    this.searchInterval = setInterval(this.autoSearch, 500);
+    this.searchInterval = setInterval(this.autoSearch, 1000);
   },
   autoSearch: function () {
     ApiUtil.search(query);
@@ -63,7 +63,7 @@ var Header = React.createClass({
       <header>
       <div className="wrapper">
       <svg className="header-banner">
-         <text><a onClick={this.redirectHome} href="#">zagRat</a></text>
+         <text><a onClick={this.redirectHome} href="#">zagrat</a></text>
        </svg>
        <div className="header-search">
          <input type="text" onChange={this.search} value={this.state.search} />

@@ -1,7 +1,21 @@
 var SearchActions = require('../actions/search_actions.js');
 var StoreActions = require('../actions/store_actions.js');
+var MapActions = require('../actions/map_actions.js');
 
 var ApiUtil = {
+  fetchMap: function(options) {
+    $.ajax({
+      method: "GET",
+      url: "api/stores",
+      data: { map_query: true, bounds: options.bounds, cuisine_type: options.cuisine_type },
+      success: function(data) {
+        MapActions.fetchMap(data);
+      },
+      error: function() {
+        console.log("error in updateMap");
+      }
+    });
+  },
   fetchStore: function (id, callback) {
     $.ajax({
       method: "GET",

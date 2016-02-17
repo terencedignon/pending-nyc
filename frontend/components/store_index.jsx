@@ -25,7 +25,9 @@ var StoreIndex = React.createClass({
     // <rect/>
     // <input type="text"/>
     return (
-      <div></div>
+      <svg className="index-banner">
+        <text className="header-text">all time highest: </text>
+      </svg>
    );
   }
 });

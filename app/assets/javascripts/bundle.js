@@ -24166,6 +24166,7 @@
 	var BarChart = __webpack_require__(236).Bar;
 	var PieChart = __webpack_require__(236).Pie;
 	var Comparison = __webpack_require__(250);
+	var Map = __webpack_require__(251);
 
 	var StoreShow = React.createClass({
 	  displayName: 'StoreShow',
@@ -24187,6 +24188,7 @@
 	  returnImage: function () {
 	    if (typeof this.state.yelp.image_url !== "undefined") {
 	      var url = this.state.yelp.image_url.replace("ms.jpg", "348s.jpg");
+
 	      return React.createElement('img', { className: 'show-image', src: url });
 	    } else {
 	      return React.createElement('div', { className: 'empty-image' });
@@ -24378,16 +24380,18 @@
 	  },
 
 	  render: function () {
+
 	    var data;
 	    var circleChart = React.createElement('div', null);
 	    var barChart = React.createElement('div', null);
 	    var overview = React.createElement('div', null);
 	    var violations;
-
 	    var store = this.state.store;
 
 	    if (typeof this.state.store !== "undefined" && typeof this.state.store.inspections !== "undefined") {
 	      ///OVERVIEW
+
+	      this.map = React.createElement(Map, { key: Math.random(), camis: this.state.store.camis, cuisine_type: this.state.store.cuisine_type, name: this.state.store.name, lat: this.state.store.lat, lng: this.state.store.lng });
 	      overview = this.createOverview();
 
 	      //VIOLATION LIST
@@ -24396,7 +24400,7 @@
 	        date = new Date(inspection.inspection_date);
 	        return React.createElement(
 	          'ul',
-	          null,
+	          { key: Math.random() },
 	          React.createElement(
 	            'h3',
 	            null,
@@ -24407,13 +24411,13 @@
 	            if (violation.critical) {
 	              return React.createElement(
 	                'li',
-	                { className: 'critical' },
+	                { key: Math.random(), className: 'critical' },
 	                violation.description.split(".")[0] + "."
 	              );
 	            } else {
 	              return React.createElement(
 	                'li',
-	                { className: 'not-critical' },
+	                { key: Math.random(), className: 'not-critical' },
 	                violation.description
 	              );
 	            }
@@ -24514,11 +24518,6 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'comparison' },
-	        React.createElement(Comparison, { store: this.state.store })
-	      ),
-	      React.createElement(
-	        'div',
 	        { className: 'show-header' },
 	        React.createElement('div', { className: 'compare' })
 	      ),
@@ -24539,7 +24538,8 @@
 	            { className: 'show-grade' },
 	            grade
 	          )
-	        )
+	        ),
+	        this.map
 	      ),
 	      React.createElement(
 	        'div',
@@ -24548,18 +24548,23 @@
 	          'div',
 	          { className: 'chart' },
 	          barChart
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'comparison' },
+	          React.createElement(Comparison, { store: this.state.store })
 	        )
 	      ),
 	      React.createElement('div', { className: 'show-row' }),
 	      React.createElement(
 	        'div',
-	        { className: 'violations' },
-	        violations
+	        { className: 'violation-chart' },
+	        circleChart
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'violation-chart' },
-	        circleChart
+	        { className: 'violations' },
+	        violations
 	      )
 	    );
 	  }
@@ -24573,8 +24578,22 @@
 
 	var SearchActions = __webpack_require__(210);
 	var StoreActions = __webpack_require__(216);
+	var MapActions = __webpack_require__(254);
 
 	var ApiUtil = {
+	  fetchMap: function (options) {
+	    $.ajax({
+	      method: "GET",
+	      url: "api/stores",
+	      data: { map_query: true, bounds: options.bounds, cuisine_type: options.cuisine_type },
+	      success: function (data) {
+	        MapActions.fetchMap(data);
+	      },
+	      error: function () {
+	        console.log("error in updateMap");
+	      }
+	    });
+	  },
 	  fetchStore: function (id, callback) {
 	    $.ajax({
 	      method: "GET",
@@ -25021,6 +25040,14 @@
 	var StoreConstants = __webpack_require__(218);
 
 	var StoreActions = {
+
+	  updateMap: function (data) {
+	    Dispatcher.dispatch({
+	      actionType: StoreConstants.UPDATE_MAP,
+	      data: data
+	    });
+	  },
+
 	  clearComparison: function () {
 	    Dispatcher.dispatch({
 	      actionType: StoreConstants.CLEAR_COMPARISON
@@ -25063,6 +25090,7 @@
 	_store = {};
 	_yelp = {};
 	_comparison = {};
+	_map = [];
 
 	StoreStore.getComparison = function () {
 	  return _comparison;
@@ -25070,6 +25098,10 @@
 
 	StoreStore.getStore = function () {
 	  return _store;
+	};
+
+	StoreStore.getMap = function () {
+	  return _map;
 	};
 
 	StoreStore.getYelp = function () {
@@ -25080,6 +25112,9 @@
 	  if (payload.actionType === StoreConstants.GET_STORE) {
 	    _store = payload.data;
 	    this.__emitChange();
+	  } else if (payload.actionType === StoreConstants.UPDATE_MAP) {
+	    _map = payload.data;
+	    console.log(_map);
 	  } else if (payload.actionType === StoreConstants.GET_COMPARISON) {
 	    _comparison = payload.data;
 	    this.__emitChange();
@@ -25101,7 +25136,8 @@
 	var StoreConstants = {
 	  GET_STORE: "GET_STORE",
 	  GET_COMPARISON: "GET_COMPARISON",
-	  CLEAR_COMPARISON: "CLEAR_COMPARISON"
+	  CLEAR_COMPARISON: "CLEAR_COMPARISON",
+	  UPDATE_MAP: "UPDATE_MAP"
 	};
 
 	module.exports = StoreConstants;
@@ -35277,7 +35313,15 @@
 	    // <text>zag</text>
 	    // <rect/>
 	    // <input type="text"/>
-	    return React.createElement('div', null);
+	    return React.createElement(
+	      'svg',
+	      { className: 'index-banner' },
+	      React.createElement(
+	        'text',
+	        { className: 'header-text' },
+	        'all time highest: '
+	      )
+	    );
 	  }
 	});
 
@@ -35365,7 +35409,7 @@
 	    clearInterval(this.searchInterval);
 	    query = e.currentTarget.value;
 	    this.setState({ search: query });
-	    this.searchInterval = setInterval(this.autoSearch, 500);
+	    this.searchInterval = setInterval(this.autoSearch, 1000);
 	  },
 	  autoSearch: function () {
 	    ApiUtil.search(query);
@@ -35406,7 +35450,7 @@
 	            React.createElement(
 	              'a',
 	              { onClick: this.redirectHome, href: '#' },
-	              'zagRat'
+	              'zagrat'
 	            )
 	          )
 	        ),
@@ -35602,7 +35646,7 @@
 	    };
 
 	    var chart = React.createElement(BarChart, { data: dataset, width: 600, height: 350, options: optionHash });
-	    debugger;
+
 	    return chart;
 	  },
 	  resetComparison: function () {
@@ -35612,13 +35656,12 @@
 	  },
 
 	  render: function () {
-	    console.log(this.state.comparison);
 
 	    var input = React.createElement('input', { type: 'text', onChange: this.inputChange, value: this.state.query });
 	    var compare = React.createElement('div', null);
 	    var chart = React.createElement('div', null);
 	    if (this.state.comparison.name) {
-	      debugger;
+
 	      chart = this.setUpChart();
 	      compare = React.createElement(
 	        'h3',
@@ -35683,34 +35726,221 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
+	var StoreStore = __webpack_require__(217);
+	var ApiUtil = __webpack_require__(209);
+	var MapStore = __webpack_require__(252);
 
 	var Map = React.createClass({
-	  displayName: 'Map',
+	    displayName: 'Map',
 
-	  componentDidMount: function () {
-	    var map = new google.maps.Map(document.getElementById('map'), {
-	      center: { lat: -34.397, lng: 150.644 },
-	      zoom: 8
-	    });
-	    var panorama;
-	    panorama = new google.maps.StreetViewPanorama(document.getElementById('street-view'), {
-	      position: { lat: 37.869260, lng: -122.254811 },
-	      pov: { heading: 165, pitch: 0 },
-	      zoom: 1
-	    });
-	  },
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement('div', { id: 'map' }),
-	      React.createElement('div', { id: 'street-view' })
-	    );
-	  }
+	    getInitialState: function () {
+	        return { markers: [], newMarkers: [] };
+	    },
+	    componentDidMount: function () {
+
+	        this.storeListener = StoreStore.addListener(this._onStoreChange);
+	        this.mapListener = MapStore.addListener(this._onMapChange);
+	        var coordinates = { lat: Number(this.props.lat), lng: Number(this.props.lng) };
+	        map = new google.maps.Map(document.getElementById('map'), {
+	            center: coordinates,
+
+	            zoom: 16,
+	            styles: [{
+	                "featureType": "administrative",
+	                "elementType": "labels.text.fill",
+	                "stylers": [{
+	                    "color": "#444444"
+	                }]
+	            }, {
+	                "featureType": "landscape",
+	                "elementType": "all",
+	                "stylers": [{
+	                    "color": "#f2f2f2"
+	                }]
+	            }, {
+	                "featureType": "poi",
+	                "elementType": "all",
+	                "stylers": [{
+	                    "visibility": "off"
+	                }]
+	            }, {
+	                "featureType": "road",
+	                "elementType": "all",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 45
+	                }]
+	            }, {
+	                "featureType": "road.highway",
+	                "elementType": "all",
+	                "stylers": [{
+	                    "visibility": "simplified"
+	                }]
+	            }, {
+	                "featureType": "road.arterial",
+	                "elementType": "labels.icon",
+	                "stylers": [{
+	                    "visibility": "off"
+	                }]
+	            }, {
+	                "featureType": "transit",
+	                "elementType": "all",
+	                "stylers": [{
+	                    "visibility": "off"
+	                }]
+	            }, {
+	                "featureType": "water",
+	                "elementType": "all",
+	                "stylers": [{
+	                    "color": "#46bcec"
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }]
+	        });
+
+	        google.maps.event.addListener(map, 'tilesloaded', function () {
+	            var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
+	            ApiUtil.fetchMap(options);
+	        }.bind(this));
+
+	        google.maps.event.addListener(map, 'idle', function () {
+	            var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
+	            ApiUtil.fetchMap(options);
+	        }.bind(this));
+
+	        //
+	        // var panorama;
+	        // panorama = new google.maps.StreetViewPanorama(
+	        //   document.getElementById('street-view'),
+	        //   {
+	        //     position: coordinates,
+	        //     disableDefaultUI: true,
+	        //     streetViewControl: false,
+	        //     pov: {heading: 165, pitch: 0},
+	        //     zoom: 1
+	        //   });
+	    },
+
+	    componentWillUnmount: function () {
+	        this.storeListener.remove();
+	        this.mapListener.remove();
+	    },
+	    _onMapChange: function () {
+	        this.setState({ markers: [] });
+	        var newMarkers = [];
+
+	        MapStore.all().forEach(function (marker) {
+	            var grade;
+	            var hex;
+	            var text = "FFF";
+	            var shadow = "_withshadow";
+
+	            if (marker.camis === this.props.camis) {
+	                grade = marker.calc.average;
+	                hex = "FFF";
+	                shadow = "";
+	                text = "FFF";
+	            } else if (marker.calc.average <= 13) {
+	                grade = marker.calc.average;
+	                text = "0056ac";
+	            } else if (marker.calc.average <= 27) {
+	                grade = marker.calc.average;
+	                hex = "49ac42";
+	            } else {
+	                grade = marker.calc.average;
+	                hex = "fa9828";
+	            }
+
+	            var coordinates = { lat: Number(marker.lat), lng: Number(marker.lng) };
+	            var newMarker = new google.maps.Marker({
+	                position: coordinates,
+	                map: map,
+	                icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter" + shadow + "&chld=" + grade + "|" + hex + "|" + text,
+	                title: marker.name
+	            });
+
+	            newMarkers.push(newMarker);
+	        }.bind(this));
+
+	        this.state.markers.forEach(function (marker) {
+	            marker.setMap(null);
+	        });
+
+	        this.setState({ markers: newMarkers });
+	    },
+	    _onStoreChange: function () {
+	        // this.setState({map: StoreStore.getMap()});
+
+	    },
+
+	    render: function () {
+	        // <div id="street-view"></div>
+
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement('div', { id: 'map' })
+	        );
+	    }
 
 	});
 
 	module.exports = Map;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(219).Store;
+	var AppDispatcher = __webpack_require__(211);
+	var MapStore = new Store(AppDispatcher);
+	var MapConstants = __webpack_require__(253);
+
+	_map = [];
+
+	MapStore.all = function () {
+	  return _map;
+	};
+
+	MapStore.__onDispatch = function (payload) {
+	  if (payload.actionType === MapConstants.FETCH_MAP) {
+	    _map = payload.data;
+	    this.__emitChange();
+	  }
+	};
+
+	module.exports = MapStore;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports) {
+
+	var MapConstants = {
+	  FETCH_MAP: "FETCH_MAP"
+	};
+
+	module.exports = MapConstants;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Dispatcher = __webpack_require__(211);
+	var MapConstants = __webpack_require__(253);
+
+	var MapActions = {
+	  fetchMap: function (data) {
+	    Dispatcher.dispatch({
+	      actionType: MapConstants.FETCH_MAP,
+	      data: data
+	    });
+	  }
+
+	};
+
+	module.exports = MapActions;
 
 /***/ }
 /******/ ]);

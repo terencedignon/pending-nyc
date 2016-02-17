@@ -7,6 +7,7 @@ var StoreStore = new Store(AppDispatcher);
 _store = {};
 _yelp = {};
 _comparison = {};
+_map = [];
 
 StoreStore.getComparison = function () {
   return _comparison;
@@ -14,6 +15,10 @@ StoreStore.getComparison = function () {
 
 StoreStore.getStore = function () {
   return _store;
+};
+
+StoreStore.getMap = function () {
+  return _map;
 };
 
 StoreStore.getYelp = function () {
@@ -25,6 +30,11 @@ StoreStore.__onDispatch = function (payload) {
     _store = payload.data;
     this.__emitChange();
     }
+
+  else if (payload.actionType === StoreConstants.UPDATE_MAP) {
+    _map = payload.data;
+    console.log(_map);
+  }
 
   else if (payload.actionType === StoreConstants.GET_COMPARISON) {
     _comparison = payload.data;

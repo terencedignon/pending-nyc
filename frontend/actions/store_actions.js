@@ -3,6 +3,14 @@ var Dispatcher = require('../dispatcher/dispatcher.js');
 var StoreConstants = require('../constants/store_constants.js');
 
 var StoreActions = {
+
+  updateMap: function (data) {
+    Dispatcher.dispatch({
+      actionType: StoreConstants.UPDATE_MAP,
+      data: data
+    });
+  },
+
   clearComparison: function () {
     Dispatcher.dispatch({
       actionType: StoreConstants.CLEAR_COMPARISON

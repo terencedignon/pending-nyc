@@ -20,6 +20,43 @@ body {
   font-family: "arial"
 }
 
+
+.index-banner {
+
+    z-index: 999;
+    background: maroon;
+
+    margin-top: -30px;
+    margin-left: -40px;
+    padding-top: 300px;
+    padding-left: 80px;
+    width: 75%;
+    height: 500px;
+  }
+
+  .header-text {
+    x: 5%;
+    /*padding-top: 80px;*/
+    y: 50%;
+    font-family: "montserrat";
+    stroke: white;
+    stroke-width: 3px;
+    font-size: 50px;
+    fill: white;
+}
+
+  .paragraph-text {
+
+    x: 20%;
+    y: 100%;
+    font-family: "montserrat";
+    stroke: white;
+    stroke-width: 3px;
+    font-size: 50px;
+    fill: white;
+
+  }
+
 .header-banner {
   position: fixed;
   top: 0;
@@ -152,11 +189,13 @@ body {
 .show-image {
   /*width: 800px;*/
   height: 400px;
-  opacity: 1;
+  opacity: 0.85;
   position: relative;
   /*border: 5px solid maroon;*/
   border-radius: 3%;
 }
+
+
 
 .drop-down {
   left: -120px;
@@ -257,7 +296,7 @@ body {
 }
 
 .overview {
-  margin-top: 10px;
+  margin-top: -20px;
   font-family: "helvetica";
   margin-bottom: 20px;
   font-size: 17px;
@@ -272,10 +311,10 @@ body {
 .violations {
   /*position: absolute;*/
   z-index: 9;
-  margin-left: 20px;
+  /*margin-left: 20px;*/
   border-radius: 2%;
   height: 400px;
-  width: 500px;
+  width: 400px;
   overflow: scroll;
   /*background: #f7f7f7;*/
   color: #222;
@@ -298,12 +337,13 @@ body {
 }
 
 .legend {
+  display: none;
   margin-top: -50px;
   margin-left: 0px;
   /*border: 1px solid #f7f7f7;*/
   opacity: 0.5;
   cursor: pointer;
-  background: #f7f7f7;
+  /*background: #f7f7f7;*/
 }
 
 .legend:hover {
@@ -321,13 +361,13 @@ body {
   text-transform: uppercase;
   color: #0056ac;
   font-family: "montserrat";
-  font-size: 40px;
+  font-size: 20px;
 }
 
 .legend > .b {
   font-family: "montserrat";
-  font-size: 40px;
-  color: #49ac42;
+  font-size: 20px;
+  color: #49ac42;f
     text-transform: uppercase;
 
 }
@@ -336,7 +376,7 @@ body {
   color: #fa9828;
     text-transform: uppercase;
     font-family: "montserrat";
-    font-size: 40px;
+    font-size: 20px;
 }
 
 .not-critical {
@@ -414,11 +454,25 @@ body {
 }
 
 #map {
-  height: 500px;
-  width: 500px;
+  margin-left: 20px;
+  box-shadow: 2px 2px 0 0 #f7f7f7;
+  height: 400px;
+  /*opacity: 0.75;*/
+  width: 400px;
 }
+/*
+#map:hover {
+  opacity: 0.95;
+}*/
 
 #street-view {
-  height: 500px;
-  width: 500px;
+  margin-left: 20px;
+  margin-top: 20px;
+  height: 100px;
+  width: 100px;
+}
+
+.material-icons {
+  color: maroon;
+  font-size: 30px;
 }

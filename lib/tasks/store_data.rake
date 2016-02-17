@@ -1,5 +1,226 @@
 namespace :store_data do
   desc "Perform calculations on Store data"
+
+
+  task coords: :environment do
+    Store.all.each do |store|
+      p store.id
+      next if store.id <= 20445 || store.phone.nil? || store.phone.to_i.to_s != store.phone.to_s || store.phone.length != 10
+      query = Yelp.client.phone_search(store.phone).businesses[0]
+      if query
+        longitude = query.location.coordinate.longitude
+        latitude = query.location.coordinate.latitude
+        store.update!(lat: latitude, lng: longitude)
+      end
+    end
+
+  end
+
+  task zipcodes: :environment do
+
+    zipcode_store = Store.order(zipcode: :desc).map do |store|
+      store.zipcode
+    end.uniq
+    boro_store = Store.order(boro: :desc).map do |store|
+      store.boro
+    end.uniq
+    cuisine_store = Store.order(cuisine_type: :desc).map do |store|
+      store.cuisine_type
+    end.uniq
+
+    boro_store.each do |boro|
+      mice = 0
+      flies = 0
+      stores = 0
+      roaches = 0
+      inspections = 0
+      violations = 0
+      critical = 0
+      first_average = []
+      average = []
+      worst_average = 0
+      worst_average_id = nil
+      worst_first_average = 0
+      worst_first_average_id = nil
+      worst = 0
+      worst_id = nil
+
+      Store.where(boro: boro).includes(:calc).each do |store|
+        next unless store.calc
+        stores += 1
+        mice += store.calc.mice
+        flies += store.calc.flies
+        roaches += store.calc.roaches
+        inspections += store.calc.inspections
+        violations += store.calc.violations
+        critical += store.calc.critical
+        first_average.push(store.calc.first_average)
+        average.push(store.calc.average)
+        if store.calc.first_average > worst_first_average
+          worst_first_average = store.calc.first_average
+          worst_first_average_id = store.id
+        end
+        if store.calc.average > worst_average
+          worst_average = store.calc.average
+          worst_average_id = store.id
+        end
+        if store.calc.worst > worst
+          worst = store.calc.worst
+          worst_id = store.id
+        end
+      end
+
+      MacroCalc.create(
+        name: boro,
+        inspections: inspections,
+        stores: stores,
+        mice: mice,
+        flies: flies,
+        roaches: roaches,
+        first_average: first_average.inject(:+) / first_average.length,
+        average: average.inject(:+) / average.length,
+        violations: violations,
+        critical: critical,
+        worst: worst,
+        worst_id: worst_id,
+        worst_average: worst_average,
+        worst_average_id: worst_average_id,
+        worst_first_average: worst_first_average,
+        worst_first_average_id: worst_first_average_id
+      )
+
+    end
+
+
+    cuisine_store.each do |cuisine_type|
+      mice = 0
+      flies = 0
+      stores = 0
+      roaches = 0
+      inspections = 0
+      violations = 0
+      critical = 0
+      first_average = []
+      average = []
+      worst_average = 0
+      worst_average_id = nil
+      worst_first_average = 0
+      worst_first_average_id = nil
+      worst = 0
+      worst_id = nil
+
+      Store.where(cuisine_type: cuisine_type).includes(:calc).each do |store|
+        next unless store.calc
+        stores += 1
+        mice += store.calc.mice
+        flies += store.calc.flies
+        roaches += store.calc.roaches
+        inspections += store.calc.inspections
+        violations += store.calc.violations
+        critical += store.calc.critical
+        first_average.push(store.calc.first_average)
+        average.push(store.calc.average)
+        if store.calc.first_average > worst_first_average
+          worst_first_average = store.calc.first_average
+          worst_first_average_id = store.id
+        end
+        if store.calc.average > worst_average
+          worst_average = store.calc.average
+          worst_average_id = store.id
+        end
+        if store.calc.worst > worst
+          worst = store.calc.worst
+          worst_id = store.id
+        end
+      end
+
+      MacroCalc.create(
+        name: cuisine_type,
+        inspections: inspections,
+        stores: stores,
+        mice: mice,
+        flies: flies,
+        roaches: roaches,
+        first_average: first_average.inject(:+) / first_average.length,
+        average: average.inject(:+) / average.length,
+        violations: violations,
+        critical: critical,
+        worst: worst,
+        worst_id: worst_id,
+        worst_average: worst_average,
+        worst_average_id: worst_average_id,
+        worst_first_average: worst_first_average,
+        worst_first_average_id: worst_first_average_id
+      )
+
+    end
+
+    zipcode_store.each do |zipcode|
+      mice = 0
+      flies = 0
+      stores = 0
+      roaches = 0
+      inspections = 0
+      violations = 0
+      critical = 0
+      first_average = []
+      average = []
+      worst_average = 0
+      worst_average_id = nil
+      worst_first_average = 0
+      worst_first_average_id = nil
+      worst = 0
+      worst_id = nil
+
+      Store.where(zipcode: zipcode).includes(:calc).each do |store|
+        next unless store.calc
+        stores += 1
+        mice += store.calc.mice
+        flies += store.calc.flies
+        roaches += store.calc.roaches
+        inspections += store.calc.inspections
+        violations += store.calc.violations
+        critical += store.calc.critical
+        first_average.push(store.calc.first_average)
+        average.push(store.calc.average)
+        if store.calc.first_average > worst_first_average
+          worst_first_average = store.calc.first_average
+          worst_first_average_id = store.id
+        end
+        if store.calc.average > worst_average
+          worst_average = store.calc.average
+          worst_average_id = store.id
+        end
+        if store.calc.worst > worst
+          worst = store.calc.worst
+          worst_id = store.id
+        end
+      end
+
+      MacroCalc.create(
+        name: zipcode,
+        inspections: inspections,
+        stores: stores,
+        mice: mice,
+        flies: flies,
+        roaches: roaches,
+        first_average: first_average.inject(:+) / first_average.length,
+        average: average.inject(:+) / average.length,
+        violations: violations,
+        critical: critical,
+        worst: worst,
+        worst_id: worst_id,
+        worst_average: worst_average,
+        worst_average_id: worst_average_id,
+        worst_first_average: worst_first_average,
+        worst_first_average_id: worst_first_average_id
+      )
+
+    end
+
+
+  end
+
   task stores: :environment do
     Store.all.each_with_index do |store, i|
       next if store.inspections.length == 1 && store.inspections[0].score == nil
