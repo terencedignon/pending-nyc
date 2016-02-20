@@ -10,6 +10,8 @@ StoreStore = require('./stores/store_store.js');
 var Header = require('./components/header.jsx');
 var Sidebar = require('./components/sidebar.jsx');
 var Map = require('./components/map.jsx');
+MapStore = require('./stores/map_store.js');
+var Browse = require('./components/browse.jsx');
 
 // <Sidebar />
 var App = React.createClass({
@@ -35,6 +37,7 @@ var route = (
 
     <IndexRoute component={StoreIndex} />
     <Route path="rest/:id" component={StoreShow} />
+    <Route path="browse" component={Browse} />
     <Route path="map" component={Map} />
     </Route>
   </Router>

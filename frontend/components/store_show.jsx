@@ -5,6 +5,8 @@ var BarChart = require("react-chartjs").Bar;
 var PieChart = require("react-chartjs").Pie;
 var Comparison = require('./comparison.jsx');
 var Map = require('./map.jsx');
+var Overview = require('./overview.jsx');
+
 
 var StoreShow = React.createClass({
   getInitialState: function () {
@@ -57,6 +59,16 @@ var StoreShow = React.createClass({
     return data;
   },
 
+  colorAverage: function(num) {
+    if (num <= 13) {
+      return "a";
+    } else if (num <= 27) {
+      return "b";
+    } else {
+      return "c";
+    }
+  },
+
   chartData: function () {
     var labels = [];
     var data = [];
@@ -77,10 +89,10 @@ var StoreShow = React.createClass({
       datasets: [
         {
           label: "My first dataset",
-          fillColor: "maroon",
-           strokeColor: "maroon",
-           highlightFill: "maroon",
-         highlightStroke: "maroon",
+          fillColor: "white",
+           strokeColor: "black",
+           highlightFill: "#f7f7f7",
+         highlightStroke: "black",
           data: data
         }
       ]
@@ -106,36 +118,42 @@ var StoreShow = React.createClass({
   },
   translate(number) {
     if (number <= 13) {
-      return <span className="a">an A</span>;
+      return "an A";
     } else if (number <= 27) {
-      return <span className="b">a B</span>;
+      return "a B";
     } else {
       return "a C"
     }
 
   },
-  createOverview: function () {
-    var name = this.state.store.name.toLowerCase().split(" ").map(function (word) {
-      return word[0].toUpperCase() + word.slice(1);
-    }).join(" ");
-    var calc = this.state.store.calc;
-    var bestDate = new Date(calc.best_date);
-    var worstDate = new Date(calc.worst_date);
-    var flies = (calc.flies > 0 ? Math.round((calc.flies / calc.inspections) * 100) + "%" : "0")
-    var mice = (calc.mice > 0 ? Math.round((calc.mice / calc.inspections) * 100) + "%" : "0")
-    var roaches = (calc.roaches > 0 ? Math.round((calc.roaches / calc.inspections) * 100) + "%" : "0")
-
-    overview = <span>
-      <span className="store-name"><strong>{name}</strong> Overview</span><p/>
-      <i className="fa fa-sticky-note"></i> {name} has an average inspection score of <strong> {calc.average}</strong>, the equivalent of {this.translate(calc.average)} <br/>
-      <i className="fa fa-sticky-note"></i>  Its average score for unannounced inspections is <strong>{calc.first_average}</strong>, or {this.translate(calc.first_average)}<br/>
-      <i className="fa fa-sticky-note"></i> Of those <strong>{calc.inspections}</strong> inspections,  <strong>{mice}</strong> found mice, <strong>{flies}</strong> found flies, and <strong>{roaches}</strong> found roaches.<br/>
-      <i className="fa fa-sticky-note"></i> Its worst inspection was <strong>{calc.worst}</strong> on {worstDate.toDateString()}.<br/>
-      <i className="fa fa-sticky-note"></i> Its best inspection was <strong>{calc.best}</strong> on {bestDate.toDateString()}.<br/>
-  </span>;
-  return overview;
+  analyzeBy: function () {
 
   },
+//   createOverview: function () {
+//     var name = this.state.store.name.toLowerCase().split(" ").map(function (word) {
+//       return word[0].toUpperCase() + word.slice(1);
+//     }).join(" ");
+//     var calc = this.state.store.calc;
+//     var bestDate = new Date(calc.best_date);
+//     var worstDate = new Date(calc.worst_date);
+//     var flies = (calc.flies > 0 ? Math.round((calc.flies / calc.inspections) * 100) + "%" : "0")
+//     var mice = (calc.mice > 0 ? Math.round((calc.mice / calc.inspections) * 100) + "%" : "0")
+//     var roaches = (calc.roaches > 0 ? Math.round((calc.roaches / calc.inspections) * 100) + "%" : "0")
+//
+//     overview = <span>
+//       <span className="store-name"><strong className="overview-emphasis">{name} Overview</strong></span><p/>
+//       <i className="fa fa-user"></i>{name} has an average inspection score of <strong className={this.colorAverage(calc.average)}> {calc.average}</strong>, the equivalent of {this.translate(calc.average)}. <br/>
+//       <i className="fa fa-user-secret"></i>Its average score for unannounced inspections is <strong className={this.colorAverage(calc.first_average)}>{calc.first_average}</strong>, or {this.translate(calc.first_average)}.<br/>
+//       <i className="fa fa-bug"></i>Of those <strong className="emphasis">{calc.inspections}</strong> inspections,  <strong className="emphasis">{mice}</strong> found mice, <strong className="emphasis">{flies}</strong> found flies, and <strong className="emphasis">{roaches}</strong> found roaches.<br/>
+//       <i className="fa fa-calendar-times-o"></i>Its worst inspection was <strong className={this.colorAverage(calc.worst)}>{calc.worst}</strong> on {worstDate.toDateString()}.<br/>
+//       <i className="fa fa-calendar-check-o"></i>Its best inspection was <strong className={this.colorAverage(calc.best)}>{calc.best}</strong> on {bestDate.toDateString()}.<p/>
+//           <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
+//           BY <a href="#" onClick={this.analyzeBy}>{this.state.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.state.store.zipcode}</a>  <a href="#">{this.state.store.boro[0] + this.state.store.boro.slice(1).toLowerCase()}</a><br/>
+//
+// </span>;
+//   return overview;
+//
+//   },
 
   render: function () {
 
@@ -151,14 +169,17 @@ var StoreShow = React.createClass({
       ///OVERVIEW
 
       this.map = <Map key={Math.random()} camis={this.state.store.camis} cuisine_type={this.state.store.cuisine_type} name={this.state.store.name} lat={this.state.store.lat} lng={this.state.store.lng}/>;
-      overview = this.createOverview();
-
+      // overview = this.createOverview();
+      overview = <Overview store={this.state.store}/>
       //VIOLATION LIST
 
       violations = this.state.store.inspections
       .map(function(inspection) {
         date = new Date(inspection.inspection_date);
-        return <ul key={Math.random()}><h3>{date.getMonth() + "/" + (date.getYear() + 1900) } </h3>{ inspection.violations.map(function(violation) {
+        return <ul key={Math.random()}><h3>Inspection Date: {date.getMonth() + "/" + (date.getYear() + 1900) }<br/>
+            Score: {inspection.score}
+
+        </h3>{ inspection.violations.map(function(violation) {
           if (violation.critical) {
           return <li key={Math.random()} className="critical">{violation.description.split(".")[0] + "."}</li>;
           } else {
@@ -174,10 +195,11 @@ var StoreShow = React.createClass({
       circleChart = <PieChart data={circleData} width={200} height={200}/>;
 
       data = this.chartData();
+      // scaleShowLabels: false
       var options = {
         scaleShowGridLines: false
       }
-      barChart = <BarChart data={data} width={350} height={350} options={options} fill={'#3182bd'}    />;
+      barChart = <BarChart data={data} width={400} height={420} options={options} fill={'#3182bd'}    />;
       var grade = <img src={this.selectGrade()}/>;
     }
 
@@ -211,17 +233,20 @@ var StoreShow = React.createClass({
         //   {circleChart}
         // </div>
 
+        // <div className="legend">
+        //   {legend}
+        // </div>
   return (
+  <section>
   <div className="show">
-    <div className="legend">
-      {legend}
-    </div>
     <div className="overview">
       {overview}
     </div>
-    <div className="comparison">
-      <Comparison store={this.state.store}/>
+    <div>
+      {this.map}
     </div>
+  </div>
+  <div>
     <div className="show-header">
     <div className="compare">
     </div>
@@ -236,22 +261,19 @@ var StoreShow = React.createClass({
           {grade}
         </div>
       </div>
-      {this.map}
-      </div>
+    </div>
     <div className="show-row">
       <div className="chart">
         {barChart}
       </div>
-
     </div>
     <div className="show-row">
   </div>
   <div className="violations">
-
     {violations}
-
   </div>
   </div>
+</section>
 
       );
   }

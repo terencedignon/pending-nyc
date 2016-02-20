@@ -11,25 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216160748) do
-
-  create_table "calc", force: :cascade do |t|
-    t.integer  "inspections"
-    t.integer  "violations"
-    t.integer  "critical"
-    t.integer  "mice"
-    t.integer  "flies"
-    t.integer  "roaches"
-    t.integer  "first_average"
-    t.integer  "average"
-    t.integer  "worst"
-    t.datetime "worst_date"
-    t.integer  "best"
-    t.datetime "best_date"
-    t.integer  "store_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
+ActiveRecord::Schema.define(version: 20160217025250) do
 
   create_table "calcs", force: :cascade do |t|
     t.integer  "inspections"

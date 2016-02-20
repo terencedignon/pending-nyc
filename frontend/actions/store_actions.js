@@ -4,6 +4,12 @@ var StoreConstants = require('../constants/store_constants.js');
 
 var StoreActions = {
 
+  fetchFilters: function (data) {
+    Dispatcher.dispatch({
+      actionType: StoreConstants.FETCH_FILTERS,
+      data: data
+    });
+  },
   updateMap: function (data) {
     Dispatcher.dispatch({
       actionType: StoreConstants.UPDATE_MAP,
@@ -21,6 +27,12 @@ var StoreActions = {
   getComparison: function (data) {
     Dispatcher.dispatch({
       actionType: StoreConstants.GET_COMPARISON,
+      data: data
+    });
+  },
+  getBrowse: function(data) {
+    Dispatcher.dispatch({
+      actionType: StoreConstants.GET_BROWSE,
       data: data
     });
   },

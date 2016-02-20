@@ -78,24 +78,25 @@ var Comparison = React.createClass({
       datasets: [
         {
           label: "",
-          fillColor: "salmon",
-           strokeColor: "maroon",
-           highlightFill: "maroon",
-         highlightStroke: "maroon",
+          fillColor: "white",
+           strokeColor: "black",
+           highlightFill: "#f7f7f7",
+         highlightStroke: "black",
           data: dataStore
         },
         {
           label: "",
-          fillColor: "lightblue",
+          fillColor: "#eeeeee",
            strokeColor: "black",
-           highlightFill: "steelblue",
-         highlightStroke: "steelblue",
+           highlightFill: "#cccccc",
+         highlightStroke: "black",
           data: dataComparison
         }
       ]
     };
 
     var optionHash = {
+      omitXLabels: true,
       barDatasetSpacing: 5,
       scaleShowGridLines: false
     }
@@ -113,7 +114,7 @@ var Comparison = React.createClass({
   render: function () {
 
 
-    var input = <input type="text" placeholder="Restaraunt..." onChange={this.inputChange} value={this.state.query}/>;
+    var input = <input type="text" placeholder="Restaurant" onChange={this.inputChange} value={this.state.query}/>;
     var compare = <div/>;
     var chart = <div/>;
     if (this.state.comparison.name) {
@@ -136,12 +137,10 @@ var Comparison = React.createClass({
 
     return (
       <div>
-      <span className="compare-name">Compare with: {input}
-        </span><br/>
-        <span className="compare-sub-header">Zipcode / Boro / Cuisine Type</span>
+      <span className="compare-name">Compare With: {input}
+      </span><br/>
         {chart}
       <ul>
-
           {searchLIS}
         </ul>
         </div>

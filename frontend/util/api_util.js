@@ -4,19 +4,47 @@ var MapActions = require('../actions/map_actions.js');
 
 var ApiUtil = {
 
-  fetchFilter: function() {
+  fetchBrowse: function(query) {
     $.ajax({
       method: "GET",
-      url: "api/stores",
-      data: { map_query: true, bounds: options.bounds, cuisine_type: options.cuisine_type },
+      url: "api/stores/browse_search",
+      data: { query: query },
       success: function(data) {
-        MapActions.fetchMap(data);
+        StoreActions.getBrowse(data);
       },
       error: function() {
-        console.log("error in updateMap");
+        console.log("error in fetchFilters");
       }
     });
   },
+
+  fetchFilters: function() {
+    $.ajax({
+      method: "GET",
+      url: "api/stores/filters",
+      success: function(data) {
+        StoreActions.fetchFilters(data);
+      },
+      error: function() {
+        console.log("error in fetchFilters");
+      }
+    });
+  },
+
+  fetchMainMap: function(options) {
+    $.ajax({
+      method: "POST",
+      url: "api/stores/main_map",
+      data: { main: true, bounds: options.bounds, query: options.query},
+      success: function(data) {
+        MapActions.fetchMainMap(data);
+      },
+      error: function (e) {
+        console.log("error in fetchMainMap");
+      }
+    });
+  },
+
   fetchMap: function(options) {
     $.ajax({
       method: "GET",
@@ -24,6 +52,7 @@ var ApiUtil = {
       data: { map_query: true, bounds: options.bounds, cuisine_type: options.cuisine_type },
       success: function(data) {
         MapActions.fetchMap(data);
+
       },
       error: function() {
         console.log("error in updateMap");

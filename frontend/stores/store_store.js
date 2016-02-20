@@ -8,13 +8,23 @@ _store = {};
 _yelp = {};
 _comparison = {};
 _map = [];
+_browse = [];
+_filters = [];
 
 StoreStore.getComparison = function () {
   return _comparison;
 };
 
+StoreStore.getFilters = function () {
+  return _filters;
+};
+
 StoreStore.getStore = function () {
   return _store;
+};
+
+StoreStore.getBrowse = function () {
+  return _browse;
 };
 
 StoreStore.getMap = function () {
@@ -26,14 +36,20 @@ StoreStore.getYelp = function () {
 };
 
 StoreStore.__onDispatch = function (payload) {
+  
   if (payload.actionType === StoreConstants.GET_STORE) {
     _store = payload.data;
     this.__emitChange();
     }
 
+  else if (payload.actionType === StoreConstants.GET_BROWSE) {
+    _browse = payload.data;
+    this.__emitChange();
+  }
+
   else if (payload.actionType === StoreConstants.UPDATE_MAP) {
     _map = payload.data;
-    console.log(_map);
+
   }
 
   else if (payload.actionType === StoreConstants.GET_COMPARISON) {
@@ -46,6 +62,10 @@ StoreStore.__onDispatch = function (payload) {
     this.__emitChange();
   }
 
+  else if (payload.actionType === StoreConstants.FETCH_FILTERS) {
+    _filters = payload.data;
+    this.__emitChange();
+  }
 
   else if (payload.actionType === StoreConstants.CLEAR_COMPARISON) {
     _comparison = {};

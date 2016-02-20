@@ -50,12 +50,14 @@
 	var ReactDOM = __webpack_require__(207);
 	var React = __webpack_require__(5);
 	var StoreShow = __webpack_require__(208);
-	var StoreIndex = __webpack_require__(246);
-	SearchStore = __webpack_require__(247);
+	var StoreIndex = __webpack_require__(253);
+	SearchStore = __webpack_require__(249);
 	StoreStore = __webpack_require__(217);
-	var Header = __webpack_require__(248);
-	var Sidebar = __webpack_require__(249);
-	var Map = __webpack_require__(251);
+	var Header = __webpack_require__(255);
+	var Sidebar = __webpack_require__(256);
+	var Map = __webpack_require__(250);
+	MapStore = __webpack_require__(251);
+	var Browse = __webpack_require__(257);
 
 	// <Sidebar />
 	var App = React.createClass({
@@ -89,6 +91,7 @@
 	    { path: '/', component: App },
 	    React.createElement(IndexRoute, { component: StoreIndex }),
 	    React.createElement(Route, { path: 'rest/:id', component: StoreShow }),
+	    React.createElement(Route, { path: 'browse', component: Browse }),
 	    React.createElement(Route, { path: 'map', component: Map })
 	  )
 	);
@@ -24163,10 +24166,11 @@
 	var React = __webpack_require__(5);
 	var ApiUtil = __webpack_require__(209);
 	var StoreStore = __webpack_require__(217);
-	var BarChart = __webpack_require__(236).Bar;
-	var PieChart = __webpack_require__(236).Pie;
-	var Comparison = __webpack_require__(250);
-	var Map = __webpack_require__(251);
+	var BarChart = __webpack_require__(238).Bar;
+	var PieChart = __webpack_require__(238).Pie;
+	var Comparison = __webpack_require__(248);
+	var Map = __webpack_require__(250);
+	var Overview = __webpack_require__(252);
 
 	var StoreShow = React.createClass({
 	  displayName: 'StoreShow',
@@ -24217,6 +24221,16 @@
 	    return data;
 	  },
 
+	  colorAverage: function (num) {
+	    if (num <= 13) {
+	      return "a";
+	    } else if (num <= 27) {
+	      return "b";
+	    } else {
+	      return "c";
+	    }
+	  },
+
 	  chartData: function () {
 	    var labels = [];
 	    var data = [];
@@ -24236,10 +24250,10 @@
 	      labels: labels,
 	      datasets: [{
 	        label: "My first dataset",
-	        fillColor: "maroon",
-	        strokeColor: "maroon",
-	        highlightFill: "maroon",
-	        highlightStroke: "maroon",
+	        fillColor: "white",
+	        strokeColor: "black",
+	        highlightFill: "#f7f7f7",
+	        highlightStroke: "black",
 	        data: data
 	      }]
 	    };
@@ -24264,122 +24278,39 @@
 	  },
 	  translate(number) {
 	    if (number <= 13) {
-	      return React.createElement(
-	        'span',
-	        { className: 'a' },
-	        'an A'
-	      );
+	      return "an A";
 	    } else if (number <= 27) {
-	      return React.createElement(
-	        'span',
-	        { className: 'b' },
-	        'a B'
-	      );
+	      return "a B";
 	    } else {
 	      return "a C";
 	    }
 	  },
-	  createOverview: function () {
-	    var name = this.state.store.name.toLowerCase().split(" ").map(function (word) {
-	      return word[0].toUpperCase() + word.slice(1);
-	    }).join(" ");
-	    var calc = this.state.store.calc;
-	    var bestDate = new Date(calc.best_date);
-	    var worstDate = new Date(calc.worst_date);
-	    var flies = calc.flies > 0 ? Math.round(calc.flies / calc.inspections * 100) + "%" : "0";
-	    var mice = calc.mice > 0 ? Math.round(calc.mice / calc.inspections * 100) + "%" : "0";
-	    var roaches = calc.roaches > 0 ? Math.round(calc.roaches / calc.inspections * 100) + "%" : "0";
-
-	    overview = React.createElement(
-	      'span',
-	      null,
-	      React.createElement(
-	        'span',
-	        { className: 'store-name' },
-	        React.createElement(
-	          'strong',
-	          null,
-	          name
-	        ),
-	        ' Overview'
-	      ),
-	      React.createElement('p', null),
-	      React.createElement('i', { className: 'fa fa-sticky-note' }),
-	      ' ',
-	      name,
-	      ' has an average inspection score of ',
-	      React.createElement(
-	        'strong',
-	        null,
-	        ' ',
-	        calc.average
-	      ),
-	      ', the equivalent of ',
-	      this.translate(calc.average),
-	      ' ',
-	      React.createElement('br', null),
-	      React.createElement('i', { className: 'fa fa-sticky-note' }),
-	      '  Its average score for unannounced inspections is ',
-	      React.createElement(
-	        'strong',
-	        null,
-	        calc.first_average
-	      ),
-	      ', or ',
-	      this.translate(calc.first_average),
-	      React.createElement('br', null),
-	      React.createElement('i', { className: 'fa fa-sticky-note' }),
-	      ' Of those ',
-	      React.createElement(
-	        'strong',
-	        null,
-	        calc.inspections
-	      ),
-	      ' inspections,  ',
-	      React.createElement(
-	        'strong',
-	        null,
-	        mice
-	      ),
-	      ' found mice, ',
-	      React.createElement(
-	        'strong',
-	        null,
-	        flies
-	      ),
-	      ' found flies, and ',
-	      React.createElement(
-	        'strong',
-	        null,
-	        roaches
-	      ),
-	      ' found roaches.',
-	      React.createElement('br', null),
-	      React.createElement('i', { className: 'fa fa-sticky-note' }),
-	      ' Its worst inspection was ',
-	      React.createElement(
-	        'strong',
-	        null,
-	        calc.worst
-	      ),
-	      ' on ',
-	      worstDate.toDateString(),
-	      '.',
-	      React.createElement('br', null),
-	      React.createElement('i', { className: 'fa fa-sticky-note' }),
-	      ' Its best inspection was ',
-	      React.createElement(
-	        'strong',
-	        null,
-	        calc.best
-	      ),
-	      ' on ',
-	      bestDate.toDateString(),
-	      '.',
-	      React.createElement('br', null)
-	    );
-	    return overview;
-	  },
+	  analyzeBy: function () {},
+	  //   createOverview: function () {
+	  //     var name = this.state.store.name.toLowerCase().split(" ").map(function (word) {
+	  //       return word[0].toUpperCase() + word.slice(1);
+	  //     }).join(" ");
+	  //     var calc = this.state.store.calc;
+	  //     var bestDate = new Date(calc.best_date);
+	  //     var worstDate = new Date(calc.worst_date);
+	  //     var flies = (calc.flies > 0 ? Math.round((calc.flies / calc.inspections) * 100) + "%" : "0")
+	  //     var mice = (calc.mice > 0 ? Math.round((calc.mice / calc.inspections) * 100) + "%" : "0")
+	  //     var roaches = (calc.roaches > 0 ? Math.round((calc.roaches / calc.inspections) * 100) + "%" : "0")
+	  //
+	  //     overview = <span>
+	  //       <span className="store-name"><strong className="overview-emphasis">{name} Overview</strong></span><p/>
+	  //       <i className="fa fa-user"></i>{name} has an average inspection score of <strong className={this.colorAverage(calc.average)}> {calc.average}</strong>, the equivalent of {this.translate(calc.average)}. <br/>
+	  //       <i className="fa fa-user-secret"></i>Its average score for unannounced inspections is <strong className={this.colorAverage(calc.first_average)}>{calc.first_average}</strong>, or {this.translate(calc.first_average)}.<br/>
+	  //       <i className="fa fa-bug"></i>Of those <strong className="emphasis">{calc.inspections}</strong> inspections,  <strong className="emphasis">{mice}</strong> found mice, <strong className="emphasis">{flies}</strong> found flies, and <strong className="emphasis">{roaches}</strong> found roaches.<br/>
+	  //       <i className="fa fa-calendar-times-o"></i>Its worst inspection was <strong className={this.colorAverage(calc.worst)}>{calc.worst}</strong> on {worstDate.toDateString()}.<br/>
+	  //       <i className="fa fa-calendar-check-o"></i>Its best inspection was <strong className={this.colorAverage(calc.best)}>{calc.best}</strong> on {bestDate.toDateString()}.<p/>
+	  //           <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
+	  //           BY <a href="#" onClick={this.analyzeBy}>{this.state.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.state.store.zipcode}</a>  <a href="#">{this.state.store.boro[0] + this.state.store.boro.slice(1).toLowerCase()}</a><br/>
+	  //
+	  // </span>;
+	  //   return overview;
+	  //
+	  //   },
 
 	  render: function () {
 
@@ -24394,8 +24325,8 @@
 	      ///OVERVIEW
 
 	      this.map = React.createElement(Map, { key: Math.random(), camis: this.state.store.camis, cuisine_type: this.state.store.cuisine_type, name: this.state.store.name, lat: this.state.store.lat, lng: this.state.store.lng });
-	      overview = this.createOverview();
-
+	      // overview = this.createOverview();
+	      overview = React.createElement(Overview, { store: this.state.store });
 	      //VIOLATION LIST
 
 	      violations = this.state.store.inspections.map(function (inspection) {
@@ -24406,8 +24337,11 @@
 	          React.createElement(
 	            'h3',
 	            null,
+	            'Inspection Date: ',
 	            date.getMonth() + "/" + (date.getYear() + 1900),
-	            ' '
+	            React.createElement('br', null),
+	            'Score: ',
+	            inspection.score
 	          ),
 	          inspection.violations.map(function (violation) {
 	            if (violation.critical) {
@@ -24434,10 +24368,11 @@
 	      circleChart = React.createElement(PieChart, { data: circleData, width: 200, height: 200 });
 
 	      data = this.chartData();
+	      // scaleShowLabels: false
 	      var options = {
 	        scaleShowGridLines: false
 	      };
-	      barChart = React.createElement(BarChart, { data: data, width: 350, height: 350, options: options, fill: '#3182bd' });
+	      barChart = React.createElement(BarChart, { data: data, width: 400, height: 420, options: options, fill: '#3182bd' });
 	      var grade = React.createElement('img', { src: this.selectGrade() });
 	    }
 
@@ -24509,63 +24444,68 @@
 	    //   {circleChart}
 	    // </div>
 
+	    // <div className="legend">
+	    //   {legend}
+	    // </div>
 	    return React.createElement(
-	      'div',
-	      { className: 'show' },
+	      'section',
+	      null,
 	      React.createElement(
 	        'div',
-	        { className: 'legend' },
-	        legend
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'overview' },
-	        overview
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'comparison' },
-	        React.createElement(Comparison, { store: this.state.store })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'show-header' },
-	        React.createElement('div', { className: 'compare' })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'show-info' },
-	        address
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'show-row' },
+	        { className: 'show' },
 	        React.createElement(
 	          'div',
-	          { className: 'show-holder' },
-	          image,
-	          React.createElement(
-	            'div',
-	            { className: 'show-grade' },
-	            grade
-	          )
+	          { className: 'overview' },
+	          overview
 	        ),
-	        this.map
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'show-row' },
 	        React.createElement(
 	          'div',
-	          { className: 'chart' },
-	          barChart
+	          null,
+	          this.map
 	        )
 	      ),
-	      React.createElement('div', { className: 'show-row' }),
 	      React.createElement(
 	        'div',
-	        { className: 'violations' },
-	        violations
+	        null,
+	        React.createElement(
+	          'div',
+	          { className: 'show-header' },
+	          React.createElement('div', { className: 'compare' })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'show-info' },
+	          address
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'show-row' },
+	          React.createElement(
+	            'div',
+	            { className: 'show-holder' },
+	            image,
+	            React.createElement(
+	              'div',
+	              { className: 'show-grade' },
+	              grade
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'show-row' },
+	          React.createElement(
+	            'div',
+	            { className: 'chart' },
+	            barChart
+	          )
+	        ),
+	        React.createElement('div', { className: 'show-row' }),
+	        React.createElement(
+	          'div',
+	          { className: 'violations' },
+	          violations
+	        )
 	      )
 	    );
 	  }
@@ -24579,23 +24519,51 @@
 
 	var SearchActions = __webpack_require__(210);
 	var StoreActions = __webpack_require__(216);
-	var MapActions = __webpack_require__(254);
+	var MapActions = __webpack_require__(236);
 
 	var ApiUtil = {
 
-	  fetchFilter: function () {
+	  fetchBrowse: function (query) {
 	    $.ajax({
 	      method: "GET",
-	      url: "api/stores",
-	      data: { map_query: true, bounds: options.bounds, cuisine_type: options.cuisine_type },
+	      url: "api/stores/browse_search",
+	      data: { query: query },
 	      success: function (data) {
-	        MapActions.fetchMap(data);
+	        StoreActions.getBrowse(data);
 	      },
 	      error: function () {
-	        console.log("error in updateMap");
+	        console.log("error in fetchFilters");
 	      }
 	    });
 	  },
+
+	  fetchFilters: function () {
+	    $.ajax({
+	      method: "GET",
+	      url: "api/stores/filters",
+	      success: function (data) {
+	        StoreActions.fetchFilters(data);
+	      },
+	      error: function () {
+	        console.log("error in fetchFilters");
+	      }
+	    });
+	  },
+
+	  fetchMainMap: function (options) {
+	    $.ajax({
+	      method: "POST",
+	      url: "api/stores/main_map",
+	      data: { main: true, bounds: options.bounds, query: options.query },
+	      success: function (data) {
+	        MapActions.fetchMainMap(data);
+	      },
+	      error: function (e) {
+	        console.log("error in fetchMainMap");
+	      }
+	    });
+	  },
+
 	  fetchMap: function (options) {
 	    $.ajax({
 	      method: "GET",
@@ -25056,6 +25024,12 @@
 
 	var StoreActions = {
 
+	  fetchFilters: function (data) {
+	    Dispatcher.dispatch({
+	      actionType: StoreConstants.FETCH_FILTERS,
+	      data: data
+	    });
+	  },
 	  updateMap: function (data) {
 	    Dispatcher.dispatch({
 	      actionType: StoreConstants.UPDATE_MAP,
@@ -25073,6 +25047,12 @@
 	  getComparison: function (data) {
 	    Dispatcher.dispatch({
 	      actionType: StoreConstants.GET_COMPARISON,
+	      data: data
+	    });
+	  },
+	  getBrowse: function (data) {
+	    Dispatcher.dispatch({
+	      actionType: StoreConstants.GET_BROWSE,
 	      data: data
 	    });
 	  },
@@ -25106,13 +25086,23 @@
 	_yelp = {};
 	_comparison = {};
 	_map = [];
+	_browse = [];
+	_filters = [];
 
 	StoreStore.getComparison = function () {
 	  return _comparison;
 	};
 
+	StoreStore.getFilters = function () {
+	  return _filters;
+	};
+
 	StoreStore.getStore = function () {
 	  return _store;
+	};
+
+	StoreStore.getBrowse = function () {
+	  return _browse;
 	};
 
 	StoreStore.getMap = function () {
@@ -25124,17 +25114,23 @@
 	};
 
 	StoreStore.__onDispatch = function (payload) {
+
 	  if (payload.actionType === StoreConstants.GET_STORE) {
 	    _store = payload.data;
 	    this.__emitChange();
+	  } else if (payload.actionType === StoreConstants.GET_BROWSE) {
+	    _browse = payload.data;
+	    this.__emitChange();
 	  } else if (payload.actionType === StoreConstants.UPDATE_MAP) {
 	    _map = payload.data;
-	    console.log(_map);
 	  } else if (payload.actionType === StoreConstants.GET_COMPARISON) {
 	    _comparison = payload.data;
 	    this.__emitChange();
 	  } else if (payload.actionType === StoreConstants.GET_YELP) {
 	    _yelp = payload.data;
+	    this.__emitChange();
+	  } else if (payload.actionType === StoreConstants.FETCH_FILTERS) {
+	    _filters = payload.data;
 	    this.__emitChange();
 	  } else if (payload.actionType === StoreConstants.CLEAR_COMPARISON) {
 	    _comparison = {};
@@ -25152,7 +25148,9 @@
 	  GET_STORE: "GET_STORE",
 	  GET_COMPARISON: "GET_COMPARISON",
 	  CLEAR_COMPARISON: "CLEAR_COMPARISON",
-	  UPDATE_MAP: "UPDATE_MAP"
+	  UPDATE_MAP: "UPDATE_MAP",
+	  FETCH_FILTERS: "FETCH_FILTERS",
+	  GET_BROWSE: "GET_BROWSE"
 	};
 
 	module.exports = StoreConstants;
@@ -31607,28 +31605,64 @@
 /* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var Dispatcher = __webpack_require__(211);
+	var MapConstants = __webpack_require__(237);
+
+	var MapActions = {
+	  fetchMap: function (data) {
+	    Dispatcher.dispatch({
+	      actionType: MapConstants.FETCH_MAP,
+	      data: data
+	    });
+	  },
+	  fetchMainMap: function (data) {
+	    Dispatcher.dispatch({
+	      actionType: MapConstants.FETCH_MAIN_MAP,
+	      data: data
+	    });
+	  }
+
+	};
+
+	module.exports = MapActions;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports) {
+
+	var MapConstants = {
+	  FETCH_MAP: "FETCH_MAP",
+	  FETCH_MAIN_MAP: "FETCH_MAIN_MAP"
+	};
+
+	module.exports = MapConstants;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
 	module.exports = {
-	  Bar: __webpack_require__(237),
-	  Doughnut: __webpack_require__(241),
-	  Line: __webpack_require__(242),
-	  Pie: __webpack_require__(243),
-	  PolarArea: __webpack_require__(244),
-	  Radar: __webpack_require__(245),
-	  createClass: __webpack_require__(238).createClass
+	  Bar: __webpack_require__(239),
+	  Doughnut: __webpack_require__(243),
+	  Line: __webpack_require__(244),
+	  Pie: __webpack_require__(245),
+	  PolarArea: __webpack_require__(246),
+	  Radar: __webpack_require__(247),
+	  createClass: __webpack_require__(240).createClass
 	};
 
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var vars = __webpack_require__(238);
+	var vars = __webpack_require__(240);
 
 	module.exports = vars.createClass('Bar', ['getBarsAtEvent']);
 
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
@@ -31687,7 +31721,7 @@
 	    };
 
 	    classData.initializeChart = function(nextProps) {
-	      var Chart = __webpack_require__(239);
+	      var Chart = __webpack_require__(241);
 	      var el = ReactDOM.findDOMNode(this);
 	      var ctx = el.getContext("2d");
 	      var chart = new Chart(ctx)[chartType](nextProps.data, nextProps.options || {});
@@ -31763,7 +31797,7 @@
 
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -32070,7 +32104,7 @@
 				//Method for warning of errors
 				if (window.console && typeof window.console.warn == "function") console.warn(str);
 			},
-			amd = helpers.amd = ("function" == 'function' && __webpack_require__(240)),
+			amd = helpers.amd = ("function" == 'function' && __webpack_require__(242)),
 			//-- Math methods
 			isNumber = helpers.isNumber = function(n){
 				return !isNaN(parseFloat(n)) && isFinite(n);
@@ -35245,7 +35279,7 @@
 	}).call(this);
 
 /***/ },
-/* 240 */
+/* 242 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -35253,322 +35287,63 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 241 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var vars = __webpack_require__(238);
-
-	module.exports = vars.createClass('Doughnut', ['getSegmentsAtEvent']);
-
-
-/***/ },
-/* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var vars = __webpack_require__(238);
-
-	module.exports = vars.createClass('Line', ['getPointsAtEvent']);
-
-
-/***/ },
 /* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var vars = __webpack_require__(238);
+	var vars = __webpack_require__(240);
 
-	module.exports = vars.createClass('Pie', ['getSegmentsAtEvent']);
+	module.exports = vars.createClass('Doughnut', ['getSegmentsAtEvent']);
 
 
 /***/ },
 /* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var vars = __webpack_require__(238);
+	var vars = __webpack_require__(240);
 
-	module.exports = vars.createClass('PolarArea', ['getSegmentsAtEvent']);
+	module.exports = vars.createClass('Line', ['getPointsAtEvent']);
 
 
 /***/ },
 /* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var vars = __webpack_require__(238);
+	var vars = __webpack_require__(240);
 
-	module.exports = vars.createClass('Radar', ['getPointsAtEvent']);
+	module.exports = vars.createClass('Pie', ['getSegmentsAtEvent']);
 
 
 /***/ },
 /* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(5);
-	var ApiUtil = __webpack_require__(209);
-	var StoreStore = __webpack_require__(217);
-	var SearchActions = __webpack_require__(210);
-	var Map = __webpack_require__(255);
+	var vars = __webpack_require__(240);
 
-	var StoreIndex = React.createClass({
-	  displayName: 'StoreIndex',
+	module.exports = vars.createClass('PolarArea', ['getSegmentsAtEvent']);
 
-	  // getInitialState: function () {
-	  //   return { };
-	  // },
-	  componentDidMount: function () {
-	    this.storeListener = StoreStore.addListener(this._onStoreChange);
-	    // this.searchListener = SearchStore.addListener(this._onSearchChange);
-	  },
-	  componentWillUnmount: function () {
-	    this.storeListener.remove();
-	    // this.searchListener.remove();
-	  },
-	  _onStoreChange: function () {},
-	  // _onSearchChange: function () {
-	  //   this.setState({ results: SearchStore.all() });
-	  // },
-	  render: function () {
-	    // <text>zag</text>
-	    // <rect/>
-	    // <input type="text"/>
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(Map, null)
-	    );
-	  }
-	});
-
-	module.exports = StoreIndex;
 
 /***/ },
 /* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(211);
-	var SearchConstants = __webpack_require__(215);
-	var Store = __webpack_require__(219).Store;
-	var SearchStore = new Store(AppDispatcher);
+	var vars = __webpack_require__(240);
 
-	_results = [];
-	_comparison = [];
+	module.exports = vars.createClass('Radar', ['getPointsAtEvent']);
 
-	SearchStore.all = function () {
-	  return _results.slice();
-	};
-
-	SearchStore.comparison = function () {
-	  return _comparison;
-	};
-
-	SearchStore.__onDispatch = function (payload) {
-	  if (payload.actionType === SearchConstants.FETCH_SEARCH) {
-	    _results = payload.data;
-	    this.__emitChange();
-	  } else if (payload.actionType === SearchConstants.CLEAR_RESULTS) {
-	    _results = [];
-	  } else if (payload.actionType === SearchConstants.FETCH_COMPARISON) {
-	    _comparison = payload.data;
-	    this.__emitChange();
-	  } else if (payload.actionType === SearchConstants.CLEAR_COMPARISON) {
-	    _comparison = [];
-	  }
-	};
-
-	module.exports = SearchStore;
 
 /***/ },
 /* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
+	var SearchStore = __webpack_require__(249);
 	var ApiUtil = __webpack_require__(209);
-	var SearchStore = __webpack_require__(247);
-	var SearchActions = __webpack_require__(210);
-	var History = __webpack_require__(1).History;
-
-	var Header = React.createClass({
-	  displayName: 'Header',
-
-	  mixins: [History],
-	  getInitialState: function () {
-	    return { search: "", results: [] };
-	  },
-	  componentDidMount: function () {
-	    // this.storeListener = StoreStore.addListener(this._onStoreChange);
-	    this.searchListener = SearchStore.addListener(this._onSearchChange);
-	  },
-	  linkHandler: function (e) {
-	    function yelpCallback(phone) {
-	      ApiUtil.getYelp(phone);
-	    };
-	    ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this));
-	    this.setState({ search: "", results: [] });
-	    SearchActions.clearResults();
-
-	    $('.drop-down').css("display", "none");
-	  },
-	  componentWillUnmount: function () {
-	    // this.storeListener.remove();
-	    this.searchListener.remove();
-	  },
-	  _onStoreChange: function () {},
-	  _onSearchChange: function () {
-	    this.setState({ results: SearchStore.all() });
-	  },
-	  redirectHome: function () {
-	    this.history.pushState(null, "/", {});
-	  },
-	  search: function (e) {
-	    clearInterval(this.searchInterval);
-	    query = e.currentTarget.value;
-	    this.setState({ search: query });
-	    this.searchInterval = setInterval(this.autoSearch, 1000);
-	  },
-	  autoSearch: function () {
-	    ApiUtil.search(query);
-	    clearInterval(this.searchInterval);
-	  },
-
-	  render: function () {
-	    var listedResults;
-	    if (this.state.results.length > 0) {
-	      $('.drop-down').css("display", "flex");
-	      listedResults = this.state.results.map(function (result) {
-	        return React.createElement(
-	          'li',
-	          { key: Math.random() },
-	          React.createElement(
-	            'a',
-	            { href: true, onClick: this.linkHandler, href: '#', id: result.id, href: "#/rest/" + result.id },
-	            result.name
-	          )
-	        );
-	      }.bind(this));
-	    } else {
-	      listedResults = React.createElement('li', null);
-	    }
-
-	    return React.createElement(
-	      'header',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'wrapper' },
-	        React.createElement(
-	          'svg',
-	          { className: 'header-banner' },
-	          React.createElement(
-	            'text',
-	            null,
-	            React.createElement(
-	              'a',
-	              { onClick: this.redirectHome, href: '#' },
-	              'zagrat'
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'header-search' },
-	          React.createElement('input', { type: 'text', onChange: this.search, value: this.state.search }),
-	          React.createElement('i', { className: 'fa fa-question' }),
-	          React.createElement(
-	            'div',
-	            { className: 'drop-down' },
-	            React.createElement(
-	              'ul',
-	              null,
-	              listedResults
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-
-	module.exports = Header;
-
-/***/ },
-/* 249 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(5);
-	var SearchStore = __webpack_require__(247);
-	// var History = require('react-router').History;
-	var ApiUtil = __webpack_require__(209);
-
-	var SideBar = React.createClass({
-	  displayName: 'SideBar',
-
-	  // mixins: [History],
-	  getInitialState: function () {
-	    return { results: [] };
-	  },
-	  componentDidMount: function () {
-	    // this.storeListener = StoreStore.addListener(this._onStoreChange);
-	    this.searchListener = SearchStore.addListener(this._onSearchChange);
-	  },
-	  linkHandler: function (e) {
-	    function yelpCallback(phone) {
-	      ApiUtil.getYelp(phone);
-	    };
-	    ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this));
-	  },
-	  componentWillUnmount: function () {
-	    // this.storeListener.remove();
-	    this.searchListener.remove();
-	  },
-	  _onStoreChange: function () {},
-	  _onSearchChange: function () {
-	    this.setState({ results: SearchStore.all() });
-	  },
-
-	  render: function () {
-	    var listedResults;
-	    if (this.state.results.length > 0) {
-	      listedResults = this.state.results.map(function (result) {
-	        return React.createElement(
-	          'li',
-	          { key: Math.random() },
-	          React.createElement(
-	            'a',
-	            { href: true, onClick: this.linkHandler, href: '#', id: result.id, href: "#/rest/" + result.id },
-	            result.name
-	          )
-	        );
-	      }.bind(this));
-	    } else {
-	      listedResults = React.createElement('li', null);
-	    }
-
-	    return React.createElement(
-	      'div',
-	      { className: 'sidebar' },
-	      React.createElement(
-	        'ul',
-	        null,
-	        listedResults
-	      )
-	    );
-	  }
-
-	});
-
-	module.exports = SideBar;
-
-/***/ },
-/* 250 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(5);
-	var SearchStore = __webpack_require__(247);
-	var ApiUtil = __webpack_require__(209);
-	var SearchStore = __webpack_require__(247);
+	var SearchStore = __webpack_require__(249);
 	var StoreStore = __webpack_require__(217);
 	var SearchActions = __webpack_require__(210);
 	var StoreActions = __webpack_require__(216);
-	var BarChart = __webpack_require__(236).Bar;
-	var LineChart = __webpack_require__(236).Line;
+	var BarChart = __webpack_require__(238).Bar;
+	var LineChart = __webpack_require__(238).Line;
 	// var BarChart = require('react-chartjs').Bar;
 
 	var Comparison = React.createClass({
@@ -35637,22 +35412,23 @@
 	      labels: labelStore,
 	      datasets: [{
 	        label: "",
-	        fillColor: "salmon",
-	        strokeColor: "maroon",
-	        highlightFill: "maroon",
-	        highlightStroke: "maroon",
+	        fillColor: "white",
+	        strokeColor: "black",
+	        highlightFill: "#f7f7f7",
+	        highlightStroke: "black",
 	        data: dataStore
 	      }, {
 	        label: "",
-	        fillColor: "lightblue",
+	        fillColor: "#eeeeee",
 	        strokeColor: "black",
-	        highlightFill: "steelblue",
-	        highlightStroke: "steelblue",
+	        highlightFill: "#cccccc",
+	        highlightStroke: "black",
 	        data: dataComparison
 	      }]
 	    };
 
 	    var optionHash = {
+	      omitXLabels: true,
 	      barDatasetSpacing: 5,
 	      scaleShowGridLines: false
 	    };
@@ -35669,7 +35445,7 @@
 
 	  render: function () {
 
-	    var input = React.createElement('input', { type: 'text', placeholder: 'Restaraunt...', onChange: this.inputChange, value: this.state.query });
+	    var input = React.createElement('input', { type: 'text', placeholder: 'Restaurant', onChange: this.inputChange, value: this.state.query });
 	    var compare = React.createElement('div', null);
 	    var chart = React.createElement('div', null);
 	    if (this.state.comparison.name) {
@@ -35711,15 +35487,10 @@
 	      React.createElement(
 	        'span',
 	        { className: 'compare-name' },
-	        'Compare with: ',
+	        'Compare With: ',
 	        input
 	      ),
 	      React.createElement('br', null),
-	      React.createElement(
-	        'span',
-	        { className: 'compare-sub-header' },
-	        'Zipcode / Boro / Cuisine Type'
-	      ),
 	      chart,
 	      React.createElement(
 	        'ul',
@@ -35734,406 +35505,568 @@
 	module.exports = Comparison;
 
 /***/ },
-/* 251 */
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(211);
+	var SearchConstants = __webpack_require__(215);
+	var Store = __webpack_require__(219).Store;
+	var SearchStore = new Store(AppDispatcher);
+
+	_results = [];
+	_comparison = [];
+
+	SearchStore.all = function () {
+	  return _results.slice();
+	};
+
+	SearchStore.comparison = function () {
+	  return _comparison;
+	};
+
+	SearchStore.__onDispatch = function (payload) {
+	  if (payload.actionType === SearchConstants.FETCH_SEARCH) {
+	    _results = payload.data;
+	    this.__emitChange();
+	  } else if (payload.actionType === SearchConstants.CLEAR_RESULTS) {
+	    _results = [];
+	  } else if (payload.actionType === SearchConstants.FETCH_COMPARISON) {
+	    _comparison = payload.data;
+	    this.__emitChange();
+	  } else if (payload.actionType === SearchConstants.CLEAR_COMPARISON) {
+	    _comparison = [];
+	  }
+	};
+
+	module.exports = SearchStore;
+
+/***/ },
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
 	var StoreStore = __webpack_require__(217);
 	var ApiUtil = __webpack_require__(209);
-	var MapStore = __webpack_require__(252);
+	var MapStore = __webpack_require__(251);
 
 	var Map = React.createClass({
-	    displayName: 'Map',
+	  displayName: 'Map',
 
-	    getInitialState: function () {
-	        return { markers: [], newMarkers: [] };
-	    },
-	    componentDidMount: function () {
+	  getInitialState: function () {
+	    return { markers: [] };
+	  },
+	  componentDidMount: function () {
+	    this.storeListener = StoreStore.addListener(this._onStoreChange);
+	    this.mapListener = MapStore.addListener(this._onMapChange);
 
-	        this.storeListener = StoreStore.addListener(this._onStoreChange);
-	        this.mapListener = MapStore.addListener(this._onMapChange);
-	        var coordinates = { lat: Number(this.props.lat), lng: Number(this.props.lng) };
-	        map = new google.maps.Map(document.getElementById('map'), {
-	            center: coordinates,
+	    var coordinates = { lat: Number(this.props.lat), lng: Number(this.props.lng) };
 
-	            zoom: 16,
-	            styles: [{
-	                "featureType": "water",
-	                "elementType": "all",
-	                "stylers": [{
-	                    "hue": "#ffffff"
-	                }, {
-	                    "saturation": -100
-	                }, {
-	                    "lightness": 100
-	                }, {
-	                    "visibility": "on"
-	                }]
-	            }, {
-	                "featureType": "landscape",
-	                "elementType": "all",
-	                "stylers": [{
-	                    "hue": "#ffffff"
-	                }, {
-	                    "saturation": -100
-	                }, {
-	                    "lightness": 100
-	                }, {
-	                    "visibility": "on"
-	                }]
-	            }, {
-	                "featureType": "road",
-	                "elementType": "geometry",
-	                "stylers": [{
-	                    "hue": "#000000"
-	                }, {
-	                    "saturation": -100
-	                }, {
-	                    "lightness": -100
-	                }, {
-	                    "visibility": "simplified"
-	                }]
-	            }, {
-	                "featureType": "road",
-	                "elementType": "labels",
-	                "stylers": [{
-	                    "hue": "#ffffff"
-	                }, {
-	                    "saturation": -100
-	                }, {
-	                    "lightness": 100
-	                }, {
-	                    "visibility": "off"
-	                }]
-	            }, {
-	                "featureType": "poi",
-	                "elementType": "all",
-	                "stylers": [{
-	                    "hue": "#ffffff"
-	                }, {
-	                    "saturation": -100
-	                }, {
-	                    "lightness": 100
-	                }, {
-	                    "visibility": "off"
-	                }]
-	            }, {
-	                "featureType": "administrative",
-	                "elementType": "all",
-	                "stylers": [{
-	                    "hue": "#ffffff"
-	                }, {
-	                    "saturation": 0
-	                }, {
-	                    "lightness": 100
-	                }, {
-	                    "visibility": "off"
-	                }]
-	            }, {
-	                "featureType": "transit",
-	                "elementType": "geometry",
-	                "stylers": [{
-	                    "hue": "#000000"
-	                }, {
-	                    "saturation": 0
-	                }, {
-	                    "lightness": -100
-	                }, {
-	                    "visibility": "on"
-	                }]
-	            }, {
-	                "featureType": "transit",
-	                "elementType": "labels",
-	                "stylers": [{
-	                    "hue": "#ffffff"
-	                }, {
-	                    "saturation": 0
-	                }, {
-	                    "lightness": 100
-	                }, {
-	                    "visibility": "off"
-	                }]
-	            }]
-	        });
+	    map = new google.maps.Map(document.getElementById('map'), {
+	      center: coordinates,
+	      zoomControl: false,
+	      streetViewControl: false,
+	      mapTypeControl: false,
 
-	        google.maps.event.addListener(map, 'tilesloaded', function () {
-	            var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
-	            ApiUtil.fetchMap(options);
-	        }.bind(this));
+	      zoom: 14
+	    });
 
-	        google.maps.event.addListener(map, 'idle', function () {
-	            clearInterval(this.mapInterval);
-	            this.mapInterval = setInterval(function () {
+	    google.maps.event.addListener(map, 'tilesloaded', function () {
+	      var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
+	      ApiUtil.fetchMap(options);
+	    }.bind(this));
 
-	                var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
-	                ApiUtil.fetchMap(options);
-	                clearInterval(this.mapInterval);
-	            }.bind(this), 1000);
-	        }.bind(this));
+	    google.maps.event.addListener(map, 'idle', function () {
+	      clearInterval(this.mapInterval);
+	      this.mapInterval = setInterval(function () {
+	        var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
+	        ApiUtil.fetchMap(options);
+	        clearInterval(this.mapInterval);
+	      }.bind(this), 1000);
+	    }.bind(this));
 
-	        //
-	        // var panorama;
-	        // panorama = new google.maps.StreetViewPanorama(
-	        //   document.getElementById('street-view'),
-	        //   {
-	        //     position: coordinates,
-	        //     disableDefaultUI: true,
-	        //     streetViewControl: false,
-	        //     pov: {heading: 165, pitch: 0},
-	        //     zoom: 1
-	        //   });
-	    },
+	    //
+	    // var panorama;
+	    // panorama = new google.maps.StreetViewPanorama(
+	    //   document.getElementById('street-view'),
+	    //   {
+	    //     position: coordinates,
+	    //     disableDefaultUI: true,
+	    //     streetViewControl: false,
+	    //     pov: {heading: 165, pitch: 0},
+	    //     zoom: 1
+	    //   });
+	  },
 
-	    componentWillUnmount: function () {
-	        this.storeListener.remove();
-	        this.mapListener.remove();
-	    },
-	    _onMapChange: function () {
-	        this.setState({ markers: [] });
-	        var newMarkers = [];
+	  componentWillUnmount: function () {
+	    this.storeListener.remove();
+	    this.mapListener.remove();
+	  },
+	  _onMapChange: function () {
+	    // this.setState({ markers: [] });
+	    var newMarkers = [];
+	    MapStore.all().forEach(function (marker) {
+	      var grade;
+	      var hex;
+	      var text = "FFF";
+	      var shadow = "_withshadow";
 
-	        MapStore.all().forEach(function (marker) {
-	            var grade;
-	            var hex;
-	            var text = "FFF";
-	            var shadow = "_withshadow";
+	      if (marker.camis === this.props.camis) {
+	        grade = marker.calc.average;
+	        hex = "FFFF00";
+	        // shadow = "";
+	        text = "000000";
+	      } else if (marker.calc.average <= 13) {
+	        grade = marker.calc.average;
+	        hex = "0056ac";
+	        // hex = "000";
+	      } else if (marker.calc.average <= 27) {
+	          grade = marker.calc.average;
+	          hex = "49ac42";
+	        } else {
+	          grade = marker.calc.average;
+	          hex = "fa9828";
+	        }
 
-	            if (marker.camis === this.props.camis) {
-	                grade = marker.calc.average;
-	                hex = "FFF";
-	                shadow = "";
-	                text = "FFF";
-	            } else if (marker.calc.average <= 13) {
-	                grade = marker.calc.average;
-	                hex = "0056ac";
-	            } else if (marker.calc.average <= 27) {
-	                grade = marker.calc.average;
-	                hex = "49ac42";
-	            } else {
-	                grade = marker.calc.average;
-	                hex = "fa9828";
-	            }
+	      var markerImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_pin_letter" + shadow + "&chld=" + grade + "|" + hex + "|" + text);
+	      var coordinates = { lat: Number(marker.lat), lng: Number(marker.lng) };
+	      var newMarker = new google.maps.Marker({
+	        position: coordinates,
+	        map: map,
+	        icon: markerImage,
+	        title: marker.name
+	      });
+	      newMarkers.push(newMarker);
+	    }.bind(this));
 
-	            var coordinates = { lat: Number(marker.lat), lng: Number(marker.lng) };
-	            var newMarker = new google.maps.Marker({
-	                position: coordinates,
-	                map: map,
-	                icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter" + shadow + "&chld=" + grade + "|" + hex + "|" + text,
-	                title: marker.name
-	            });
+	    this.state.markers.forEach(function (marker) {
+	      marker.setMap(null);
+	    });
+	    this.setState({ markers: newMarkers });
+	  },
+	  _onStoreChange: function () {},
+	  render: function () {
+	    // <div id="street-view"></div>
 
-	            newMarkers.push(newMarker);
-	        }.bind(this));
-
-	        this.state.markers.forEach(function (marker) {
-	            marker.setMap(null);
-	        });
-
-	        this.setState({ markers: newMarkers });
-	    },
-	    _onStoreChange: function () {
-	        // this.setState({map: StoreStore.getMap()});
-
-	    },
-
-	    render: function () {
-	        // <div id="street-view"></div>
-
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement('div', { id: 'map' })
-	        );
-	    }
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement('div', { id: 'map' })
+	    );
+	  }
 
 	});
 
 	module.exports = Map;
 
 /***/ },
-/* 252 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(219).Store;
 	var AppDispatcher = __webpack_require__(211);
 	var MapStore = new Store(AppDispatcher);
-	var MapConstants = __webpack_require__(253);
+	var MapConstants = __webpack_require__(237);
 
 	_map = [];
+	_mainMap = [];
 
 	MapStore.all = function () {
 	  return _map;
 	};
 
+	MapStore.getMainMap = function () {
+	  return _mainMap;
+	};
+
 	MapStore.__onDispatch = function (payload) {
+	  console.log("hi");
 	  if (payload.actionType === MapConstants.FETCH_MAP) {
 	    _map = payload.data;
 	    this.__emitChange();
+	  } else if (payload.actionType === MapConstants.FETCH_MAIN_MAP) {
+	    _mainMap = payload.data;
+	    // this.__emitChange();
 	  }
 	};
 
 	module.exports = MapStore;
 
 /***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(5);
+	var Map = __webpack_require__(250);
+	var Comparison = __webpack_require__(248);
+
+	var Overview = React.createClass({
+	  displayName: 'Overview',
+
+	  formatName: function (string) {
+	    return string.toLowerCase().split(" ").map(function (word) {
+	      return word[0].toUpperCase() + word.slice(1);
+	    }).join(" ");
+	  },
+	  percentageCalc: function (num, div) {
+	    return num > 0 ? Math.round(num / div * 100) + "%" : "0";
+	  },
+	  translate(number) {
+	    if (number <= 13) return "an A";
+	    if (number <= 27) return "a B";
+	    return "a C";
+	  },
+	  propsData: function () {
+	    var calc = this.props.store.calc;
+	    var data = {};
+	    data.average = calc.average;
+	    data.worst = calc.worst;
+	    data.best = calc.best;
+	    data.first_average = calc.first_average;
+	    data.name = this.formatName(this.props.store.name);
+	    data.bestDate = new Date(calc.best_date);
+	    data.worstDate = new Date(calc.worst_date);
+	    data.flies = this.percentageCalc(calc.flies, calc.inspections);
+	    data.mice = this.percentageCalc(calc.mice, calc.inspections);
+	    data.roaches = this.percentageCalc(calc.roaches, calc.inspections);
+	    return data;
+	  },
+	  render: function () {
+
+	    var data = this.propsData();
+
+	    return React.createElement(
+	      'span',
+	      null,
+	      React.createElement(
+	        'span',
+	        { className: 'store-name' },
+	        data.name,
+	        ' Overview'
+	      ),
+	      React.createElement('p', null),
+	      React.createElement('i', { className: 'fa fa-user' }),
+	      data.name,
+	      ' has an average inspection score of ',
+	      data.average,
+	      ', the equivalent of ',
+	      this.translate(data.average),
+	      '. ',
+	      React.createElement('br', null),
+	      React.createElement('i', { className: 'fa fa-user-secret' }),
+	      'Its average score for unannounced inspections is ',
+	      data.first_average,
+	      ', or ',
+	      this.translate(data.first_average),
+	      '.',
+	      React.createElement('br', null),
+	      React.createElement('i', { className: 'fa fa-bug' }),
+	      'Of those ',
+	      data.inspections,
+	      ' inspections,  ',
+	      data.mice,
+	      ' found mice, ',
+	      React.createElement(
+	        'strong',
+	        { className: 'emphasis' },
+	        data.flies
+	      ),
+	      ' found flies, and ',
+	      data.roaches,
+	      ' found roaches.',
+	      React.createElement('br', null),
+	      React.createElement('i', { className: 'fa fa-calendar-times-o' }),
+	      'Its worst inspection was ',
+	      data.worst,
+	      ' on ',
+	      data.worstDate.toDateString(),
+	      '.',
+	      React.createElement('br', null),
+	      React.createElement('i', { className: 'fa fa-calendar-check-o' }),
+	      'Its best inspection was ',
+	      data.best,
+	      ' on ',
+	      data.bestDate.toDateString(),
+	      '.',
+	      React.createElement('p', null),
+	      React.createElement(
+	        'span',
+	        { className: 'store-name' },
+	        React.createElement(
+	          'strong',
+	          { className: 'overview-emphasis' },
+	          'Analyze'
+	        )
+	      ),
+	      React.createElement('br', null),
+	      'BY ',
+	      React.createElement(
+	        'a',
+	        { href: '#', onClick: this.analyzeBy },
+	        this.props.store.cuisine_type.trim() + " Cuisine"
+	      ),
+	      '  ',
+	      React.createElement(
+	        'a',
+	        { href: '#' },
+	        this.props.store.zipcode
+	      ),
+	      '  ',
+	      React.createElement(
+	        'a',
+	        { href: '#' },
+	        this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()
+	      ),
+	      React.createElement('br', null),
+	      React.createElement(
+	        'div',
+	        { className: 'comparison' },
+	        React.createElement(Comparison, { store: this.props.store })
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = Overview;
+
+/***/ },
 /* 253 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	var MapConstants = {
-	  FETCH_MAP: "FETCH_MAP"
-	};
+	var React = __webpack_require__(5);
+	var ApiUtil = __webpack_require__(209);
+	var StoreStore = __webpack_require__(217);
+	var SearchActions = __webpack_require__(210);
+	var Map = __webpack_require__(254);
 
-	module.exports = MapConstants;
+	var StoreIndex = React.createClass({
+	  displayName: 'StoreIndex',
+
+	  // getInitialState: function () {
+	  //   return { };
+	  // },
+	  componentDidMount: function () {
+	    this.storeListener = StoreStore.addListener(this._onStoreChange);
+	    // this.searchListener = SearchStore.addListener(this._onSearchChange);
+	  },
+	  componentWillUnmount: function () {
+	    this.storeListener.remove();
+	    // this.searchListener.remove();
+	  },
+	  _onStoreChange: function () {},
+	  // _onSearchChange: function () {
+	  //   this.setState({ results: SearchStore.all() });
+	  // },
+	  render: function () {
+	    // <text>zag</text>
+	    // <rect/>
+	    // <input type="text"/>
+	    // <Map />
+	    // <span>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?</span>
+	    return React.createElement(
+	      'div',
+	      { className: 'show-index' },
+	      React.createElement(
+	        'div',
+	        { className: 'intro-header' },
+	        React.createElement(
+	          'span',
+	          { className: 'big-header' },
+	          'NYC restaurant grade analytics '
+	        ),
+	        React.createElement('p', null)
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'most-visited' },
+	        React.createElement(
+	          'h1',
+	          null,
+	          'MOST VISITED'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = StoreIndex;
 
 /***/ },
 /* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(211);
-	var MapConstants = __webpack_require__(253);
-
-	var MapActions = {
-	  fetchMap: function (data) {
-	    Dispatcher.dispatch({
-	      actionType: MapConstants.FETCH_MAP,
-	      data: data
-	    });
-	  }
-
-	};
-
-	module.exports = MapActions;
-
-/***/ },
-/* 255 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var React = __webpack_require__(5);
 	var StoreStore = __webpack_require__(217);
 	var ApiUtil = __webpack_require__(209);
-	var MapStore = __webpack_require__(252);
+	var MapStore = __webpack_require__(251);
+	var History = __webpack_require__(1).History;
 
 	var Map = React.createClass({
 	    displayName: 'Map',
 
+
+	    mixins: [History],
+
 	    getInitialState: function () {
-	        return { markers: [], newMarkers: [], cuisine_type: null };
+	        return { markers: [], markerSetting: "average", newMarkers: [], zipcode: "", boro: "", cuisine_type: "", name: "" };
 	    },
 	    componentDidMount: function () {
 
+	        // setInterval(function () {
+	        // this.setState({ markers: MapStore.getMainMap() });
+	        // }.bind(this), 3000);
+
 	        this.storeListener = StoreStore.addListener(this._onStoreChange);
 	        this.mapListener = MapStore.addListener(this._onMapChange);
+
 	        var coordinates = { lat: 40.7127, lng: -74.0059 };
+
 	        map = new google.maps.Map(document.getElementById('main-map'), {
 	            center: coordinates,
 	            disableDefaultUI: true,
 	            zoom: 12,
 	            styles: [{
 	                "featureType": "water",
-	                "elementType": "all",
+	                "elementType": "geometry",
 	                "stylers": [{
-	                    "hue": "#ffffff"
+	                    "color": "#e9e9e9"
 	                }, {
-	                    "saturation": -100
-	                }, {
-	                    "lightness": 100
-	                }, {
-	                    "visibility": "on"
+	                    "lightness": 17
 	                }]
 	            }, {
 	                "featureType": "landscape",
-	                "elementType": "all",
-	                "stylers": [{
-	                    "hue": "#ffffff"
-	                }, {
-	                    "saturation": -100
-	                }, {
-	                    "lightness": 100
-	                }, {
-	                    "visibility": "on"
-	                }]
-	            }, {
-	                "featureType": "road",
 	                "elementType": "geometry",
 	                "stylers": [{
-	                    "hue": "#000000"
+	                    "color": "#f5f5f5"
 	                }, {
-	                    "saturation": -100
-	                }, {
-	                    "lightness": -100
-	                }, {
-	                    "visibility": "simplified"
+	                    "lightness": 20
 	                }]
 	            }, {
-	                "featureType": "road",
-	                "elementType": "labels",
+	                "featureType": "road.highway",
+	                "elementType": "geometry.fill",
 	                "stylers": [{
-	                    "hue": "#ffffff"
+	                    "color": "#ffffff"
 	                }, {
-	                    "saturation": -100
+	                    "lightness": 17
+	                }]
+	            }, {
+	                "featureType": "road.highway",
+	                "elementType": "geometry.stroke",
+	                "stylers": [{
+	                    "color": "#ffffff"
 	                }, {
-	                    "lightness": 100
+	                    "lightness": 29
 	                }, {
-	                    "visibility": "off"
+	                    "weight": 0.2
+	                }]
+	            }, {
+	                "featureType": "road.arterial",
+	                "elementType": "geometry",
+	                "stylers": [{
+	                    "color": "#ffffff"
+	                }, {
+	                    "lightness": 18
+	                }]
+	            }, {
+	                "featureType": "road.local",
+	                "elementType": "geometry",
+	                "stylers": [{
+	                    "color": "#ffffff"
+	                }, {
+	                    "lightness": 16
 	                }]
 	            }, {
 	                "featureType": "poi",
-	                "elementType": "all",
+	                "elementType": "geometry",
 	                "stylers": [{
-	                    "hue": "#ffffff"
+	                    "color": "#f5f5f5"
 	                }, {
-	                    "saturation": -100
-	                }, {
-	                    "lightness": 100
-	                }, {
-	                    "visibility": "off"
+	                    "lightness": 21
 	                }]
 	            }, {
-	                "featureType": "administrative",
-	                "elementType": "all",
+	                "featureType": "poi.park",
+	                "elementType": "geometry",
 	                "stylers": [{
-	                    "hue": "#ffffff"
-	                }, {
-	                    "saturation": 0
+	                    "color": "#dedede"
 	                }, {
 	                    "lightness": 100
+	                }]
+	            }, {
+	                "elementType": "labels.text.stroke",
+	                "stylers": [{
+	                    "visibility": "on"
 	                }, {
+	                    "color": "#ffffff"
+	                }, {
+	                    "lightness": 16
+	                }]
+	            }, {
+	                "elementType": "labels.text.fill",
+	                "stylers": [{
+	                    "saturation": 36
+	                }, {
+	                    "color": "#333333"
+	                }, {
+	                    "lightness": 40
+	                }]
+	            }, {
+	                "elementType": "labels.icon",
+	                "stylers": [{
 	                    "visibility": "off"
 	                }]
 	            }, {
 	                "featureType": "transit",
 	                "elementType": "geometry",
 	                "stylers": [{
-	                    "hue": "#000000"
+	                    "color": "#ffffff"
 	                }, {
-	                    "saturation": 0
-	                }, {
-	                    "lightness": -100
-	                }, {
-	                    "visibility": "on"
+	                    "lightness": 19
 	                }]
 	            }, {
-	                "featureType": "transit",
-	                "elementType": "labels",
+	                "featureType": "administrative",
+	                "elementType": "geometry.fill",
 	                "stylers": [{
-	                    "hue": "#ffffff"
+	                    "color": "#ffffff"
 	                }, {
-	                    "saturation": 0
+	                    "lightness": 20
+	                }]
+	            }, {
+	                "featureType": "administrative",
+	                "elementType": "geometry.stroke",
+	                "stylers": [{
+	                    "color": "#ffffff"
 	                }, {
-	                    "lightness": 100
+	                    "lightness": 17
 	                }, {
-	                    "visibility": "off"
+	                    "weight": 1.2
 	                }]
 	            }]
+
 	        });
 
+	        var query = {
+	            boro: this.state.boro,
+	            cuisine_type: this.state.cuisine_type,
+	            zipcode: this.state.zipcode,
+	            name: this.state.name
+	        };
+
 	        google.maps.event.addListener(map, 'tilesloaded', function () {
-	            var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.state.cuisine_type };
-	            ApiUtil.fetchMap(options);
+	            var options = { bounds: map.getBounds().toJSON(), query: query };
+	            ApiUtil.fetchMainMap(options);
 	        }.bind(this));
 
 	        google.maps.event.addListener(map, 'idle', function () {
-	            var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.state.cuisine_type };
-	            ApiUtil.fetchMap(options);
+	            var options = { bounds: map.getBounds().toJSON(), query: {
+	                    boro: this.state.boro,
+	                    zipcode: this.state.zipcode,
+	                    name: this.state.name,
+	                    cuisine_type: this.state.cuisine_type
+	                } };
+	            ApiUtil.fetchMainMap(options);
+	            setTimeout(function () {
+	                this._onMapChange();
+	            }.bind(this), 500);
 	        }.bind(this));
 
 	        //
@@ -36154,28 +36087,29 @@
 	        this.mapListener.remove();
 	    },
 	    _onMapChange: function () {
-	        this.setState({ markers: [] });
+	        console.log(this.state.markers.length);
+	        // this.setState({ markers: [] });
 	        var newMarkers = [];
 
-	        MapStore.all().forEach(function (marker) {
+	        MapStore.getMainMap().forEach(function (marker) {
 	            var grade;
 	            var hex;
 	            var text = "FFF";
 	            var shadow = "_withshadow";
 
 	            if (marker.camis === this.props.camis) {
-	                grade = marker.calc.average;
+	                grade = marker.calc[this.state.markerSetting];
 	                hex = "FFF";
 	                shadow = "";
 	                text = "FFF";
-	            } else if (marker.calc.average <= 13) {
-	                grade = marker.calc.average;
+	            } else if (marker.calc[this.state.markerSetting] <= 13) {
+	                grade = marker.calc[this.state.markerSetting];
 	                hex = "0056ac";
-	            } else if (marker.calc.average <= 27) {
-	                grade = marker.calc.average;
+	            } else if (marker.calc[this.state.markerSetting] <= 27) {
+	                grade = marker.calc[this.state.markerSetting];
 	                hex = "49ac42";
 	            } else {
-	                grade = marker.calc.average;
+	                grade = marker.calc[this.state.markerSetting];
 	                hex = "fa9828";
 	            }
 
@@ -36184,44 +36118,459 @@
 	                position: coordinates,
 	                map: map,
 	                icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter" + shadow + "&chld=" + grade + "|" + hex + "|" + text,
-	                title: marker.name
+	                title: marker.name,
+	                id: marker.id
 	            });
+
+	            google.maps.event.addListener(newMarker, 'click', function () {
+	                this.history.pushState(null, "rest/" + newMarker.id, {});
+	            }.bind(this));
 
 	            newMarkers.push(newMarker);
 	        }.bind(this));
 
 	        this.state.markers.forEach(function (marker) {
 	            marker.setMap(null);
-	        });
-
+	        }.bind(this));
 	        this.setState({ markers: newMarkers });
+	    },
+	    changeName: function (e) {
+	        this.setState({ name: e.currentTarget.value });
+	        this.mapUpdate();
+	    },
+	    changeCuisine: function (e) {
+	        this.setState({ cuisine_type: e.currentTarget.value });
+	        this.mapUpdate();
+	    },
+	    changeZipcode: function (e) {
+
+	        this.setState({ zipcode: e.currentTarget.value });
+
+	        this.mapUpdate();
+	    },
+	    changeBoro: function (e) {
+	        this.setState({ boro: e.currentTarget.value });
+	        this.mapUpdate();
+	    },
+	    mapUpdate: function () {
+	        console.log(this.state);
+	        clearInterval(this.timeout);
+	        this.timeout = setInterval(function () {
+
+	            var options = { bounds: map.getBounds().toJSON(), query: {
+	                    boro: this.state.boro,
+	                    zipcode: this.state.zipcode,
+	                    name: this.state.name,
+	                    cuisine_type: this.state.cuisine_type
+	                } };
+	            ApiUtil.fetchMainMap(options);
+	            setTimeout(function () {
+	                this._onMapChange();
+	            }.bind(this), 500);
+	            clearInterval(this.timeout);
+	        }.bind(this), 1000);
+	    },
+	    changeSettings: function (e) {
+
+	        this.setState({ markerSetting: e.currentTarget.id });
 	    },
 	    _onStoreChange: function () {
 	        // this.setState({map: StoreStore.getMap()});
 
 	    },
-
 	    render: function () {
 	        // <div id="street-view"></div>
+	        // <i className="fa fa-reply"></i>
+	        // <input type="checkbox" name="cuisine" value="American"/>American<br/>
 
 	        return React.createElement(
 	            'div',
 	            { className: 'main-page-holder' },
-	            React.createElement('div', { id: 'main-map' }),
 	            React.createElement(
 	                'div',
 	                { className: 'options' },
-	                React.createElement('i', { className: 'fa fa-reply' }),
-	                React.createElement('input', { type: 'checkbox', name: 'cuisine', value: 'American' }),
-	                'American',
-	                React.createElement('br', null)
-	            )
+	                'Show By: ',
+	                React.createElement(
+	                    'a',
+	                    { href: '#', id: 'average', onClick: this.changeSettings },
+	                    'Average'
+	                ),
+	                ' /',
+	                React.createElement(
+	                    'a',
+	                    { href: '#', id: 'worst', onClick: this.changeSettings },
+	                    'Worst Inspection'
+	                ),
+	                ' /',
+	                React.createElement(
+	                    'a',
+	                    { href: '#', id: 'best', onClick: this.changeSettings },
+	                    'Best Inspection'
+	                ),
+	                ' /',
+	                React.createElement(
+	                    'a',
+	                    { href: '#', id: 'first_average', onClick: this.changeSettings },
+	                    'First Average'
+	                ),
+	                React.createElement('input', { type: 'text', placeholder: 'Name', onChange: this.changeName, value: this.state.name }),
+	                React.createElement('input', { type: 'text', placeholder: 'Cuisine', onChange: this.changeCuisine, value: this.state.cuisine_type }),
+	                React.createElement('input', { type: 'text', placeholder: 'Zipcode', onChange: this.changeZipcode, value: this.state.zipcode }),
+	                React.createElement('input', { type: 'text', placeholder: 'Boro', onChange: this.changeBoro, value: this.state.boro })
+	            ),
+	            React.createElement('div', { id: 'main-map' })
 	        );
 	    }
 
 	});
 
 	module.exports = Map;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(5);
+	var ApiUtil = __webpack_require__(209);
+	var SearchStore = __webpack_require__(249);
+	var SearchActions = __webpack_require__(210);
+	var History = __webpack_require__(1).History;
+
+	var Header = React.createClass({
+	  displayName: 'Header',
+
+	  mixins: [History],
+	  getInitialState: function () {
+	    return { search: "", results: [] };
+	  },
+	  componentDidMount: function () {
+	    // this.storeListener = StoreStore.addListener(this._onStoreChange);
+	    this.searchListener = SearchStore.addListener(this._onSearchChange);
+	  },
+	  linkHandler: function (e) {
+	    function yelpCallback(phone) {
+	      ApiUtil.getYelp(phone);
+	    };
+	    ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this));
+	    this.setState({ search: "", results: [] });
+	    SearchActions.clearResults();
+
+	    $('.drop-down').css("display", "none");
+	  },
+	  componentWillUnmount: function () {
+	    // this.storeListener.remove();
+	    this.searchListener.remove();
+	  },
+	  hideSettings: function () {
+
+	    $('.settings-drop-down').css("display", "none");
+	  },
+	  _onStoreChange: function () {},
+	  _onSearchChange: function () {
+	    this.setState({ results: SearchStore.all() });
+	  },
+	  redirectHome: function () {
+	    this.history.pushState(null, "/", {});
+	  },
+	  search: function (e) {
+	    clearInterval(this.searchInterval);
+	    query = e.currentTarget.value;
+	    this.setState({ search: query });
+	    this.searchInterval = setInterval(this.autoSearch, 1000);
+	  },
+	  autoSearch: function () {
+	    ApiUtil.search(query);
+	    clearInterval(this.searchInterval);
+	  },
+	  settingsDropDown: function (e) {
+	    if (e.target.tagName === "I") $('.settings-drop-down').css("display", "block");
+	  },
+	  render: function () {
+
+	    $(window).scroll(function () {
+	      if ($(this).scrollTop() > 1) {
+	        $('.header-banner').css("opacity", "0.75");
+	        $('.header-banner text').css("opacity", "1");
+	        // $('.header-search').css("opacity", "0.75");
+	        $('.header-banner').css("height", "20px");
+	        // $('.header-banner').css("box-shadow", "2px 2px 0 0 #f7f7f7");
+	        // $('.header-banner').css("background", "#f7f7f7");
+	        $('.show-info').css("opacity", "0.75");
+	      } else {
+	        $('.header-banner').css("opacity", "1");
+	        // $('.header-search').css("opacity", "1");
+	        $('.header-banner').css("box-shadow", "2px 2px 0 0 #ffffff");
+	        $('.header-banner').css("height", "40px");
+	        $('.show-info').css("opacity", "1");
+	      }
+	    });
+
+	    var listedResults;
+	    if (this.state.results.length > 0) {
+	      $('.drop-down').css("display", "flex");
+	      listedResults = this.state.results.map(function (result) {
+	        return React.createElement(
+	          'a',
+	          { href: true, onClick: this.linkHandler, href: '#', id: result.id, href: "#/rest/" + result.id },
+	          React.createElement(
+	            'li',
+	            { key: Math.random() },
+	            result.name
+	          )
+	        );
+	      }.bind(this));
+	    } else {
+	      listedResults = React.createElement('li', null);
+	    }
+
+	    // <div className="header-links">
+	    //   <a href="#">Browse</a>
+	    //   <a href="#">Metrics</a>
+	    //   <a href="#">Map View</a>
+	    // </div>
+
+	    return React.createElement(
+	      'header',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'wrapper' },
+	        React.createElement(
+	          'svg',
+	          { className: 'header-banner' },
+	          React.createElement(
+	            'text',
+	            null,
+	            React.createElement(
+	              'a',
+	              { onClick: this.redirectHome, href: '#' },
+	              'nymetrics'
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'header-search' },
+	          React.createElement('input', { type: 'text', onChange: this.search, value: this.state.search }),
+	          React.createElement('i', { className: 'fa fa-question' }),
+	          React.createElement(
+	            'i',
+	            { onClick: this.settingsDropDown, className: 'fa fa-cog' },
+	            React.createElement(
+	              'div',
+	              { className: 'settings-drop-down' },
+	              React.createElement(
+	                'a',
+	                { onClick: this.hideSettings, href: '#/browse/' },
+	                'Browse '
+	              ),
+	              React.createElement('br', null),
+	              React.createElement(
+	                'a',
+	                { onClick: this.hideSettings, href: '#/leaderBoard' },
+	                'Leader Board'
+	              ),
+	              React.createElement('br', null)
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'drop-down' },
+	            React.createElement(
+	              'ul',
+	              null,
+	              listedResults
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Header;
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(5);
+	var SearchStore = __webpack_require__(249);
+	// var History = require('react-router').History;
+	var ApiUtil = __webpack_require__(209);
+
+	var SideBar = React.createClass({
+	  displayName: 'SideBar',
+
+	  // mixins: [History],
+	  getInitialState: function () {
+	    return { results: [] };
+	  },
+	  componentDidMount: function () {
+	    // this.storeListener = StoreStore.addListener(this._onStoreChange);
+	    this.searchListener = SearchStore.addListener(this._onSearchChange);
+	  },
+	  linkHandler: function (e) {
+	    function yelpCallback(phone) {
+	      ApiUtil.getYelp(phone);
+	    };
+	    ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this));
+	  },
+	  componentWillUnmount: function () {
+	    // this.storeListener.remove();
+	    this.searchListener.remove();
+	  },
+	  _onStoreChange: function () {},
+	  _onSearchChange: function () {
+	    this.setState({ results: SearchStore.all() });
+	  },
+
+	  render: function () {
+	    var listedResults;
+	    if (this.state.results.length > 0) {
+	      listedResults = this.state.results.map(function (result) {
+	        return React.createElement(
+	          'li',
+	          { key: Math.random() },
+	          React.createElement(
+	            'a',
+	            { href: true, onClick: this.linkHandler, href: '#', id: result.id, href: "#/rest/" + result.id },
+	            result.name
+	          )
+	        );
+	      }.bind(this));
+	    } else {
+	      listedResults = React.createElement('li', null);
+	    }
+
+	    return React.createElement(
+	      'div',
+	      { className: 'sidebar' },
+	      React.createElement(
+	        'ul',
+	        null,
+	        listedResults
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = SideBar;
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(5);
+	var ApiUtil = __webpack_require__(209);
+	var StoreStore = __webpack_require__(217);
+
+	var Browse = React.createClass({
+	  displayName: 'Browse',
+
+	  getInitialState: function () {
+	    return { filters: StoreStore.getFilters(), filter: "", browse: [] };
+	  },
+	  componentDidMount: function () {
+	    this.storeListener = StoreStore.addListener(this._onStoreChange);
+	    ApiUtil.fetchFilters();
+	  },
+	  componentWillUnmount: function () {
+	    this.storeListener.remove();
+	  },
+	  isSelected: function (el) {
+	    if (el === this.state.filter) return "selected";
+	    return "";
+	  },
+	  fetchBrowse: function (e) {
+	    var query = {};
+	    query = [this.state.filter, e.currentTarget.id];
+
+	    ApiUtil.fetchBrowse(query);
+	  },
+	  headerHandler: function (e) {
+	    this.setState({ filter: e.currentTarget.id });
+	  },
+	  _onStoreChange: function () {
+	    this.setState({ filters: StoreStore.getFilters(), browse: StoreStore.getBrowse() });
+	  },
+	  render: function () {
+	    var detailBrowse = React.createElement('div', null);
+	    var detailResults = React.createElement('div', null);
+	    if (this.state.filter !== "") {
+	      detailBrowse = this.state.filters[this.state.filter].map(function (filter) {
+	        return React.createElement(
+	          'div',
+	          { onClick: this.fetchBrowse, id: filter, className: 'browse-second-level', key: Math.random() },
+	          filter
+	        );
+	      }.bind(this));
+	    }
+	    if (this.state.browse.length !== 0) {
+
+	      detailResults = this.state.browse.map(function (store) {
+	        debugger;
+	        return React.createElement(
+	          'div',
+	          { className: 'browse-list-item', key: Math.random() },
+	          React.createElement('span', { className: 'badge' }),
+	          store.name
+	        );
+	      });
+	      detailResults = React.createElement(
+	        'div',
+	        { className: 'list-holder' },
+	        ' ',
+	        detailResults,
+	        ' '
+	      );
+	    }
+
+	    // <span className="browse-intro">Browse By:</span><br/>
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'span',
+	          { onClick: this.headerHandler, id: 'boro', className: "browse-header " + this.isSelected("boro") },
+	          'Borough'
+	        ),
+	        React.createElement(
+	          'span',
+	          { onClick: this.headerHandler, id: 'zipcode', className: "browse-header " + this.isSelected("zipcode") },
+	          'Zipcode'
+	        ),
+	        React.createElement(
+	          'span',
+	          { onClick: this.headerHandler, id: 'cuisine_type', className: "browse-header " + this.isSelected("cuisine_type") },
+	          'Cuisine'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'browse-second' },
+	        React.createElement(
+	          'div',
+	          { className: 'detail-browse' },
+	          detailBrowse
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'detail-holder' },
+	          detailResults
+	        )
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = Browse;
 
 /***/ }
 /******/ ]);
