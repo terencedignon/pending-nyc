@@ -20,7 +20,6 @@ var Map = React.createClass({
       zoomControl: false,
       streetViewControl: false,
       mapTypeControl: false,
-
       zoom: 14
     });
 
@@ -112,7 +111,7 @@ _onMapChange: function () {
   this.setState({ markers: newMarkers});
 },
 _onStoreChange: function () {
-
+  // this.setState(this.state);
 },
   render: function () {
     // <div id="street-view"></div>

@@ -14,7 +14,7 @@ var Map = React.createClass({
   componentDidMount: function () {
 
     // setInterval(function () {
-      // this.setState({ markers: MapStore.getMainMap() });
+    //   this.setState({ markers: MapStore.getMainMap() });
     // }.bind(this), 3000);
 
 
@@ -75,7 +75,7 @@ componentWillUnmount: function () {
 },
 _onMapChange: function () {
 
-  // this.setState({ markers: [] });
+  this.setState({ markers: [] });
   var newMarkers = [];
 
   MapStore.getMainMap().forEach(function(marker) {

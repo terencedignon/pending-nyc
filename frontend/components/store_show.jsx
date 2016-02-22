@@ -10,7 +10,7 @@ var Overview = require('./overview.jsx');
 
 var StoreShow = React.createClass({
   getInitialState: function () {
-    return { grade: "P", store: {}, yelp: {} };
+    return { grade: "P", store: {}, yelp: {}, key: "map" };
   },
   componentDidMount: function () {
     function yelpCallback (phone) {
@@ -23,18 +23,25 @@ var StoreShow = React.createClass({
     this.storeListener.remove();
   },
   returnImage: function () {
-    if (typeof this.state.yelp.image_url !== "undefined") {
-      var url = this.state.yelp.image_url.replace("ms.jpg", "348s.jpg");
-
-
+    var url;
+    // console.log(this.state.store.image_url);
+    if (this.state.store.image_url !== null) {
+      url = this.state.store.image_url.replace("ms.jpg", "348s.jpg");
       return <img className="show-image" src={url} />;
+    // } else if (typeof this.state.yelp.image_url !== "undefined") {
+    //   console.log(this.state.yelp.image_url);
+    //   url = this.state.yelp.image_url.replace("ms.jpg", "348s.jpg");
+    //   return <img className="show-image" src={url} />;
   } else {
       return <div className="empty-image"></div>;
     }
   },
   _onStoreChange: function () {
-
-    this.setState({ store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
+    if (this.state.store !== StoreStore.getStore()) {
+    this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
+  };
+    // console.log(this.state.store.name);
+    // this.setState(this.state);
   },
 
   violationChart: function () {
@@ -77,9 +84,9 @@ var StoreShow = React.createClass({
       var date = new Date(inspect.inspection_date);
       var month = date.getMonth() + 1;
       var year = date.getYear() + 1900;
-      labels.unshift(month + "/" + year);
+      labels.push(month + "/" + year);
       // if (typeof inspect.score !== "number") { inspect.score = 0; }
-      data.unshift(inspect.score);
+      data.push(inspect.score);
       // return {x: month + "/" + year, y: inspect.score};
     }.bind(this));
 
@@ -165,11 +172,13 @@ var StoreShow = React.createClass({
     var violations;
     var store = this.state.store;
 
-    if (typeof this.state.store !== "undefined" && typeof this.state.store.inspections !== "undefined") {
+    if (typeof this.state.store !== "undefined" && typeof this.state.store.calc !== "undefined") {
+
+
       ///OVERVIEW
-      this.map = <Map key={Math.random()} camis={this.state.store.camis} cuisine_type={this.state.store.cuisine_type} name={this.state.store.name} lat={this.state.store.lat} lng={this.state.store.lng}/>;
+      this.map = <Map key={this.state.mapKey} camis={this.state.store.camis} cuisine_type={this.state.store.cuisine_type} name={this.state.store.name} lat={this.state.store.lat} lng={this.state.store.lng}/>;
       // overview = this.createOverview();
-      comparison = <Comparison store={this.state.store} />;
+      comparison = <Comparison key={this.state.comparisonKey} store={this.state.store} />;
       overview = <Overview store={this.state.store}/>
       //VIOLATION LIST
 
@@ -200,6 +209,7 @@ var StoreShow = React.createClass({
       barChart = <BarChart className="bar-chart" data={data} width={500} height={150} options={options} fill={'#3182bd'}    />;
 
     var grade = <img src={this.selectGrade()}/>;
+      var image = this.returnImage();
     }
 
 
@@ -207,7 +217,7 @@ var StoreShow = React.createClass({
     //   var open = (this.state.yelp.is_closed ? <span className="closed">Closed</span> :
     //               <span className="open">Open</span>)
     // // initMap();
-    var image = this.returnImage();
+
     var address = <div></div>;
       // {this.state.yelp.location.display_address[1]}<br/>
       // {this.state.yelp.location.display_address[0]}
@@ -251,13 +261,13 @@ var StoreShow = React.createClass({
       {barChart}
       <hr/>
       {comparison}
-  
+
 
 
 
     </div>
     <div>
-    <div className="show-holder">
+    <div key={Math.random()} className="show-holder">
         {image}
       <div className="show-grade">
           {grade}

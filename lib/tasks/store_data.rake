@@ -1,6 +1,9 @@
 namespace :store_data do
   desc "Perform calculations on Store data"
 
+
+  ###add function that removes errant stores 
+
   task add_macro_score: :environment do
     MacroCalc.all.each do |macro|
       score = [
@@ -48,7 +51,7 @@ namespace :store_data do
   task coords: :environment do
     Store.all.each do |store|
       p store.id
-      next if store.phone.nil? || store.phone.to_i.to_s != store.phone.to_s || store.phone.length != 10
+      next if store.id < 8069 || store.phone.nil? || store.phone.to_i.to_s != store.phone.to_s || store.phone.length != 10
       query = Yelp.client.phone_search(store.phone).businesses[0]
       if query
 
@@ -80,7 +83,7 @@ namespace :store_data do
 
   end
 
-  task zipcodes: :environment do
+  task  populate_macro_data: :environment do
 
     zipcode_store = Store.order(zipcode: :desc).map do |store|
       store.zipcode

@@ -109,7 +109,7 @@ var Header = React.createClass({
     if (this.state.results.length > 0) {
       $('.drop-down').css("display", "flex");
       listedResults = this.state.results.map(function(result) {
-        return <a href onClick={this.linkHandler} href="#" id={result.id} href={"#/rest/" + result.id}><li key={Math.random()}>{result.name}</li></a>;
+        return <a href key={Math.random()} onClick={this.linkHandler} href="#" id={result.id} href={"#/rest/" + result.id}><li key={Math.random()}>{result.name}</li></a>;
         }.bind(this));
       } else {
         listedResults = <li></li>;

@@ -4,9 +4,9 @@ var Comparison = require('./comparison.jsx');
 
 var Overview = React.createClass({
   formatName: function (string) {
-    return string.toLowerCase().split(" ").map(function(word) {
+    return string.trim().toLowerCase().split(" +").map(function(word) {
       return word[0].toUpperCase() + word.slice(1);
-    }).join(" ");
+    }.bind(this)).join(" ");
   },
   percentageCalc: function (num, div) {
     return (num > 0 ? Math.round((num / div) * 100) + "%" : "0")
@@ -66,7 +66,7 @@ var Overview = React.createClass({
   render: function () {
 
     var data = this.propsData();
-    // 
+    //
     // $('.question-highlight').on("mouseover", function(e) {
     //   $('.unannounced').css("display", "block");
     // });

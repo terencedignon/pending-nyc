@@ -74,7 +74,7 @@ class Api::StoresController < ApplicationController
   end
 
   def trending
-    @stores = Store.all.order(last_visit: :desc).limit(5)
+    @stores = Store.all.where("last_visit IS NOT NULL").order(last_visit: :desc).limit(5)
     render :index
   end
 

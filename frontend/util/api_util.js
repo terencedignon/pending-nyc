@@ -106,6 +106,7 @@ var ApiUtil = {
       url: "api/stores/" + id,
       success: function(data) {
         StoreActions.getComparison(data, type);
+        
         // if (callback) callback(data.phone);
       },
       error: function () {

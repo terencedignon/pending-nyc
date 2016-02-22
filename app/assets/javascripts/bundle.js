@@ -92,7 +92,7 @@
 	    Route,
 	    { path: '/', component: App },
 	    React.createElement(IndexRoute, { component: StoreIndex }),
-	    React.createElement(Route, { path: 'rest/:id', component: StoreShow }),
+	    React.createElement(Route, { path: 'rest/:id', key: Math.random(), component: StoreShow }),
 	    React.createElement(Route, { path: 'browse', component: Browse }),
 	    React.createElement(Route, { path: 'map', component: Map })
 	  )
@@ -24178,7 +24178,7 @@
 	  displayName: 'StoreShow',
 
 	  getInitialState: function () {
-	    return { grade: "P", store: {}, yelp: {} };
+	    return { grade: "P", store: {}, yelp: {}, key: "map" };
 	  },
 	  componentDidMount: function () {
 	    function yelpCallback(phone) {
@@ -24191,17 +24191,25 @@
 	    this.storeListener.remove();
 	  },
 	  returnImage: function () {
-	    if (typeof this.state.yelp.image_url !== "undefined") {
-	      var url = this.state.yelp.image_url.replace("ms.jpg", "348s.jpg");
-
+	    var url;
+	    // console.log(this.state.store.image_url);
+	    if (this.state.store.image_url !== null) {
+	      url = this.state.store.image_url.replace("ms.jpg", "348s.jpg");
 	      return React.createElement('img', { className: 'show-image', src: url });
+	      // } else if (typeof this.state.yelp.image_url !== "undefined") {
+	      //   console.log(this.state.yelp.image_url);
+	      //   url = this.state.yelp.image_url.replace("ms.jpg", "348s.jpg");
+	      //   return <img className="show-image" src={url} />;
 	    } else {
-	      return React.createElement('div', { className: 'empty-image' });
-	    }
+	        return React.createElement('div', { className: 'empty-image' });
+	      }
 	  },
 	  _onStoreChange: function () {
-
-	    this.setState({ store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
+	    if (this.state.store !== StoreStore.getStore()) {
+	      this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
+	    };
+	    // console.log(this.state.store.name);
+	    // this.setState(this.state);
 	  },
 
 	  violationChart: function () {
@@ -24241,9 +24249,9 @@
 	      var date = new Date(inspect.inspection_date);
 	      var month = date.getMonth() + 1;
 	      var year = date.getYear() + 1900;
-	      labels.unshift(month + "/" + year);
+	      labels.push(month + "/" + year);
 	      // if (typeof inspect.score !== "number") { inspect.score = 0; }
-	      data.unshift(inspect.score);
+	      data.push(inspect.score);
 	      // return {x: month + "/" + year, y: inspect.score};
 	    }.bind(this));
 
@@ -24323,11 +24331,12 @@
 	    var violations;
 	    var store = this.state.store;
 
-	    if (typeof this.state.store !== "undefined" && typeof this.state.store.inspections !== "undefined") {
+	    if (typeof this.state.store !== "undefined" && typeof this.state.store.calc !== "undefined") {
+
 	      ///OVERVIEW
-	      this.map = React.createElement(Map, { key: Math.random(), camis: this.state.store.camis, cuisine_type: this.state.store.cuisine_type, name: this.state.store.name, lat: this.state.store.lat, lng: this.state.store.lng });
+	      this.map = React.createElement(Map, { key: this.state.mapKey, camis: this.state.store.camis, cuisine_type: this.state.store.cuisine_type, name: this.state.store.name, lat: this.state.store.lat, lng: this.state.store.lng });
 	      // overview = this.createOverview();
-	      comparison = React.createElement(Comparison, { store: this.state.store });
+	      comparison = React.createElement(Comparison, { key: this.state.comparisonKey, store: this.state.store });
 	      overview = React.createElement(Overview, { store: this.state.store });
 	      //VIOLATION LIST
 
@@ -24375,13 +24384,14 @@
 	      barChart = React.createElement(BarChart, { className: 'bar-chart', data: data, width: 500, height: 150, options: options, fill: '#3182bd' });
 
 	      var grade = React.createElement('img', { src: this.selectGrade() });
+	      var image = this.returnImage();
 	    }
 
 	    // if (typeof this.state.yelp.location !== "undefined") {
 	    //   var open = (this.state.yelp.is_closed ? <span className="closed">Closed</span> :
 	    //               <span className="open">Open</span>)
 	    // // initMap();
-	    var image = this.returnImage();
+
 	    var address = React.createElement('div', null);
 	    // {this.state.yelp.location.display_address[1]}<br/>
 	    // {this.state.yelp.location.display_address[0]}
@@ -24482,7 +24492,7 @@
 	          null,
 	          React.createElement(
 	            'div',
-	            { className: 'show-holder' },
+	            { key: Math.random(), className: 'show-holder' },
 	            image,
 	            React.createElement(
 	              'div',
@@ -24615,6 +24625,7 @@
 	      url: "api/stores/" + id,
 	      success: function (data) {
 	        StoreActions.getComparison(data, type);
+
 	        // if (callback) callback(data.phone);
 	      },
 	      error: function () {
@@ -35424,7 +35435,6 @@
 	  },
 	  getComparisonText(comparison) {},
 	  onStoreChange: function () {
-
 	    var comparison = StoreStore.getComparison();
 	    if (comparison !== []) {
 	      this.setState({ comparison: StoreStore.getComparison(), comparisonText: StoreStore.getComparisonType() });
@@ -35457,8 +35467,7 @@
 
 	    var storeData = [store.average, store.first_average, store.mice / store.inspections * 100, store.flies / store.inspections * 100, store.roaches / store.inspections * 100];
 	    var comparison = this.state.comparison;
-	    if (!comparison.average) comparison = this.state.comparison.calc;
-	    console.log(this.state.comparison);
+	    if (typeof comparison.average === "undefined") comparison = this.state.comparison.calc;
 	    var compData = [comparison.average, comparison.first_average, comparison.mice / comparison.inspections * 100, comparison.flies / comparison.inspections * 100, comparison.roaches / comparison.inspections * 100];
 
 	    // this.props.store.inspections.forEach(function(inspect) {
@@ -35536,6 +35545,7 @@
 	  // scoreProcessing: function ()
 
 	  render: function () {
+	    console.log(this.state.comparison);
 
 	    var input = React.createElement('input', { type: 'text', placeholder: 'Restaurant', onChange: this.inputChange, value: this.state.query });
 	    var compare = React.createElement('div', null);
@@ -35546,7 +35556,8 @@
 	    );
 	    var score = React.createElement('div', null);
 
-	    if (this.state.comparison.name) {
+	    if (typeof this.state.comparison.name !== "undefined") {
+
 	      chart = this.setUpChart();
 	      if (this.state.comparison.calc) {
 	        score = this.props.store.calc.score - this.state.comparison.calc.score;
@@ -35619,7 +35630,7 @@
 	      { className: 'comparison' },
 	      React.createElement(
 	        'span',
-	        { className: 'store-name' },
+	        { key: Math.random(), className: 'store-name' },
 	        'Relative to  ',
 	        this.state.comparisonText,
 	        ' '
@@ -35728,7 +35739,6 @@
 	      zoomControl: false,
 	      streetViewControl: false,
 	      mapTypeControl: false,
-
 	      zoom: 14
 	    });
 
@@ -35814,7 +35824,9 @@
 
 	    this.setState({ markers: newMarkers });
 	  },
-	  _onStoreChange: function () {},
+	  _onStoreChange: function () {
+	    // this.setState(this.state);
+	  },
 	  render: function () {
 	    // <div id="street-view"></div>
 
@@ -35874,9 +35886,9 @@
 	  displayName: 'Overview',
 
 	  formatName: function (string) {
-	    return string.toLowerCase().split(" ").map(function (word) {
+	    return string.trim().toLowerCase().split(" +").map(function (word) {
 	      return word[0].toUpperCase() + word.slice(1);
-	    }).join(" ");
+	    }.bind(this)).join(" ");
 	  },
 	  percentageCalc: function (num, div) {
 	    return num > 0 ? Math.round(num / div * 100) + "%" : "0";
@@ -36296,7 +36308,7 @@
 	      listedResults = this.state.results.map(function (result) {
 	        return React.createElement(
 	          'a',
-	          { href: true, onClick: this.linkHandler, href: '#', id: result.id, href: "#/rest/" + result.id },
+	          { href: true, key: Math.random(), onClick: this.linkHandler, href: '#', id: result.id, href: "#/rest/" + result.id },
 	          React.createElement(
 	            'li',
 	            { key: Math.random() },
@@ -36560,7 +36572,7 @@
 	  componentDidMount: function () {
 
 	    // setInterval(function () {
-	    // this.setState({ markers: MapStore.getMainMap() });
+	    //   this.setState({ markers: MapStore.getMainMap() });
 	    // }.bind(this), 3000);
 
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
@@ -36619,7 +36631,7 @@
 	  },
 	  _onMapChange: function () {
 
-	    // this.setState({ markers: [] });
+	    this.setState({ markers: [] });
 	    var newMarkers = [];
 
 	    MapStore.getMainMap().forEach(function (marker) {
@@ -36755,7 +36767,7 @@
 	      ".  ",
 	      React.createElement(
 	        "a",
-	        { href: "http://github.com/terencedignon" },
+	        { href: "http://github.com/terencedignon/pending-nyc" },
 	        "github repo"
 	      )
 	    );

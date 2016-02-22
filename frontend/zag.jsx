@@ -38,7 +38,7 @@ var route = (
     <Route path="/" component={App}>
 
     <IndexRoute component={StoreIndex} />
-    <Route path="rest/:id" component={StoreShow} />
+    <Route path="rest/:id" key={Math.random()} component={StoreShow} />
     <Route path="browse" component={Browse} />
     <Route path="map" component={Map} />
     </Route>

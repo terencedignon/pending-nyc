@@ -32,7 +32,6 @@ var Comparison = React.createClass({
   getComparisonText(comparison) {
   },
   onStoreChange: function () {
-
     var comparison = StoreStore.getComparison();
     if (comparison !== []) {
       this.setState({ comparison: StoreStore.getComparison(), comparisonText: StoreStore.getComparisonType() });
@@ -74,8 +73,7 @@ var Comparison = React.createClass({
       (store.roaches / store.inspections) * 100
     ];
     var comparison = this.state.comparison;
-    if (!comparison.average) comparison = this.state.comparison.calc;
-    console.log(this.state.comparison);
+    if (typeof comparison.average === "undefined") comparison = this.state.comparison.calc;
     var compData = [
       comparison.average,
       comparison.first_average,
@@ -165,14 +163,15 @@ var Comparison = React.createClass({
   // scoreProcessing: function ()
 
   render: function () {
-
+    console.log(this.state.comparison);
 
     var input = <input type="text" placeholder="Restaurant" onChange={this.inputChange} value={this.state.query}/>;
     var compare = <div/>;
     var chart = <div>hello</div>;
     var score = <div/>;
 
-    if (this.state.comparison.name) {
+    if (typeof this.state.comparison.name !== "undefined") {
+
         chart = this.setUpChart();
         if (this.state.comparison.calc) {
         score = this.props.store.calc.score - this.state.comparison.calc.score;
@@ -208,7 +207,7 @@ var Comparison = React.createClass({
 
     return (
       <div className="comparison">
-        <span className="store-name">Relative to  {this.state.comparisonText} </span>
+        <span key={Math.random()} className="store-name">Relative to  {this.state.comparisonText} </span>
           <span className="comparison-results">{score}</span>
           <br/>
         Select By <a href="#" id="cuisine_calc" onClick={this.setDefaultComparison}>Cuisine</a>, <a href="#" id="zipcode_calc" onClick={this.setDefaultComparison}>Zipcode</a>, or <a href="#" id="boro_calc" onClick={this.setDefaultComparison}>Boro</a>.  Click markers on map for further comparison.<p/>
