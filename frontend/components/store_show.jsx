@@ -13,7 +13,6 @@ var StoreShow = React.createClass({
     return { grade: "P", store: {}, yelp: {} };
   },
   componentDidMount: function () {
-
     function yelpCallback (phone) {
       ApiUtil.getYelp(phone);
     };
@@ -159,6 +158,7 @@ var StoreShow = React.createClass({
 
 
     var data;
+    var comparison = <div/>;
     var circleChart = <div></div>;
     var barChart = <div></div>;
     var overview = <div></div>;
@@ -167,9 +167,9 @@ var StoreShow = React.createClass({
 
     if (typeof this.state.store !== "undefined" && typeof this.state.store.inspections !== "undefined") {
       ///OVERVIEW
-
       this.map = <Map key={Math.random()} camis={this.state.store.camis} cuisine_type={this.state.store.cuisine_type} name={this.state.store.name} lat={this.state.store.lat} lng={this.state.store.lng}/>;
       // overview = this.createOverview();
+      comparison = <Comparison store={this.state.store} />;
       overview = <Overview store={this.state.store}/>
       //VIOLATION LIST
 
@@ -190,17 +190,16 @@ var StoreShow = React.createClass({
 
         //CHART
 
-      var circleData = this.violationChart();
-
-      circleChart = <PieChart data={circleData} width={200} height={200}/>;
-
+      // var circleData = this.violationChart();
+      // circleChart = <PieChart data={circleData} width={200} height={200}/>;
       data = this.chartData();
       // scaleShowLabels: false
       var options = {
-        scaleShowGridLines: false
+        scaleShowGridLines: true
       }
-      barChart = <BarChart data={data} width={400} height={420} options={options} fill={'#3182bd'}    />;
-      var grade = <img src={this.selectGrade()}/>;
+      barChart = <BarChart className="bar-chart" data={data} width={500} height={150} options={options} fill={'#3182bd'}    />;
+
+    var grade = <img src={this.selectGrade()}/>;
     }
 
 
@@ -236,43 +235,39 @@ var StoreShow = React.createClass({
         // <div className="legend">
         //   {legend}
         // </div>
+        // <div className="show-row">
+
   return (
-  <section>
-  <div className="show">
-    <div className="overview">
-      {overview}
-    </div>
-    <div>
-      {this.map}
-    </div>
-  </div>
-  <div>
-    <div className="show-header">
-    <div className="compare">
-    </div>
-  </div>
+  <section className="show-container">
     <div className="show-info">
       {address}
     </div>
-    <div className="show-row">
-      <div className="show-holder">
+  <div className="show-row">
+    <div className="overview">
+
+      {overview}
+      <hr/>
+      <span className="store-name">Time series</span>
+      {barChart}
+      <hr/>
+      {comparison}
+    </div>
+    <div>
+    <div className="show-holder">
         {image}
-        <div className="show-grade">
+      <div className="show-grade">
           {grade}
+      </div>
+    </div>
+      <div>
+          {this.map}
         </div>
       </div>
+
     </div>
-    <div className="show-row">
-      <div className="chart">
-        {barChart}
-      </div>
+    <div className="violations">
+      {violations}
     </div>
-    <div className="show-row">
-  </div>
-  <div className="violations">
-    {violations}
-  </div>
-  </div>
 </section>
 
       );

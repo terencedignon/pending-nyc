@@ -24,15 +24,28 @@ var StoreActions = {
     });
   },
 
-  getComparison: function (data) {
+  getComparison: function (data, type) {
     Dispatcher.dispatch({
       actionType: StoreConstants.GET_COMPARISON,
+      data: data,
+      type: type
+    });
+  },
+  getTrending: function (data) {
+    Dispatcher.dispatch({
+      actionType: StoreConstants.GET_TRENDING,
       data: data
     });
   },
   getBrowse: function(data) {
     Dispatcher.dispatch({
       actionType: StoreConstants.GET_BROWSE,
+      data: data
+    });
+  },
+  getMostVisited: function (data) {
+    Dispatcher.dispatch({
+      actionType: StoreConstants.GET_MOST_VISITED,
       data: data
     });
   },

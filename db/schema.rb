@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217025250) do
+ActiveRecord::Schema.define(version: 20160221233321) do
 
   create_table "calcs", force: :cascade do |t|
     t.integer  "inspections"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 20160217025250) do
     t.integer  "store_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "score"
+    t.integer  "last"
   end
 
   create_table "inspections", force: :cascade do |t|
@@ -66,21 +68,30 @@ ActiveRecord::Schema.define(version: 20160217025250) do
     t.integer  "worst_average_id"
     t.integer  "worst_first_average"
     t.integer  "worst_first_average_id"
+    t.integer  "score"
   end
 
   create_table "stores", force: :cascade do |t|
-    t.string   "building",                             default: ""
-    t.string   "name",                                 default: ""
-    t.integer  "camis",                                                   null: false
-    t.string   "phone",                                default: ""
-    t.string   "street",                               default: ""
-    t.integer  "zipcode",                                                 null: false
+    t.string   "building",                                default: ""
+    t.string   "name",                                    default: ""
+    t.integer  "camis",                                                      null: false
+    t.string   "phone",                                   default: ""
+    t.string   "street",                                  default: ""
+    t.integer  "zipcode",                                                    null: false
     t.string   "boro"
-    t.string   "cuisine_type",                         default: ""
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
-    t.decimal  "lng",          precision: 9, scale: 6, default: -74.0444
-    t.decimal  "lat",          precision: 9, scale: 6, default: 40.6892
+    t.string   "cuisine_type",                            default: ""
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
+    t.decimal  "lng",             precision: 9, scale: 6, default: -74.0444
+    t.decimal  "lat",             precision: 9, scale: 6, default: 40.6892
+    t.datetime "last_visit"
+    t.integer  "visit_count",                             default: 0
+    t.string   "snippet_text"
+    t.string   "image_url"
+    t.string   "neighborhoods"
+    t.string   "display_phone"
+    t.string   "yelp_url"
+    t.string   "display_address"
   end
 
   add_index "stores", ["boro"], name: "index_stores_on_boro"

@@ -1,16 +1,77 @@
 namespace :store_data do
   desc "Perform calculations on Store data"
 
+  task add_macro_score: :environment do
+    MacroCalc.all.each do |macro|
+      score = [
+        (macro.mice / macro.inspections.to_f) * 100,
+        (macro.roaches / macro.inspections.to_f) * 100,
+        (macro.flies / macro.inspections.to_f) * 100,
+        macro.average,
+        macro.first_average,
+      ].inject(:+) / 5
+
+      macro.update(score: score.round)
+
+    end
+
+  end
+
+  task add_overall_score: :environment do
+    Store.all.each do |store|
+      p store.id
+      last = store.inspections.map{|inspection| inspection.score}.reject{|n| n.nil?}.first
+
+      score = [
+        (store.calc.mice / store.calc.inspections.to_f) * 100,
+        (store.calc.roaches / store.calc.inspections.to_f) * 100,
+        (store.calc.flies / store.calc.inspections.to_f) * 100,
+        store.calc.average,
+        last,
+        store.calc.first_average,
+        store.calc.best,
+        store.calc.worst
+      ].inject(:+) / 8.to_f
+
+
+      store.calc.update(last: last, score: score.round)
+
+    end
+
+  end
+
+
 
   task coords: :environment do
     Store.all.each do |store|
       p store.id
-      next if store.id <= 20445 || store.phone.nil? || store.phone.to_i.to_s != store.phone.to_s || store.phone.length != 10
+      next if store.phone.nil? || store.phone.to_i.to_s != store.phone.to_s || store.phone.length != 10
       query = Yelp.client.phone_search(store.phone).businesses[0]
       if query
+
         longitude = query.location.coordinate.longitude
         latitude = query.location.coordinate.latitude
-        store.update!(lat: latitude, lng: longitude)
+        store.update!(
+        lat: latitude,
+        lng: longitude,
+        display_address: query.location.display_address,
+        snippet_text: query.snippet_text,
+        yelp_url: query.url,
+        image_url: query.image_url,
+        display_phone: query.display_phone,
+        neighborhoods: query.location.neighborhoods
+        )
+
+
+
+        # add_column :stores, :rating_image_url, :string
+        # add_column :stores, :image_url, :string
+        # add_column :stores, :rating_image_url_large, :string
+        # add_column :stores, :neighborhoods, :string
+        # add_column :stores, :cross_streets, :string
+        # add_column :stores, :display_phone, :string
+        # add_column :stores, :yelp_url, :string
+        # add_column :stores, :display_address, :string
       end
     end
 

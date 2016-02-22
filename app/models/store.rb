@@ -1,5 +1,6 @@
 class Store < ActiveRecord::Base
-
+  serialize :neighborhoods, Array
+  serialize :display_address, Array
   has_one :calc
   has_one(
     :zipcode_calc,

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
         get 'filters'
         post 'main_map'
         get 'browse_search'
+        get 'most_visited'
+        get 'trending'
       end
     end
 

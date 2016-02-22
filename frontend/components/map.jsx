@@ -2,8 +2,10 @@ var React = require('react');
 var StoreStore = require('../stores/store_store.js');
 var ApiUtil = require('../util/api_util.js');
 var MapStore = require('../stores/map_store.js');
+var History = require('react-router').History;
 
 var Map = React.createClass({
+  mixins: [History],
   getInitialState: function () {
     return { markers: [] };
   },
@@ -89,17 +91,26 @@ _onMapChange: function () {
       map: map,
       icon: markerImage,
       title: marker.name,
+      id: marker.id
     });
+
+    google.maps.event.addListener(newMarker, 'click', function() {
+      ApiUtil.fetchComparison(newMarker.id, newMarker.title);
+      // this.history.pushState(null, "rest/" + newMarker.id, {});
+    }.bind(this));
+
     newMarkers.push(newMarker);
+
   }.bind(this));
 
   this.state.markers.forEach(function(marker) {
     marker.setMap(null)
   });
+
+
   this.setState({ markers: newMarkers});
 },
 _onStoreChange: function () {
-
 
 },
   render: function () {

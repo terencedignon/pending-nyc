@@ -9,7 +9,7 @@ SearchStore = require('./stores/search_store.js');
 StoreStore = require('./stores/store_store.js');
 var Header = require('./components/header.jsx');
 var Sidebar = require('./components/sidebar.jsx');
-var Map = require('./components/map.jsx');
+var Map = require('./components/main_map.jsx');
 MapStore = require('./stores/map_store.js');
 var Browse = require('./components/browse.jsx');
 

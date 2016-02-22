@@ -8,15 +8,30 @@ _store = {};
 _yelp = {};
 _comparison = {};
 _map = [];
+_mostVisited = [];
+_trending = [];
 _browse = [];
 _filters = [];
+_comparisonType = "";
 
 StoreStore.getComparison = function () {
   return _comparison;
 };
 
+StoreStore.getComparisonType = function () {
+  return _comparisonType;
+};
+
+StoreStore.getTrending = function () {
+  return _trending;
+};
+
 StoreStore.getFilters = function () {
   return _filters;
+};
+
+StoreStore.getMostVisited = function () {
+  return _mostVisited;
 };
 
 StoreStore.getStore = function () {
@@ -36,7 +51,7 @@ StoreStore.getYelp = function () {
 };
 
 StoreStore.__onDispatch = function (payload) {
-  
+
   if (payload.actionType === StoreConstants.GET_STORE) {
     _store = payload.data;
     this.__emitChange();
@@ -54,6 +69,12 @@ StoreStore.__onDispatch = function (payload) {
 
   else if (payload.actionType === StoreConstants.GET_COMPARISON) {
     _comparison = payload.data;
+    _comparisonType = payload.type;
+    this.__emitChange();
+  }
+
+  else if (payload.actionType === StoreConstants.GET_TRENDING) {
+    _trending = payload.data;
     this.__emitChange();
   }
 
@@ -64,6 +85,11 @@ StoreStore.__onDispatch = function (payload) {
 
   else if (payload.actionType === StoreConstants.FETCH_FILTERS) {
     _filters = payload.data;
+    this.__emitChange();
+  }
+
+  else if (payload.actionType === StoreConstants.GET_MOST_VISITED) {
+    _mostVisited = payload.data;
     this.__emitChange();
   }
 

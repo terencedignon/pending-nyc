@@ -18,10 +18,13 @@ var Overview = React.createClass({
   },
   propsData: function () {
     var calc = this.props.store.calc;
+
     var data = {};
     data.average = calc.average;
     data.worst = calc.worst;
+    data.inspections = calc.inspections;
     data.best = calc.best;
+    data.last = this.props.store.inspections[0].score;
     data.first_average = calc.first_average;
     data.name = this.formatName(this.props.store.name);
     data.bestDate = new Date(calc.best_date);
@@ -29,27 +32,66 @@ var Overview = React.createClass({
     data.flies = this.percentageCalc(calc.flies, calc.inspections);
     data.mice = this.percentageCalc(calc.mice, calc.inspections);
     data.roaches = this.percentageCalc(calc.roaches, calc.inspections);
+
+
+    data.total = Math.round((data.last + data.average + data.worst + data.best + ((calc.flies / calc.inspections) * 100) + ((calc.mice / calc.inspections) * 100) + ((calc.roaches / calc.inspections) * 100) + data.first_average) / 8);
+
     return data;
   },
+
+
+  iconParse: function (grade) {
+
+    if (grade instanceof Array) {
+      for (var i = 0; i < grade.length; i++) {
+        var num = grade[i];
+        if (num.includes("%")) num = num.slice(0, -1);
+
+        if (num >= 25) {
+
+          return "thumbs-down";
+      }
+    }
+    return "thumbs-up";
+  }
+      if (grade <= 13) {
+        return "thumbs-up";
+      } else if (grade <= 27) {
+        return "minus";
+      } else {
+        return "thumbs-down";
+      }
+  },
+
   render: function () {
 
     var data = this.propsData();
 
+    $('.question-highlight').on("mouseover", function(e) {
+      $('.unannounced').css("display", "block");
+    });
+    $('.question-highlight').on("mouseout", function(e) {
+      $('.unannounced').css("display", "none");
+    });
+
+  //   <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
+  //   BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
+  // <div className="comparison">
+  //   <Comparison store={this.props.store}/>
+  // </div>
+
     return (
-      <span>
-        <span className="store-name">{data.name} Overview</span><p/>
-
-        <i className="fa fa-user"></i>{data.name} has an average inspection score of {data.average}, the equivalent of {this.translate(data.average)}. <br/>
-        <i className="fa fa-user-secret"></i>Its average score for unannounced inspections is {data.first_average}, or {this.translate(data.first_average)}.<br/>
-        <i className="fa fa-bug"></i>Of those {data.inspections} inspections,  {data.mice} found mice, <strong className="emphasis">{data.flies}</strong> found flies, and {data.roaches} found roaches.<br/>
-        <i className="fa fa-calendar-times-o"></i>Its worst inspection was {data.worst} on {data.worstDate.toDateString()}.<br/>
-        <i className="fa fa-calendar-check-o"></i>Its best inspection was {data.best} on {data.bestDate.toDateString()}.<p/>
-
-    <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
-        BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
-      <div className="comparison">
-        <Comparison store={this.props.store}/>
-      </div>
+      <span className="overview-holder">
+        <span className="store-name">{this.props.store.name} Overview: <span className="question-highlight">{data.total}
+        </span></span><p/>
+        <span className="inspection-detail"><i className={"fa fa-" + this.iconParse(data.last)}></i>Most recent: {data.last}, {this.translate(data.last)}. </span><br/>
+        <i className={"fa fa-" + this.iconParse(data.average)}></i>Average: {data.average}, {this.translate(data.average)} <br/>
+        <i className={"fa fa-" + this.iconParse(data.first_average)}></i>Average <span className="question-highlight">unannounced inspection
+            <span className="unannounced">here's the explanation</span>
+          </span>: {data.first_average}, {this.translate(data.first_average)}.<br/>
+        <i className={"fa fa-" + this.iconParse([data.mice, data.roaches, data.flies])}></i>Of {data.inspections} inspections,  {data.mice} found mice, {data.flies} found flies, and {data.roaches} found roaches.<br/>
+        <i className={"fa fa-" + this.iconParse(data.worst)}></i>Worst: {data.worst} on {data.worstDate.toDateString()}.<br/>
+        <i className={"fa fa-" + this.iconParse(data.best)}></i>Best: {data.best} on {data.bestDate.toDateString()}.<p/>
   </span>
 );
   }

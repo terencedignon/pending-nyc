@@ -18,6 +18,19 @@ var ApiUtil = {
     });
   },
 
+  fetchTrending: function() {
+    $.ajax({
+      method: "GET",
+      url: "api/stores/trending",
+      success: function(data) {
+        StoreActions.getTrending(data);
+      },
+      error: function() {
+        console.log("error in fetchTrending");
+      }
+    });
+  },
+
   fetchFilters: function() {
     $.ajax({
       method: "GET",
@@ -27,6 +40,19 @@ var ApiUtil = {
       },
       error: function() {
         console.log("error in fetchFilters");
+      }
+    });
+  },
+
+  fetchMostVisited: function() {
+    $.ajax({
+      method: "GET",
+      url: "api/stores/most_visited",
+      success: function(data) {
+        StoreActions.getMostVisited(data);
+      },
+      error: function (e) {
+        console.log("error in fetchMostVisited");
       }
     });
   },
@@ -74,12 +100,12 @@ var ApiUtil = {
 
     });
   },
-  fetchComparison: function (id) {
+  fetchComparison: function (id, type) {
     $.ajax({
       method: "GET",
       url: "api/stores/" + id,
       success: function(data) {
-        StoreActions.getComparison(data);
+        StoreActions.getComparison(data, type);
         // if (callback) callback(data.phone);
       },
       error: function () {

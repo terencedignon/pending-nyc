@@ -41,7 +41,7 @@ var Browse = React.createClass({
     if (this.state.browse.length !== 0) {
 
       detailResults = this.state.browse.map(function(store) {
-        debugger
+        
         return <div className="browse-list-item" key={Math.random()}><span className="badge"></span>{store.name}</div>;
       });
       detailResults = <div className="list-holder"> {detailResults} </div>;
