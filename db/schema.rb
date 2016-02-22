@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160221233321) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "calcs", force: :cascade do |t|
     t.integer  "inspections"
     t.integer  "violations"
@@ -46,8 +49,8 @@ ActiveRecord::Schema.define(version: 20160221233321) do
     t.string   "inspection_type", default: ""
   end
 
-  add_index "inspections", ["inspection_date"], name: "index_inspections_on_inspection_date"
-  add_index "inspections", ["store_id"], name: "index_inspections_on_store_id"
+  add_index "inspections", ["inspection_date"], name: "index_inspections_on_inspection_date", using: :btree
+  add_index "inspections", ["store_id"], name: "index_inspections_on_store_id", using: :btree
 
   create_table "macro_calcs", force: :cascade do |t|
     t.integer  "stores"
@@ -94,10 +97,10 @@ ActiveRecord::Schema.define(version: 20160221233321) do
     t.string   "display_address"
   end
 
-  add_index "stores", ["boro"], name: "index_stores_on_boro"
-  add_index "stores", ["camis"], name: "index_stores_on_camis"
-  add_index "stores", ["name"], name: "index_stores_on_name"
-  add_index "stores", ["zipcode"], name: "index_stores_on_zipcode"
+  add_index "stores", ["boro"], name: "index_stores_on_boro", using: :btree
+  add_index "stores", ["camis"], name: "index_stores_on_camis", using: :btree
+  add_index "stores", ["name"], name: "index_stores_on_name", using: :btree
+  add_index "stores", ["zipcode"], name: "index_stores_on_zipcode", using: :btree
 
   create_table "violations", force: :cascade do |t|
     t.string   "description"
@@ -108,6 +111,6 @@ ActiveRecord::Schema.define(version: 20160221233321) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "violations", ["inspection_id"], name: "index_violations_on_inspection_id"
+  add_index "violations", ["inspection_id"], name: "index_violations_on_inspection_id", using: :btree
 
 end

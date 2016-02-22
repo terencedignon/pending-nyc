@@ -19,6 +19,9 @@ namespace :store_data do
 
   task add_overall_score: :environment do
     Store.all.each do |store|
+      next if store.id < 11360
+      next if store.calc.nil?
+
       p store.id
       last = store.inspections.map{|inspection| inspection.score}.reject{|n| n.nil?}.first
 
