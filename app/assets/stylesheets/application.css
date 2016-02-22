@@ -393,14 +393,26 @@ hr:last-child {
   margin-left: -5px;
 }
 
+footer a {
+  color: steelblue;
+  text-decoration: none;
+}
+
+footer {
+  width: 90%;
+  text-align: right;
+  color: #777;
+}
+
+
 .violations {
   display: none;
   /*position: absolute;*/
   z-index: 9;
   /*margin-left: 20px;*/
   border-radius: 2%;
-  height: 400px;
-  width: 800px;
+  /*max-height: 400px!important;*/
+
   overflow: scroll;
   /*background: #f7f7f7;*/
   color: #222;
@@ -1038,7 +1050,7 @@ span.normal-header {
   padding: 10px;
   font-size: 20px;
   color: #222;
-  opacity: 0.75;
+  /*opacity: 0.75;*/
   font-family: "montserrat";
   transition: all 0.4s ease;
 }

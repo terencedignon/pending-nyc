@@ -59,6 +59,7 @@ componentWillUnmount: function () {
 _onMapChange: function () {
   // this.setState({ markers: [] });
   var newMarkers = [];
+  this.setState({markers: []});
   MapStore.all().forEach(function(marker) {
     var grade;
     var hex;

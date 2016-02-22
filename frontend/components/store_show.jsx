@@ -236,7 +236,7 @@ var StoreShow = React.createClass({
         //   {legend}
         // </div>
         // <div className="show-row">
-
+  {violations}
   return (
   <section className="show-container">
     <div className="show-info">
@@ -251,6 +251,10 @@ var StoreShow = React.createClass({
       {barChart}
       <hr/>
       {comparison}
+  
+
+
+
     </div>
     <div>
     <div className="show-holder">
@@ -263,11 +267,13 @@ var StoreShow = React.createClass({
           {this.map}
         </div>
       </div>
+    </div>
 
-    </div>
-    <div className="violations">
-      {violations}
-    </div>
+  <div className="show-row">
+
+
+
+  </div>
 </section>
 
       );

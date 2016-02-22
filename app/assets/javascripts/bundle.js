@@ -58,6 +58,7 @@
 	var Map = __webpack_require__(257);
 	MapStore = __webpack_require__(251);
 	var Browse = __webpack_require__(256);
+	var Footer = __webpack_require__(258);
 
 	// <Sidebar />
 	var App = React.createClass({
@@ -76,7 +77,8 @@
 	          { className: 'main' },
 	          this.props.children
 	        )
-	      )
+	      ),
+	      React.createElement(Footer, null)
 	    );
 	  }
 
@@ -24447,7 +24449,9 @@
 	    //   {legend}
 	    // </div>
 	    // <div className="show-row">
-
+	    {
+	      violations;
+	    }
 	    return React.createElement(
 	      'section',
 	      { className: 'show-container' },
@@ -24493,11 +24497,7 @@
 	          )
 	        )
 	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'violations' },
-	        violations
-	      )
+	      React.createElement('div', { className: 'show-row' })
 	    );
 	  }
 	});
@@ -35766,6 +35766,7 @@
 	  _onMapChange: function () {
 	    // this.setState({ markers: [] });
 	    var newMarkers = [];
+	    this.setState({ markers: [] });
 	    MapStore.all().forEach(function (marker) {
 	      var grade;
 	      var hex;
@@ -35933,13 +35934,13 @@
 	  render: function () {
 
 	    var data = this.propsData();
-
-	    $('.question-highlight').on("mouseover", function (e) {
-	      $('.unannounced').css("display", "block");
-	    });
-	    $('.question-highlight').on("mouseout", function (e) {
-	      $('.unannounced').css("display", "none");
-	    });
+	    //
+	    // $('.question-highlight').on("mouseover", function(e) {
+	    //   $('.unannounced').css("display", "block");
+	    // });
+	    // $('.question-highlight').on("mouseout", function(e) {
+	    //   $('.unannounced').css("display", "none");
+	    // });
 
 	    //   <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
 	    //   BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
@@ -36731,6 +36732,37 @@
 	});
 
 	module.exports = Map;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(5);
+
+	var Footer = React.createClass({
+	  displayName: "Footer",
+
+	  render: function () {
+	    return React.createElement(
+	      "footer",
+	      null,
+	      "developed by ",
+	      React.createElement(
+	        "a",
+	        { href: "http://terencedignon.com" },
+	        "terence dignon"
+	      ),
+	      ".  ",
+	      React.createElement(
+	        "a",
+	        { href: "http://github.com/terencedignon" },
+	        "github repo"
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Footer;
 
 /***/ }
 /******/ ]);

@@ -12,6 +12,7 @@ var Sidebar = require('./components/sidebar.jsx');
 var Map = require('./components/main_map.jsx');
 MapStore = require('./stores/map_store.js');
 var Browse = require('./components/browse.jsx');
+var Footer = require('./components/footer.jsx');
 
 // <Sidebar />
 var App = React.createClass({
@@ -24,6 +25,7 @@ var App = React.createClass({
                 {this.props.children}
               </div>
           </div>
+          <Footer />
       </div>
     );
   }

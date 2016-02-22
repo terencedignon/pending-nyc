@@ -66,13 +66,13 @@ var Overview = React.createClass({
   render: function () {
 
     var data = this.propsData();
-
-    $('.question-highlight').on("mouseover", function(e) {
-      $('.unannounced').css("display", "block");
-    });
-    $('.question-highlight').on("mouseout", function(e) {
-      $('.unannounced').css("display", "none");
-    });
+    // 
+    // $('.question-highlight').on("mouseover", function(e) {
+    //   $('.unannounced').css("display", "block");
+    // });
+    // $('.question-highlight').on("mouseout", function(e) {
+    //   $('.unannounced').css("display", "none");
+    // });
 
   //   <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
   //   BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
