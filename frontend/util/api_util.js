@@ -92,7 +92,7 @@ var ApiUtil = {
       success: function(data) {
         StoreActions.getStore(data);
 
-        if (callback) callback(data.phone);
+        // if (callback) callback(data.phone);
       },
       error: function () {
         console.log("error in fetchStore");
@@ -106,7 +106,7 @@ var ApiUtil = {
       url: "api/stores/" + id,
       success: function(data) {
         StoreActions.getComparison(data, type);
-        
+
         // if (callback) callback(data.phone);
       },
       error: function () {

@@ -24611,7 +24611,7 @@
 	      success: function (data) {
 	        StoreActions.getStore(data);
 
-	        if (callback) callback(data.phone);
+	        // if (callback) callback(data.phone);
 	      },
 	      error: function () {
 	        console.log("error in fetchStore");
