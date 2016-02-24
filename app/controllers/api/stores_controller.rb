@@ -77,6 +77,11 @@ class Api::StoresController < ApplicationController
     @stores = Store.all.where("last_visit IS NOT NULL").order(last_visit: :desc).limit(5)
     render :index
   end
+  # 
+  # def most
+  #   # query = params[:query]
+  #   # @stores = Store.all.order("#{query} ")
+  # end
 
   def most_visited
     @stores = Store.all.order(visit_count: :desc).limit(5)

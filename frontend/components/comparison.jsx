@@ -183,6 +183,7 @@ var Comparison = React.createClass({
           score = <span className="neutral-score">{score}</span>;
         }
       } else {
+              debugger
         score = this.props.store.calc.score - this.state.comparison.score;
         if (score > 0) {
           score = <span className="positive-score">{"+ " + score}</span>;

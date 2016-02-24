@@ -245,12 +245,15 @@ body {
 
 .drop-down {
   left: -120px;
-  margin-top: 1px;
+  border-bottom: 2px solid #eee;
+  border-left: 2px solid #eee;
+  border-right: 2px solid #eee;
+  margin-top: 3px;
   display: none;
   position: absolute;
   z-index: 9999;
   background: white;
-  width: 340px;
+  width: 330px;
 }
 
 .drop-down ul {
