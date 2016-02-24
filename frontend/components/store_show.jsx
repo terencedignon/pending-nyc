@@ -276,7 +276,8 @@ var StoreShow = React.createClass({
       </div>
     </div>
     <hr/>
-    <span className="store-name">Violation Record</span>
+    <span className="store-name">Violation Record</span><br/>
+    Total: {this.state.store.calc.violations} : Critical: {this.state.store.calc.critical}
     <div className="violations">
     {violations}
   </div>
