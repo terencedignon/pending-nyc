@@ -16,6 +16,13 @@ var SearchActions = {
     });
   },
 
+  fetchMost: function (data) {
+    Dispatcher.dispatch({
+      actionType: SearchConstants.FETCH_SEARCH,
+      data: data
+    });
+  },
+
   fetchSearch: function (data) {
     Dispatcher.dispatch({
       actionType: SearchConstants.FETCH_SEARCH,

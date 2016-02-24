@@ -290,7 +290,7 @@ namespace :store_data do
   task stores: :environment do
     Store.all.each_with_index do |store, i|
       next if store.inspections.length == 1 && store.inspections[0].score == nil
-      puts store.id
+      puts "#{store.id} => #{i}"
       initial_inspections = []
       all_inspections = []
       critical = 0
@@ -303,6 +303,8 @@ namespace :store_data do
       best = 10000
       best_date = nil
       violation_count = 0
+      score_divisor = store.inspections.select { |inspection| inspection.score }.length
+      first_score_divisor = store.inspections.select { |inspection| inspection.score && inspection.inspection_type =~ /Initial Inspection/ }.length
       inspection_count = store.inspections.length
       store.inspections.each do |inspect|
         mouse = false
@@ -332,14 +334,14 @@ namespace :store_data do
         fly_count += 1 if fly
         roach_count += 1 if roach
       end
-      p initial_inspections
+
 
       calc = Calc.create(
       store_id: store.id,
       violations: violation_count,
       inspections: inspection_count,
-      first_average: (initial_inspections.inject(:+) / initial_inspections.length.to_f),
-      average: (all_inspections.inject(:+) / all_inspections.length.to_f),
+      first_average: (initial_inspections.inject(:+) / first_score_divisor.to_f),
+      average: (all_inspections.inject(:+) / score_divisor.to_f),
       mice: mouse_count,
       flies: fly_count,
       roaches: roach_count,

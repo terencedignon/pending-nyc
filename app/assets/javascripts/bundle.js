@@ -59,6 +59,7 @@
 	MapStore = __webpack_require__(251);
 	var Browse = __webpack_require__(256);
 	var Footer = __webpack_require__(258);
+	var Most = __webpack_require__(259);
 
 	// <Sidebar />
 	var App = React.createClass({
@@ -94,6 +95,7 @@
 	    React.createElement(IndexRoute, { component: StoreIndex }),
 	    React.createElement(Route, { path: 'rest/:id', key: Math.random(), component: StoreShow }),
 	    React.createElement(Route, { path: 'browse', component: Browse }),
+	    React.createElement(Route, { path: 'top', component: Most }),
 	    React.createElement(Route, { path: 'map', component: Map })
 	  )
 	);
@@ -24660,6 +24662,19 @@
 	    });
 	  },
 
+	  fetchMost: function (query) {
+	    $.ajax({
+	      method: "GET",
+	      url: "api/stores/most?q=" + query,
+	      success: function (data) {
+	        StoreActions.getMost(data);
+	      },
+	      error: function () {
+	        console.log("error in fetchMost function");
+	      }
+	    });
+	  },
+
 	  search: function (query) {
 	    $.ajax({
 	      method: "GET",
@@ -24694,6 +24709,13 @@
 	  fetchComparison: function (data) {
 	    Dispatcher.dispatch({
 	      actionType: SearchConstants.FETCH_COMPARISON,
+	      data: data
+	    });
+	  },
+
+	  fetchMost: function (data) {
+	    Dispatcher.dispatch({
+	      actionType: SearchConstants.FETCH_SEARCH,
 	      data: data
 	    });
 	  },
@@ -25036,7 +25058,8 @@
 	  FETCH_SEARCH: "FETCH_SEARCH",
 	  CLEAR_RESULTS: "CLEAR_RESULTS",
 	  FETCH_COMPARISON: "FETCH_COMPARISON",
-	  CLEAR_COMPARISON: "CLEAR_COMPARISON"
+	  CLEAR_COMPARISON: "CLEAR_COMPARISON",
+	  FETCH_MOST: "FETCH_MOST"
 
 	};
 
@@ -25069,6 +25092,13 @@
 	    Dispatcher.dispatch({
 	      actionType: StoreConstants.CLEAR_COMPARISON
 
+	    });
+	  },
+
+	  getMost: function (data) {
+	    Dispatcher.dispatch({
+	      actionType: StoreConstants.GET_MOST,
+	      data: data
 	    });
 	  },
 
@@ -25126,6 +25156,7 @@
 	_store = {};
 	_yelp = {};
 	_comparison = {};
+	_getMost = [];
 	_map = [];
 	_mostVisited = [];
 	_trending = [];
@@ -25143,6 +25174,10 @@
 
 	StoreStore.getTrending = function () {
 	  return _trending;
+	};
+
+	StoreStore.getMost = function () {
+	  return _most;
 	};
 
 	StoreStore.getFilters = function () {
@@ -25186,6 +25221,10 @@
 	  } else if (payload.actionType === StoreConstants.GET_TRENDING) {
 	    _trending = payload.data;
 	    this.__emitChange();
+	  } else if (payload.actionType === StoreConstants.GET_MOST) {
+
+	    _most = payload.data;
+	    this.__emitChange();
 	  } else if (payload.actionType === StoreConstants.GET_YELP) {
 	    _yelp = payload.data;
 	    this.__emitChange();
@@ -25215,7 +25254,8 @@
 	  FETCH_FILTERS: "FETCH_FILTERS",
 	  GET_BROWSE: "GET_BROWSE",
 	  GET_MOST_VISITED: "GET_MOST_VISITED",
-	  GET_TRENDING: "GET_TRENDING"
+	  GET_TRENDING: "GET_TRENDING",
+	  GET_MOST: "GET_MOST"
 	};
 
 	module.exports = StoreConstants;
@@ -35581,7 +35621,6 @@
 	          );
 	        }
 	      } else {
-	        debugger;
 	        score = this.props.store.calc.score - this.state.comparison.score;
 	        if (score > 0) {
 	          score = React.createElement(
@@ -35685,6 +35724,7 @@
 	var Store = __webpack_require__(219).Store;
 	var SearchStore = new Store(AppDispatcher);
 
+	_most = [];
 	_results = [];
 	_comparison = [];
 
@@ -35702,11 +35742,15 @@
 	    this.__emitChange();
 	  } else if (payload.actionType === SearchConstants.CLEAR_RESULTS) {
 	    _results = [];
+	    this.__emitChange();
 	  } else if (payload.actionType === SearchConstants.FETCH_COMPARISON) {
 	    _comparison = payload.data;
 	    this.__emitChange();
 	  } else if (payload.actionType === SearchConstants.CLEAR_COMPARISON) {
 	    _comparison = [];
+	  } else if (payload.actionType === SearchConstants.FETCH_MOST) {
+	    _most = [];
+	    this.__emitChange();
 	  }
 	};
 
@@ -35785,19 +35829,19 @@
 	      var shadow = "_withshadow";
 
 	      if (marker.camis === this.props.camis) {
-	        grade = marker.calc.average;
+	        grade = marker.calc.score;
 	        hex = "FFFF00";
 	        // shadow = "";
 	        text = "000000";
 	      } else if (marker.calc.average <= 13) {
-	        grade = marker.calc.average;
+	        grade = marker.calc.score;
 	        hex = "0056ac";
 	        // hex = "000";
-	      } else if (marker.calc.average <= 27) {
-	          grade = marker.calc.average;
+	      } else if (marker.calc.score <= 27) {
+	          grade = marker.calc.score;
 	          hex = "49ac42";
 	        } else {
-	          grade = marker.calc.average;
+	          grade = marker.calc.score;
 	          hex = "fa9828";
 	        }
 
@@ -36221,6 +36265,31 @@
 	    // this.storeListener.remove();
 	    this.searchListener.remove();
 	  },
+	  populateSearch: function () {
+	    if (this.state.results.length > 0) {
+	      $('.drop-down').css("display", "flex");
+	      $('body').on("click", function () {
+	        $('.drop-down').css("display", "none");
+	        $('body').off("click");
+	        SearchActions.clearResults();
+	        // this.setState({ search: "" });
+	      }.bind(this));
+
+	      return this.state.results.map(function (result) {
+	        return React.createElement(
+	          'a',
+	          { href: true, key: Math.random(), onClick: this.linkHandler, href: '#', id: result.id, href: "#/rest/" + result.id },
+	          React.createElement(
+	            'li',
+	            { key: Math.random() },
+	            result.name
+	          )
+	        );
+	      }.bind(this));
+	    } else {
+	      return React.createElement('li', null);
+	    }
+	  },
 	  hideSettings: function () {
 
 	    $('.settings-drop-down').css("display", "none");
@@ -36303,23 +36372,7 @@
 	      )
 	    );
 
-	    var listedResults;
-	    if (this.state.results.length > 0) {
-	      $('.drop-down').css("display", "flex");
-	      listedResults = this.state.results.map(function (result) {
-	        return React.createElement(
-	          'a',
-	          { href: true, key: Math.random(), onClick: this.linkHandler, href: '#', id: result.id, href: "#/rest/" + result.id },
-	          React.createElement(
-	            'li',
-	            { key: Math.random() },
-	            result.name
-	          )
-	        );
-	      }.bind(this));
-	    } else {
-	      listedResults = React.createElement('li', null);
-	    }
+	    var listedResults = this.populateSearch();
 
 	    // <div className="header-links">
 	    //   <a href="#">Browse</a>
@@ -36776,6 +36829,60 @@
 	});
 
 	module.exports = Footer;
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(5);
+	var ApiUtil = __webpack_require__(209);
+	var StoreStore = __webpack_require__(217);
+
+	var Most = React.createClass({
+	  displayName: 'Most',
+
+	  getInitialState: function () {
+	    return { query: "mice", most: [] };
+	  },
+	  componentDidMount: function () {
+	    ApiUtil.fetchMost(this.state.query);
+	    this.storeListener = StoreStore.addListener(this._onStoreChange);
+	  },
+	  componentWillUnmount: function () {
+	    this.storeListener.remove();
+	  },
+	  _onStoreChange: function () {
+
+	    this.setState({ most: StoreStore.getMost() });
+	  },
+	  render: function () {
+	    var mostList = React.createElement('div', null);
+	    if (this.state.most.length > 1) {
+
+	      mostList = this.state.most.map(function (store) {
+
+	        return React.createElement(
+	          'li',
+	          { key: Math.random() },
+	          store.name,
+	          ' => ',
+	          store.calc.mice,
+	          ' => ',
+	          store.calc.mice / store.calc.inspections * 100
+	        );
+	      }.bind(this));
+	    }
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      'Highest Percentage Mice',
+	      mostList
+	    );
+	  }
+	});
+
+	module.exports = Most;
 
 /***/ }
 /******/ ]);

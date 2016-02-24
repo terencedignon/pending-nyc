@@ -13,6 +13,8 @@ var Map = require('./components/main_map.jsx');
 MapStore = require('./stores/map_store.js');
 var Browse = require('./components/browse.jsx');
 var Footer = require('./components/footer.jsx');
+var Most = require('./components/most.jsx');
+
 
 // <Sidebar />
 var App = React.createClass({
@@ -40,6 +42,7 @@ var route = (
     <IndexRoute component={StoreIndex} />
     <Route path="rest/:id" key={Math.random()} component={StoreShow} />
     <Route path="browse" component={Browse} />
+    <Route path="top" component={Most} />
     <Route path="map" component={Map} />
     </Route>
   </Router>

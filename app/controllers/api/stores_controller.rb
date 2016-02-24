@@ -28,6 +28,11 @@ class Api::StoresController < ApplicationController
     end
   end
 
+  def most
+    @stores = Store.includes(:calc).order("calcs.#{params[:q]} DESC").limit(100)
+    render :index
+  end
+
   def main_map
     south = params[:bounds][:south]
     north = params[:bounds][:north]
@@ -68,7 +73,6 @@ class Api::StoresController < ApplicationController
 
   def browse_search
     query = params[:query]
-
     @stores = Store.where("#{query[0]} LIKE ?", "%" + query[1] +  "%")
     render json: @stores.includes(:calcs)
   end
@@ -77,14 +81,14 @@ class Api::StoresController < ApplicationController
     @stores = Store.all.where("last_visit IS NOT NULL").order(last_visit: :desc).limit(5)
     render :index
   end
-  # 
+  #
   # def most
   #   # query = params[:query]
   #   # @stores = Store.all.order("#{query} ")
   # end
 
   def most_visited
-    @stores = Store.all.order(visit_count: :desc).limit(5)
+    @stores = Store.all.order(visit_count: :desc).page(params[:page]).per(10)
     render :index
   end
 

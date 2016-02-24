@@ -27,6 +27,23 @@ var Header = React.createClass({
     // this.storeListener.remove();
     this.searchListener.remove();
   },
+  populateSearch: function () {
+    if (this.state.results.length > 0) {
+      $('.drop-down').css("display", "flex");
+      $('body').on("click", function () {
+        $('.drop-down').css("display", "none");
+        $('body').off("click");
+        SearchActions.clearResults();
+        // this.setState({ search: "" });
+      }.bind(this));
+
+      return this.state.results.map(function(result) {
+        return <a href key={Math.random()} onClick={this.linkHandler} href="#" id={result.id} href={"#/rest/" + result.id}><li key={Math.random()}>{result.name}</li></a>;
+        }.bind(this));
+      } else {
+        return <li></li>;
+      }
+  },
   hideSettings: function () {
 
     $('.settings-drop-down').css("display", "none");
@@ -105,15 +122,7 @@ var Header = React.createClass({
       </div>;
 
 
-    var listedResults;
-    if (this.state.results.length > 0) {
-      $('.drop-down').css("display", "flex");
-      listedResults = this.state.results.map(function(result) {
-        return <a href key={Math.random()} onClick={this.linkHandler} href="#" id={result.id} href={"#/rest/" + result.id}><li key={Math.random()}>{result.name}</li></a>;
-        }.bind(this));
-      } else {
-        listedResults = <li></li>;
-      }
+    var listedResults = this.populateSearch();
 
       // <div className="header-links">
       //   <a href="#">Browse</a>

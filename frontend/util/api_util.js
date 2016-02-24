@@ -61,7 +61,7 @@ var ApiUtil = {
     $.ajax({
       method: "POST",
       url: "api/stores/main_map",
-      data: { main: true, bounds: options.bounds, query: options.query},
+      data: { main: true, bounds: options.bounds, query: options.query },
       success: function(data) {
         MapActions.fetchMainMap(data);
       },
@@ -137,6 +137,19 @@ var ApiUtil = {
       },
       error: function () {
         console.log("comparison api_util error");
+      }
+    });
+  },
+
+  fetchMost: function (query) {
+    $.ajax({
+      method: "GET",
+      url: "api/stores/most?q=" + query,
+      success: function(data) {
+        StoreActions.getMost(data);
+      },
+      error: function () {
+        console.log("error in fetchMost function");
       }
     });
   },

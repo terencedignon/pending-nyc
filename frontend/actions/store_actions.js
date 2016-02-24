@@ -24,6 +24,13 @@ var StoreActions = {
     });
   },
 
+  getMost: function (data) {
+    Dispatcher.dispatch({
+      actionType: StoreConstants.GET_MOST,
+      data: data
+    });
+  },
+
   getComparison: function (data, type) {
     Dispatcher.dispatch({
       actionType: StoreConstants.GET_COMPARISON,

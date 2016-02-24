@@ -6,7 +6,8 @@ var StoreConstants = {
   FETCH_FILTERS: "FETCH_FILTERS",
   GET_BROWSE: "GET_BROWSE",
   GET_MOST_VISITED: "GET_MOST_VISITED",
-  GET_TRENDING: "GET_TRENDING"
+  GET_TRENDING: "GET_TRENDING",
+  GET_MOST: "GET_MOST"
 };
 
 module.exports = StoreConstants;

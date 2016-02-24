@@ -66,20 +66,20 @@ _onMapChange: function () {
     var shadow = "_withshadow";
 
   if (marker.camis === this.props.camis) {
-      grade = marker.calc.average;
+      grade = marker.calc.score;
       hex = "FFFF00";
       // shadow = "";
       text = "000000";
   }
   else if (marker.calc.average <= 13) {
-      grade = marker.calc.average;
+      grade = marker.calc.score;
       hex = "0056ac";
       // hex = "000";
-    } else if (marker.calc.average <= 27) {
-      grade = marker.calc.average;
+    } else if (marker.calc.score <= 27) {
+      grade = marker.calc.score;
       hex = "49ac42";
     } else {
-      grade = marker.calc.average;
+      grade = marker.calc.score;
       hex="fa9828";
     }
 

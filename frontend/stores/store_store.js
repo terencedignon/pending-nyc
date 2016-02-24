@@ -7,6 +7,7 @@ var StoreStore = new Store(AppDispatcher);
 _store = {};
 _yelp = {};
 _comparison = {};
+_getMost = [];
 _map = [];
 _mostVisited = [];
 _trending = [];
@@ -24,6 +25,10 @@ StoreStore.getComparisonType = function () {
 
 StoreStore.getTrending = function () {
   return _trending;
+};
+
+StoreStore.getMost = function () {
+  return _most;
 };
 
 StoreStore.getFilters = function () {
@@ -75,6 +80,12 @@ StoreStore.__onDispatch = function (payload) {
 
   else if (payload.actionType === StoreConstants.GET_TRENDING) {
     _trending = payload.data;
+    this.__emitChange();
+  }
+
+  else if (payload.actionType === StoreConstants.GET_MOST) {
+    
+    _most = payload.data;
     this.__emitChange();
   }
 
