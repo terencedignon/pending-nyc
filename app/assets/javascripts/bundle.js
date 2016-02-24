@@ -36369,6 +36369,11 @@
 	      { className: 'header-links' },
 	      React.createElement(
 	        'a',
+	        { href: '#/top' },
+	        'Top 50/Browse'
+	      ),
+	      React.createElement(
+	        'a',
 	        { href: '#/map' },
 	        'Map'
 	      )
@@ -36879,13 +36884,15 @@
 	  },
 	  changeQuery: function (e) {
 	    e.preventDefault();
-	    ApiUtil.fetchMost(this.state);
-	    this.setState({ query: e.currentTarget.id });
+	    this.setState({ query: e.currentTarget.id, most: [] });
+	    console.log($.extend(this.state, { query: e.currentTarget.id }));
+	    this.updateList($.extend(this.state, { query: e.currentTarget.id }));
+	    var input = e.currentTarget.id;
 	  },
 	  render: function () {
 	    var mostList = React.createElement('div', null);
 	    if (this.state.most.length > 1) {
-	      mostList = this.state.most.map(function (store) {
+	      mostList = StoreStore.getMost().map(function (store) {
 
 	        return React.createElement(
 	          'li',
@@ -36896,9 +36903,9 @@
 	            { href: "#/rest/" + store.id },
 	            store.name
 	          ),
-	          ' => ',
+	          ' (',
 	          store.calc[this.state.query],
-	          ' '
+	          ') '
 	        );
 	      }.bind(this));
 	    }
@@ -36918,7 +36925,13 @@
 	        React.createElement('input', { onChange: this.zipcodeInput, type: 'text', placeholder: 'Zipcode' }),
 	        ' ',
 	        React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', placeholder: 'Cuisine' }),
-	        React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' })
+	        React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' }),
+	        React.createElement('p', null),
+	        React.createElement(
+	          'h2',
+	          null,
+	          'Options:'
+	        )
 	      ),
 	      React.createElement(
 	        'div',
@@ -36928,60 +36941,55 @@
 	          { id: 'score', onClick: this.changeQuery, href: '#' },
 	          'Pending.nyc Aggregate Score'
 	        ),
-	        ' • ',
 	        React.createElement(
 	          'a',
 	          { id: 'average', onClick: this.changeQuery, href: '#' },
 	          'Average'
 	        ),
-	        ' •',
 	        React.createElement(
 	          'a',
 	          { id: 'first_average', onClick: this.changeQuery, href: '#' },
 	          'Surprise Inspection Average'
 	        ),
-	        ' • ',
+	        React.createElement('p', null),
 	        React.createElement(
 	          'a',
 	          { id: 'worst', onClick: this.changeQuery, href: '#' },
 	          'Worst'
 	        ),
-	        React.createElement('br', null),
-	        'Mice: ',
 	        React.createElement(
 	          'a',
 	          { id: 'mice_percentage', onClick: this.changeQuery, href: '#' },
-	          'Percent'
+	          'Mice Percent'
 	        ),
-	        ' or ',
+	        '  ',
 	        React.createElement(
 	          'a',
 	          { id: 'mice', onClick: this.changeQuery, href: '#' },
-	          'Number'
+	          'Mice Number'
 	        ),
-	        ' • Roaches: ',
+	        React.createElement('p', null),
 	        React.createElement(
 	          'a',
 	          { id: 'roach_percentage', onClick: this.changeQuery, href: '#' },
-	          'Percent'
+	          'Roach Percent'
 	        ),
-	        ' or ',
+	        '  ',
 	        React.createElement(
 	          'a',
 	          { id: 'roaches', onClick: this.changeQuery, href: '#' },
-	          'Number'
+	          'Roach Number'
 	        ),
-	        ' • Flies: ',
 	        React.createElement(
 	          'a',
 	          { id: 'flies_percentage', onClick: this.changeQuery, href: '#' },
-	          'Percent'
+	          'Flies Percent'
 	        ),
-	        ' or ',
+	        ' ',
 	        React.createElement(
 	          'a',
 	          { id: 'flies', onClick: this.changeQuery, href: '#' },
-	          'Number'
+	          'Flies Number'
 	        )
 	      ),
 	      React.createElement(

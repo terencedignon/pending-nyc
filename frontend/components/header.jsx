@@ -118,6 +118,7 @@ var Header = React.createClass({
     // <a href="#/browse">Browse</a>
     // <a href="#/overview">Overview</a>
     var headerLinks = <div className="header-links">
+      <a href="#/top">Top 50/Browse</a>
         <a href="#/map">Map</a>
       </div>;
 

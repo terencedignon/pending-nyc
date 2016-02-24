@@ -1089,6 +1089,8 @@ span.normal-header {
 
 .filter-by {
   margin-bottom: 20px;
+  font-family: "lato";
+  text-transform: uppercase;
 }
 
 .filter-by input {
@@ -1115,16 +1117,39 @@ span.normal-header {
 
 .most-header {
   margin-bottom: 20px;
+
+
 }
 
 .most-header a {
-  color: steelblue;
-  text-decoration: none;
-  font-size: 18px;
+  cursor: pointer;
+/*display: flex;*/
+/*float: left;*/
+/*width: 20px;*/
+/*height: 15px;*/
+font-size: 18px;
+margin: 1px;
+font-family: "lato";
+text-transform: uppercase;
+color: #aaa;
+/*margin-bottom: 30px;*/
+text-decoration: none;
+/*line-height: 15px;*/
+background: #f7f7f7;
+padding: 5px 20px 5px 20px;
+border: 1px solid #eee;
+transition: 50ms ease-in-out;
+/*margin-top: -1px;*/
+}
+
+.most-header a:hover {
+  color: #777;
+  /*border: 1px solid #aaa;*/
 }
 
 .filter-links {
   list-style: none;
+  min-height: 500px;
 }
 
 .filter-links a {
