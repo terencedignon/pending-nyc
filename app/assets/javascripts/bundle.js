@@ -35545,10 +35545,10 @@
 	        data: storeData
 	      }, {
 	        label: "",
-	        fillColor: "steelblue",
-	        strokeColor: "steelblue",
-	        highlightFill: "steelblue",
-	        highlightStroke: "steelblue",
+	        fillColor: "#eeeeee",
+	        strokeColor: "black",
+	        highlightFill: "#eeeeee",
+	        highlightStroke: "black",
 	        data: compData
 	      }]
 	    };
