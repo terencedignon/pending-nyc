@@ -15,7 +15,7 @@ var StoreIndex = React.createClass({
     ApiUtil.fetchTrending();
     this.trendingInterval = setInterval(function () {
       ApiUtil.fetchTrending();
-    }, 10000);
+    }, 60000);
     // this.searchListener = SearchStore.addListener(this._onSearchChange);
   },
   componentWillUnmount: function () {

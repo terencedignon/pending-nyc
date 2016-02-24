@@ -9,7 +9,7 @@ Rails.application.routes.draw do
         get 'browse_search'
         get 'most_visited'
         get 'trending'
-        get 'most'
+        post 'most'
       end
     end
 

@@ -24263,7 +24263,7 @@
 	        label: "My first dataset",
 	        fillColor: "white",
 	        strokeColor: "black",
-	        highlightFill: "#f7f7f7",
+	        highlightFill: "white",
 	        highlightStroke: "black",
 	        data: data
 	      }]
@@ -24664,8 +24664,9 @@
 
 	  fetchMost: function (query) {
 	    $.ajax({
-	      method: "GET",
-	      url: "api/stores/most?q=" + query,
+	      method: "POST",
+	      url: "api/stores/most",
+	      data: query,
 	      success: function (data) {
 	        StoreActions.getMost(data);
 	      },
@@ -35539,24 +35540,25 @@
 	        label: "",
 	        fillColor: "white",
 	        strokeColor: "black",
-	        highlightFill: "#f7f7f7",
+	        highlightFill: "white",
 	        highlightStroke: "black",
 	        data: storeData
 	      }, {
 	        label: "",
-	        fillColor: "#eeeeee",
-	        strokeColor: "black",
-	        highlightFill: "#cccccc",
-	        highlightStroke: "black",
+	        fillColor: "steelblue",
+	        strokeColor: "steelblue",
+	        highlightFill: "steelblue",
+	        highlightStroke: "steelblue",
 	        data: compData
 	      }]
 	    };
 
 	    // omitXLabels: true,
 	    var optionHash = {
-	      barDatasetSpacing: 5
+	      barDatasetSpacing: 3,
+	      barValueSpacing: 10
+	      // scaleShowGridLines: false,
 	    };
-	    // scaleShowGridLines: false,
 	    // var chart = new Chart($('div')).Bar(dataset, optionHash);
 	    // debugger
 	    var chart = React.createElement(BarChart, { ref: 'barGraph', redraw: true, key: Math.random(), className: 'comparison-chart', data: dataset, width: 500, height: 350, options: optionHash });
@@ -36111,7 +36113,7 @@
 	    ApiUtil.fetchTrending();
 	    this.trendingInterval = setInterval(function () {
 	      ApiUtil.fetchTrending();
-	    }, 10000);
+	    }, 60000);
 	    // this.searchListener = SearchStore.addListener(this._onSearchChange);
 	  },
 	  componentWillUnmount: function () {
@@ -36842,33 +36844,61 @@
 	  displayName: 'Most',
 
 	  getInitialState: function () {
-	    return { query: "mice", most: [] };
+	    return { query: "roach_percentage", most: [], boro: "", zipcode: "", cuisine_type: "" };
 	  },
 	  componentDidMount: function () {
-	    ApiUtil.fetchMost(this.state.query);
+	    ApiUtil.fetchMost(this.state);
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
 	  },
 	  componentWillUnmount: function () {
 	    this.storeListener.remove();
 	  },
-	  _onStoreChange: function () {
 
+	  boroInput: function (e) {
+	    this.setState({ boro: e.currentTarget.value });
+	    this.updateList();
+	  },
+
+	  cuisineInput: function (e) {
+	    this.setState({ cuisine_type: e.currentTarget.value });
+	    this.updateList();
+	  },
+
+	  zipcodeInput: function (e) {
+	    this.setState({ zipcode: e.currentTarget.value });
+	    setTimeout(function () {
+	      this.updateList();
+	    }.bind(this), 200);
+	  },
+
+	  _onStoreChange: function () {
 	    this.setState({ most: StoreStore.getMost() });
+	  },
+	  updateList: function () {
+	    ApiUtil.fetchMost(this.state);
+	  },
+	  changeQuery: function (e) {
+	    e.preventDefault();
+	    ApiUtil.fetchMost(this.state);
+	    this.setState({ query: e.currentTarget.id });
 	  },
 	  render: function () {
 	    var mostList = React.createElement('div', null);
 	    if (this.state.most.length > 1) {
-
 	      mostList = this.state.most.map(function (store) {
 
 	        return React.createElement(
 	          'li',
 	          { key: Math.random() },
-	          store.name,
+	          ' ',
+	          React.createElement(
+	            'a',
+	            { href: "#/rest/" + store.id },
+	            store.name
+	          ),
 	          ' => ',
-	          store.calc.mice,
-	          ' => ',
-	          store.calc.mice / store.calc.inspections * 100
+	          store.calc[this.state.query],
+	          ' '
 	        );
 	      }.bind(this));
 	    }
@@ -36876,8 +36906,89 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      'Highest Percentage Mice',
-	      mostList
+	      React.createElement(
+	        'div',
+	        { className: 'filter-by' },
+	        React.createElement(
+	          'h2',
+	          null,
+	          'Filter By: '
+	        ),
+	        ' ',
+	        React.createElement('input', { onChange: this.zipcodeInput, type: 'text', placeholder: 'Zipcode' }),
+	        ' ',
+	        React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', placeholder: 'Cuisine' }),
+	        React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'most-header' },
+	        React.createElement(
+	          'a',
+	          { id: 'score', onClick: this.changeQuery, href: '#' },
+	          'Pending.nyc Aggregate Score'
+	        ),
+	        ' • ',
+	        React.createElement(
+	          'a',
+	          { id: 'average', onClick: this.changeQuery, href: '#' },
+	          'Average'
+	        ),
+	        ' •',
+	        React.createElement(
+	          'a',
+	          { id: 'first_average', onClick: this.changeQuery, href: '#' },
+	          'Surprise Inspection Average'
+	        ),
+	        ' • ',
+	        React.createElement(
+	          'a',
+	          { id: 'worst', onClick: this.changeQuery, href: '#' },
+	          'Worst'
+	        ),
+	        React.createElement('br', null),
+	        'Mice: ',
+	        React.createElement(
+	          'a',
+	          { id: 'mice_percentage', onClick: this.changeQuery, href: '#' },
+	          'Percent'
+	        ),
+	        ' or ',
+	        React.createElement(
+	          'a',
+	          { id: 'mice', onClick: this.changeQuery, href: '#' },
+	          'Number'
+	        ),
+	        ' • Roaches: ',
+	        React.createElement(
+	          'a',
+	          { id: 'roach_percentage', onClick: this.changeQuery, href: '#' },
+	          'Percent'
+	        ),
+	        ' or ',
+	        React.createElement(
+	          'a',
+	          { id: 'roaches', onClick: this.changeQuery, href: '#' },
+	          'Number'
+	        ),
+	        ' • Flies: ',
+	        React.createElement(
+	          'a',
+	          { id: 'flies_percentage', onClick: this.changeQuery, href: '#' },
+	          'Percent'
+	        ),
+	        ' or ',
+	        React.createElement(
+	          'a',
+	          { id: 'flies', onClick: this.changeQuery, href: '#' },
+	          'Number'
+	        )
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'filter-links' },
+	        mostList
+	      )
 	    );
 	  }
 	});

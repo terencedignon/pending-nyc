@@ -1,9 +1,29 @@
 namespace :store_data do
   desc "Perform calculations on Store data"
 
-
+  # task change_to_percent: :environment do
+  #   Store.all.includes(:calc).each do |store|
+  #     p store.id
+  #     store.calc.update(
+  #       mice: store.calc.mice == 0 ? 0 : (store.calc.mice / store.calc.inspections) * 100,
+  #       roaches: store.calc.roaches == 0 ? 0 : (store.calc.roaches / store.calc.roaches) * 100,
+  #       flies: store.calc.flies == 0 ? 0 : (store.calc.flies / store.calc.flies) * 100
+  #     )
+  #   end
+  # end
 
   ###add function that removes errant stores
+
+  task geocode: :environment do
+    Store.all.each do |store|
+      next unless (store.lng == -74.044) && (store.lat == 40.6892)
+      debugger
+      # https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I
+    end
+
+  end
+
+
 
   task add_macro_score: :environment do
     MacroCalc.all.each do |macro|
@@ -21,16 +41,16 @@ namespace :store_data do
 
   task add_overall_score: :environment do
     Store.all.each do |store|
-      next if store.id < 11360
+      # next if store.id < 11360
       next if store.calc.nil?
 
       p store.id
       last = store.inspections.map{|inspection| inspection.score}.reject{|n| n.nil?}.first
 
       score = [
-        (store.calc.mice / store.calc.inspections.to_f) * 100,
-        (store.calc.roaches / store.calc.inspections.to_f) * 100,
-        (store.calc.flies / store.calc.inspections.to_f) * 100,
+        store.calc.mice_percentage,
+        store.calc.roach_percentage,
+        store.calc.flies_percentage,
         store.calc.average,
         last,
         store.calc.first_average,
@@ -343,6 +363,9 @@ namespace :store_data do
       first_average: (initial_inspections.inject(:+) / first_score_divisor.to_f),
       average: (all_inspections.inject(:+) / score_divisor.to_f),
       mice: mouse_count,
+      mice_percentage: (mouse_count == 0 ? mouse_count : ((mouse_count / inspection_count.to_f) * 100)),
+      roach_percentage: (roach_count == 0 ? roach_count : ((roach_count / inspection_count.to_f) * 100)),
+      flies_percentage: (fly_count == 0 ? fly_count : ((fly_count / inspection_count.to_f) * 100)),
       flies: fly_count,
       roaches: roach_count,
       critical: critical,

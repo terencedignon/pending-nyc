@@ -97,7 +97,7 @@ var StoreShow = React.createClass({
           label: "My first dataset",
           fillColor: "white",
            strokeColor: "black",
-           highlightFill: "#f7f7f7",
+           highlightFill: "white",
          highlightStroke: "black",
           data: data
         }

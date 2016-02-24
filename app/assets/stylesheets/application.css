@@ -1086,3 +1086,49 @@ span.normal-header {
   position: relative;
   border-bottom: 1px dashed steelblue;
 }
+
+.filter-by {
+  margin-bottom: 20px;
+}
+
+.filter-by input {
+
+  /*top: 0;*/
+  /*z-index: 9999;*/
+  height: 25px;
+  background: #f7f7f7;
+  color: #222;
+  /*font-weight: bold;*/
+  border: 1px solid transparent;
+  outline-width: 0;
+  margin-right: 10px;
+  /*margin-left: -120px;*/
+  padding: 10px;
+  padding-left: 20px;
+  width: 300px;
+  font-size: 20px;
+  /*border: 2px solid #222;*/
+  border: 1px solid #eee;
+  box-shadow: 2px 2px 5px 0 #ccc;
+  font-family: "helvetica";
+}
+
+.most-header {
+  margin-bottom: 20px;
+}
+
+.most-header a {
+  color: steelblue;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.filter-links {
+  list-style: none;
+}
+
+.filter-links a {
+  color: steelblue;
+  text-decoration: none;
+  font-size: 18px;
+}

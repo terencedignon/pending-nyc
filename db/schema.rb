@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160221233321) do
+ActiveRecord::Schema.define(version: 20160224034909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,10 +30,13 @@ ActiveRecord::Schema.define(version: 20160221233321) do
     t.integer  "best"
     t.datetime "best_date"
     t.integer  "store_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "score"
     t.integer  "last"
+    t.integer  "mice_percentage"
+    t.integer  "roach_percentage"
+    t.integer  "flies_percentage"
   end
 
   create_table "inspections", force: :cascade do |t|

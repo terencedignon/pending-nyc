@@ -29,7 +29,10 @@ class Api::StoresController < ApplicationController
   end
 
   def most
-    @stores = Store.includes(:calc).order("calcs.#{params[:q]} DESC").limit(100)
+    # debugger
+    @stores = Store.includes(:calc).ransack(cuisine_type_cont: params[:cuisine_type], zipcode_eq: params[:zipcode], boro_cont: params[:boro]).result.order("calcs.#{params[:query]} DESC").limit(10)
+
+
     render :index
   end
 

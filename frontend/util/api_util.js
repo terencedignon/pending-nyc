@@ -143,8 +143,9 @@ var ApiUtil = {
 
   fetchMost: function (query) {
     $.ajax({
-      method: "GET",
-      url: "api/stores/most?q=" + query,
+      method: "POST",
+      url: "api/stores/most",
+      data: query,
       success: function(data) {
         StoreActions.getMost(data);
       },

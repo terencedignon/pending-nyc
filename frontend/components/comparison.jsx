@@ -114,16 +114,16 @@ var Comparison = React.createClass({
           label: "",
           fillColor: "white",
            strokeColor: "black",
-           highlightFill: "#f7f7f7",
+           highlightFill: "white",
          highlightStroke: "black",
           data: storeData
         },
         {
           label: "",
-          fillColor: "#eeeeee",
-           strokeColor: "black",
-           highlightFill: "#cccccc",
-         highlightStroke: "black",
+          fillColor: "steelblue",
+           strokeColor: "steelblue",
+           highlightFill: "steelblue",
+         highlightStroke: "steelblue",
           data: compData
         }
       ]
@@ -132,7 +132,8 @@ var Comparison = React.createClass({
 
     // omitXLabels: true,
     var optionHash = {
-      barDatasetSpacing: 5,
+      barDatasetSpacing: 3,
+      barValueSpacing: 10
       // scaleShowGridLines: false,
     }
     // var chart = new Chart($('div')).Bar(dataset, optionHash);
