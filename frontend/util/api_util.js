@@ -86,6 +86,7 @@ var ApiUtil = {
     });
   },
   fetchStore: function (id, callback) {
+  
     $.ajax({
       method: "GET",
       url: "api/stores/" + id,

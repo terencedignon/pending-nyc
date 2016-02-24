@@ -57,6 +57,7 @@ var StoreActions = {
     });
   },
   getStore: function (data) {
+    
     Dispatcher.dispatch({
       actionType: StoreConstants.GET_STORE,
       data: data

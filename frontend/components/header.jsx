@@ -17,7 +17,7 @@ var Header = React.createClass({
     function yelpCallback (phone) {
       ApiUtil.getYelp(phone);
     };
-    ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this)  );
+    ApiUtil.fetchStore(e.currentTarget.id);
     this.setState({ search: "", results: [] });
     SearchActions.clearResults();
 
@@ -33,7 +33,7 @@ var Header = React.createClass({
       $('body').on("click", function () {
         $('.drop-down').css("display", "none");
         $('body').off("click");
-        SearchActions.clearResults();
+        // SearchActions.clearResults();
         // this.setState({ search: "" });
       }.bind(this));
 
@@ -59,7 +59,7 @@ var Header = React.createClass({
   search: function (e) {
     clearInterval(this.searchInterval);
     query = e.currentTarget.value;
-    this.setState({ search: query })
+    this.setState({ search: query });
     this.searchInterval = setInterval(this.autoSearch, 1000);
   },
   autoSearch: function () {
@@ -134,9 +134,9 @@ var Header = React.createClass({
     return (
       <header>
       <div className="wrapper">
-      <svg className="header-banner">
-         <text><a onClick={this.redirectHome} href="#">pending</a></text>
-       </svg>
+      <a onClick={this.redirectHome} href="#"><svg className="header-banner">
+         <text>pending.nyc</text>
+       </svg></a>
        {headerLinks}
        <div className="header-search">
          <input type="text" onChange={this.search} value={this.state.search} />

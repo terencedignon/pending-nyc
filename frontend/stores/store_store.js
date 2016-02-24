@@ -59,6 +59,7 @@ StoreStore.__onDispatch = function (payload) {
 
   if (payload.actionType === StoreConstants.GET_STORE) {
     _store = payload.data;
+    
     this.__emitChange();
     }
 
@@ -84,7 +85,7 @@ StoreStore.__onDispatch = function (payload) {
   }
 
   else if (payload.actionType === StoreConstants.GET_MOST) {
-    
+
     _most = payload.data;
     this.__emitChange();
   }
