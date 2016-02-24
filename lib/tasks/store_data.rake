@@ -16,7 +16,9 @@ namespace :store_data do
 
   task geocode: :environment do
     Store.all.each do |store|
-      next unless (store.lng == -74.044) && (store.lat == 40.6892)
+
+      next unless (store.lng == -74.0444)
+
       debugger
       # https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I
     end
