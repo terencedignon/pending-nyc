@@ -1,3 +1,5 @@
+require 'open-uri'
+
 namespace :store_data do
   desc "Perform calculations on Store data"
 
@@ -15,14 +17,23 @@ namespace :store_data do
   ###add function that removes errant stores
 
   task geocode: :environment do
-    Store.all.each do |store|
+    Store.all.each_with_index do |store, i|
+      p store.id
+      next unless store.id > 20960
+      next unless (store.lng.to_s == "-74.0444" && store.lat.to_s == "40.6892")
 
-      next unless (store.lng == -74.0444)
+      query = "#{store.building}+#{store.street.split(" ").join("+")},+#{store.boro.split(" ").join("+")},+NY"
+      data = JSON.load(open("https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&key=" + ENV["GOOGLE_API_KEY"]))
 
-      debugger
-      # https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I
+      next if data["results"] = []
+      lat = data["results"][0]["geometry"]["location"]["lat"]
+      lng = data["results"][0]["geometry"]["location"]["lng"]
+
+      store.update(
+        lat: lat,
+        lng: lng
+      )
     end
-
   end
 
 

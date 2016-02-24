@@ -4,7 +4,7 @@ var StoreStore = require('../stores/store_store.js');
 
 var Most = React.createClass({
   getInitialState: function () {
-    return { query: "roach_percentage", most: [], boro: "", zipcode: "", cuisine_type: ""}
+    return { query: "score", most: [], boro: "", zipcode: "", cuisine_type: ""}
   },
   componentDidMount: function () {
     ApiUtil.fetchMost(this.state);

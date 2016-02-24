@@ -190,7 +190,7 @@ var StoreShow = React.createClass({
 
         </h3>{ inspection.violations.map(function(violation) {
           if (violation.critical) {
-          return <li key={Math.random()} className="critical">{violation.description.split(".")[0] + "."}</li>;
+          return <li key={Math.random()} className="critical"><div className="critical-box"></div>{violation.description.split(".")[0] + "."}</li>;
           } else {
           return <li key={Math.random()} className="not-critical">{violation.description}</li>;
           }
@@ -246,9 +246,10 @@ var StoreShow = React.createClass({
         //   {legend}
         // </div>
         // <div className="show-row">
-  {violations}
-  return (
-  <section className="show-container">
+  var showDisplay;
+  if (typeof this.state.store.calc !== "undefined") {
+    showDisplay =
+    <div>
     <div className="show-info">
       {address}
     </div>
@@ -261,10 +262,6 @@ var StoreShow = React.createClass({
       {barChart}
       <hr/>
       {comparison}
-
-
-
-
     </div>
     <div>
     <div key={Math.random()} className="show-holder">
@@ -278,12 +275,19 @@ var StoreShow = React.createClass({
         </div>
       </div>
     </div>
-
-  <div className="show-row">
-
-
-
+    <hr/>
+    <span className="store-name">Violation Record</span>
+    <div className="violations">
+    {violations}
   </div>
+    </div>;
+  } else {
+    showDisplay = <div/>;
+  }
+
+  return (
+  <section className="show-container">
+    {showDisplay}
 </section>
 
       );

@@ -147,6 +147,9 @@ var Comparison = React.createClass({
     SearchActions.clearComparison();
     StoreActions.clearComparison();
   },
+  linkHandler: function (e) {
+    ApiUtil.fetchStore(this.state.comparison.id);
+  },
   setDefaultComparison: function (e) {
     e.preventDefault();
     var comparisonText;
@@ -206,11 +209,18 @@ var Comparison = React.createClass({
     // };
     // <span className="compare-name">Compare With: {input}
 
+    var comparisonNameOrLink;
+    if (typeof this.state.comparison.calc !== "undefined") {
+      comparisonNameOrLink = <a href={"#/rest/" + this.state.comparison.id} onClick={this.linkHandler}>{this.state.comparisonText}</a>;
+    } else {
+      comparisonNameOrLink = this.state.comparisonText;
+    }
+
     return (
       <div className="comparison">
-        <span key={Math.random()} className="store-name">Relative to  {this.state.comparisonText} </span>
+        <span key={Math.random()} className="store-name">Relative to  {comparisonNameOrLink} </span>
           <span className="comparison-results">{score}</span>
-          <br/>
+          <p/>
         Select By <a href="#" id="cuisine_calc" onClick={this.setDefaultComparison}>Cuisine</a>, <a href="#" id="zipcode_calc" onClick={this.setDefaultComparison}>Zipcode</a>, or <a href="#" id="boro_calc" onClick={this.setDefaultComparison}>Boro</a>.  Click markers on map for further comparison.<p/>
 
     <p/>

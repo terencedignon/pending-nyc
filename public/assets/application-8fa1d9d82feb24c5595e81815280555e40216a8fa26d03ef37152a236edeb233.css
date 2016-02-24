@@ -10,9 +10,10 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
+
+
  */
+
 
 body {
   /*margin-right: 20px;*/
@@ -196,7 +197,7 @@ body {
 .empty-image {
   width: 400px;
   height: 400px;
-  background: #222  ;
+  background: #f7f7f7;
 }
 
 .show-name {
@@ -428,8 +429,8 @@ footer {
 
 .violations ul {
   font-family: "helvetica";
-  list-style: decimal;
-  /*list-style: none;*/
+  /*list-style: decimal;*/
+  list-style: none;
 }
 
 
