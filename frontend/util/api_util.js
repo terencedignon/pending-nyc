@@ -92,7 +92,7 @@ var ApiUtil = {
       url: "api/stores/" + id,
       success: function(data) {
         StoreActions.getStore(data);
-        if (callback) callback();
+        // if (callback) callback();
       },
       error: function () {
         console.log("error in fetchStore");

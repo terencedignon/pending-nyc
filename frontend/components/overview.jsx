@@ -39,6 +39,12 @@ var Overview = React.createClass({
     return data;
   },
 
+  showUnannounced: function (e) {
+    $(e.currentTarget).find('.unannounced').css("display", "block");
+  },
+  hideUnannounced: function (e) {
+    $(e.currentTarget).find('.unannounced').css("display", "none");
+  },
 
   iconParse: function (grade) {
 
@@ -66,13 +72,8 @@ var Overview = React.createClass({
   render: function () {
 
     var data = this.propsData();
-    //
-    // $('.question-highlight').on("mouseover", function(e) {
-    //   $('.unannounced').css("display", "block");
-    // });
-    // $('.question-highlight').on("mouseout", function(e) {
-    //   $('.unannounced').css("display", "none");
-    // });
+
+
 
   //   <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
   //   BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
@@ -82,12 +83,12 @@ var Overview = React.createClass({
 
     return (
       <span className="overview-holder">
-        <span className="store-name">{this.props.store.name} Overview: <span className="question-highlight">{data.total}
-        </span></span><p/>
+        <span className="store-name">{this.props.store.name} Overview: <span onMouseover={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">{data.total}
+        <span className="unannounced">Number derived from </span></span></span><p/>
         <span className="inspection-detail"><i className={"fa fa-" + this.iconParse(data.last)}></i>Most recent: {data.last}, {this.translate(data.last)}. </span><br/>
         <i className={"fa fa-" + this.iconParse(data.average)}></i>Average: {data.average}, {this.translate(data.average)} <br/>
-        <i className={"fa fa-" + this.iconParse(data.first_average)}></i>Average <span className="question-highlight">unannounced inspection
-            <span className="unannounced">here's the explanation</span>
+        <i className={"fa fa-" + this.iconParse(data.first_average)}></i>Average <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">unannounced inspection
+            <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span>
           </span>: {data.first_average}, {this.translate(data.first_average)}.<br/>
         <i className={"fa fa-" + this.iconParse([data.mice, data.roaches, data.flies])}></i>Of {data.inspections} inspections,  {data.mice} found mice, {data.flies} found flies, and {data.roaches} found roaches.<br/>
         <i className={"fa fa-" + this.iconParse(data.worst)}></i>Worst: {data.worst} on {data.worstDate.toDateString()}.<br/>

@@ -17,13 +17,10 @@ namespace :store_data do
   ###add function that removes errant stores
 
   task geocode: :environment do
-    Store.all.each_with_index do |store, i|
-      p store.id
-      next unless store.id > 20960
-      next unless (store.lng.to_s == "-74.0444" && store.lat.to_s == "40.6892")
-
+    Store.all.select { |store| store.lng.to_s == "-74.0444" }.each do |store|
+      p store.name
       query = "#{store.building}+#{store.street.split(" ").join("+")},+#{store.boro.split(" ").join("+")},+NY"
-      data = JSON.load(open("https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&key=" + ENV["GOOGLE_API_KEY"]))
+      data = JSON.load(open("https://maps.googleapis.com/maps/api/geocode/json?address=" + query + ""))
 
       next if data["results"] = []
       lat = data["results"][0]["geometry"]["location"]["lat"]

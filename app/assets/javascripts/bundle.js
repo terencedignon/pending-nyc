@@ -24637,7 +24637,7 @@
 	      url: "api/stores/" + id,
 	      success: function (data) {
 	        StoreActions.getStore(data);
-	        if (callback) callback();
+	        // if (callback) callback();
 	      },
 	      error: function () {
 	        console.log("error in fetchStore");
@@ -36008,6 +36008,13 @@
 	    return data;
 	  },
 
+	  showUnannounced: function (e) {
+	    $(e.currentTarget).find('.unannounced').css("display", "block");
+	  },
+	  hideUnannounced: function (e) {
+	    $(e.currentTarget).find('.unannounced').css("display", "none");
+	  },
+
 	  iconParse: function (grade) {
 
 	    if (grade instanceof Array) {
@@ -36034,13 +36041,6 @@
 	  render: function () {
 
 	    var data = this.propsData();
-	    //
-	    // $('.question-highlight').on("mouseover", function(e) {
-	    //   $('.unannounced').css("display", "block");
-	    // });
-	    // $('.question-highlight').on("mouseout", function(e) {
-	    //   $('.unannounced').css("display", "none");
-	    // });
 
 	    //   <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
 	    //   BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
@@ -36058,8 +36058,13 @@
 	        ' Overview: ',
 	        React.createElement(
 	          'span',
-	          { className: 'question-highlight' },
-	          data.total
+	          { onMouseover: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'question-highlight' },
+	          data.total,
+	          React.createElement(
+	            'span',
+	            { className: 'unannounced' },
+	            'Number derived from '
+	          )
 	        )
 	      ),
 	      React.createElement('p', null),
@@ -36085,12 +36090,12 @@
 	      'Average ',
 	      React.createElement(
 	        'span',
-	        { className: 'question-highlight' },
+	        { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'question-highlight' },
 	        'unannounced inspection',
 	        React.createElement(
 	          'span',
 	          { className: 'unannounced' },
-	          'here\'s the explanation'
+	          'The Health Department conducts unannounced inspections of restaurants at least once a year.'
 	        )
 	      ),
 	      ': ',
