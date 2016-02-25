@@ -1069,7 +1069,7 @@ span.normal-header {
   position: fixed;
   top: 31px;
   right: 100px;
-  z-index: 999999;
+  z-index: 999;
 }
 
 .header-links a {
@@ -1182,4 +1182,13 @@ transition: 50ms ease-in-out;
   color: steelblue;
   text-decoration: none;
   font-size: 18px;
+}
+
+.searching {
+  position: absolute;
+  top: 25px;
+  left: 250px;
+  font-style: italic;
+  color: #777;
+  z-index: 999999999;
 }

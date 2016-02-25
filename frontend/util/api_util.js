@@ -86,14 +86,13 @@ var ApiUtil = {
     });
   },
   fetchStore: function (id, callback) {
-  
+
     $.ajax({
       method: "GET",
       url: "api/stores/" + id,
       success: function(data) {
         StoreActions.getStore(data);
-
-        // if (callback) callback(data.phone);
+        if (callback) callback();
       },
       error: function () {
         console.log("error in fetchStore");
@@ -156,12 +155,13 @@ var ApiUtil = {
     });
   },
 
-  search: function (query) {
+  search: function (query, callback) {
     $.ajax({
       method: "GET",
       url: "api/stores/search?q=" + query,
       success: function(data) {
         SearchActions.fetchSearch(data);
+        callback && callback(data);
       },
       error: function() {
         console.log("search api_util error");

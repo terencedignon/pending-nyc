@@ -50,13 +50,13 @@
 	var ReactDOM = __webpack_require__(207);
 	var React = __webpack_require__(5);
 	var StoreShow = __webpack_require__(208);
-	var StoreIndex = __webpack_require__(252);
-	SearchStore = __webpack_require__(254);
+	var StoreIndex = __webpack_require__(253);
+	SearchStore = __webpack_require__(249);
 	StoreStore = __webpack_require__(217);
 	var Header = __webpack_require__(255);
 	var Sidebar = __webpack_require__(256);
-	var Map = __webpack_require__(253);
-	MapStore = __webpack_require__(250);
+	var Map = __webpack_require__(254);
+	MapStore = __webpack_require__(251);
 	var Browse = __webpack_require__(257);
 	var Footer = __webpack_require__(258);
 	var Most = __webpack_require__(259);
@@ -24173,8 +24173,8 @@
 	var BarChart = __webpack_require__(238).Bar;
 	var PieChart = __webpack_require__(238).Pie;
 	var Comparison = __webpack_require__(248);
-	var Map = __webpack_require__(249);
-	var Overview = __webpack_require__(251);
+	var Map = __webpack_require__(250);
+	var Overview = __webpack_require__(252);
 
 	var StoreShow = React.createClass({
 	  displayName: 'StoreShow',
@@ -24637,8 +24637,7 @@
 	      url: "api/stores/" + id,
 	      success: function (data) {
 	        StoreActions.getStore(data);
-
-	        // if (callback) callback(data.phone);
+	        if (callback) callback();
 	      },
 	      error: function () {
 	        console.log("error in fetchStore");
@@ -24701,12 +24700,13 @@
 	    });
 	  },
 
-	  search: function (query) {
+	  search: function (query, callback) {
 	    $.ajax({
 	      method: "GET",
 	      url: "api/stores/search?q=" + query,
 	      success: function (data) {
 	        SearchActions.fetchSearch(data);
+	        callback && callback(data);
 	      },
 	      error: function () {
 	        console.log("search api_util error");
@@ -35469,9 +35469,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
-	var SearchStore = __webpack_require__(254);
+	var SearchStore = __webpack_require__(249);
 	var ApiUtil = __webpack_require__(209);
-	var SearchStore = __webpack_require__(254);
+	var SearchStore = __webpack_require__(249);
 	var StoreStore = __webpack_require__(217);
 	var SearchActions = __webpack_require__(210);
 	var StoreActions = __webpack_require__(216);
@@ -35762,10 +35762,51 @@
 /* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var AppDispatcher = __webpack_require__(211);
+	var SearchConstants = __webpack_require__(215);
+	var Store = __webpack_require__(219).Store;
+	var SearchStore = new Store(AppDispatcher);
+
+	_most = [];
+	_results = [];
+	_comparison = [];
+
+	SearchStore.all = function () {
+	  return _results.slice();
+	};
+
+	SearchStore.comparison = function () {
+	  return _comparison;
+	};
+
+	SearchStore.__onDispatch = function (payload) {
+	  if (payload.actionType === SearchConstants.FETCH_SEARCH) {
+	    _results = payload.data;
+	    this.__emitChange();
+	  } else if (payload.actionType === SearchConstants.CLEAR_RESULTS) {
+	    _results = [];
+	    this.__emitChange();
+	  } else if (payload.actionType === SearchConstants.FETCH_COMPARISON) {
+	    _comparison = payload.data;
+	    this.__emitChange();
+	  } else if (payload.actionType === SearchConstants.CLEAR_COMPARISON) {
+	    _comparison = [];
+	  } else if (payload.actionType === SearchConstants.FETCH_MOST) {
+	    _most = [];
+	    this.__emitChange();
+	  }
+	};
+
+	module.exports = SearchStore;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var React = __webpack_require__(5);
 	var StoreStore = __webpack_require__(217);
 	var ApiUtil = __webpack_require__(209);
-	var MapStore = __webpack_require__(250);
+	var MapStore = __webpack_require__(251);
 	var History = __webpack_require__(1).History;
 
 	var Map = React.createClass({
@@ -35889,7 +35930,7 @@
 	module.exports = Map;
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(219).Store;
@@ -35922,11 +35963,11 @@
 	module.exports = MapStore;
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
-	var Map = __webpack_require__(249);
+	var Map = __webpack_require__(250);
 	var Comparison = __webpack_require__(248);
 
 	var Overview = React.createClass({
@@ -36091,14 +36132,14 @@
 	module.exports = Overview;
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
 	var ApiUtil = __webpack_require__(209);
 	var StoreStore = __webpack_require__(217);
 	var SearchActions = __webpack_require__(210);
-	var Map = __webpack_require__(253);
+	var Map = __webpack_require__(254);
 
 	var StoreIndex = React.createClass({
 	  displayName: 'StoreIndex',
@@ -36233,13 +36274,13 @@
 	module.exports = StoreIndex;
 
 /***/ },
-/* 253 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
 	var StoreStore = __webpack_require__(217);
 	var ApiUtil = __webpack_require__(209);
-	var MapStore = __webpack_require__(250);
+	var MapStore = __webpack_require__(251);
 	var History = __webpack_require__(1).History;
 
 	var Map = React.createClass({
@@ -36428,53 +36469,12 @@
 	module.exports = Map;
 
 /***/ },
-/* 254 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(211);
-	var SearchConstants = __webpack_require__(215);
-	var Store = __webpack_require__(219).Store;
-	var SearchStore = new Store(AppDispatcher);
-
-	_most = [];
-	_results = [];
-	_comparison = [];
-
-	SearchStore.all = function () {
-	  return _results.slice();
-	};
-
-	SearchStore.comparison = function () {
-	  return _comparison;
-	};
-
-	SearchStore.__onDispatch = function (payload) {
-	  if (payload.actionType === SearchConstants.FETCH_SEARCH) {
-	    _results = payload.data;
-	    this.__emitChange();
-	  } else if (payload.actionType === SearchConstants.CLEAR_RESULTS) {
-	    _results = [];
-	    this.__emitChange();
-	  } else if (payload.actionType === SearchConstants.FETCH_COMPARISON) {
-	    _comparison = payload.data;
-	    this.__emitChange();
-	  } else if (payload.actionType === SearchConstants.CLEAR_COMPARISON) {
-	    _comparison = [];
-	  } else if (payload.actionType === SearchConstants.FETCH_MOST) {
-	    _most = [];
-	    this.__emitChange();
-	  }
-	};
-
-	module.exports = SearchStore;
-
-/***/ },
 /* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
 	var ApiUtil = __webpack_require__(209);
-	var SearchStore = __webpack_require__(254);
+	var SearchStore = __webpack_require__(249);
 	var SearchActions = __webpack_require__(210);
 	var History = __webpack_require__(1).History;
 
@@ -36483,18 +36483,18 @@
 
 	  mixins: [History],
 	  getInitialState: function () {
-	    return { search: "", results: [] };
+	    return { search: "", searching: "", results: [] };
 	  },
 	  componentDidMount: function () {
 	    // this.storeListener = StoreStore.addListener(this._onStoreChange);
 	    this.searchListener = SearchStore.addListener(this._onSearchChange);
 	  },
 	  linkHandler: function (e) {
-	    function yelpCallback(phone) {
-	      ApiUtil.getYelp(phone);
+	    function yelpCallback() {
+	      // this.setState({ searching: "Done!"});
 	    };
-	    ApiUtil.fetchStore(e.currentTarget.id);
 	    this.setState({ search: "", results: [] });
+	    ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this));
 	    SearchActions.clearResults();
 
 	    $('.drop-down').css("display", "none");
@@ -36541,12 +36541,21 @@
 	  },
 	  search: function (e) {
 	    clearInterval(this.searchInterval);
+
+	    this.setState({ searching: "Thinking" });
 	    query = e.currentTarget.value;
 	    this.setState({ search: query });
 	    this.searchInterval = setInterval(this.autoSearch, 1000);
 	  },
 	  autoSearch: function () {
-	    ApiUtil.search(query);
+	    function callback(data) {
+	      this.setState({ searching: "Done!" });
+	      setTimeout(function () {
+	        this.setState({ searching: "" });
+	      }.bind(this), 1000);
+	    }
+	    // this.setState({ searching: "Searching..."});
+	    ApiUtil.search(query, callback.bind(this));
 	    clearInterval(this.searchInterval);
 	  },
 	  settingsDropDown: function (e) {
@@ -36623,7 +36632,7 @@
 	    //   <a href="#">Metrics</a>
 	    //   <a href="#">Map View</a>
 	    // </div>
-
+	    // console.log(this.state.searching);
 	    return React.createElement(
 	      'header',
 	      null,
@@ -36650,6 +36659,11 @@
 	          React.createElement('input', { type: 'text', onChange: this.search, value: this.state.search }),
 	          React.createElement('i', { className: 'fa fa-question' }),
 	          React.createElement(
+	            'span',
+	            { className: 'searching' },
+	            this.state.searching
+	          ),
+	          React.createElement(
 	            'div',
 	            { className: 'drop-down' },
 	            React.createElement(
@@ -36671,7 +36685,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
-	var SearchStore = __webpack_require__(254);
+	var SearchStore = __webpack_require__(249);
 	// var History = require('react-router').History;
 	var ApiUtil = __webpack_require__(209);
 

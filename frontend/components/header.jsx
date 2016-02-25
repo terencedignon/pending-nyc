@@ -7,18 +7,18 @@ var History = require('react-router').History;
 var Header = React.createClass({
   mixins: [History],
   getInitialState: function () {
-    return { search: "", results: [] };
+    return { search: "", searching: "", results: [] };
   },
   componentDidMount: function () {
     // this.storeListener = StoreStore.addListener(this._onStoreChange);
     this.searchListener = SearchStore.addListener(this._onSearchChange);
   },
   linkHandler: function (e) {
-    function yelpCallback (phone) {
-      ApiUtil.getYelp(phone);
+    function yelpCallback () {
+      // this.setState({ searching: "Done!"});
     };
-    ApiUtil.fetchStore(e.currentTarget.id);
     this.setState({ search: "", results: [] });
+    ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this));
     SearchActions.clearResults();
 
     $('.drop-down').css("display", "none");
@@ -58,12 +58,21 @@ var Header = React.createClass({
   },
   search: function (e) {
     clearInterval(this.searchInterval);
+
+    this.setState({ searching: "Thinking"})
     query = e.currentTarget.value;
     this.setState({ search: query });
     this.searchInterval = setInterval(this.autoSearch, 1000);
   },
   autoSearch: function () {
-    ApiUtil.search(query);
+    function callback (data) {
+      this.setState({ searching: "Done!"});
+      setTimeout(function () {
+        this.setState({ searching: ""});
+      }.bind(this), 1000);
+    }
+    // this.setState({ searching: "Searching..."});
+    ApiUtil.search(query, callback.bind(this));
     clearInterval(this.searchInterval);
   },
   settingsDropDown: function (e) {
@@ -131,7 +140,7 @@ var Header = React.createClass({
       //   <a href="#">Metrics</a>
       //   <a href="#">Map View</a>
       // </div>
-
+      // console.log(this.state.searching);
     return (
       <header>
       <div className="wrapper">
@@ -141,9 +150,11 @@ var Header = React.createClass({
        {headerLinks}
        <div className="header-search">
          <input type="text" onChange={this.search} value={this.state.search} />
-
          <i className="fa fa-question"></i>
 
+         <span className="searching">
+           {this.state.searching}
+         </span>
          <div className="drop-down">
            <ul>
              {listedResults}
