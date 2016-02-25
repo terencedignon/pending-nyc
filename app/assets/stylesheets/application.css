@@ -508,7 +508,7 @@ footer {
   margin-top: 5px;
   width: 5px;
   height: 10px;
-  background: maroon;
+  background: salmon;
   display: inline-block;
   left: 90px;
 }
@@ -1043,9 +1043,11 @@ span.normal-header {
 
 .trend-holder {
   /*display:none;*/
+  /*background: #f7f7f7;*/
+  padding: 10px;
   margin-top: -35px;
-  margin-left: 0px;
-  margin-bottom: 20px;
+  margin-left: -10px;
+  /*margin-bottom: 20px;*/
 }
 
 .trending-item {
@@ -1057,7 +1059,7 @@ span.normal-header {
   border: 1px solid transparent;
   /*border: 1px solid #f7f7f7;*/
   color: #222;
-  font-size: 18px;
+  font-size: 16px;
   font-family: "lato";
   opacity: 0.9;
   /*background: #f7f7f7;*/

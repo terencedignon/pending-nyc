@@ -36190,7 +36190,7 @@
 	        React.createElement(
 	          'span',
 	          { className: 'trending' },
-	          'Active:'
+	          'Most Active:'
 	        ),
 	        mostVisitedItems,
 	        React.createElement('hr', null),

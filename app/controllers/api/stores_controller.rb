@@ -80,7 +80,7 @@ class Api::StoresController < ApplicationController
   end
 
   def trending
-    @stores = Store.all.where("last_visit IS NOT NULL").order(last_visit: :desc).limit(3)
+    @stores = Store.all.where("last_visit IS NOT NULL").order(last_visit: :desc).limit(5)
     render :index
   end
   #
@@ -90,7 +90,7 @@ class Api::StoresController < ApplicationController
   # end
 
   def most_visited
-    @stores = Store.all.order(visit_count: :desc).page(params[:page]).per(3)
+    @stores = Store.all.order(visit_count: :desc).page(params[:page]).per(5)
     render :index
   end
 
