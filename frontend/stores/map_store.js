@@ -15,7 +15,6 @@ MapStore.getMainMap = function () {
 };
 
 MapStore.__onDispatch = function (payload) {
-  console.log("hi");
   if (payload.actionType === MapConstants.FETCH_MAP) {
     _map = payload.data;
     this.__emitChange();

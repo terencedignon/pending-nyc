@@ -47,7 +47,7 @@ class Api::StoresController < ApplicationController
 
     # end
     @stores = @stores.ransack(name_cont: params[:query][:name],
-                  zipcode_start: params[:query][:zipcode],
+                  zipcode_eq: params[:query][:zipcode],
                   boro_cont: params[:query][:boro],
                   cuisine_type_cont: params[:query][:cuisine_type]
                   ).result.includes(:calc).order(created_at: :desc).limit(500)

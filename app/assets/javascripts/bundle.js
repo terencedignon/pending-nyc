@@ -35950,7 +35950,6 @@
 	};
 
 	MapStore.__onDispatch = function (payload) {
-	  console.log("hi");
 	  if (payload.actionType === MapConstants.FETCH_MAP) {
 	    _map = payload.data;
 	    this.__emitChange();
@@ -36295,7 +36294,7 @@
 	  mixins: [History],
 
 	  getInitialState: function () {
-	    return { markers: [], markerSetting: "average", newMarkers: [], zipcode: "", boro: "", cuisine_type: "", name: "" };
+	    return { markers: [], markerSetting: "average", newMarkers: [], zipcode: "11375", boro: "", cuisine_type: "", name: "" };
 	  },
 	  componentDidMount: function () {
 
@@ -36359,7 +36358,7 @@
 	  },
 	  _onMapChange: function () {
 
-	    this.setState({ markers: [] });
+	    // this.setState({ markers: [] });
 	    var newMarkers = [];
 
 	    MapStore.getMainMap().forEach(function (marker) {
