@@ -138,7 +138,7 @@ var Comparison = React.createClass({
     }
     // var chart = new Chart($('div')).Bar(dataset, optionHash);
     // debugger
-    var chart = <BarChart ref="barGraph" redraw key={Math.random()} className="comparison-chart" data={dataset} width={500} height={350} options={optionHash}/>;
+    var chart = <BarChart ref="barGraph" redraw key={Math.random()} className="comparison-chart" data={dataset} width={500} height={325} options={optionHash}/>;
 
     return chart;
 },

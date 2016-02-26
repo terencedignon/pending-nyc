@@ -9,7 +9,7 @@ var Map = React.createClass({
   mixins: [History],
 
   getInitialState: function () {
-    return { markers: [], markerSetting: "average", newMarkers: [], zipcode: "11375", boro: "", cuisine_type: "", name: ""};
+    return { markers: [], markerSetting: "average", newMarkers: [], zipcode: "", boro: "", cuisine_type: "", name: ""};
   },
   componentDidMount: function () {
 
@@ -206,17 +206,21 @@ var Map = React.createClass({
 
     });
 
-  var query = {
-    boro: this.state.boro,
-    cuisine_type: this.state.cuisine_type,
-    zipcode: this.state.zipcode,
-    name: this.state.name
-  }
 
-  google.maps.event.addListener(map, 'tilesloaded', function () {
-    var options = {bounds: map.getBounds().toJSON(), query: query};
-    ApiUtil.fetchMainMap(options);
-  }.bind(this));
+  // google.maps.event.addListener(map, 'tilesloaded', function () {
+  setTimeout(function() {
+
+  var options = {bounds: map.getBounds().toJSON(), query: {
+      boro: this.state.boro,
+      zipcode: this.state.zipcode,
+      name: this.state.name,
+      cuisine_type: this.state.cuisine_type
+    } };
+  ApiUtil.fetchMainMap(options);
+  setTimeout(function() {
+      this._onMapChange();
+    }.bind(this), 10000);
+  }.bind(this), 2000);
 
   google.maps.event.addListener(map, 'idle', function() {
       var options = {bounds: map.getBounds().toJSON(), query: {
@@ -300,9 +304,7 @@ _onMapChange: function () {
       this.mapUpdate();
   },
   changeZipcode: function (e) {
-
     this.setState({ zipcode: e.currentTarget.value});
-
     this.mapUpdate();
   },
   changeBoro: function (e) {
@@ -310,7 +312,6 @@ _onMapChange: function () {
       this.mapUpdate();
   },
   mapUpdate: function () {
-
     clearInterval(this.timeout);
     this.timeout = setInterval(function () {
 
@@ -323,7 +324,7 @@ _onMapChange: function () {
       ApiUtil.fetchMainMap(options);
       setTimeout(function () {
         this._onMapChange();
-      }.bind(this), 500);
+      }.bind(this), 1000);
       clearInterval(this.timeout);
     }.bind(this), 1000);
   },

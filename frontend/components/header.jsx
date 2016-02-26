@@ -87,7 +87,7 @@ var Header = React.createClass({
         // $('.header-banner').css("opacity", "0.75");
         $('.header-banner text').css("opacity", "1");
         // $('.header-search').css("opacity", "0.75");
-        $('.header-banner').css("opacity", "0.95");
+        $('.header-banner').css("opacity", "1");
         $('.header-banner').css("height", "25px");
         $('.header-banner').css("box-shadow", "2px 2px 0 0 #f7f7f7");
         $('.show-info').css("height", "100%");

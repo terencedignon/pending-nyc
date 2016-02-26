@@ -50,7 +50,7 @@ class Api::StoresController < ApplicationController
                   zipcode_eq: params[:query][:zipcode],
                   boro_cont: params[:query][:boro],
                   cuisine_type_cont: params[:query][:cuisine_type]
-                  ).result.includes(:calc).order(created_at: :desc).limit(500)
+                  ).result.includes(:calc).order(created_at: :desc).limit(10)
 
 
     # @stores = @stores.includes(:calc).limit(100)

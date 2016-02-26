@@ -47,7 +47,6 @@ var Overview = React.createClass({
   },
 
   iconParse: function (grade) {
-
     if (grade instanceof Array) {
       for (var i = 0; i < grade.length; i++) {
         var num = grade[i];
@@ -83,7 +82,7 @@ var Overview = React.createClass({
 
     return (
       <span className="overview-holder">
-        <span className="store-name">{this.props.store.name} Overview: <span onMouseover={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">{data.total}
+        <span className="store-name">{this.props.store.name} Overview: <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">{data.total}
         <span className="unannounced">Number derived from </span></span></span><p/>
         <span className="inspection-detail"><i className={"fa fa-" + this.iconParse(data.last)}></i>Most recent: {data.last}, {this.translate(data.last)}. </span><br/>
         <i className={"fa fa-" + this.iconParse(data.average)}></i>Average: {data.average}, {this.translate(data.average)} <br/>
