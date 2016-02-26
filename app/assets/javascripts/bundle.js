@@ -24288,7 +24288,7 @@
 	      return imageObject["P"];
 	    }
 	  },
-	  translate(number) {
+	  translate: function (number) {
 	    if (number <= 13) {
 	      return "an A";
 	    } else if (number <= 27) {
