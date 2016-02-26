@@ -82,8 +82,8 @@ var Overview = React.createClass({
 
     return (
       <span className="overview-holder">
-        <span className="store-name">{this.props.store.name} Overview: <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">{data.total}
-        <span className="unannounced">Number derived from </span></span></span><p/>
+        <span className="store-name">{this.props.store.name} Overview: <span className="question-highlight">{data.total}
+        <span className="unannounced">An average of best, worst, average, surprise average, and percentage of infestations </span></span></span><p/>
         <span className="inspection-detail"><i className={"fa fa-" + this.iconParse(data.last)}></i>Most recent: {data.last}, {this.translate(data.last)}. </span><br/>
         <i className={"fa fa-" + this.iconParse(data.average)}></i>Average: {data.average}, {this.translate(data.average)} <br/>
         <i className={"fa fa-" + this.iconParse(data.first_average)}></i>Average <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">unannounced inspection
