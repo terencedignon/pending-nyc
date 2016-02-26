@@ -240,13 +240,13 @@ _onMapChange: function () {
     var icon;
 
   if (marker.calc.average <= 13) {
-      icon = "/assets/blue_MarkerA.png";
+      icon = "http://i.imgur.com/E2oZQ4V.png";
 
     } else if (marker.calc.score <= 27) {
-      icon = "/assets/green_MarkerB.png";
+      icon = "http://i.imgur.com/h0qBo2q.png";
 
     } else {
-      icon = "/assets/orange_MarkerC.png";
+      icon = "http://i.imgur.com/ejjOVXB.png";
 
     }
     var coordinates = {lat: Number(marker.lat), lng: Number(marker.lng) };
