@@ -192,8 +192,7 @@ var StoreShow = React.createClass({
       var options = {
         scaleShowGridLines: true
       }
-      barChart = <BarChart className="bar-chart" data={data} width={500} height={200} options={options} fill={'#3182bd'}    />;
-
+      barChart = <BarChart className="bar-chart" data={data} width={500} height={175} options={options} fill={'#3182bd'}    />;
     var grade = <img src={this.selectGrade()}/>;
       var image = this.returnImage();
     }
@@ -212,6 +211,7 @@ var StoreShow = React.createClass({
 
     address = <div>
       <h2>{this.state.store.name}</h2>
+      {this.state.store.display_phone}
 
   </div>;
 
@@ -261,7 +261,7 @@ var StoreShow = React.createClass({
         </div>
       </div>
     </div>
-    <hr/>
+
     <span className="store-name">Violation Record</span><br/>
     <div className="violations">
       Total: {this.state.store.calc.violations} : Critical: {this.state.store.calc.critical}

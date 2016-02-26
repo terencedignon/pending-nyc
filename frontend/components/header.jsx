@@ -97,7 +97,7 @@ var Header = React.createClass({
         // $('.show-info').css("color", "#222222");
         // $('.show-info').css("background", "transparent");
         // $('.show-info').css("background", "#f7f7f7");
-        $('.show-info').css("width", "200px");
+        $('.show-info').css("width", "150px");
         $('.show-info').css("right", "20");
 
         $('.show-info').on("click", function() {
