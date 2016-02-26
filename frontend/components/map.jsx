@@ -18,6 +18,182 @@ var Map = React.createClass({
     map = new google.maps.Map(document.getElementById('map'), {
       center: coordinates,
       zoomControl: false,
+      styles: [
+    {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#e9e9e9"
+            },
+            {
+                "lightness": 17
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#f5f5f5"
+            },
+            {
+                "lightness": 20
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            },
+            {
+                "lightness": 17
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            },
+            {
+                "lightness": 29
+            },
+            {
+                "weight": 0.2
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            },
+            {
+                "lightness": 18
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            },
+            {
+                "lightness": 16
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#f5f5f5"
+            },
+            {
+                "lightness": 21
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#dedede"
+            },
+            {
+                "lightness": 21
+            }
+        ]
+    },
+    {
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "color": "#ffffff"
+            },
+            {
+                "lightness": 16
+            }
+        ]
+    },
+    {
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "saturation": 36
+            },
+            {
+                "color": "#333333"
+            },
+            {
+                "lightness": 40
+            }
+        ]
+    },
+    {
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#f2f2f2"
+            },
+            {
+                "lightness": 19
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#fefefe"
+            },
+            {
+                "lightness": 20
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#fefefe"
+            },
+            {
+                "lightness": 17
+            },
+            {
+                "weight": 1.2
+            }
+        ]
+    }
+],
       streetViewControl: false,
       mapTypeControl: false,
       zoom: 14
@@ -58,38 +234,26 @@ componentWillUnmount: function () {
 _onMapChange: function () {
   // this.setState({ markers: [] });
   var newMarkers = [];
-  this.setState({markers: []});
+  // this.setState({markers: []});
   MapStore.all().forEach(function(marker) {
-    var grade;
-    var hex;
-    var text = "FFF";
-    var shadow = "_withshadow";
 
-  if (marker.camis === this.props.camis) {
-      grade = marker.calc.score;
-      hex = "FFFF00";
-      // shadow = "";
-      text = "000000";
-  }
-  else if (marker.calc.average <= 13) {
-      grade = marker.calc.score;
-      hex = "0056ac";
-      // hex = "000";
+    var icon;
+
+  if (marker.calc.average <= 13) {
+      icon = "/assets/blue_MarkerA.png";
+
     } else if (marker.calc.score <= 27) {
-      grade = marker.calc.score;
-      hex = "49ac42";
-    } else {
-      grade = marker.calc.score;
-      hex="fa9828";
-    }
+      icon = "/assets/green_MarkerB.png";
 
-    var markerImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_pin_letter" + shadow + "&chld=" +
-      grade + "|" + hex + "|" + text);
+    } else {
+      icon = "/assets/orange_MarkerC.png";
+
+    }
     var coordinates = {lat: Number(marker.lat), lng: Number(marker.lng) };
     var newMarker = new google.maps.Marker({
       position: coordinates,
       map: map,
-      icon: markerImage,
+      icon: icon,
       title: marker.name,
       id: marker.id
     });

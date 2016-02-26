@@ -10,9 +10,10 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
+
+
  */
+
 
 body {
   /*margin-right: 20px;*/
@@ -413,9 +414,9 @@ footer {
 .violations {
   /*display: none;*/
   /*position: absolute;*/
-  z-index: 999;
+  z-index: 9;
   /*margin-left: 20px;*/
-  /*border-radius: 2%;*/
+  border-radius: 2%;
   /*max-height: 400px!important;*/
 
   overflow: scroll;
@@ -426,12 +427,6 @@ footer {
   /*margin-top: -150px;*/
   /*margin-left: 100px;*/
   /*box-shadow: 2px 2px 0 0 #f7f7f7;*/
-}
-
-.violations a {
-  text-decoration: none;
-  color: steelblue;
-  /*z-index: 9999999;*/
 }
 
 .violations ul {
@@ -682,7 +677,7 @@ footer {
 .options {
   position: absolute;
   z-index: 99;
-  top: -50px;
+  top: -40px;
   left: 0px;
 
 }

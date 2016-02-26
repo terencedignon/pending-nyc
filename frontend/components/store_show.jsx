@@ -182,7 +182,7 @@ var StoreShow = React.createClass({
       overview = <Overview store={this.state.store}/>
       //VIOLATION LIST
 
-      violations = <Violations inspections={this.state.store.inspections} />
+      violations = <Violations key={Math.random()} inspections={this.state.store.inspections} />
         //CHART
 
       // var circleData = this.violationChart();
@@ -263,8 +263,8 @@ var StoreShow = React.createClass({
     </div>
     <hr/>
     <span className="store-name">Violation Record</span><br/>
-    Total: {this.state.store.calc.violations} : Critical: {this.state.store.calc.critical}<br/>
     <div className="violations">
+      Total: {this.state.store.calc.violations} : Critical: {this.state.store.calc.critical} 
     {violations}
   </div>
     </div>;
