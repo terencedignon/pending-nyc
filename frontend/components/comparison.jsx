@@ -29,7 +29,7 @@ var Comparison = React.createClass({
   onSearchChange: function () {
     this.setState({ comparisons: SearchStore.comparison() });
   },
-  getComparisonText(comparison) {
+  getComparisonText: function (comparison) {
   },
   onStoreChange: function () {
     var comparison = StoreStore.getComparison();
