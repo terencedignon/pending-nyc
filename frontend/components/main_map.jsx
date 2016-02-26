@@ -254,7 +254,7 @@ _onMapChange: function () {
   // this.setState({ markers: [] });
   var newMarkers = [];
   // this.setState({markers: []});
-  MapStore.all().forEach(function(marker) {
+  MapStore.getMainMap().forEach(function(marker) {
 
     var icon;
 
