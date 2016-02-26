@@ -48,8 +48,9 @@ var Most = React.createClass({
     var mostList = <div/>;
     if (this.state.most.length > 1) {
       mostList = StoreStore.getMost().map(function (store) {
-
-        return <li key={Math.random()}> <a href={"#/rest/" + store.id}>{store.name}</a> ({store.calc[this.state.query]}) </li>;
+        return <li key={Math.random()}> <a href={"#/rest/" + store.id}>{store.name}</a> ({store.calc[this.state.query]})<br/>
+        {store.boro} / {store.zipcode}
+         </li>;
         }.bind(this));
     }
 

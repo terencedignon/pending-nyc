@@ -6,7 +6,7 @@ var PieChart = require("react-chartjs").Pie;
 var Comparison = require('./comparison.jsx');
 var Map = require('./map.jsx');
 var Overview = require('./overview.jsx');
-
+var Violations = require('./violations.jsx');
 
 var StoreShow = React.createClass({
   getInitialState: function () {
@@ -182,21 +182,7 @@ var StoreShow = React.createClass({
       overview = <Overview store={this.state.store}/>
       //VIOLATION LIST
 
-      violations = this.state.store.inspections
-      .map(function(inspection) {
-        date = new Date(inspection.inspection_date);
-        return <ul key={Math.random()}><h3>Inspection Date: {date.getMonth() + "/" + (date.getYear() + 1900) }<br/>
-            Score: {inspection.score}
-
-        </h3>{ inspection.violations.map(function(violation) {
-          if (violation.critical) {
-          return <li key={Math.random()} className="critical"><div className="critical-box"></div>{violation.description.split(".")[0] + "."}</li>;
-          } else {
-          return <li key={Math.random()} className="not-critical">{violation.description}</li>;
-          }
-          }) }</ul>
-        });
-
+      violations = <Violations inspections={this.state.store.inspections} />
         //CHART
 
       // var circleData = this.violationChart();
@@ -277,7 +263,7 @@ var StoreShow = React.createClass({
     </div>
     <hr/>
     <span className="store-name">Violation Record</span><br/>
-    Total: {this.state.store.calc.violations} : Critical: {this.state.store.calc.critical}
+    Total: {this.state.store.calc.violations} : Critical: {this.state.store.calc.critical}<br/>
     <div className="violations">
     {violations}
   </div>

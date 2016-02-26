@@ -50,16 +50,16 @@
 	var ReactDOM = __webpack_require__(207);
 	var React = __webpack_require__(5);
 	var StoreShow = __webpack_require__(208);
-	var StoreIndex = __webpack_require__(253);
+	var StoreIndex = __webpack_require__(254);
 	SearchStore = __webpack_require__(249);
 	StoreStore = __webpack_require__(217);
-	var Header = __webpack_require__(255);
-	var Sidebar = __webpack_require__(256);
-	var Map = __webpack_require__(254);
+	var Header = __webpack_require__(256);
+	var Sidebar = __webpack_require__(257);
+	var Map = __webpack_require__(255);
 	MapStore = __webpack_require__(251);
-	var Browse = __webpack_require__(257);
-	var Footer = __webpack_require__(258);
-	var Most = __webpack_require__(259);
+	var Browse = __webpack_require__(258);
+	var Footer = __webpack_require__(259);
+	var Most = __webpack_require__(260);
 
 	// <Sidebar />
 	var App = React.createClass({
@@ -24175,6 +24175,7 @@
 	var Comparison = __webpack_require__(248);
 	var Map = __webpack_require__(250);
 	var Overview = __webpack_require__(252);
+	var Violations = __webpack_require__(253);
 
 	var StoreShow = React.createClass({
 	  displayName: 'StoreShow',
@@ -24342,39 +24343,7 @@
 	      overview = React.createElement(Overview, { store: this.state.store });
 	      //VIOLATION LIST
 
-	      violations = this.state.store.inspections.map(function (inspection) {
-	        date = new Date(inspection.inspection_date);
-	        return React.createElement(
-	          'ul',
-	          { key: Math.random() },
-	          React.createElement(
-	            'h3',
-	            null,
-	            'Inspection Date: ',
-	            date.getMonth() + "/" + (date.getYear() + 1900),
-	            React.createElement('br', null),
-	            'Score: ',
-	            inspection.score
-	          ),
-	          inspection.violations.map(function (violation) {
-	            if (violation.critical) {
-	              return React.createElement(
-	                'li',
-	                { key: Math.random(), className: 'critical' },
-	                React.createElement('div', { className: 'critical-box' }),
-	                violation.description.split(".")[0] + "."
-	              );
-	            } else {
-	              return React.createElement(
-	                'li',
-	                { key: Math.random(), className: 'not-critical' },
-	                violation.description
-	              );
-	            }
-	          })
-	        );
-	      });
-
+	      violations = React.createElement(Violations, { inspections: this.state.store.inspections });
 	      //CHART
 
 	      // var circleData = this.violationChart();
@@ -24520,6 +24489,7 @@
 	        this.state.store.calc.violations,
 	        ' : Critical: ',
 	        this.state.store.calc.critical,
+	        React.createElement('br', null),
 	        React.createElement(
 	          'div',
 	          { className: 'violations' },
@@ -35993,7 +35963,7 @@
 	    data.worst = calc.worst;
 	    data.inspections = calc.inspections;
 	    data.best = calc.best;
-	    data.last = this.props.store.inspections[0].score;
+	    data.last = this.props.store.inspections[this.props.store.inspections.length - 1].score;
 	    data.first_average = calc.first_average;
 	    data.name = this.formatName(this.props.store.name);
 	    data.bestDate = new Date(calc.best_date);
@@ -36140,10 +36110,90 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
+
+	var Violations = React.createClass({
+	  displayName: "Violations",
+
+	  getInitialState: function () {
+	    return { expanded: true, onlyCritical: false, message: "Collapse All" };
+	  },
+	  toggle: function (e) {
+	    e.preventDefault();
+	    var expanded = !this.state.expanded;
+	    var message;
+	    if (expanded) {
+	      message = "Expand";
+	    } else {
+	      message = "Collapse";
+	    }
+	    this.setState({ expanded: expanded, message: message });
+	  },
+	  toggleCritical: function () {
+	    this.setState({ onlyCritical: !this.state.onlyCritical });
+	  },
+	  render: function () {
+	    var violationList = this.props.inspections.map(function (inspection) {
+	      date = new Date(inspection.inspection_date);
+	      return React.createElement(
+	        "ul",
+	        { key: Math.random() },
+	        React.createElement(
+	          "h3",
+	          null,
+	          "Inspection Date: ",
+	          date.getMonth() + "/" + (date.getYear() + 1900),
+	          React.createElement("br", null),
+	          "Score: ",
+	          inspection.score
+	        ),
+	        inspection.violations.map(function (violation) {
+	          if (violation.critical) {
+	            return React.createElement(
+	              "li",
+	              { key: Math.random(), className: "critical" },
+	              React.createElement("div", { className: "critical-box" }),
+	              violation.description.split(".")[0] + "."
+	            );
+	          } else if (!this.state.onlyCritical) {
+	            return React.createElement(
+	              "li",
+	              { key: Math.random(), className: "not-critical" },
+	              violation.description
+	            );
+	          }
+	        }.bind(this))
+	      );
+	    }.bind(this));
+
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "a",
+	        { href: "#", onClick: this.toggle },
+	        this.state.message
+	      ),
+	      React.createElement(
+	        "a",
+	        { href: "#", onClick: this.toggleCritical },
+	        "Only Critical"
+	      ),
+	      violationList
+	    );
+	  }
+	});
+
+	module.exports = Violations;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(5);
 	var ApiUtil = __webpack_require__(209);
 	var StoreStore = __webpack_require__(217);
 	var SearchActions = __webpack_require__(210);
-	var Map = __webpack_require__(254);
+	var Map = __webpack_require__(255);
 
 	var StoreIndex = React.createClass({
 	  displayName: 'StoreIndex',
@@ -36278,7 +36328,7 @@
 	module.exports = StoreIndex;
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
@@ -36473,7 +36523,7 @@
 	module.exports = Map;
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
@@ -36510,11 +36560,13 @@
 	  populateSearch: function () {
 	    if (this.state.results.length > 0) {
 	      $('.drop-down').css("display", "flex");
-	      $('body').on("click", function () {
-	        $('.drop-down').css("display", "none");
-	        $('body').off("click");
-	        // SearchActions.clearResults();
-	        // this.setState({ search: "" });
+	      $('body').on("click", function (e) {
+	        if (e.target.tagName !== "LI") {
+	          $('.drop-down').css("display", "none");
+	          $('body').off("click");
+	          SearchActions.clearResults();
+	          this.setState({ search: "" });
+	        }
 	      }.bind(this));
 
 	      return this.state.results.map(function (result) {
@@ -36573,9 +36625,10 @@
 	        $('.header-banner text').css("opacity", "1");
 	        // $('.header-search').css("opacity", "0.75");
 	        $('.header-banner').css("opacity", "0.95");
-	        $('.header-banner').css("height", "30px");
-	        $('.header-banner').css("box-shadow", "2px 2px 0 0 #eee");
+	        $('.header-banner').css("height", "25px");
+	        $('.header-banner').css("box-shadow", "2px 2px 0 0 #f7f7f7");
 	        $('.show-info').css("height", "100%");
+	        // $('.header-banner').css("background", "i");
 
 	        $('.show-info').css("border-radius", "0");
 	        // $('.show-info').css("color", "#222222");
@@ -36600,7 +36653,7 @@
 	          $('.header-search').css("opacity", "1");
 	          $('.show-info').css("right", "20px");
 	          $('.header-banner').css("box-shadow", "2px 2px 0 0 #ffffff");
-	          $('.header-banner').css("height", "40px");
+	          $('.header-banner').css("height", "30px");
 	          // $('.show-info').css("opacity", "1");
 	        }
 	    });
@@ -36685,7 +36738,7 @@
 	module.exports = Header;
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
@@ -36753,7 +36806,7 @@
 	module.exports = SideBar;
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
@@ -36867,7 +36920,7 @@
 	module.exports = Browse;
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
@@ -36898,7 +36951,7 @@
 	module.exports = Footer;
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(5);
@@ -36953,7 +37006,6 @@
 	    var mostList = React.createElement('div', null);
 	    if (this.state.most.length > 1) {
 	      mostList = StoreStore.getMost().map(function (store) {
-
 	        return React.createElement(
 	          'li',
 	          { key: Math.random() },
@@ -36965,7 +37017,11 @@
 	          ),
 	          ' (',
 	          store.calc[this.state.query],
-	          ') '
+	          ')',
+	          React.createElement('br', null),
+	          store.boro,
+	          ' / ',
+	          store.zipcode
 	        );
 	      }.bind(this));
 	    }

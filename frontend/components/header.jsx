@@ -30,11 +30,13 @@ var Header = React.createClass({
   populateSearch: function () {
     if (this.state.results.length > 0) {
       $('.drop-down').css("display", "flex");
-      $('body').on("click", function () {
-        $('.drop-down').css("display", "none");
-        $('body').off("click");
-        // SearchActions.clearResults();
-        // this.setState({ search: "" });
+      $('body').on("click", function (e) {
+        if (e.target.tagName !== "LI") {
+          $('.drop-down').css("display", "none");
+          $('body').off("click");
+          SearchActions.clearResults();
+          this.setState({ search: "" });
+        }
       }.bind(this));
 
       return this.state.results.map(function(result) {
@@ -86,9 +88,10 @@ var Header = React.createClass({
         $('.header-banner text').css("opacity", "1");
         // $('.header-search').css("opacity", "0.75");
         $('.header-banner').css("opacity", "0.95");
-        $('.header-banner').css("height", "30px");
-        $('.header-banner').css("box-shadow", "2px 2px 0 0 #eee");
+        $('.header-banner').css("height", "25px");
+        $('.header-banner').css("box-shadow", "2px 2px 0 0 #f7f7f7");
         $('.show-info').css("height", "100%");
+        // $('.header-banner').css("background", "i");
 
         $('.show-info').css("border-radius", "0")
         // $('.show-info').css("color", "#222222");
@@ -113,7 +116,7 @@ var Header = React.createClass({
         $('.header-search').css("opacity", "1");
         $('.show-info').css("right", "20px");
         $('.header-banner').css("box-shadow", "2px 2px 0 0 #ffffff");
-        $('.header-banner').css("height", "40px");
+        $('.header-banner').css("height", "30px");
         // $('.show-info').css("opacity", "1");
       }
     });

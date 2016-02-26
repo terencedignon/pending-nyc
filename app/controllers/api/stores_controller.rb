@@ -97,7 +97,7 @@ class Api::StoresController < ApplicationController
   def search
     search = params[:q]
     search_result = Store.ransack(name_cont: search).result.includes(:calc)
-    @stores = search_result.limit(100)
+    @stores = search_result.limit(15)
     render json: @stores
     # render "api/stores/index"
   end
