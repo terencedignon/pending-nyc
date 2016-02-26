@@ -35935,7 +35935,7 @@
 	  percentageCalc: function (num, div) {
 	    return num > 0 ? Math.round(num / div * 100) + "%" : "0";
 	  },
-	  translate(number) {
+	  translate: function (number) {
 	    if (number <= 13) return "an A";
 	    if (number <= 27) return "a B";
 	    return "a C";
