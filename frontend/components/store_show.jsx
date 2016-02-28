@@ -135,32 +135,6 @@ var StoreShow = React.createClass({
   analyzeBy: function () {
 
   },
-//   createOverview: function () {
-//     var name = this.state.store.name.toLowerCase().split(" ").map(function (word) {
-//       return word[0].toUpperCase() + word.slice(1);
-//     }).join(" ");
-//     var calc = this.state.store.calc;
-//     var bestDate = new Date(calc.best_date);
-//     var worstDate = new Date(calc.worst_date);
-//     var flies = (calc.flies > 0 ? Math.round((calc.flies / calc.inspections) * 100) + "%" : "0")
-//     var mice = (calc.mice > 0 ? Math.round((calc.mice / calc.inspections) * 100) + "%" : "0")
-//     var roaches = (calc.roaches > 0 ? Math.round((calc.roaches / calc.inspections) * 100) + "%" : "0")
-//
-//     overview = <span>
-//       <span className="store-name"><strong className="overview-emphasis">{name} Overview</strong></span><p/>
-//       <i className="fa fa-user"></i>{name} has an average inspection score of <strong className={this.colorAverage(calc.average)}> {calc.average}</strong>, the equivalent of {this.translate(calc.average)}. <br/>
-//       <i className="fa fa-user-secret"></i>Its average score for unannounced inspections is <strong className={this.colorAverage(calc.first_average)}>{calc.first_average}</strong>, or {this.translate(calc.first_average)}.<br/>
-//       <i className="fa fa-bug"></i>Of those <strong className="emphasis">{calc.inspections}</strong> inspections,  <strong className="emphasis">{mice}</strong> found mice, <strong className="emphasis">{flies}</strong> found flies, and <strong className="emphasis">{roaches}</strong> found roaches.<br/>
-//       <i className="fa fa-calendar-times-o"></i>Its worst inspection was <strong className={this.colorAverage(calc.worst)}>{calc.worst}</strong> on {worstDate.toDateString()}.<br/>
-//       <i className="fa fa-calendar-check-o"></i>Its best inspection was <strong className={this.colorAverage(calc.best)}>{calc.best}</strong> on {bestDate.toDateString()}.<p/>
-//           <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
-//           BY <a href="#" onClick={this.analyzeBy}>{this.state.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.state.store.zipcode}</a>  <a href="#">{this.state.store.boro[0] + this.state.store.boro.slice(1).toLowerCase()}</a><br/>
-//
-// </span>;
-//   return overview;
-//
-//   },
-
   render: function () {
 
 
@@ -192,7 +166,7 @@ var StoreShow = React.createClass({
       var options = {
         scaleShowGridLines: true
       }
-      barChart = <BarChart className="bar-chart" data={data} width={500} height={175} options={options} fill={'#3182bd'}    />;
+      barChart = <BarChart className="bar-chart" data={data} width={500} height={150} options={options} fill={'#3182bd'}    />;
     var grade = <img src={this.selectGrade()}/>;
       var image = this.returnImage();
     }
@@ -220,28 +194,15 @@ var StoreShow = React.createClass({
   // <LineChart className="chart" data={data} width="600" height="250" />
   // {barChart}
 
-  var legend =  <div className="legend"><span className="a">A:</span> <span className="range">0-13 / </span>&nbsp;
-    <span className="b">B:</span> <span className="range">14-27 / </span>&nbsp;
-      <span className="c">C:</span> <span className="range">28 and up </span></div>;
-
         // <div className="violation-chart">
         //   {circleChart}
         // </div>
-
-        // <div className="legend">
-        //   {legend}
-        // </div>
-        // <div className="show-row">
   var showDisplay;
   if (typeof this.state.store.calc !== "undefined") {
     showDisplay =
     <div>
-    <div className="show-info">
-      {address}
-    </div>
   <div className="show-row">
     <div className="overview">
-
       {overview}
       <hr/>
       <span className="store-name">Inspections over time</span>
@@ -249,24 +210,24 @@ var StoreShow = React.createClass({
       <hr/>
       {comparison}
     </div>
-    <div>
+  <div>
     <div key={Math.random()} className="show-holder">
         {image}
       <div className="show-grade">
           {grade}
-      </div>
+    </div>
     </div>
       <div>
           {this.map}
-        </div>
       </div>
     </div>
-
-    <span className="store-name">Violation Record</span><br/>
-    <div className="violations">
-      Total: {this.state.store.calc.violations} : Critical: {this.state.store.calc.critical}
+  </div>
+  <span className="store-name">Violation Record</span><br/>
+  <div className="violations">
+    Total: {this.state.store.calc.violations} : Critical: {this.state.store.calc.critical}
     {violations}
   </div>
+
     </div>;
   } else {
     showDisplay = <div/>;

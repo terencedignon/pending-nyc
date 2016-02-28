@@ -24298,32 +24298,6 @@
 	    }
 	  },
 	  analyzeBy: function () {},
-	  //   createOverview: function () {
-	  //     var name = this.state.store.name.toLowerCase().split(" ").map(function (word) {
-	  //       return word[0].toUpperCase() + word.slice(1);
-	  //     }).join(" ");
-	  //     var calc = this.state.store.calc;
-	  //     var bestDate = new Date(calc.best_date);
-	  //     var worstDate = new Date(calc.worst_date);
-	  //     var flies = (calc.flies > 0 ? Math.round((calc.flies / calc.inspections) * 100) + "%" : "0")
-	  //     var mice = (calc.mice > 0 ? Math.round((calc.mice / calc.inspections) * 100) + "%" : "0")
-	  //     var roaches = (calc.roaches > 0 ? Math.round((calc.roaches / calc.inspections) * 100) + "%" : "0")
-	  //
-	  //     overview = <span>
-	  //       <span className="store-name"><strong className="overview-emphasis">{name} Overview</strong></span><p/>
-	  //       <i className="fa fa-user"></i>{name} has an average inspection score of <strong className={this.colorAverage(calc.average)}> {calc.average}</strong>, the equivalent of {this.translate(calc.average)}. <br/>
-	  //       <i className="fa fa-user-secret"></i>Its average score for unannounced inspections is <strong className={this.colorAverage(calc.first_average)}>{calc.first_average}</strong>, or {this.translate(calc.first_average)}.<br/>
-	  //       <i className="fa fa-bug"></i>Of those <strong className="emphasis">{calc.inspections}</strong> inspections,  <strong className="emphasis">{mice}</strong> found mice, <strong className="emphasis">{flies}</strong> found flies, and <strong className="emphasis">{roaches}</strong> found roaches.<br/>
-	  //       <i className="fa fa-calendar-times-o"></i>Its worst inspection was <strong className={this.colorAverage(calc.worst)}>{calc.worst}</strong> on {worstDate.toDateString()}.<br/>
-	  //       <i className="fa fa-calendar-check-o"></i>Its best inspection was <strong className={this.colorAverage(calc.best)}>{calc.best}</strong> on {bestDate.toDateString()}.<p/>
-	  //           <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
-	  //           BY <a href="#" onClick={this.analyzeBy}>{this.state.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.state.store.zipcode}</a>  <a href="#">{this.state.store.boro[0] + this.state.store.boro.slice(1).toLowerCase()}</a><br/>
-	  //
-	  // </span>;
-	  //   return overview;
-	  //
-	  //   },
-
 	  render: function () {
 
 	    var data;
@@ -24353,7 +24327,7 @@
 	      var options = {
 	        scaleShowGridLines: true
 	      };
-	      barChart = React.createElement(BarChart, { className: 'bar-chart', data: data, width: 500, height: 175, options: options, fill: '#3182bd' });
+	      barChart = React.createElement(BarChart, { className: 'bar-chart', data: data, width: 500, height: 150, options: options, fill: '#3182bd' });
 	      var grade = React.createElement('img', { src: this.selectGrade() });
 	      var image = this.returnImage();
 	    }
@@ -24383,64 +24357,14 @@
 	    // <LineChart className="chart" data={data} width="600" height="250" />
 	    // {barChart}
 
-	    var legend = React.createElement(
-	      'div',
-	      { className: 'legend' },
-	      React.createElement(
-	        'span',
-	        { className: 'a' },
-	        'A:'
-	      ),
-	      ' ',
-	      React.createElement(
-	        'span',
-	        { className: 'range' },
-	        '0-13 / '
-	      ),
-	      ' ',
-	      React.createElement(
-	        'span',
-	        { className: 'b' },
-	        'B:'
-	      ),
-	      ' ',
-	      React.createElement(
-	        'span',
-	        { className: 'range' },
-	        '14-27 / '
-	      ),
-	      ' ',
-	      React.createElement(
-	        'span',
-	        { className: 'c' },
-	        'C:'
-	      ),
-	      ' ',
-	      React.createElement(
-	        'span',
-	        { className: 'range' },
-	        '28 and up '
-	      )
-	    );
-
 	    // <div className="violation-chart">
 	    //   {circleChart}
 	    // </div>
-
-	    // <div className="legend">
-	    //   {legend}
-	    // </div>
-	    // <div className="show-row">
 	    var showDisplay;
 	    if (typeof this.state.store.calc !== "undefined") {
 	      showDisplay = React.createElement(
 	        'div',
 	        null,
-	        React.createElement(
-	          'div',
-	          { className: 'show-info' },
-	          address
-	        ),
 	        React.createElement(
 	          'div',
 	          { className: 'show-row' },
@@ -36014,6 +35938,45 @@
 	          { className: 'question-highlight' },
 	          data.total,
 	          React.createElement(
+	            'div',
+	            { className: 'legend' },
+	            React.createElement(
+	              'span',
+	              { className: 'a' },
+	              'A:'
+	            ),
+	            ' ',
+	            React.createElement(
+	              'span',
+	              { className: 'range' },
+	              '0-13'
+	            ),
+	            ' ',
+	            React.createElement(
+	              'span',
+	              { className: 'b' },
+	              'B:'
+	            ),
+	            ' ',
+	            React.createElement(
+	              'span',
+	              { className: 'range' },
+	              '14-27'
+	            ),
+	            ' ',
+	            React.createElement(
+	              'span',
+	              { className: 'c' },
+	              'C:'
+	            ),
+	            ' ',
+	            React.createElement(
+	              'span',
+	              { className: 'range' },
+	              '28 and up'
+	            )
+	          ),
+	          React.createElement(
 	            'span',
 	            { className: 'unannounced' },
 	            'An average of best, worst, average, surprise average, and percentage of infestations '
@@ -36264,8 +36227,6 @@
 	      //     <span className='image-hover-info'>{store.name}</span></a>
 	      //     </li>;
 	    }
-
-	    console.log(this.state.trending);
 	    return React.createElement(
 	      'div',
 	      null,
@@ -36285,7 +36246,7 @@
 	          'Trending:'
 	        ),
 	        trendItems,
-	        React.createElement('p', null)
+	        React.createElement('hr', null)
 	      ),
 	      React.createElement(
 	        'div',
@@ -36296,19 +36257,13 @@
 	          React.createElement(
 	            'span',
 	            { className: 'big-header' },
-	            'NYC restaurant grade analytics '
+	            React.createElement(
+	              'span',
+	              { className: 'big-header-title' },
+	              'NYC restaurant grade analytics '
+	            )
 	          ),
 	          React.createElement('p', null)
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'most-visited' },
-	          React.createElement(
-	            'span',
-	            { className: 'most-visited-title' },
-	            'Most Active'
-	          ),
-	          mostVisitedList
 	        )
 	      )
 	    );
@@ -36600,52 +36555,15 @@
 
 	    $(window).scroll(function () {
 	      if ($(this).scrollTop() > 1) {
-	        // $('.header-banner').css("opacity", "0.75");
-	        $('.header-banner text').css("opacity", "1");
-	        // $('.header-search').css("opacity", "0.75");
-	        $('.header-banner').css("opacity", "1");
-	        $('.header-banner').css("height", "25px");
-	        $('.header-banner').css("box-shadow", "2px 2px 0 0 #f7f7f7");
+	        $('header').css("opacity", "0.75");
+	        $('header').css("height", "50px");
+	        $('.header-wrapper').css("border-bottom", "2px 2px 0 0 #f7f7f7");
 	        $('.show-info').css("height", "100%");
-	        // $('.header-banner').css("background", "i");
-
-	        $('.show-info').css("border-radius", "0");
-	        // $('.show-info').css("color", "#222222");
-	        // $('.show-info').css("background", "transparent");
-	        // $('.show-info').css("background", "#f7f7f7");
-	        $('.show-info').css("width", "150px");
-	        $('.show-info').css("right", "20");
-
-	        $('.show-info').on("click", function () {
-	          $(this).css("height", "100%");
-	        });
-	        // $('.header-banner').css("background", "#f7f7f7");
-	        // $('.show-info').css("opacity", "0.75");
 	      } else {
-	          $('.header-banner').css("opacity", "1");
-	          // $('.show-info').css("height", "100px");
-	          // $('.show-info').css("width", "300px");
-	          $('.show-info').css("cursor", "pointer");
-
-	          // $('.show-info').css("right", "20px");
-	          $('.show-info').css("border-radius", "0 0 20px 0");
-	          $('.header-search').css("opacity", "1");
-	          $('.show-info').css("right", "20px");
-	          $('.header-banner').css("box-shadow", "2px 2px 0 0 #ffffff");
-	          $('.header-banner').css("height", "30px");
-	          // $('.show-info').css("opacity", "1");
-	        }
+	        $('header').css("opacity", "1");
+	      }
 	    });
 
-	    // if (window.location.hash.includes("rest")) {
-	    //   headerLinks = <i onClick={this.settingsDropDown} className="fa fa-cog">
-	    //     <div className="settings-drop-down">
-	    //       <a onClick={this.hideSettings} href="#/browse/">Browse </a><br/>
-	    //       <a onClick={this.hideSettings} href="#/leaderBoard">Leader Board</a><br/>
-	    //     </div>
-	    //   </i>;
-	    // <a href="#/browse">Browse</a>
-	    // <a href="#/overview">Overview</a>
 	    var headerLinks = React.createElement(
 	      'div',
 	      { className: 'header-links' },
@@ -36663,29 +36581,19 @@
 
 	    var listedResults = this.populateSearch();
 
-	    // <div className="header-links">
-	    //   <a href="#">Browse</a>
-	    //   <a href="#">Metrics</a>
-	    //   <a href="#">Map View</a>
-	    // </div>
-	    // console.log(this.state.searching);
 	    return React.createElement(
 	      'header',
 	      null,
 	      React.createElement(
 	        'div',
-	        { className: 'wrapper' },
+	        { className: 'header-wrapper' },
 	        React.createElement(
-	          'a',
-	          { onClick: this.redirectHome, href: '#' },
+	          'div',
+	          { className: 'logo' },
 	          React.createElement(
-	            'svg',
-	            { className: 'header-banner' },
-	            React.createElement(
-	              'text',
-	              null,
-	              'pending.nyc'
-	            )
+	            'a',
+	            { onClick: this.redirectHome, href: '#' },
+	            React.createElement('img', { className: 'logo', src: 'http://i.imgur.com/g0zoa2g.png' })
 	          )
 	        ),
 	        headerLinks,
@@ -36693,7 +36601,6 @@
 	          'div',
 	          { className: 'header-search' },
 	          React.createElement('input', { type: 'text', onChange: this.search, value: this.state.search }),
-	          React.createElement('i', { className: 'fa fa-question' }),
 	          React.createElement(
 	            'span',
 	            { className: 'searching' },

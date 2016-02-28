@@ -83,6 +83,9 @@ var Overview = React.createClass({
     return (
       <span className="overview-holder">
         <span className="store-name">{this.props.store.name} Overview: <span className="question-highlight">{data.total}
+          <div className="legend"><span className="a">A:</span> <span className="range">0-13</span>&nbsp;
+            <span className="b">B:</span> <span className="range">14-27</span>&nbsp;
+              <span className="c">C:</span> <span className="range">28 and up</span></div>
         <span className="unannounced">An average of best, worst, average, surprise average, and percentage of infestations </span></span></span><p/>
         <span className="inspection-detail"><i className={"fa fa-" + this.iconParse(data.last)}></i>Most recent: {data.last}, {this.translate(data.last)}. </span><br/>
         <i className={"fa fa-" + this.iconParse(data.average)}></i>Average: {data.average}, {this.translate(data.average)} <br/>

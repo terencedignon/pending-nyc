@@ -84,52 +84,16 @@ var Header = React.createClass({
 
     $(window).scroll(function() {
       if ($(this).scrollTop() > 1) {
-        // $('.header-banner').css("opacity", "0.75");
-        $('.header-banner text').css("opacity", "1");
-        // $('.header-search').css("opacity", "0.75");
-        $('.header-banner').css("opacity", "1");
-        $('.header-banner').css("height", "25px");
-        $('.header-banner').css("box-shadow", "2px 2px 0 0 #f7f7f7");
+        $('header').css("opacity", "0.75");
+        $('header').css("height", "50px");
+        $('.header-wrapper').css("border-bottom", "2px 2px 0 0 #f7f7f7");
         $('.show-info').css("height", "100%");
-        // $('.header-banner').css("background", "i");
 
-        $('.show-info').css("border-radius", "0")
-        // $('.show-info').css("color", "#222222");
-        // $('.show-info').css("background", "transparent");
-        // $('.show-info').css("background", "#f7f7f7");
-        $('.show-info').css("width", "150px");
-        $('.show-info').css("right", "20");
-
-        $('.show-info').on("click", function() {
-          $(this).css("height", "100%");
-        });
-        // $('.header-banner').css("background", "#f7f7f7");
-        // $('.show-info').css("opacity", "0.75");
       } else {
-        $('.header-banner').css("opacity", "1");
-        // $('.show-info').css("height", "100px");
-        // $('.show-info').css("width", "300px");
-        $('.show-info').css("cursor", "pointer");
-
-        // $('.show-info').css("right", "20px");
-        $('.show-info').css("border-radius", "0 0 20px 0");
-        $('.header-search').css("opacity", "1");
-        $('.show-info').css("right", "20px");
-        $('.header-banner').css("box-shadow", "2px 2px 0 0 #ffffff");
-        $('.header-banner').css("height", "30px");
-        // $('.show-info').css("opacity", "1");
+        $('header').css("opacity", "1");
       }
     });
 
-    // if (window.location.hash.includes("rest")) {
-    //   headerLinks = <i onClick={this.settingsDropDown} className="fa fa-cog">
-    //     <div className="settings-drop-down">
-    //       <a onClick={this.hideSettings} href="#/browse/">Browse </a><br/>
-    //       <a onClick={this.hideSettings} href="#/leaderBoard">Leader Board</a><br/>
-    //     </div>
-    //   </i>;
-    // <a href="#/browse">Browse</a>
-    // <a href="#/overview">Overview</a>
     var headerLinks = <div className="header-links">
       <a href="#/top">Top 50/Browse</a>
         <a href="#/map">Map</a>
@@ -138,23 +102,17 @@ var Header = React.createClass({
 
     var listedResults = this.populateSearch();
 
-      // <div className="header-links">
-      //   <a href="#">Browse</a>
-      //   <a href="#">Metrics</a>
-      //   <a href="#">Map View</a>
-      // </div>
-      // console.log(this.state.searching);
     return (
       <header>
-      <div className="wrapper">
-      <a onClick={this.redirectHome} href="#"><svg className="header-banner">
-         <text>pending.nyc</text>
-       </svg></a>
+        <div className="header-wrapper">
+        <div className="logo">
+        <a onClick={this.redirectHome} href="#">
+          <img className="logo" src="http://i.imgur.com/g0zoa2g.png"/>
+        </a>
+      </div>
        {headerLinks}
        <div className="header-search">
          <input type="text" onChange={this.search} value={this.state.search} />
-         <i className="fa fa-question"></i>
-
          <span className="searching">
            {this.state.searching}
          </span>
@@ -164,7 +122,7 @@ var Header = React.createClass({
            </ul>
          </div>
      </div>
-     </div>
+   </div>
     </header>
     );
   }

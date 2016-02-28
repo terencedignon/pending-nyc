@@ -65,8 +65,6 @@ var StoreIndex = React.createClass({
       //     <span className='image-hover-info'>{store.name}</span></a>
       //     </li>;
     }
-
-    console.log(this.state.trending);
     return (
       <div>
         <div className="trend-holder">
@@ -75,15 +73,12 @@ var StoreIndex = React.createClass({
           {mostVisitedItems}<hr/>
 
           <span className="trending">Trending:</span>
-          {trendItems}
-        <p/>
+          {trendItems}<hr/>
+  
       </div>
       <div className="show-index">
         <div className="intro-header">
-          <span className="big-header">NYC restaurant grade analytics </span><p/>
-        </div>
-        <div className="most-visited"><span className="most-visited-title">Most Active</span>
-          {mostVisitedList}
+          <span className="big-header"><span className="big-header-title">NYC restaurant grade analytics </span></span><p/>
         </div>
         </div>
         </div>
