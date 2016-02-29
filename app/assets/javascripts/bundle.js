@@ -36555,8 +36555,9 @@
 
 	    $(window).scroll(function () {
 	      if ($(this).scrollTop() > 1) {
-	        $('header').css("opacity", "0.75");
+	        $('header').css("opacity", "0.8");
 	        $('header').css("height", "50px");
+	        // $('.header-search > input').css("background", "#777");
 	        $('.header-wrapper').css("border-bottom", "2px 2px 0 0 #f7f7f7");
 	        $('.show-info').css("height", "100%");
 	      } else {
