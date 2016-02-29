@@ -524,7 +524,7 @@ footer {
 
 #main-map {
   margin-top: 50px
-  width: 100%!important;
+  width: 100%;
   height: 400px!important;
   /*height: 100%;*/
 }
