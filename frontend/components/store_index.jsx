@@ -74,11 +74,11 @@ var StoreIndex = React.createClass({
 
           <span className="trending">Trending:</span>
           {trendItems}<hr/>
-  
+
       </div>
       <div className="show-index">
         <div className="intro-header">
-          <span className="big-header"><span className="big-header-title">NYC restaurant grade analytics </span></span><p/>
+          <span className="big-header">NYC restaurant grade analytics</span><p/>
         </div>
         </div>
         </div>

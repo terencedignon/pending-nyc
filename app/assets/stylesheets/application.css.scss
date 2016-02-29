@@ -125,9 +125,9 @@ header {
 }
 
 .header-links {
-  padding: 15px 0;
+  padding: 13px 0;
   float: right;
-  margin-right: 10%;
+  margin-right: 11%;
   z-index: 999;
 }
 
@@ -195,8 +195,8 @@ header {
 
 .show-holder {
   /*margin-top: -10px;*/
-  height: 400px;
-  width: 400px;
+  height: 425px;
+  width: 425px;
   // border: 1px solid #000;
   margin-top: 10px;
   margin-left: 50px;
@@ -211,7 +211,7 @@ header {
 }
 
 .show-image {
-  height: 400px;
+  height: 425px;
   width: auto;
   opacity: 0.90;
   position: relative;
@@ -333,6 +333,8 @@ footer a {
 
 footer {
   font-family: "Helvetica";
+  text-transform: uppercase;
+  opacity: 0.75;
   width: 95%;
   margin-top: 20px;
   text-align: right;
@@ -513,7 +515,7 @@ footer {
 
   height: 450px;
 
-  width: 400px;
+  width: 425px;
 }
 /*
 #map:hover {
@@ -661,17 +663,18 @@ footer {
 
 span.big-header {
   display: block;
-  font-size: 100px;
+  font-size: 110px;
   padding: 20px;
   width: 100%;
   font-weight: bolder;
   background: #222;
-  opacity: 0.85;
+  opacity: 0.75;
   font-family: "Montserrat"!important;
   text-transform: uppercase;
   /*letter-spacing: 10px;*/
   color: #fff;
 }
+
 
 
 .trending-item {

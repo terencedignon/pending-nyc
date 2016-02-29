@@ -26,7 +26,7 @@ var StoreShow = React.createClass({
     var url;
     // console.log(this.state.store.image_url);
     if (this.state.store.image_url !== null) {
-      url = this.state.store.image_url.replace("ms.jpg", "348s.jpg");
+      url = this.state.store.image_url.replace("ms.jpg", "o.jpg");
       return <img className="show-image" src={url} />;
     // } else if (typeof this.state.yelp.image_url !== "undefined") {
     //   console.log(this.state.yelp.image_url);
