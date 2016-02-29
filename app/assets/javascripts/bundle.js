@@ -24799,6 +24799,7 @@
 	              { className: 'store-name' },
 	              'Inspections over time'
 	            ),
+	            React.createElement('br', null),
 	            barChart,
 	            React.createElement('hr', null),
 	            comparison
