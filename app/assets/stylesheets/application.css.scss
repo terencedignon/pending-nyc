@@ -61,7 +61,7 @@
 
 
 body {
-  width: 90%;
+  width: 85%;
   font-family: "Helvetica", Helvetica;
 }
 
@@ -77,7 +77,7 @@ header {
 
 .header-wrapper {
   /*margin-bottom: 50px;*/
-  width: 90%;
+  width: 85%;
   padding-top: 5px;
   /*background: #fff;*/
   height: 60px;
@@ -127,7 +127,7 @@ header {
 .header-links {
   padding: 13px 0;
   float: right;
-  margin-right: 11%;
+  margin-right: 16%;
   z-index: 999;
 }
 
@@ -146,7 +146,7 @@ header {
 }
 
 .container {
-  width: 89%;
+  width: 83%;
   height: auto;
   margin: 0 auto;
   min-height: 400px;
@@ -172,8 +172,8 @@ header {
 }
 
 .empty-image {
-  width: 425px;
-  height: 425px;
+  width: 400px;
+  height: 400px;
   border-radius: 5%;
   background: maroon;
 }
@@ -195,8 +195,8 @@ header {
 
 .show-holder {
   /*margin-top: -10px;*/
-  height: 425px;
-  width: 425px;
+  height: 400px;
+  width: 400px;
   // border: 1px solid #000;
   margin-top: 10px;
   margin-left: 50px;
@@ -211,7 +211,7 @@ header {
 }
 
 .show-image {
-  height: 450px;
+  height: 400px;
   // height: 450px;
   opacity: 0.90;
   position: relative;
@@ -514,10 +514,8 @@ footer {
   border-radius: 5%;
   margin-top: 30px;
   margin-left: 50px;
-
-  height: 425px;
-
-  width: 425px;
+  height: 450px;
+  width: 400px;
 }
 /*
 #map:hover {
@@ -659,6 +657,7 @@ footer {
 
 .intro-header {
   background: url("http://www.venetian.com/content/dam/lasvegas/venetian/master/main/home/restaurants/lavo/lavo-restaurant.jpg") no-repeat;
+  background-size: cover;
   width: auto;
   height: 100%;
   padding-left: 50px;
@@ -709,6 +708,7 @@ span.big-header {
 .trend-holder {
   // padding: 10px;
   // background: #f7f7f7;
+  width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
 }

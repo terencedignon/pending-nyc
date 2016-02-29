@@ -24618,7 +24618,7 @@
 	    var url;
 	    // console.log(this.state.store.image_url);
 	    if (this.state.store.image_url !== null) {
-	      url = this.state.store.image_url.replace("ms.jpg", "l.jpg");
+	      url = this.state.store.image_url.replace("ms.jpg", "348s.jpg");
 	      return React.createElement('img', { className: 'show-image', src: url });
 	      // } else if (typeof this.state.yelp.image_url !== "undefined") {
 	      //   console.log(this.state.yelp.image_url);
@@ -24748,7 +24748,7 @@
 	      var options = {
 	        scaleShowGridLines: true
 	      };
-	      barChart = React.createElement(BarChart, { className: 'bar-chart', data: data, width: 500, height: 200, options: options, fill: '#3182bd' });
+	      barChart = React.createElement(BarChart, { className: 'bar-chart', data: data, width: 500, height: 150, options: options, fill: '#3182bd' });
 	      var grade = React.createElement('img', { src: this.selectGrade() });
 	      var image = this.returnImage();
 	    }
@@ -36681,7 +36681,7 @@
 	          React.createElement(
 	            'span',
 	            { className: 'big-header' },
-	            'NYC restaurant grade analytics'
+	            'NYC restaurant analytics'
 	          ),
 	          React.createElement('p', null)
 	        )
