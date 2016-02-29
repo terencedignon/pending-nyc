@@ -18,14 +18,14 @@
  @import "font-awesome";
 
  @font-face {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato', Helvetica;
     src: font_url('Lato-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 
  @font-face {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', Helvetica;
     src: font_url('Montserrat-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
@@ -62,7 +62,7 @@
 
 body {
   width: 90%;
-  font-family: "Arial", sans-serif;
+  font-family: "Helvetica", Helvetica;
 }
 
 
@@ -78,11 +78,11 @@ header {
 .header-wrapper {
   /*margin-bottom: 50px;*/
   width: 90%;
-  padding: 10px 0;
+  padding-top: 5px;
   /*background: #fff;*/
   height: 60px;
   margin: 0 auto;
-  transition: all 0.3s ease-in-out;
+  // transition: all 0.3s ease-in-out;
 }
 
 .logo {
@@ -117,7 +117,7 @@ header {
   font-size: 15px;
 
   box-shadow: 2px 2px 5px 0 #ccc;
-  font-family: "arial"!important;
+  font-family: "Helvetica"!important;
 }
 
 .header-search input:focus {
@@ -125,7 +125,7 @@ header {
 }
 
 .header-links {
-  padding: 12px;
+  padding: 15px 0;
   float: right;
   margin-right: 10%;
   z-index: 999;
@@ -168,7 +168,7 @@ header {
 .main {
   width: 100%;
   position: relative;
-  margin-top: 75px;
+  margin-top: 65px;
 }
 
 .empty-image {
@@ -196,6 +196,8 @@ header {
 .show-holder {
   /*margin-top: -10px;*/
   height: 400px;
+  width: 400px;
+  // border: 1px solid #000;
   margin-top: 10px;
   margin-left: 50px;
   /*margin-top: -10px;*/
@@ -209,13 +211,12 @@ header {
 }
 
 .show-image {
-
   height: 400px;
+  width: auto;
   opacity: 0.90;
   position: relative;
   border-radius: 5%;
 }
-
 
 
 .drop-down {
@@ -308,7 +309,7 @@ header {
 }
 
 .overview {
-  font-family: "arial";
+  font-family: "Helvetica";
   font-size: 17px;
   /*width: 100%;*/
   margin-right: 10px;
@@ -318,7 +319,7 @@ header {
 }
 
 hr {
-  border: 1px solid #fff;
+  border: 1px solid #f7f7f7;
 }
 
 /*hr:last-child {
@@ -331,7 +332,7 @@ footer a {
 }
 
 footer {
-  font-family: "arial";
+  font-family: "Helvetica";
   width: 95%;
   margin-top: 20px;
   text-align: right;
@@ -342,7 +343,7 @@ footer {
 .violations {
   width: 85%;
   color: #222;
-  font-size: 16px;
+  font-size: 17px;
 
 }
 
@@ -353,7 +354,7 @@ footer {
 }
 
 .violations ul {
-  font-family: "arial";
+  font-family: "Helvetica";
   list-style: decimal;
   /*list-style: none;*/
 }
@@ -364,7 +365,9 @@ footer {
   margin-top: 5px;
   margin-bottom: -30px;
   color: #222;
+  background: #f7f7f7;
   font-weight: normal;
+
 }
 
 .violations h3 {
@@ -379,20 +382,20 @@ footer {
   text-transform: uppercase;
   color: #222;
   /*font-weight: normal;*/
-  font-family: "arial";
+  font-family: "Helvetica";
   font-size: 18px;
 }
 
 .legend > .a {
   text-transform: uppercase;
   color: #0056ac;
-  font-family: "arial";
+  font-family: "Helvetica";
   font-size: 18px;
 }
 
 .legend > .b {
   margin-left: 10px;
-  font-family: "arial";
+  font-family: "Helvetica";
   font-size: 18px;
   color: #49ac42;
     text-transform: uppercase;
@@ -403,7 +406,7 @@ footer {
   margin-left: 10px;
   color: #fa9828;
     text-transform: uppercase;
-    font-family: "arial";
+    font-family: "Helvetica";
     font-size: 18px;
 }
 
@@ -420,7 +423,7 @@ footer {
   text-transform: uppercase;
   padding: 10px 10px 10px 0;
   color: #111;
-  font-family: "arial";
+  font-family: "Helvetica";
   font-size: 20px;
 }
 
@@ -431,7 +434,7 @@ footer {
 }
 
 .comparison {
-  font-family: "arial";
+  font-family: "Helvetica";
   margin-bottom: 20px;
   margin-top: 20px;
   /*height: 600px;*/
@@ -465,7 +468,7 @@ footer {
 
     font-size: 20px;
 
-    font-family: "arial";
+    font-family: "Helvetica";
 }
 
 .compare-name input:focus {
@@ -610,7 +613,7 @@ footer {
   /*background: #fff;*/
   border: 2px solid #eee;
   /*box-shadow: 2px 2px 2px 0 #f7f7f7;*/
-  font-family: "arial";
+  font-family: "Helvetica";
 }
 .options input:focus {
   box-shadow: 2px 2px 2px 0 #eee;
@@ -663,7 +666,7 @@ span.big-header {
   width: 100%;
   font-weight: bolder;
   background: #222;
-  opacity: 0.5;
+  opacity: 0.85;
   font-family: "Montserrat"!important;
   text-transform: uppercase;
   /*letter-spacing: 10px;*/
@@ -672,25 +675,34 @@ span.big-header {
 
 
 .trending-item {
+
   padding: 5px;
-  font-family: "arial";
-  margin: 5px;
-  color: #222;
-  font-size: 16px;
+  font-family: "Helvetica";
+  // margin: 5px;
+  // color: #222;
+  font-size: 17px;
   opacity: 0.9;
 }
 
 
 .trending {
+  // background: #f7f7f7;
   font-size: 20px;
   font-family: "Montserrat"!important;
   color: #222;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
+}
+
+.trend-holder {
+  // padding: 10px;
+  // background: #f7f7f7;
 }
 
 .trend-holder a {
   text-decoration: none;
+  // text-decoration: underline;
+  color: steelblue;
 }
 
 .trending-item:hover {
@@ -730,7 +742,7 @@ span.big-header {
   /*border: 2px solid #222;*/
   border: 1px solid #eee;
   box-shadow: 2px 2px 5px 0 #ccc;
-  font-family: "arial"!important;
+  font-family: "Helvetica"!important;
 }
 
 .most-header {

@@ -166,7 +166,7 @@ var StoreShow = React.createClass({
       var options = {
         scaleShowGridLines: true
       }
-      barChart = <BarChart className="bar-chart" data={data} width={500} height={150} options={options} fill={'#3182bd'}    />;
+      barChart = <BarChart className="bar-chart" data={data} width={500} height={175} options={options} fill={'#3182bd'}    />;
     var grade = <img src={this.selectGrade()}/>;
       var image = this.returnImage();
     }

@@ -83,10 +83,10 @@ var Header = React.createClass({
   render: function () {
 
     $(window).scroll(function() {
-      if ($(this).scrollTop() > 50) {
+      if ($(this).scrollTop() > 1) {
         $('header').css("opacity", "0.9");
         $('.header-wrapper').css("height", "50px");
-        $('.header-wrapper').css("padding", "0px");
+        // $('.header-wrapper').css("padding", "0px");
         // $('.header-search > input').css("background", "#777");
         // $('header').css("border-bottom", "2px solid #f7f7f7");
         // $('.show-info').css("height", "100%");
@@ -94,8 +94,8 @@ var Header = React.createClass({
       } else {
         $('header').css("opacity", "1");
         $('header').css("border-bottom", "0");
-        $('.header-wrapper').css("height", "60px");
-        $('.header-wrapper').css("padding", "10px 0");
+        // $('.header-wrapper').css("height", "60px");
+        $('.header-wrapper').css("padding-top", "5px");
       }
     });
 
