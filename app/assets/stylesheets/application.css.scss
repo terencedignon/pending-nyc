@@ -94,7 +94,7 @@ header {
   float: left;
   position: relative;
   /*margin-top: -10px;*/
-  margin-top: 10px;
+  margin-top: 9px;
   margin-left: 30px;
   /*left: 400px;*/
   background: transparent;
@@ -172,8 +172,8 @@ header {
 }
 
 .empty-image {
-  width: 400px;
-  height: 400px;
+  width: 450px;
+  height: 450px;
   border-radius: 5%;
   background: maroon;
 }
@@ -660,21 +660,21 @@ footer {
   background: url("http://www.venetian.com/content/dam/lasvegas/venetian/master/main/home/restaurants/lavo/lavo-restaurant.jpg") no-repeat;
   width: auto;
   height: 100%;
-  padding: 50px;
+  padding: 100px;
 }
 
 span.big-header {
   display: block;
-  font-size: 110px;
+  font-size: 80px;
   padding: 50px;
   width: 80%;
   font-weight: bolder;
-  background: #fff;
-  opacity: 0.75;
+  background: #000;
+  opacity: 0.7;
   font-family: "Montserrat"!important;
   text-transform: uppercase;
   /*letter-spacing: 10px;*/
-  color: #222;
+  color: #fff;
 }
 
 
@@ -685,6 +685,7 @@ span.big-header {
   font-family: "Helvetica";
   // margin: 5px;
   // color: #222;
+  text-decoration: underline;
   font-size: 17px;
   opacity: 0.9;
 }
@@ -695,6 +696,7 @@ span.big-header {
   font-size: 20px;
   font-family: "Montserrat"!important;
   color: #222;
+  margin-right: 5px;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
@@ -702,6 +704,8 @@ span.big-header {
 .trend-holder {
   // padding: 10px;
   // background: #f7f7f7;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .trend-holder a {
