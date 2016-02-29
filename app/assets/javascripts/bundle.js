@@ -47,16 +47,17 @@
 	var Router = __webpack_require__(1).Router;
 	var IndexRoute = __webpack_require__(1).IndexRoute;
 	var Route = __webpack_require__(1).Route;
+	// var History = require('react-router');
 	var ReactDOM = __webpack_require__(207);
 	var React = __webpack_require__(5);
 	var StoreShow = __webpack_require__(208);
 	var StoreIndex = __webpack_require__(254);
-	SearchStore = __webpack_require__(249);
-	StoreStore = __webpack_require__(217);
+	var SearchStore = __webpack_require__(249);
+	var StoreStore = __webpack_require__(217);
 	var Header = __webpack_require__(256);
 	var Sidebar = __webpack_require__(257);
 	var Map = __webpack_require__(255);
-	MapStore = __webpack_require__(251);
+	var MapStore = __webpack_require__(251);
 	var Browse = __webpack_require__(258);
 	var Footer = __webpack_require__(259);
 	var Most = __webpack_require__(260);
@@ -22439,7 +22440,7 @@
 			}
 
 			if (Array.isArray(val)) {
-				return val.sort().map(function (val2) {
+				return val.slice().sort().map(function (val2) {
 					return strictUriEncode(key) + '=' + strictUriEncode(val2);
 				}).join('&');
 			}
