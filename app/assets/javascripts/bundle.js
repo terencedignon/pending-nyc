@@ -24197,7 +24197,7 @@
 	    var url;
 	    // console.log(this.state.store.image_url);
 	    if (this.state.store.image_url !== null) {
-	      url = this.state.store.image_url.replace("ms.jpg", "o.jpg");
+	      url = this.state.store.image_url.replace("ms.jpg", "l.jpg");
 	      return React.createElement('img', { className: 'show-image', src: url });
 	      // } else if (typeof this.state.yelp.image_url !== "undefined") {
 	      //   console.log(this.state.yelp.image_url);
@@ -24327,7 +24327,7 @@
 	      var options = {
 	        scaleShowGridLines: true
 	      };
-	      barChart = React.createElement(BarChart, { className: 'bar-chart', data: data, width: 500, height: 175, options: options, fill: '#3182bd' });
+	      barChart = React.createElement(BarChart, { className: 'bar-chart', data: data, width: 500, height: 200, options: options, fill: '#3182bd' });
 	      var grade = React.createElement('img', { src: this.selectGrade() });
 	      var image = this.returnImage();
 	    }
@@ -36246,7 +36246,7 @@
 	          'Trending:'
 	        ),
 	        trendItems,
-	        React.createElement('hr', null)
+	        React.createElement('p', null)
 	      ),
 	      React.createElement(
 	        'div',

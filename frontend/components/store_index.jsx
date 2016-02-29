@@ -73,7 +73,7 @@ var StoreIndex = React.createClass({
           {mostVisitedItems}<hr/>
 
           <span className="trending">Trending:</span>
-          {trendItems}<hr/>
+          {trendItems}<p/>
 
       </div>
       <div className="show-index">

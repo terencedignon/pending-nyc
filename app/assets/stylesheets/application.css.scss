@@ -195,8 +195,8 @@ header {
 
 .show-holder {
   /*margin-top: -10px;*/
-  height: 425px;
-  width: 425px;
+  height: 450px;
+  width: 450px;
   // border: 1px solid #000;
   margin-top: 10px;
   margin-left: 50px;
@@ -211,8 +211,8 @@ header {
 }
 
 .show-image {
-  height: 425px;
-  width: auto;
+  height: 450px;
+  // height: 450px;
   opacity: 0.90;
   position: relative;
   border-radius: 5%;
@@ -333,9 +333,10 @@ footer a {
 
 footer {
   font-family: "Helvetica";
-  text-transform: uppercase;
+  // text-transform: uppercase;
   opacity: 0.75;
   width: 95%;
+  font-size: 16px;
   margin-top: 20px;
   text-align: right;
   color: #777;
@@ -439,6 +440,7 @@ footer {
   font-family: "Helvetica";
   margin-bottom: 20px;
   margin-top: 20px;
+  // background: #f7f7f7;
   /*height: 600px;*/
   font-size: 17px;
   /*box-shadow: 2px 2px 0 0 #f7f7f7;*/
@@ -515,7 +517,7 @@ footer {
 
   height: 450px;
 
-  width: 425px;
+  width: 450px;
 }
 /*
 #map:hover {
@@ -664,15 +666,15 @@ footer {
 span.big-header {
   display: block;
   font-size: 110px;
-  padding: 20px;
-  width: 100%;
+  padding: 50px;
+  width: 80%;
   font-weight: bolder;
-  background: #222;
+  background: #fff;
   opacity: 0.75;
   font-family: "Montserrat"!important;
   text-transform: uppercase;
   /*letter-spacing: 10px;*/
-  color: #fff;
+  color: #222;
 }
 
 
