@@ -62,7 +62,7 @@
 
 body {
   width: 90%;
-  font-family: "Helvetica", sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 
@@ -78,9 +78,11 @@ header {
 .header-wrapper {
   /*margin-bottom: 50px;*/
   width: 90%;
+  padding: 10px 0;
   /*background: #fff;*/
-  height: 50px;
+  height: 60px;
   margin: 0 auto;
+  transition: all 0.3s ease-in-out;
 }
 
 .logo {
@@ -115,7 +117,7 @@ header {
   font-size: 15px;
 
   box-shadow: 2px 2px 5px 0 #ccc;
-  font-family: "helvetica"!important;
+  font-family: "arial"!important;
 }
 
 .header-search input:focus {
@@ -123,7 +125,7 @@ header {
 }
 
 .header-links {
-  padding: 15px;
+  padding: 12px;
   float: right;
   margin-right: 10%;
   z-index: 999;
@@ -136,7 +138,7 @@ header {
   font-size: 18px;
   color: #222;
   font-family: "Montserrat"!important;
-  transition: all 0.4s ease;
+  transition: all 0.05s ease;
 }
 
 .header-links a:hover {
@@ -166,7 +168,7 @@ header {
 .main {
   width: 100%;
   position: relative;
-  margin-top: 60px;
+  margin-top: 75px;
 }
 
 .empty-image {
@@ -306,7 +308,7 @@ header {
 }
 
 .overview {
-  font-family: "helvetica";
+  font-family: "arial";
   font-size: 17px;
   /*width: 100%;*/
   margin-right: 10px;
@@ -329,7 +331,7 @@ footer a {
 }
 
 footer {
-  font-family: "helvetica";
+  font-family: "arial";
   width: 95%;
   margin-top: 20px;
   text-align: right;
@@ -351,7 +353,7 @@ footer {
 }
 
 .violations ul {
-  font-family: "helvetica";
+  font-family: "arial";
   list-style: decimal;
   /*list-style: none;*/
 }
@@ -377,20 +379,20 @@ footer {
   text-transform: uppercase;
   color: #222;
   /*font-weight: normal;*/
-  font-family: "helvetica";
+  font-family: "arial";
   font-size: 18px;
 }
 
 .legend > .a {
   text-transform: uppercase;
   color: #0056ac;
-  font-family: "helvetica";
+  font-family: "arial";
   font-size: 18px;
 }
 
 .legend > .b {
   margin-left: 10px;
-  font-family: "helvetica";
+  font-family: "arial";
   font-size: 18px;
   color: #49ac42;
     text-transform: uppercase;
@@ -401,7 +403,7 @@ footer {
   margin-left: 10px;
   color: #fa9828;
     text-transform: uppercase;
-    font-family: "helvetica";
+    font-family: "arial";
     font-size: 18px;
 }
 
@@ -418,7 +420,7 @@ footer {
   text-transform: uppercase;
   padding: 10px 10px 10px 0;
   color: #111;
-  font-family: "helvetica";
+  font-family: "arial";
   font-size: 20px;
 }
 
@@ -429,7 +431,7 @@ footer {
 }
 
 .comparison {
-  font-family: "helvetica";
+  font-family: "arial";
   margin-bottom: 20px;
   margin-top: 20px;
   /*height: 600px;*/
@@ -463,7 +465,7 @@ footer {
 
     font-size: 20px;
 
-    font-family: "helvetica";
+    font-family: "arial";
 }
 
 .compare-name input:focus {
@@ -608,7 +610,7 @@ footer {
   /*background: #fff;*/
   border: 2px solid #eee;
   /*box-shadow: 2px 2px 2px 0 #f7f7f7;*/
-  font-family: "helvetica";
+  font-family: "arial";
 }
 .options input:focus {
   box-shadow: 2px 2px 2px 0 #eee;
@@ -671,7 +673,7 @@ span.big-header {
 
 .trending-item {
   padding: 5px;
-  font-family: "helvetica";
+  font-family: "arial";
   margin: 5px;
   color: #222;
   font-size: 16px;
@@ -728,7 +730,7 @@ span.big-header {
   /*border: 2px solid #222;*/
   border: 1px solid #eee;
   box-shadow: 2px 2px 5px 0 #ccc;
-  font-family: "helvetica"!important;
+  font-family: "arial"!important;
 }
 
 .most-header {
