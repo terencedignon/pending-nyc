@@ -12,12 +12,13 @@ var Header = React.createClass({
   componentDidMount: function () {
     // this.storeListener = StoreStore.addListener(this._onStoreChange);
     this.searchListener = SearchStore.addListener(this._onSearchChange);
-  },
+},
   linkHandler: function (e) {
     function yelpCallback () {
       // this.setState({ searching: "Done!"});
     };
     this.setState({ search: "", results: [] });
+    this.history.pushState(null, "#/rest/" + e.currentTarget.id, {});
     ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this));
     SearchActions.clearResults();
 
@@ -40,7 +41,7 @@ var Header = React.createClass({
       }.bind(this));
 
       return this.state.results.map(function(result) {
-        return <a href key={Math.random()} onClick={this.linkHandler} href="#" id={result.id} href={"#/rest/" + result.id}><li key={Math.random()}>{result.name}</li></a>;
+        return <a href key={Math.random()} onClick={this.linkHandler} id={result.id} href={"#/rest/" + result.id}><li key={Math.random()}>{result.name}</li></a>;
         }.bind(this));
       } else {
         return <li></li>;

@@ -23,12 +23,12 @@ var Map = React.createClass({
       zoom: 14
     });
 
-  google.maps.event.addListener(map, 'tilesloaded', function () {
+  this.tilesLoaded = google.maps.event.addListener(map, 'tilesloaded', function () {
     var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
     ApiUtil.fetchMap(options);
   }.bind(this));
 
-  google.maps.event.addListener(map, 'idle', function() {
+  this.idleListener = google.maps.event.addListener(map, 'idle', function() {
       clearInterval(this.mapInterval);
       this.mapInterval = setInterval(function () {
       var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
@@ -54,6 +54,8 @@ var Map = React.createClass({
 componentWillUnmount: function () {
   this.storeListener.remove();
   this.mapListener.remove();
+  google.maps.event.removeListener(this.idleListener);
+  google.maps.event.removeListener(this.tilesLoaded);
 },
 _onMapChange: function () {
   // this.setState({ markers: [] });
