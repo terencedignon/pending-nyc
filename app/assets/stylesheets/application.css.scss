@@ -104,7 +104,7 @@ header {
 .header-search input {
   /*position: relative;*/
   z-index: 9999;
-  height: 10px;
+  height: 12px;
   background: #f7f7f7;
   color: #222;
 
@@ -114,15 +114,15 @@ header {
   padding: 8px;
   padding-left: 20px;
   width: 300px;
-  font-size: 15px;
-
+  font-size: 18px;
+  // font-weight: bold;
   box-shadow: 2px 2px 5px 0 #ccc;
   font-family: "Helvetica"!important;
 }
 
-.header-search input:focus {
-  box-shadow: 2px 2px 5px 0px #777;
-}
+// .header-search input:focus {
+//   box-shadow: 2px 2px 5px 0px #777;
+// }
 
 .header-links {
   padding: 13px 0;
@@ -532,7 +532,7 @@ footer {
 }
 
 #main-map {
-  margin-top: 50px;
+  margin-top: 75px;
   width: 100%!important;
   height: 400px!important;
   /*height: 100%;*/
@@ -548,9 +548,10 @@ footer {
 .options {
   position: absolute;
   z-index: 99;
-  /*top: -50px;*/
-  /*margin-bottom: 20px;*/
-  left: 0px;
+  left: 0;
+  top: -50px;
+  // /*margin-bottom: 20px;*/
+  // left: 0px;
 
 }
 
