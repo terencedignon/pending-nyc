@@ -319,7 +319,7 @@ header {
 }
 
 hr {
-  border: 1px solid #f7f7f7;
+  border: 1px solid #fff;
 }
 
 /*hr:last-child {
@@ -660,17 +660,19 @@ footer {
   background: url("http://www.venetian.com/content/dam/lasvegas/venetian/master/main/home/restaurants/lavo/lavo-restaurant.jpg") no-repeat;
   width: auto;
   height: 100%;
-  padding: 100px;
+  padding-left: 50px;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
 span.big-header {
   display: block;
-  font-size: 80px;
+  font-size: 100px;
   padding: 50px;
   width: 80%;
   font-weight: bolder;
   background: #000;
-  opacity: 0.7;
+  opacity: 0.9;
   font-family: "Montserrat"!important;
   text-transform: uppercase;
   /*letter-spacing: 10px;*/
@@ -681,11 +683,13 @@ span.big-header {
 
 .trending-item {
 
-  padding: 5px;
+  // padding: 5px;
   font-family: "Helvetica";
   // margin: 5px;
   // color: #222;
-  text-decoration: underline;
+  margin-left: 10px;
+  margin-right: 15px;
+  // text-decoration: underline;
   font-size: 17px;
   opacity: 0.9;
 }
