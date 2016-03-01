@@ -757,7 +757,7 @@ span.big-header {
   /*margin-left: -120px;*/
   padding: 10px;
   padding-left: 20px;
-  width: 300px;
+  width: 200px;
   font-size: 20px;
   /*border: 2px solid #222;*/
   border: 1px solid #eee;
@@ -780,9 +780,9 @@ text-transform: uppercase;
 color: #aaa;
 
 text-decoration: none;
-
+// line-height: 20px;
 background: #f7f7f7;
-padding: 5px 20px 5px 20px;
+padding: 3px 10px 3px 10px;
 border: 1px solid #eee;
 transition: 50ms ease-in-out;
 
