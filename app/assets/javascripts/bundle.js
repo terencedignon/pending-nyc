@@ -36486,7 +36486,7 @@
 	  displayName: "Violations",
 
 	  getInitialState: function () {
-	    return { expanded: true, onlyCritical: false, message: "Collapse" };
+	    return { expanded: false, onlyCritical: false, message: "Expand" };
 	  },
 	  toggle: function (e) {
 	    e.preventDefault();
@@ -37022,7 +37022,6 @@
 	            React.createElement('img', { className: 'logo', src: 'http://i.imgur.com/g0zoa2g.png' })
 	          )
 	        ),
-	        headerLinks,
 	        React.createElement(
 	          'div',
 	          { className: 'header-search' },
@@ -37041,7 +37040,8 @@
 	              listedResults
 	            )
 	          )
-	        )
+	        ),
+	        headerLinks
 	      )
 	    );
 	  }

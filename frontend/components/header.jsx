@@ -116,7 +116,6 @@ var Header = React.createClass({
           <img className="logo" src="http://i.imgur.com/g0zoa2g.png"/>
         </a>
       </div>
-       {headerLinks}
        <div className="header-search">
          <input type="text" onChange={this.search} value={this.state.search} />
          <span className="searching">
@@ -128,6 +127,7 @@ var Header = React.createClass({
            </ul>
          </div>
      </div>
+     {headerLinks}
    </div>
     </header>
     );

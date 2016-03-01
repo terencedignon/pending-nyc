@@ -2,7 +2,7 @@ var React = require('react');
 
 var Violations = React.createClass({
   getInitialState: function () {
-    return { expanded: true, onlyCritical: false, message: "Collapse" };
+    return { expanded: false, onlyCritical: false, message: "Expand" };
   },
   toggle: function (e) {
     e.preventDefault();
