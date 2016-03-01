@@ -84,9 +84,9 @@ var StoreShow = React.createClass({
       var date = new Date(inspect.inspection_date);
       var month = date.getMonth() + 1;
       var year = date.getYear() + 1900;
-      labels.unshift(month + "/" + year);
+      labels.push(month + "/" + year);
       // if (typeof inspect.score !== "number") { inspect.score = 0; }
-      data.unshift(inspect.score);
+      data.push(inspect.score);
       // return {x: month + "/" + year, y: inspect.score};
     }.bind(this));
 
