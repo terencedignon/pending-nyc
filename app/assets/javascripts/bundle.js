@@ -36895,10 +36895,10 @@
 	        React.createElement('input', { type: 'text', placeholder: 'Zipcode', onChange: this.changeZipcode, value: this.state.zipcode }),
 	        React.createElement('input', { type: 'text', placeholder: 'Boro', onChange: this.changeBoro, value: this.state.boro })
 	      ),
-	      React.createElement('div', { id: 'main-map' }),
-	      React.createElement('hr', null),
-	      restaurants
+	      React.createElement('div', { id: 'main-map' })
 	    );
+	    // <hr/>
+	    // {restaurants}
 	  }
 
 	});

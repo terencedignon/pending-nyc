@@ -171,7 +171,7 @@ _onMapChange: function () {
           AVG: {store.calc.average}<br/>
         FIRST AVG: {store.calc.first_average}
         </div>
-        
+
 
         </div>);
       });
@@ -191,11 +191,11 @@ _onMapChange: function () {
         </div>
       <div id="main-map">
       </div>
-        <hr/>
-        {restaurants}
       </div>
 
     );
+    // <hr/>
+    // {restaurants}
   }
 
 });
