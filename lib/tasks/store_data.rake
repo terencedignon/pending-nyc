@@ -16,13 +16,22 @@ namespace :store_data do
 
   ###add function that removes errant stores
 
+  task rankings: :environment do
+    MacroCalc.all.each do |macro|
+      store_collection = Store.includes(:calc).where(zipcode: macro.name) + Store.where(boro: macro.name) + Store.where(cuisine_type: macro.name)
+      sorted = store_collection.sort_by { |store| store.calc.worst }.map { |store| store.id }
+      macro.update!(
+        rankings: sorted
+      )
+    end
+  end
+
   task geocode: :environment do
-    # Store.all.select { |store| store.lng.to_s == "-74.0444" }.each do |store|
-      store = Store.find_by_name("SILK CAKES")
+    Store.all.select { |store| store.lng.to_s == "-74.0444" }.each do |store|
       p store.lat.to_s
       query = "#{store.building}+#{store.street.split(" ").join("+")},+#{store.boro.split(" ").join("+")},+NY"
 
-      data = JSON.load(open("https://maps.googleapis.com/maps/api/geocode/json?address=" + query + ""))
+      data = JSON.load(open("https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I"))
 
       next if data["results"] == []
       lat = data["results"][0]["geometry"]["location"]["lat"]
@@ -33,8 +42,8 @@ namespace :store_data do
         lng: lng
       )
       p store.lat.to_s
-      p "-" * 50
-
+      p "-"
+    end
   end
 
 

@@ -161,6 +161,21 @@ _onMapChange: function () {
 
   },
     render: function () {
+      var restaurants = MapStore.getMainMap().map(function(store) {
+        return (<div className="main-map-store">
+        <div>
+        {store.name}<br/>
+      {store.zipcode} {store.boro}
+        </div>
+        <div>
+          AVG: {store.calc.average}<br/>
+        FIRST AVG: {store.calc.first_average}
+        </div>
+        
+
+        </div>);
+      });
+
       // <div id="street-view"></div>
       // <i className="fa fa-reply"></i>
       // <input type="checkbox" name="cuisine" value="American"/>American<br/>
@@ -176,6 +191,8 @@ _onMapChange: function () {
         </div>
       <div id="main-map">
       </div>
+        <hr/>
+        {restaurants}
       </div>
 
     );

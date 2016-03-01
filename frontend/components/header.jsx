@@ -89,7 +89,7 @@ var Header = React.createClass({
         $('.header-wrapper').css("height", "50px");
         // $('.header-wrapper').css("padding", "0px");
         // $('.header-search > input').css("background", "#777");
-        // $('header').css("border-bottom", "2px solid #f7f7f7");
+        $('header').css("border-bottom", "2px solid #f7f7f7");
         // $('.show-info').css("height", "100%");
 
       } else {
@@ -101,6 +101,7 @@ var Header = React.createClass({
     });
 
     var headerLinks = <div className="header-links">
+       <a href="#/about">About</a>
       <a href="#/top">Top 50/Browse</a>
         <a href="#/map">Map</a>
       </div>;
@@ -113,7 +114,7 @@ var Header = React.createClass({
         <div className="header-wrapper">
         <div className="logo">
         <a onClick={this.redirectHome} href="#">
-          <img className="logo" src="http://i.imgur.com/g0zoa2g.png"/>
+          <img className="logo" src="http://i.imgur.com/Ky6jpCP.png"/>
         </a>
       </div>
        <div className="header-search">
@@ -127,10 +128,13 @@ var Header = React.createClass({
            </ul>
          </div>
      </div>
-     {headerLinks}
-   </div>
+     <div className="header-images">
+     <a href="#/top"><img alt="list" src="http://i.imgur.com/ot7zRtV.png"/></a> <a href="#/map"><img src="http://i.imgur.com/cGhtK9a.png"/></a>
+     </div>
+ </div>
     </header>
     );
+    // {headerLinks}
   }
 });
 

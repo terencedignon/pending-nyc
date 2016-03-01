@@ -16,13 +16,13 @@ var MapStore = require('./stores/map_store.js');
 var Browse = require('./components/browse.jsx');
 var Footer = require('./components/footer.jsx');
 var Most = require('./components/most.jsx');
-
+var About = require('./components/about.jsx');
 
 // <Sidebar />
 var App = React.createClass({
   render: function () {
     return (
-      <div>
+      <div className="body-container">
         <Header />
           <div className="container">
               <div className="main">
@@ -44,6 +44,7 @@ var route = (
     <IndexRoute component={StoreIndex} />
     <Route path="rest/:id" component={StoreShow} />
     <Route path="browse" component={Browse} />
+    <Route path="about" component={About} />
     <Route path="top" component={Most} />
     <Route path="map" component={Map} />
     </Route>

@@ -62,6 +62,7 @@
 	var Browse = __webpack_require__(263);
 	var Footer = __webpack_require__(264);
 	var Most = __webpack_require__(265);
+	var About = __webpack_require__(266);
 
 	// <Sidebar />
 	var App = React.createClass({
@@ -70,7 +71,7 @@
 	  render: function () {
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'body-container' },
 	      React.createElement(Header, null),
 	      React.createElement(
 	        'div',
@@ -97,6 +98,7 @@
 	    React.createElement(IndexRoute, { component: StoreIndex }),
 	    React.createElement(Route, { path: 'rest/:id', component: StoreShow }),
 	    React.createElement(Route, { path: 'browse', component: Browse }),
+	    React.createElement(Route, { path: 'about', component: About }),
 	    React.createElement(Route, { path: 'top', component: Most }),
 	    React.createElement(Route, { path: 'map', component: Map })
 	  )
@@ -36853,6 +36855,31 @@
 
 	  },
 	  render: function () {
+	    var restaurants = MapStore.getMainMap().map(function (store) {
+	      return React.createElement(
+	        'div',
+	        { className: 'main-map-store' },
+	        React.createElement(
+	          'div',
+	          null,
+	          store.name,
+	          React.createElement('br', null),
+	          store.zipcode,
+	          ' ',
+	          store.boro
+	        ),
+	        React.createElement(
+	          'div',
+	          null,
+	          'AVG: ',
+	          store.calc.average,
+	          React.createElement('br', null),
+	          'FIRST AVG: ',
+	          store.calc.first_average
+	        )
+	      );
+	    });
+
 	    // <div id="street-view"></div>
 	    // <i className="fa fa-reply"></i>
 	    // <input type="checkbox" name="cuisine" value="American"/>American<br/>
@@ -36868,7 +36895,9 @@
 	        React.createElement('input', { type: 'text', placeholder: 'Zipcode', onChange: this.changeZipcode, value: this.state.zipcode }),
 	        React.createElement('input', { type: 'text', placeholder: 'Boro', onChange: this.changeBoro, value: this.state.boro })
 	      ),
-	      React.createElement('div', { id: 'main-map' })
+	      React.createElement('div', { id: 'main-map' }),
+	      React.createElement('hr', null),
+	      restaurants
 	    );
 	  }
 
@@ -36980,7 +37009,7 @@
 	        $('.header-wrapper').css("height", "50px");
 	        // $('.header-wrapper').css("padding", "0px");
 	        // $('.header-search > input').css("background", "#777");
-	        // $('header').css("border-bottom", "2px solid #f7f7f7");
+	        $('header').css("border-bottom", "2px solid #f7f7f7");
 	        // $('.show-info').css("height", "100%");
 	      } else {
 	          $('header').css("opacity", "1");
@@ -36993,6 +37022,11 @@
 	    var headerLinks = React.createElement(
 	      'div',
 	      { className: 'header-links' },
+	      React.createElement(
+	        'a',
+	        { href: '#/about' },
+	        'About'
+	      ),
 	      React.createElement(
 	        'a',
 	        { href: '#/top' },
@@ -37019,7 +37053,7 @@
 	          React.createElement(
 	            'a',
 	            { onClick: this.redirectHome, href: '#' },
-	            React.createElement('img', { className: 'logo', src: 'http://i.imgur.com/g0zoa2g.png' })
+	            React.createElement('img', { className: 'logo', src: 'http://i.imgur.com/Ky6jpCP.png' })
 	          )
 	        ),
 	        React.createElement(
@@ -37041,9 +37075,24 @@
 	            )
 	          )
 	        ),
-	        headerLinks
+	        React.createElement(
+	          'div',
+	          { className: 'header-images' },
+	          React.createElement(
+	            'a',
+	            { href: '#/top' },
+	            React.createElement('img', { alt: 'list', src: 'http://i.imgur.com/ot7zRtV.png' })
+	          ),
+	          ' ',
+	          React.createElement(
+	            'a',
+	            { href: '#/map' },
+	            React.createElement('img', { src: 'http://i.imgur.com/cGhtK9a.png' })
+	          )
+	        )
 	      )
 	    );
+	    // {headerLinks}
 	  }
 	});
 
@@ -37430,6 +37479,37 @@
 	});
 
 	module.exports = Most;
+
+/***/ },
+/* 266 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(5);
+
+	var About = React.createClass({
+	  displayName: "About",
+
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      { className: "about" },
+	      React.createElement(
+	        "h1",
+	        null,
+	        "Pending.nyc is an in-depth look at NYC publicly available restaurant inspection grades."
+	      ),
+	      React.createElement("img", { src: "https://bmj2k.files.wordpress.com/2011/02/ratings1.jpg" }),
+	      React.createElement(
+	        "h3",
+	        null,
+	        "Starting in July 2010, New York City has required restaurants to post letter grades that correspond to scores received from sanitary inspections. An inspection score of 0-13 is an A, 14-27 points is a B, and 28 or more points is a C. Grade cards must be posted where they can easily be seen by people passing by."
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = About;
 
 /***/ }
 /******/ ]);
