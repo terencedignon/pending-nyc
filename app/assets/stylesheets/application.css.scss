@@ -325,7 +325,7 @@ header {
 }
 
 hr {
-  border: 1px solid #f7f7f7;
+  border: 1px solid #fff;
 }
 
 /*hr:last-child {
@@ -691,16 +691,16 @@ footer {
 
 span.big-header {
   display: block;
-  font-size: 80px;
+  font-size: 50px;
   padding: 50px;
   width: 80%;
   font-weight: bolder;
-  background: #000;
-  opacity: 0.9;
+  background:steelblue;
+  opacity: 1;
   font-family: "Montserrat"!important;
   text-transform: uppercase;
   /*letter-spacing: 10px;*/
-  color: #fff;
+  color: #eee;
 }
 
 
