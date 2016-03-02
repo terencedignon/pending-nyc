@@ -24802,6 +24802,7 @@
 	              'Inspections over time'
 	            ),
 	            React.createElement('br', null),
+	            React.createElement('hr', null),
 	            barChart,
 	            React.createElement('hr', null),
 	            comparison

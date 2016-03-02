@@ -206,7 +206,8 @@ var StoreShow = React.createClass({
       {overview}
       <hr/>
       <span className="store-name">Inspections over time</span><br/>
-      {barChart}
+      <hr/>
+    {barChart}
       <hr/>
       {comparison}
     </div>
