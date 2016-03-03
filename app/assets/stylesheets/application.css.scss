@@ -681,11 +681,11 @@ footer {
 
 .intro-header {
   background: url("http://www.venetian.com/content/dam/lasvegas/venetian/master/main/home/restaurants/lavo/lavo-restaurant.jpg") no-repeat;
-  background-size: cover;
+  // background-size: cover;
   width: auto;
   height: 100%;
-  padding-left: 50px;
-  padding-top: 100px;
+  padding: 50px;
+  padding-top: 50px;
   padding-bottom: 100px;
 }
 
@@ -695,12 +695,14 @@ span.big-header {
   padding: 50px;
   width: 80%;
   font-weight: bolder;
-  background: black;
-  opacity: 1;
+  background: white;
+  // opacity: 0.8;
+  text-align: center;
   font-family: "Montserrat"!important;
   text-transform: uppercase;
+  letter-spacing: 2px;
   /*letter-spacing: 10px;*/
-  color: #eee;
+  color: black;
 }
 
 
@@ -838,23 +840,40 @@ transition: 50ms ease-in-out;
   // color: #222;
 }
 .about h1 {
-  font-size: 50px;
-  font-family: "lato";
+  font-size: 30px;
+  text-align: center;
+  // font-family: "lato";
+  font-family: "montserrat";
+  // box-shadow: 5px 5px 1px 2px #ccc;
+  padding: 30px 50px;
+  width: 80%;
   letter-spacing: 5px;
-  background: #000;
-  color: #fff;
-  padding: 20px;
+  // opacity: 0.9;
+  // text-align: right;
+  background: maroon;
+  // font-weight: bolder;
+  color: white;
+  // padding: 20px;
   // opacity: 0.5;
   text-transform: uppercase;
-  font-weight: normal;
+  // font-weight: normal;
 }
 
 .about h3 {
   font-size: 25px;
-  font-family: "lato";
-  letter-spacing: 2px;
+  // margin-right: -20px;
+  // font-family: "lato";
+  font-family: "montserrat";
+  text-align: right;
+  background: steelblue;
+  // opacity: 0.9;
+  text-transform: uppercase;
+  // padding-left: 20px;
+  // letter-spacing: 2px;
   font-weight: normal;
-  padding: 10px;
+  padding: 10px 50px;
+  width: 80%;
+  color: white;
 }
 
 

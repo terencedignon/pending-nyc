@@ -114,7 +114,7 @@ var Header = React.createClass({
         <div className="header-wrapper">
         <div className="logo">
         <a onClick={this.redirectHome} href="#">
-          <img className="logo" src="http://i.imgur.com/Ky6jpCP.png"/>
+          <img className="logo" src="http://i.imgur.com/IkSfQsy.png"/>
         </a>
       </div>
        <div className="header-search">

@@ -36684,14 +36684,34 @@
 	          React.createElement(
 	            'span',
 	            { className: 'big-header' },
-	            'NYC restaurant analytics'
+	            'NYC health grade analytics'
 	          ),
-	          React.createElement('p', null)
+	          React.createElement('p', null),
+	          React.createElement(
+	            'div',
+	            { className: 'about' },
+	            React.createElement(
+	              'h1',
+	              null,
+	              '22,488   restaurants'
+	            ),
+	            React.createElement(
+	              'h1',
+	              null,
+	              ' 154,159  inspections '
+	            ),
+	            React.createElement(
+	              'h1',
+	              null,
+	              ' 463,245 violations'
+	            )
+	          )
 	        )
 	      )
 	    );
 	  }
 	});
+	// A quantitative look at all of NYC's 23,000 restaurants.  Data is drawn from 150,000+ inspections and 450,000+ violations.<p/>Search by name, location, or cuisine type.</h1>
 
 	module.exports = StoreIndex;
 
@@ -37054,7 +37074,7 @@
 	          React.createElement(
 	            'a',
 	            { onClick: this.redirectHome, href: '#' },
-	            React.createElement('img', { className: 'logo', src: 'http://i.imgur.com/Ky6jpCP.png' })
+	            React.createElement('img', { className: 'logo', src: 'http://i.imgur.com/IkSfQsy.png' })
 	          )
 	        ),
 	        React.createElement(

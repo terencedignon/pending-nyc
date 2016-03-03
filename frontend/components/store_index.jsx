@@ -78,12 +78,21 @@ var StoreIndex = React.createClass({
       </div>
       <div className="show-index">
         <div className="intro-header">
-          <span className="big-header">NYC restaurant analytics</span><p/>
+          <span className="big-header">NYC health grade analytics</span><p/>
+            <div className="about">
+
+              <h1>22,488   restaurants</h1>
+              <h1> 154,159  inspections </h1>
+              <h1> 463,245 violations</h1>
+
+      </div>
+      </div>
         </div>
-        </div>
+
         </div>
    );
   }
 });
+// A quantitative look at all of NYC's 23,000 restaurants.  Data is drawn from 150,000+ inspections and 450,000+ violations.<p/>Search by name, location, or cuisine type.</h1>
 
 module.exports = StoreIndex;
