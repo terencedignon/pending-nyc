@@ -10,6 +10,12 @@ var StoreActions = {
       data: data
     });
   },
+  getUserLocation: function (data) {
+    Dispatcher.dispatch({
+      actionType: StoreConstants.USER_LOCATION,
+      data: data
+    });
+  },
   updateMap: function (data) {
     Dispatcher.dispatch({
       actionType: StoreConstants.UPDATE_MAP,
@@ -57,7 +63,7 @@ var StoreActions = {
     });
   },
   getStore: function (data) {
-    
+
     Dispatcher.dispatch({
       actionType: StoreConstants.GET_STORE,
       data: data

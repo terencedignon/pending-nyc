@@ -25424,6 +25424,12 @@
 	      data: data
 	    });
 	  },
+	  getUserLocation: function (data) {
+	    Dispatcher.dispatch({
+	      actionType: StoreConstants.USER_LOCATION,
+	      data: data
+	    });
+	  },
 	  updateMap: function (data) {
 	    Dispatcher.dispatch({
 	      actionType: StoreConstants.UPDATE_MAP,
@@ -25497,6 +25503,7 @@
 
 	var StoreStore = new Store(AppDispatcher);
 
+	_location = {};
 	_store = {};
 	_yelp = {};
 	_comparison = {};
@@ -25554,6 +25561,16 @@
 	    _store = payload.data;
 
 	    this.__emitChange();
+	  } else if (payload.actionType === StoreConstants.USER_LOCATION) {
+	    var location = payload.data.coords;
+	    _location = { lat: location.latitude, lng: location.longitude };
+
+	    var json = $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I", function (data) {
+
+	      debugger;
+	    });
+
+	    this.__emitChange();
 	  } else if (payload.actionType === StoreConstants.GET_BROWSE) {
 	    _browse = payload.data;
 	    this.__emitChange();
@@ -25600,7 +25617,8 @@
 	  GET_BROWSE: "GET_BROWSE",
 	  GET_MOST_VISITED: "GET_MOST_VISITED",
 	  GET_TRENDING: "GET_TRENDING",
-	  GET_MOST: "GET_MOST"
+	  GET_MOST: "GET_MOST",
+	  USER_LOCATION: "USER_LOCATION"
 	};
 
 	module.exports = StoreConstants;
@@ -36574,6 +36592,7 @@
 	var StoreStore = __webpack_require__(222);
 	var SearchActions = __webpack_require__(215);
 	var Map = __webpack_require__(260);
+	var StoreActions = __webpack_require__(221);
 
 	var StoreIndex = React.createClass({
 	  displayName: 'StoreIndex',
@@ -36583,6 +36602,10 @@
 	    // },
 	  },
 	  componentDidMount: function () {
+	    // navigator.geolocation.getCurrentPosition(function (data) {
+	    //   StoreActions.getUserLocation(data);
+	    // });
+
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
 	    ApiUtil.fetchMostVisited();
 	    ApiUtil.fetchTrending();
@@ -36684,7 +36707,7 @@
 	          React.createElement(
 	            'span',
 	            { className: 'big-header' },
-	            'NYC health grade analytics'
+	            'NYC restaurant grade analytics'
 	          ),
 	          React.createElement('p', null),
 	          React.createElement(
@@ -37385,7 +37408,11 @@
 	    var input = e.currentTarget.id;
 	  },
 	  render: function () {
-	    var mostList = React.createElement('div', null);
+	    var mostList = React.createElement(
+	      'div',
+	      { className: 'most-loading' },
+	      React.createElement('i', { className: 'fa fa-circle-o-notch fa-spin most-spin' })
+	    );
 	    if (this.state.most.length > 1) {
 	      mostList = StoreStore.getMost().map(function (store) {
 	        return React.createElement(

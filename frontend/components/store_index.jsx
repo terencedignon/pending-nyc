@@ -3,6 +3,7 @@ var ApiUtil = require('../util/api_util.js');
 var StoreStore = require('../stores/store_store.js');
 var SearchActions = require('../actions/search_actions.js');
 var Map = require('./main_map.jsx');
+var StoreActions = require('../actions/store_actions.js');
 
 var StoreIndex = React.createClass({
   getInitialState: function () {
@@ -10,6 +11,10 @@ var StoreIndex = React.createClass({
   // },
 },
   componentDidMount: function () {
+    // navigator.geolocation.getCurrentPosition(function (data) {
+    //   StoreActions.getUserLocation(data);
+    // });
+
     this.storeListener = StoreStore.addListener(this._onStoreChange);
     ApiUtil.fetchMostVisited();
     ApiUtil.fetchTrending();
@@ -78,7 +83,7 @@ var StoreIndex = React.createClass({
       </div>
       <div className="show-index">
         <div className="intro-header">
-          <span className="big-header">NYC health grade analytics</span><p/>
+          <span className="big-header">NYC restaurant grade analytics</span><p/>
             <div className="about">
 
               <h1>22,488   restaurants</h1>

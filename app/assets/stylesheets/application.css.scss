@@ -697,10 +697,10 @@ span.big-header {
   font-weight: bolder;
   background: white;
   // opacity: 0.8;
-  // text-align: center;
+  text-align: center;
   font-family: "Montserrat"!important;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 5px;
   /*letter-spacing: 10px;*/
   color: black;
 }
@@ -892,7 +892,7 @@ transition: 50ms ease-in-out;
 }
 
 .logo:hover {
-  opacity: 1;
+  // border: 1px solid #f7f7f7;
 }
 
 .header-images {
@@ -911,4 +911,14 @@ transition: 50ms ease-in-out;
 
 .header-images img:hover {
   opacity: 1;
+}
+
+.most-loading {
+
+  padding: 50px;
+}
+
+.most-spin {
+  font-size: 200px;
+  color: #eee;
 }

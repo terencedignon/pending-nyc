@@ -4,6 +4,7 @@ var Store = require('flux/utils').Store;
 
 var StoreStore = new Store(AppDispatcher);
 
+_location = {};
 _store = {};
 _yelp = {};
 _comparison = {};
@@ -59,9 +60,22 @@ StoreStore.__onDispatch = function (payload) {
 
   if (payload.actionType === StoreConstants.GET_STORE) {
     _store = payload.data;
-    
+
     this.__emitChange();
     }
+
+  else if (payload.actionType === StoreConstants.USER_LOCATION) {
+    var location = payload.data.coords;
+    _location = {lat: location.latitude, lng: location.longitude};
+
+
+    var json = $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I", function(data) {
+
+      debugger
+    });
+
+    this.__emitChange();
+  }
 
   else if (payload.actionType === StoreConstants.GET_BROWSE) {
     _browse = payload.data;
