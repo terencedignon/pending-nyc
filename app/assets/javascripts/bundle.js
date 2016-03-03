@@ -36432,7 +36432,7 @@
 	      React.createElement(
 	        'span',
 	        { className: 'inspection-detail' },
-	        React.createElement('i', { className: "fa fa-" + this.iconParse(data.last) }),
+	        React.createElement('i', { className: "fa fa-border fa-" + this.iconParse(data.last) }),
 	        'Most recent: ',
 	        data.last,
 	        ', ',
@@ -36440,14 +36440,14 @@
 	        '. '
 	      ),
 	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.average) }),
+	      React.createElement('i', { className: "fa fa-border fa-" + this.iconParse(data.average) }),
 	      'Average: ',
 	      data.average,
 	      ', ',
 	      this.translate(data.average),
 	      ' ',
 	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.first_average) }),
+	      React.createElement('i', { className: "fa fa-border fa-" + this.iconParse(data.first_average) }),
 	      'Average ',
 	      React.createElement(
 	        'span',
@@ -36465,7 +36465,7 @@
 	      this.translate(data.first_average),
 	      '.',
 	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-" + this.iconParse([data.mice, data.roaches, data.flies]) }),
+	      React.createElement('i', { className: "fa fa-border fa-" + this.iconParse([data.mice, data.roaches, data.flies]) }),
 	      'Of ',
 	      data.inspections,
 	      ' inspections,  ',
@@ -36476,14 +36476,14 @@
 	      data.roaches,
 	      ' found roaches.',
 	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.worst) }),
+	      React.createElement('i', { className: "fa fa-border fa-" + this.iconParse(data.worst) }),
 	      'Worst: ',
 	      data.worst,
 	      ' on ',
 	      data.worstDate.toDateString(),
 	      '.',
 	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.best) }),
+	      React.createElement('i', { className: "fa fa-border fa-" + this.iconParse(data.best) }),
 	      'Best: ',
 	      data.best,
 	      ' on ',
@@ -36677,6 +36677,7 @@
 	      //     <span className='image-hover-info'>{store.name}</span></a>
 	      //     </li>;
 	    }
+
 	    return React.createElement(
 	      'div',
 	      null,
@@ -36798,9 +36799,6 @@
 	          cuisine_type: this.state.cuisine_type
 	        } };
 
-	      $('.main-map-wrapper > i').css("display", "block");
-	      $('#main-map').css("opacity", "0.8");
-
 	      ApiUtil.fetchMainMap(options);
 	      setTimeout(function () {
 	        this._onMapChange();
@@ -36864,7 +36862,7 @@
 	    $('.main-map-wrapper > i').css("display", "none");
 	    $('#main-map').css("opacity", "1");
 
-	    // this.setState({ markers: newMarkers});
+	    this.setState({ markers: newMarkers });
 	  },
 	  changeName: function (e) {
 	    this.setState({ name: e.currentTarget.value });
@@ -36885,7 +36883,8 @@
 	  mapUpdate: function () {
 	    clearInterval(this.timeout);
 	    this.timeout = setInterval(function () {
-
+	      $('.main-map-wrapper > i').css("display", "block");
+	      $('#main-map').css("opacity", "0.8");
 	      var options = { bounds: map.getBounds().toJSON(), query: {
 	          boro: this.state.boro,
 	          zipcode: this.state.zipcode,
@@ -37037,6 +37036,16 @@
 	  redirectHome: function () {
 	    this.history.pushState(null, "/", {});
 	  },
+	  hover: function (e) {
+	    // debugger
+
+	    // $(e.currentTarget).find("div").css("display", "block");
+	    // ("<div class='arrow-up'></div>");
+	    // $(e.currentTarget).find("div").css("display", "block")("<div class='mouseover'>" + name + "</div>");
+	  },
+	  mouseLeave: function (e) {
+	    $(e.currentTarget).find('div').css("display", "none");
+	  },
 	  search: function (e) {
 	    clearInterval(this.searchInterval);
 
@@ -37065,37 +37074,13 @@
 	      if ($(this).scrollTop() > 1) {
 	        $('header').css("opacity", "0.9");
 	        $('.header-wrapper').css("height", "50px");
-	        // $('.header-wrapper').css("padding", "0px");
-	        // $('.header-search > input').css("background", "#777");
 	        $('header').css("border-bottom", "2px solid #f7f7f7");
-	        // $('.show-info').css("height", "100%");
 	      } else {
-	          $('header').css("opacity", "1");
-	          $('header').css("border-bottom", "0");
-	          // $('.header-wrapper').css("height", "60px");
-	          $('.header-wrapper').css("padding-top", "5px");
-	        }
+	        $('header').css("opacity", "1");
+	        $('header').css("border-bottom", "0");
+	        $('.header-wrapper').css("padding-top", "5px");
+	      }
 	    });
-
-	    var headerLinks = React.createElement(
-	      'div',
-	      { className: 'header-links' },
-	      React.createElement(
-	        'a',
-	        { href: '#/about' },
-	        'About'
-	      ),
-	      React.createElement(
-	        'a',
-	        { href: '#/top' },
-	        'Top 50/Browse'
-	      ),
-	      React.createElement(
-	        'a',
-	        { href: '#/map' },
-	        'Map'
-	      )
-	    );
 
 	    var listedResults = this.populateSearch();
 
@@ -37137,19 +37122,40 @@
 	          'div',
 	          { className: 'header-images' },
 	          React.createElement(
-	            'a',
-	            { href: '#/top' },
-	            React.createElement('img', { alt: 'list', src: 'http://i.imgur.com/ot7zRtV.png' })
+	            'span',
+	            { onMouseOut: this.mouseLeave, onMouseOver: this.hover },
+	            ' ',
+	            React.createElement(
+	              'a',
+	              { href: '#/top' },
+	              React.createElement('img', { alt: 'list', src: 'http://i.imgur.com/ot7zRtV.png' })
+	            ),
+	            React.createElement('div', { className: 'arrow-up' }),
+	            React.createElement(
+	              'div',
+	              { className: 'mouseover' },
+	              'Top 50'
+	            )
 	          ),
-	          ' ',
 	          React.createElement(
-	            'a',
-	            { href: '#/map' },
-	            React.createElement('img', { src: 'http://i.imgur.com/cGhtK9a.png' })
+	            'span',
+	            { onMouseOut: this.mouseLeave, onMouseOver: this.hover },
+	            React.createElement(
+	              'a',
+	              { href: '#/map' },
+	              React.createElement('img', { src: 'http://i.imgur.com/cGhtK9a.png' })
+	            ),
+	            React.createElement('div', { className: 'arrow-up' }),
+	            React.createElement(
+	              'div',
+	              { className: 'mouseover' },
+	              'Map'
+	            )
 	          )
 	        )
 	      )
 	    );
+	    // <a href="#" onMouseOut={this.mouseLeave} onMouseOver={this.hover.bind(this, "Internals")}><img src="http://i.imgur.com/Wu8hnv7.png"/></a>
 	    // {headerLinks}
 	  }
 	});

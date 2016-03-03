@@ -59,6 +59,16 @@ var Header = React.createClass({
   redirectHome: function () {
     this.history.pushState(null, "/", {});
   },
+  hover: function (e) {
+    // debugger
+
+    // $(e.currentTarget).find("div").css("display", "block");
+    // ("<div class='arrow-up'></div>");
+    // $(e.currentTarget).find("div").css("display", "block")("<div class='mouseover'>" + name + "</div>");
+  },
+  mouseLeave: function (e) {
+    $(e.currentTarget).find('div').css("display", "none");
+  },
   search: function (e) {
     clearInterval(this.searchInterval);
 
@@ -87,24 +97,14 @@ var Header = React.createClass({
       if ($(this).scrollTop() > 1) {
         $('header').css("opacity", "0.9");
         $('.header-wrapper').css("height", "50px");
-        // $('.header-wrapper').css("padding", "0px");
-        // $('.header-search > input').css("background", "#777");
         $('header').css("border-bottom", "2px solid #f7f7f7");
-        // $('.show-info').css("height", "100%");
-
       } else {
         $('header').css("opacity", "1");
         $('header').css("border-bottom", "0");
-        // $('.header-wrapper').css("height", "60px");
         $('.header-wrapper').css("padding-top", "5px");
       }
     });
 
-    var headerLinks = <div className="header-links">
-       <a href="#/about">About</a>
-      <a href="#/top">Top 50/Browse</a>
-        <a href="#/map">Map</a>
-      </div>;
 
 
     var listedResults = this.populateSearch();
@@ -129,11 +129,19 @@ var Header = React.createClass({
          </div>
      </div>
      <div className="header-images">
-     <a href="#/top"><img alt="list" src="http://i.imgur.com/ot7zRtV.png"/></a> <a href="#/map"><img src="http://i.imgur.com/cGhtK9a.png"/></a>
+      <span onMouseOut={this.mouseLeave} onMouseOver={this.hover}> <a href="#/top"><img alt="list" src="http://i.imgur.com/ot7zRtV.png"></img></a>
+        <div className='arrow-up'></div>
+        <div className='mouseover'>Top 50</div>
+      </span>
+       <span onMouseOut={this.mouseLeave} onMouseOver={this.hover}><a href="#/map"><img src="http://i.imgur.com/cGhtK9a.png"/></a>
+         <div className='arrow-up'></div>
+         <div className='mouseover'>Map</div>
+         </span>
      </div>
  </div>
     </header>
     );
+    // <a href="#" onMouseOut={this.mouseLeave} onMouseOver={this.hover.bind(this, "Internals")}><img src="http://i.imgur.com/Wu8hnv7.png"/></a>
     // {headerLinks}
   }
 });

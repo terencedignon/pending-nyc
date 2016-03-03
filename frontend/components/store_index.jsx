@@ -70,6 +70,7 @@ var StoreIndex = React.createClass({
       //     <span className='image-hover-info'>{store.name}</span></a>
       //     </li>;
     }
+
     return (
       <div>
         <div className="trend-holder">
@@ -83,6 +84,7 @@ var StoreIndex = React.createClass({
       </div>
       <div className="show-index">
         <div className="intro-header">
+  
           <span className="big-header">NYC restaurant grade analytics</span><p/>
             <div className="about">
 

@@ -54,10 +54,6 @@ var Map = React.createClass({
         cuisine_type: this.state.cuisine_type
       } };
 
-
-      $('.main-map-wrapper > i').css("display", "block");
-        $('#main-map').css("opacity", "0.8");
-
       ApiUtil.fetchMainMap(options);
       setTimeout(function() {
         this._onMapChange();
@@ -126,7 +122,7 @@ _onMapChange: function () {
   $('.main-map-wrapper > i').css("display", "none");
   $('#main-map').css("opacity", "1");
 
-  // this.setState({ markers: newMarkers});
+  this.setState({ markers: newMarkers});
 
   },
   changeName: function (e) {
@@ -148,7 +144,8 @@ _onMapChange: function () {
   mapUpdate: function () {
     clearInterval(this.timeout);
     this.timeout = setInterval(function () {
-
+      $('.main-map-wrapper > i').css("display", "block");
+        $('#main-map').css("opacity", "0.8");
       var options = { bounds: map.getBounds().toJSON(), query: {
         boro: this.state.boro,
         zipcode: this.state.zipcode,
