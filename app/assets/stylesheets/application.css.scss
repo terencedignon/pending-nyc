@@ -921,4 +921,23 @@ transition: 50ms ease-in-out;
 .most-spin {
   font-size: 200px;
   color: #eee;
+
+}
+
+.main-map-wrapper {
+
+}
+
+.main-map-wrapper i {
+  font-size: 100px;
+  left: 350px;
+
+  top: 125px;
+  // bottom: 0;
+  display: none;
+  color: steelblue;
+  // margin-left: auto;
+  // margin-right: auto;
+  position: absolute;
+  z-index: 99999999;
 }

@@ -9,7 +9,7 @@ var Map = React.createClass({
   mixins: [History],
 
   getInitialState: function () {
-    return { markers: [], markerSetting: "average", newMarkers: [], zipcode: "", boro: "", cuisine_type: "", name: ""};
+    return { searching: false, markers: [], markerSetting: "average", newMarkers: [], zipcode: "", boro: "", cuisine_type: "", name: ""};
   },
   componentDidMount: function () {
 
@@ -53,6 +53,11 @@ var Map = React.createClass({
         name: this.state.name,
         cuisine_type: this.state.cuisine_type
       } };
+
+
+      $('.main-map-wrapper > i').css("display", "block");
+        $('#main-map').css("opacity", "0.8");
+
       ApiUtil.fetchMainMap(options);
       setTimeout(function() {
         this._onMapChange();
@@ -111,12 +116,17 @@ _onMapChange: function () {
 
 
     newMarkers.push(newMarker);
+    this.setState({ searching: false })
   }.bind(this));
 
   this.state.markers.forEach(function(marker) {
     marker.setMap(null)
   }.bind(this));
-  this.setState({ markers: newMarkers});
+
+  $('.main-map-wrapper > i').css("display", "none");
+  $('#main-map').css("opacity", "1");
+
+  // this.setState({ markers: newMarkers});
 
   },
   changeName: function (e) {
@@ -189,7 +199,10 @@ _onMapChange: function () {
           <input type="text" placeholder="Zipcode" onChange={this.changeZipcode} value={this.state.zipcode} />
           <input type="text" placeholder="Boro" onChange={this.changeBoro} value={this.state.boro}/>
         </div>
+        <div className="main-map-wrapper">
+        <i className="fa fa-spinner fa-pulse"></i>
       <div id="main-map">
+      </div>
       </div>
       </div>
 

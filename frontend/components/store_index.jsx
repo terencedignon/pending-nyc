@@ -86,7 +86,10 @@ var StoreIndex = React.createClass({
           <span className="big-header">NYC restaurant grade analytics</span><p/>
             <div className="about">
 
-              <h1>22,488   restaurants</h1>
+              <h1>
+
+
+                22,488   restaurants</h1>
               <h1> 154,159  inspections </h1>
               <h1> 463,245 violations</h1>
 
