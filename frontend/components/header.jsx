@@ -62,14 +62,14 @@ var Header = React.createClass({
   search: function (e) {
     clearInterval(this.searchInterval);
 
-    this.setState({ searching: "Thinking"})
+    this.setState({ searching: <i className="fa fa-circle-o-notch fa-spin fa-lg"></i>})
     query = e.currentTarget.value;
     this.setState({ search: query });
     this.searchInterval = setInterval(this.autoSearch, 1000);
   },
   autoSearch: function () {
     function callback (data) {
-      this.setState({ searching: "Done!"});
+      this.setState({ searching: <i className="fa fa-check fa-lg"></i>});
       setTimeout(function () {
         this.setState({ searching: ""});
       }.bind(this), 1000);
