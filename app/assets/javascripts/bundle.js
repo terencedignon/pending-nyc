@@ -37484,7 +37484,7 @@
 	        // (store.image_url ?  <img src={store.image_url.replace("ms.jpg", "348s.jpg")}/> : <img src="http://i.imgur.com/8PkvwVo.jpg"/>);
 
 	        return React.createElement(
-	          'li',
+	          'div',
 	          { key: Math.random() },
 	          React.createElement('i', { onClick: this.expand, className: 'fa fa-plus fa-border' }),
 	          React.createElement('i', { onClick: this.collapse, className: 'fa fa-minus fa-border' }),
@@ -37634,7 +37634,7 @@
 	      ),
 	      React.createElement('hr', null),
 	      React.createElement(
-	        'ul',
+	        'div',
 	        { className: 'filter-links' },
 	        mostList
 	      )

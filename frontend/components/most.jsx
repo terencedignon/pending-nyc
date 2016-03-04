@@ -80,7 +80,7 @@ var Most = React.createClass({
         var image = <img src={this.setGrade(store)}/>;
         // (store.image_url ?  <img src={store.image_url.replace("ms.jpg", "348s.jpg")}/> : <img src="http://i.imgur.com/8PkvwVo.jpg"/>);
 
-        return <li key={Math.random()}><i onClick={this.expand} className="fa fa-plus fa-border"></i>
+        return <div key={Math.random()}><i onClick={this.expand} className="fa fa-plus fa-border"></i>
         <i onClick={this.collapse} className="fa fa-minus fa-border"></i>
       <a href={"#/rest/" + store.id}>{store.name}</a>
           <span className="fa-stack most-stack ">
@@ -102,7 +102,7 @@ var Most = React.createClass({
 
 
     </span>
-         </li>;
+  </div>;
 
         }.bind(this));
     }
@@ -131,9 +131,9 @@ var Most = React.createClass({
     <a id="flies_percentage" onClick={this.changeQuery} href="#">Flies Percent</a> <a id="flies" onClick={this.changeQuery} href="#">Flies Number</a>
     </div>
     <hr/>
-    <ul className="filter-links">
+    <div className="filter-links">
       {mostList}
-    </ul>
+    </div>
     </div>
     );
   }

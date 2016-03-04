@@ -863,7 +863,7 @@ transition: 50ms ease-in-out;
   font-family: "helvetica";
   // padding-left: 3%;
 
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .fa-hide {
@@ -873,7 +873,7 @@ transition: 50ms ease-in-out;
 }
 
 .details i {
-  color: #ccc;
+  color: #777;
   // margin-top: 10px;
   margin-right: 5px;
   // margin-top: 2px;
@@ -942,8 +942,8 @@ span.underline {
 }
 
 .google-image-holder {
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   // background: steelblue
 
   font-size: 40px;
@@ -958,11 +958,13 @@ span.underline {
 .wrapper {
   // margin-left: 15px;
   margin-top: 5px;
+  margin-bottom: 5px;
   display: none;
   padding: 2px;
-  background: #fff;
 
-  // border: 2px solid #eee;
+  // background: #777;
+
+  // border: 1px solid #f7f7f7;
 }
 
 .wrapper hr {
