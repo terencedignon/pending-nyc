@@ -36374,7 +36374,7 @@
 	    if (grade <= 13) {
 	      return "thumbs-up";
 	    } else if (grade <= 27) {
-	      return "minus";
+	      return "minus fa-border";
 	    } else {
 	      return "thumbs-down";
 	    }

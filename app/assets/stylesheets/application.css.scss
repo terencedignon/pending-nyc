@@ -665,10 +665,11 @@ footer {
   opacity: 1;
 }
 
-.fa-minus {
+.overview-holder .fa-minus {
   margin-right: 11px;
   /*font-size: 20px;*/
-  color: #777;
+  display: inline-block;
+  color: #777!important;
   opacity: 1;
 }
 
@@ -1066,7 +1067,7 @@ span.underline {
 }
 
 .fa-border {
-  border: 0px solid transparent;
+  border: 1px solid transparent;
 }
 
 .fa-plus {
