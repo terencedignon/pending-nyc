@@ -116,11 +116,8 @@ var StoreShow = React.createClass({
       Z: "http://i.imgur.com/fksRyj5.jpg"
     };
 
-    if (typeof this.state.store.inspections[0].grade !== "undefined") {
-      return imageObject[this.state.store.inspections[0].grade]
-    } else {
-      return imageObject["P"];
-    }
+      return imageObject[this.state.store.calc.grade]
+
   },
   translate: function (number) {
     if (number <= 13) {

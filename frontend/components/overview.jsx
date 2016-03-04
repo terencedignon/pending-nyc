@@ -90,17 +90,17 @@ var Overview = React.createClass({
         <span className="inspection-detail">
 
 
-          <i className={"fa fa-border fa-" + this.iconParse(data.last)}></i>Most recent: {data.last}, {this.translate(data.last)}. </span><br/>
+          <i className={"fa fa-" + this.iconParse(data.last)}></i>Most recent: {data.last}, {this.translate(data.last)}. </span><br/>
 
 
-    <i className={"fa fa-border fa-" + this.iconParse(data.average)}></i>
+    <i className={"fa fa-" + this.iconParse(data.average)}></i>
       Average: {data.average}, {this.translate(data.average)} <br/>
-    <i className={"fa fa-border fa-" + this.iconParse(data.first_average)}></i>Average <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">unannounced inspection
+    <i className={"fa fa-" + this.iconParse(data.first_average)}></i>Average <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">unannounced inspection
             <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span>
           </span>: {data.first_average}, {this.translate(data.first_average)}.<br/>
-        <i className={"fa fa-border fa-" + this.iconParse([data.mice, data.roaches, data.flies])}></i>Of {data.inspections} inspections,  {data.mice} found mice, {data.flies} found flies, and {data.roaches} found roaches.<br/>
-        <i className={"fa fa-border fa-" + this.iconParse(data.worst)}></i>Worst: {data.worst} on {data.worstDate.toDateString()}.<br/>
-        <i className={"fa fa-border fa-" + this.iconParse(data.best)}></i>Best: {data.best} on {data.bestDate.toDateString()}.<p/>
+        <i className={"fa fa-" + this.iconParse([data.mice, data.roaches, data.flies])}></i>Of {data.inspections} inspections,  {data.mice} found mice, {data.flies} found flies, and {data.roaches} found roaches.<br/>
+        <i className={"fa fa-" + this.iconParse(data.worst)}></i>Worst: {data.worst} on {data.worstDate.toDateString()}.<br/>
+        <i className={"fa fa-" + this.iconParse(data.best)}></i>Best: {data.best} on {data.bestDate.toDateString()}.<p/>
   </span>
 );
   }

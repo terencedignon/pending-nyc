@@ -58,6 +58,11 @@ class Api::StoresController < ApplicationController
 
   end
 
+  def auto_complete
+    query = Store.where("#{params[:query]} IN #{params[:value]}")
+    debugger
+  end
+
   def show
     @store = Store.find(params[:id])
     @store.update!(last_visit: Time.now, visit_count: @store.visit_count + 1)

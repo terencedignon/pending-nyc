@@ -16,6 +16,34 @@ namespace :store_data do
 
   ###add function that removes errant stores
 
+  task set_last: :environment do
+    Store.includes(:calc).each do |store|
+      last_inspection = store.inspections.order(inspection_date: :desc)
+      score = (last_inspection.first.score ? last_inspection.first.score : last_inspection.second.score)
+      grade = (last_inspection.first.grade ? last_inspection.first.grade : last_inspection.second.grade)
+
+      store.calc.update(last: score, grade: grade)
+
+    end
+  end
+
+  task set_case: :environment do
+    Store.all.each do |store|
+      # p store.id if store.id % 1000 == 0
+      #
+      # street = store.street.split(" ").map(&:capitalize).join(" ")
+      # boro = store.boro.split(" ").map(&:capitalize).join(" ")
+      cuisine = store.cuisine_type
+      if store.cuisine_type
+        cuisine = store.cuisine_type.split(" ").map(&:capitalize).join("")
+      
+
+      end
+
+      store.update(cuisine_type: cuisine)
+    end
+  end
+
   task rankings: :environment do
     MacroCalc.all.each do |macro|
       store_collection = Store.includes(:calc).where(zipcode: macro.name) + Store.where(boro: macro.name) + Store.where(cuisine_type: macro.name)

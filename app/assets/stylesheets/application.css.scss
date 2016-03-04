@@ -82,7 +82,7 @@ header {
   /*margin-bottom: 50px;*/
   width: 100%;
   padding-top: 5px;
-  /*background: #fff;*/
+  // /*background: #fff;*/
   height: 60px;
   margin: 0 auto;
   // transition: all 0.3s ease-in-out;
@@ -370,7 +370,7 @@ footer {
 
 
 .legend {
-
+  display: none;
   margin-top: 5px;
   margin-bottom: -30px;
   // padding: 5px;
@@ -817,12 +817,88 @@ transition: 50ms ease-in-out;
 }
 
 .filter-links {
-  list-style: decimal;
+  list-style: none;
+  // margin-bottom: 100px;
   min-height: 500px;
+}
+
+.filter-links li {
+  margin-bottom: 2px;
+  padding: 2px;
+  // border: 1px solid #f7f7f7;
+}
+
+.expanded-details-row {
+  color: #777;
+  // padding-top: 1%;
+  padding-left: 2%;
+  // background: #222;
+  display: flex;
+  flex-direction: row;
+}
+
+.address {
+  width: 50%;
+}
+
+.expanded-details-row div {
+  padding: 5px;
+}
+
+#mini-map {
+  width: 200px;
+  height: 100px;
+}
+
+.details {
+  // margin-top: 5px;
+  display: none;
+
+  color: #222;
+  // text-align: center;
+  font-family: "helvetica";
+  // padding-left: 3%;
+
+  font-size: 14px;
+}
+
+.fa-hide {
+  color: transparent!important;
+  // margin-bottom: 5px;
+  // display: none;
+}
+
+.details i {
+  color: #777;
+  // margin-top: 10px;
+  margin-right: 5px;
+  // margin-top: 2px;
+}
+
+.fa-phone {
+  margin-left: 2px;
+}
+
+.details-numbers {
+  // background: #f7f7f7;
+  text-align: center;
+}
+
+
+span.underline {
+  font-size: 18px;
+  font-weight: bolder;
+  // padding: 2px;
+  // border: 1px solid maroon;
+
+  // text-decoration: underline;
+  // color: #777;
+
 }
 
 .filter-links a {
   color: steelblue;
+  font-weight: strong;
   text-decoration: none;
   font-size: 18px;
 }
@@ -857,6 +933,47 @@ transition: 50ms ease-in-out;
   // opacity: 0.5;
   text-transform: uppercase;
   // font-weight: normal;
+}
+
+.google-image-holder {
+  width: 90px;
+  height: 90px;
+  // background: steelblue
+
+  font-size: 40px;
+  margin-top: 0px;
+  // margin-bottom: 14px;
+  // box-shadow: 2px 2px 0 0 #f7f7f7;
+  // margin-right: 5px;
+  // border-radius: 5%;
+  overflow: hidden;
+}
+
+.wrapper {
+  margin-top: 5px;
+  display: none;
+  padding: 5px;
+  // background: #f7f7f7;
+  border: 3px solid #f7f7f7;
+}
+
+.wrapper hr {
+  color: #fff;
+  opacity: 0;
+  margin: 0.5px;
+}
+
+.google-image-holder img {
+  // border-radius: 5%;
+  border: 2px solid #f7f7f7;
+  // opacity: 0.9;
+  // margin: 0 auto;
+  width: 75%;
+}
+
+.fa-star {
+  margin-top: 5px;
+  color: maroon!important;
 }
 
 .about h3 {
@@ -952,6 +1069,32 @@ transition: 50ms ease-in-out;
   border: 0px solid transparent;
 }
 
+.fa-plus {
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 10px;
+  color: #777;
+  // display: none;
+  transition: 0.1s ease-in-out;
+}
+
+.fa-minus {
+  display: none;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 10px;
+  color: #777;
+  transition: 0.1s ease-in-out;
+}
+
+.fa-minus:hover {
+  color: #222;
+}
+
+.fa-plus:hover {
+  color: #222;
+}
+
 .mouseover {
   display: none;
   position: absolute;
@@ -973,6 +1116,33 @@ transition: 50ms ease-in-out;
 
 }
 
+.most-stack {
+  border: 1px solid #f7f7f7;
+  margin-left: 15px;
+  border-radius: 10%;
+  // padding: 5px;
+  color: #fff;
+  font-size: 10px;
+  margin-top: -3px;
+  // margin-bottom: 5px;
+}
+
+.most-text {
+  // margin-top: .3em;
+  font-family: "montserrat";
+  color: #222;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.most-index {
+  // padding: 1px;
+  // background: steelblue;
+  // color: white;
+  // margin-bottom: 2px;
+  // border: 1px solid black;
+}
+
 .arrow-up {
   display: none;
   position: absolute;
@@ -983,5 +1153,8 @@ transition: 50ms ease-in-out;
   // margin-left: -7px;
   margin-top: -5px;
 	border-bottom: 20px solid steelblue;
+}
 
+.fa-culinary {
+  margin-top: 10px;
 }

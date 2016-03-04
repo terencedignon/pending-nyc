@@ -43,6 +43,19 @@ var ApiUtil = {
       }
     });
   },
+  autoComplete: function (params) {
+    $.ajax({
+      method: "GET",
+      url: "api/stores/auto_complete",
+      data: params,
+      success: function(data) {
+        SearchActions.autoComplete(data);
+      },
+      error: function (e) {
+        console.log("error in fetchMostVisited");
+      }
+    });
+    },
 
   fetchMostVisited: function() {
     $.ajax({

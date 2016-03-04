@@ -24705,11 +24705,7 @@
 	      Z: "http://i.imgur.com/fksRyj5.jpg"
 	    };
 
-	    if (typeof this.state.store.inspections[0].grade !== "undefined") {
-	      return imageObject[this.state.store.inspections[0].grade];
-	    } else {
-	      return imageObject["P"];
-	    }
+	    return imageObject[this.state.store.calc.grade];
 	  },
 	  translate: function (number) {
 	    if (number <= 13) {
@@ -24906,6 +24902,19 @@
 	      }
 	    });
 	  },
+	  autoComplete: function (params) {
+	    $.ajax({
+	      method: "GET",
+	      url: "api/stores/auto_complete",
+	      data: params,
+	      success: function (data) {
+	        SearchActions.autoComplete(data);
+	      },
+	      error: function (e) {
+	        console.log("error in fetchMostVisited");
+	      }
+	    });
+	  },
 
 	  fetchMostVisited: function () {
 	    $.ajax({
@@ -25066,6 +25075,12 @@
 	  fetchSearch: function (data) {
 	    Dispatcher.dispatch({
 	      actionType: SearchConstants.FETCH_SEARCH,
+	      data: data
+	    });
+	  },
+	  autoComplete: function (data) {
+	    Dispatcher.dispatch({
+	      actionType: SearchConstants.AUTO_COMPLETE,
 	      data: data
 	    });
 	  },
@@ -25402,7 +25417,8 @@
 	  CLEAR_RESULTS: "CLEAR_RESULTS",
 	  FETCH_COMPARISON: "FETCH_COMPARISON",
 	  CLEAR_COMPARISON: "CLEAR_COMPARISON",
-	  FETCH_MOST: "FETCH_MOST"
+	  FETCH_MOST: "FETCH_MOST",
+	  AUTO_COMPLETE: "AUTO_COMPLETE"
 
 	};
 
@@ -36102,12 +36118,17 @@
 	var Store = __webpack_require__(224).Store;
 	var SearchStore = new Store(AppDispatcher);
 
+	_autoComplete = [];
 	_most = [];
 	_results = [];
 	_comparison = [];
 
 	SearchStore.all = function () {
 	  return _results.slice();
+	};
+
+	SearchStore.autoComplete = function () {
+	  return _autoComplete;
 	};
 
 	SearchStore.comparison = function () {
@@ -36126,6 +36147,9 @@
 	    this.__emitChange();
 	  } else if (payload.actionType === SearchConstants.CLEAR_COMPARISON) {
 	    _comparison = [];
+	  } else if (payload.actionType === SearchConstants.AUTO_COMPLETE) {
+	    _autoComplete = payload.data;
+	    this.__emitChange();
 	  } else if (payload.actionType === SearchConstants.FETCH_MOST) {
 	    _most = [];
 	    this.__emitChange();
@@ -36432,7 +36456,7 @@
 	      React.createElement(
 	        'span',
 	        { className: 'inspection-detail' },
-	        React.createElement('i', { className: "fa fa-border fa-" + this.iconParse(data.last) }),
+	        React.createElement('i', { className: "fa fa-" + this.iconParse(data.last) }),
 	        'Most recent: ',
 	        data.last,
 	        ', ',
@@ -36440,14 +36464,14 @@
 	        '. '
 	      ),
 	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-border fa-" + this.iconParse(data.average) }),
+	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.average) }),
 	      'Average: ',
 	      data.average,
 	      ', ',
 	      this.translate(data.average),
 	      ' ',
 	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-border fa-" + this.iconParse(data.first_average) }),
+	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.first_average) }),
 	      'Average ',
 	      React.createElement(
 	        'span',
@@ -36465,7 +36489,7 @@
 	      this.translate(data.first_average),
 	      '.',
 	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-border fa-" + this.iconParse([data.mice, data.roaches, data.flies]) }),
+	      React.createElement('i', { className: "fa fa-" + this.iconParse([data.mice, data.roaches, data.flies]) }),
 	      'Of ',
 	      data.inspections,
 	      ' inspections,  ',
@@ -36476,14 +36500,14 @@
 	      data.roaches,
 	      ' found roaches.',
 	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-border fa-" + this.iconParse(data.worst) }),
+	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.worst) }),
 	      'Worst: ',
 	      data.worst,
 	      ' on ',
 	      data.worstDate.toDateString(),
 	      '.',
 	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-border fa-" + this.iconParse(data.best) }),
+	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.best) }),
 	      'Best: ',
 	      data.best,
 	      ' on ',
@@ -37387,7 +37411,7 @@
 	  displayName: 'Most',
 
 	  getInitialState: function () {
-	    return { query: "score", most: [], boro: "", zipcode: "", cuisine_type: "" };
+	    return { query: "score", most: [], boro: "", autoZip: "", zipcode: "", cuisine_type: "" };
 	  },
 	  componentDidMount: function () {
 	    ApiUtil.fetchMost(this.state);
@@ -37396,7 +37420,9 @@
 	  componentWillUnmount: function () {
 	    this.storeListener.remove();
 	  },
-
+	  formatPhone: function (n) {
+	    return [n.slice(0, 3), n.slice(3, 6), n.slice(6)].join("-");
+	  },
 	  boroInput: function (e) {
 	    this.setState({ boro: e.currentTarget.value });
 	    this.updateList();
@@ -37406,8 +37432,20 @@
 	    this.setState({ cuisine_type: e.currentTarget.value });
 	    this.updateList();
 	  },
-
+	  expand: function (e) {
+	    $(e.currentTarget.parentElement).find(".wrapper").css("display", "flex");
+	    $(e.currentTarget.parentElement).find(".fa-minus").css("display", "inline");
+	    $(e.currentTarget).css("display", "none");
+	    $(e.currentTarget.parentElement).find(".details").css("display", "block");
+	  },
+	  collapse: function (e) {
+	    $(e.currentTarget.parentElement).find(".wrapper").css("display", "none");
+	    $(e.currentTarget.parentElement).find(".fa-plus").css("display", "inline");
+	    $(e.currentTarget).css("display", "none");
+	    $(e.currentTarget.parentElement).find(".details").css("display", "none");
+	  },
 	  zipcodeInput: function (e) {
+	    // ApiUtil.autoComplete({ value: e.currentTarget.value, query: "zipcode"});
 	    this.setState({ zipcode: e.currentTarget.value });
 	    setTimeout(function () {
 	      this.updateList();
@@ -37420,12 +37458,22 @@
 	  updateList: function () {
 	    ApiUtil.fetchMost(this.state);
 	  },
+	  setGrade: function (store) {
+	    imageObject = {
+	      A: "http://i.imgur.com/8PkvwVo.jpg",
+	      B: "http://i.imgur.com/pt3dIsE.jpg",
+	      C: "http://i.imgur.com/NUoquVG.jpg",
+	      P: "http://i.imgur.com/fksRyj5.jpg",
+	      Z: "http://i.imgur.com/fksRyj5.jpg"
+	    };
+
+	    return imageObject[store.calc.grade];
+	  },
 	  changeQuery: function (e) {
 	    e.preventDefault();
 	    this.setState({ query: e.currentTarget.id, most: [] });
-	    console.log($.extend(this.state, { query: e.currentTarget.id }));
 	    this.updateList($.extend(this.state, { query: e.currentTarget.id }));
-	    var input = e.currentTarget.id;
+	    // var input = e.currentTarget.id;
 	  },
 	  render: function () {
 	    var mostList = React.createElement(
@@ -37435,22 +37483,78 @@
 	    );
 	    if (this.state.most.length > 1) {
 	      mostList = StoreStore.getMost().map(function (store) {
+
+	        var image = React.createElement('img', { src: this.setGrade(store) });
+	        // (store.image_url ?  <img src={store.image_url.replace("ms.jpg", "348s.jpg")}/> : <img src="http://i.imgur.com/8PkvwVo.jpg"/>);
+
 	        return React.createElement(
 	          'li',
 	          { key: Math.random() },
-	          ' ',
+	          React.createElement('i', { onClick: this.expand, className: 'fa fa-plus fa-border' }),
+	          React.createElement('i', { onClick: this.collapse, className: 'fa fa-minus fa-border' }),
 	          React.createElement(
 	            'a',
 	            { href: "#/rest/" + store.id },
 	            store.name
 	          ),
-	          ' (',
-	          store.calc[this.state.query],
-	          ')',
+	          React.createElement(
+	            'span',
+	            { className: 'fa-stack most-stack ' },
+	            React.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	            React.createElement(
+	              'span',
+	              { className: 'fa-stack-1x most-text' },
+	              store.calc[this.state.query]
+	            )
+	          ),
 	          React.createElement('br', null),
-	          store.boro,
-	          ' / ',
-	          store.zipcode
+	          React.createElement(
+	            'span',
+	            { className: 'expanded-details-row wrapper' },
+	            React.createElement(
+	              'div',
+	              { className: 'google-image-holder details' },
+	              image
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'address details' },
+	              React.createElement(
+	                'span',
+	                { className: 'details' },
+	                React.createElement('i', { className: 'fa fa-building fa-border' }),
+	                store.building,
+	                ' ',
+	                store.street,
+	                ' '
+	              ),
+	              React.createElement(
+	                'span',
+	                { className: 'details' },
+	                React.createElement('i', { className: 'fa fa-building fa-border fa-hide' }),
+	                store.boro,
+	                ', NY ',
+	                store.zipcode
+	              ),
+	              React.createElement('hr', null),
+	              React.createElement(
+	                'span',
+	                { className: 'details' },
+	                React.createElement('i', { className: 'fa fa-phone fa-border' }),
+	                this.formatPhone(store.phone),
+	                ' '
+	              ),
+	              React.createElement('hr', null),
+	              React.createElement(
+	                'span',
+	                { className: 'details' },
+	                React.createElement('i', { className: 'fa fa-cutlery fa-border' }),
+	                ' ',
+	                store.cuisine_type,
+	                ' '
+	              )
+	            )
+	          )
 	        );
 	      }.bind(this));
 	    }
@@ -37467,8 +37571,9 @@
 	          'Filter By: '
 	        ),
 	        ' ',
-	        React.createElement('input', { onChange: this.zipcodeInput, type: 'text', placeholder: 'Zipcode' }),
+	        React.createElement('input', { className: 'zipcode', onChange: this.zipcodeInput, type: 'text', placeholder: 'Zipcode' }),
 	        ' ',
+	        this.state.autoZip,
 	        React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', placeholder: 'Cuisine' }),
 	        React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' }),
 	        React.createElement('p', null),

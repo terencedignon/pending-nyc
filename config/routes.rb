@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         get 'most_visited'
         get 'trending'
         post 'most'
+        get 'auto_complete'
       end
     end
 

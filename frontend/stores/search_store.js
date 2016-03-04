@@ -3,13 +3,17 @@ var SearchConstants = require('../constants/search_constants.js');
 var Store = require('flux/utils').Store;
 var SearchStore = new Store(AppDispatcher);
 
-
+_autoComplete = [];
 _most = [];
 _results = [];
 _comparison = [];
 
 SearchStore.all = function () {
   return _results.slice();
+};
+
+SearchStore.autoComplete = function () {
+  return _autoComplete;
 };
 
 SearchStore.comparison = function () {
@@ -28,6 +32,10 @@ SearchStore.__onDispatch = function (payload) {
     this.__emitChange();
   } else if (payload.actionType === SearchConstants.CLEAR_COMPARISON) {
     _comparison = [];
+  } else if (payload.actionType === SearchConstants.AUTO_COMPLETE) {
+    _autoComplete = payload.data;
+    this.__emitChange();
+
   } else if (payload.actionType === SearchConstants.FETCH_MOST) {
     _most = [];
     this.__emitChange();

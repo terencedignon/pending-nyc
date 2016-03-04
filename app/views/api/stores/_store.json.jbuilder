@@ -1,4 +1,4 @@
-json.extract!(store, :image_url, :name, :camis, :id, :lat, :lng, :calc, :display_address, :boro, :zipcode)
+json.extract!(store, :image_url, :cuisine_type, :building, :street, :name, :phone, :camis, :id, :lat, :lng, :calc, :display_address, :boro, :zipcode)
 # json.partial!('api/calcs/calc', calc: store.calc)
 
 unless index

@@ -4,7 +4,7 @@ var StoreStore = require('../stores/store_store.js');
 
 var Most = React.createClass({
   getInitialState: function () {
-    return { query: "score", most: [], boro: "", zipcode: "", cuisine_type: ""}
+    return { query: "score", most: [], boro: "", autoZip: "", zipcode: "", cuisine_type: ""}
   },
   componentDidMount: function () {
     ApiUtil.fetchMost(this.state);
@@ -13,7 +13,13 @@ var Most = React.createClass({
   componentWillUnmount: function () {
     this.storeListener.remove();
   },
-
+  formatPhone: function(n) {
+    return [
+      n.slice(0, 3),
+      n.slice(3, 6),
+      n.slice(6)
+    ].join("-")
+  },
   boroInput: function (e) {
     this.setState({ boro: e.currentTarget.value });
     this.updateList();
@@ -23,8 +29,20 @@ var Most = React.createClass({
     this.setState({ cuisine_type: e.currentTarget.value });
     this.updateList();
   },
-
+  expand: function(e) {
+    $(e.currentTarget.parentElement).find(".wrapper").css("display", "flex");
+    $(e.currentTarget.parentElement).find(".fa-minus").css("display", "inline");
+    $(e.currentTarget).css("display", "none");
+    $(e.currentTarget.parentElement).find(".details").css("display", "block");
+  },
+  collapse: function(e) {
+    $(e.currentTarget.parentElement).find(".wrapper").css("display", "none");
+    $(e.currentTarget.parentElement).find(".fa-plus").css("display", "inline");
+    $(e.currentTarget).css("display", "none");
+    $(e.currentTarget.parentElement).find(".details").css("display", "none");
+  },
   zipcodeInput: function (e) {
+    // ApiUtil.autoComplete({ value: e.currentTarget.value, query: "zipcode"});
     this.setState({ zipcode: e.currentTarget.value });
     setTimeout(function () {
       this.updateList();
@@ -37,20 +55,55 @@ var Most = React.createClass({
   updateList: function () {
     ApiUtil.fetchMost(this.state);
   },
+  setGrade: function (store) {
+        imageObject = {
+          A: "http://i.imgur.com/8PkvwVo.jpg",
+          B: "http://i.imgur.com/pt3dIsE.jpg",
+          C: "http://i.imgur.com/NUoquVG.jpg",
+          P: "http://i.imgur.com/fksRyj5.jpg",
+          Z: "http://i.imgur.com/fksRyj5.jpg"
+        };
+
+          return imageObject[store.calc.grade];
+  },
   changeQuery: function (e) {
     e.preventDefault();
     this.setState({ query: e.currentTarget.id, most: []})
-    console.log($.extend(this.state, {query: e.currentTarget.id}));
     this.updateList($.extend(this.state, {query: e.currentTarget.id}));
-    var input = e.currentTarget.id;
+    // var input = e.currentTarget.id;
   },
   render: function () {
     var mostList = <div className="most-loading"><i className="fa fa-circle-o-notch fa-spin most-spin"></i></div>  ;
     if (this.state.most.length > 1) {
       mostList = StoreStore.getMost().map(function (store) {
-        return <li key={Math.random()}> <a href={"#/rest/" + store.id}>{store.name}</a> ({store.calc[this.state.query]})<br/>
-        {store.boro} / {store.zipcode}
+
+        var image = <img src={this.setGrade(store)}/>;
+        // (store.image_url ?  <img src={store.image_url.replace("ms.jpg", "348s.jpg")}/> : <img src="http://i.imgur.com/8PkvwVo.jpg"/>);
+
+        return <li key={Math.random()}><i onClick={this.expand} className="fa fa-plus fa-border"></i>
+        <i onClick={this.collapse} className="fa fa-minus fa-border"></i>
+      <a href={"#/rest/" + store.id}>{store.name}</a>
+          <span className="fa-stack most-stack ">
+            <i className="fa fa-square fa-stack-2x"></i>
+            <span className="fa-stack-1x most-text">{store.calc[this.state.query]}</span>
+            </span>
+            <br/>
+    <span className="expanded-details-row wrapper">
+      <div className="google-image-holder details">
+        {image}
+      </div>
+      <div className="address details">
+
+            <span className="details"><i className="fa fa-building fa-border"></i>{store.building} {store.street} </span>
+            <span className="details"><i className="fa fa-building fa-border fa-hide"></i>{store.boro}, NY {store.zipcode}</span><hr/>
+            <span className="details"><i className="fa fa-phone fa-border"></i>{this.formatPhone(store.phone)} </span><hr/>
+            <span className="details"><i className="fa fa-cutlery fa-border"></i> {store.cuisine_type} </span>
+  </div>
+
+
+    </span>
          </li>;
+
         }.bind(this));
     }
 
@@ -59,8 +112,12 @@ var Most = React.createClass({
     return (
       <div>
         <div className="filter-by">
-          <h2>Filter By: </h2> <input onChange={this.zipcodeInput} type="text" placeholder="Zipcode"/> <input id="cuisine_type"  onChange={this.cuisineInput} type="text" placeholder="Cuisine"/>
-          <input id="boro" onChange={this.boroInput} type="text" placeholder="Boro"/>
+          <h2>Filter By: </h2> <input className="zipcode" onChange={this.zipcodeInput} type="text" placeholder="Zipcode"/> {this.state.autoZip}
+
+
+
+        <input id="cuisine_type"  onChange={this.cuisineInput} type="text" placeholder="Cuisine"/>
+        <input id="boro" onChange={this.boroInput} type="text" placeholder="Boro"/>
           <p/>
           <h2>Options:</h2>
       </div>
