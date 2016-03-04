@@ -37566,9 +37566,9 @@
 	        'div',
 	        { className: 'filter-by' },
 	        React.createElement(
-	          'h2',
+	          'h3',
 	          null,
-	          'Filter By: '
+	          'Search by: '
 	        ),
 	        ' ',
 	        React.createElement('input', { className: 'zipcode', onChange: this.zipcodeInput, type: 'text', placeholder: 'Zipcode' }),
@@ -37578,7 +37578,7 @@
 	        React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' }),
 	        React.createElement('p', null),
 	        React.createElement(
-	          'h2',
+	          'h3',
 	          null,
 	          'Options:'
 	        )
@@ -37641,6 +37641,11 @@
 	          { id: 'flies', onClick: this.changeQuery, href: '#' },
 	          'Flies Number'
 	        )
+	      ),
+	      React.createElement(
+	        'h3',
+	        { className: 'filter-by' },
+	        'Results:'
 	      ),
 	      React.createElement(
 	        'ul',

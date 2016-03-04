@@ -112,14 +112,14 @@ var Most = React.createClass({
     return (
       <div>
         <div className="filter-by">
-          <h2>Filter By: </h2> <input className="zipcode" onChange={this.zipcodeInput} type="text" placeholder="Zipcode"/> {this.state.autoZip}
+          <h3>Search by: </h3> <input className="zipcode" onChange={this.zipcodeInput} type="text" placeholder="Zipcode"/> {this.state.autoZip}
 
 
 
         <input id="cuisine_type"  onChange={this.cuisineInput} type="text" placeholder="Cuisine"/>
         <input id="boro" onChange={this.boroInput} type="text" placeholder="Boro"/>
           <p/>
-          <h2>Options:</h2>
+          <h3>Options:</h3>
       </div>
       <div className="most-header">
       <a id="score" onClick={this.changeQuery} href="#">Pending.nyc Aggregate Score</a>
@@ -130,6 +130,7 @@ var Most = React.createClass({
      <a id="roach_percentage" onClick={this.changeQuery} href="#">Roach Percent</a>  <a id="roaches" onClick={this.changeQuery} href="#">Roach Number</a>
     <a id="flies_percentage" onClick={this.changeQuery} href="#">Flies Percent</a> <a id="flies" onClick={this.changeQuery} href="#">Flies Number</a>
     </div>
+    <h3 className="filter-by">Results:</h3>
     <ul className="filter-links">
       {mostList}
     </ul>
