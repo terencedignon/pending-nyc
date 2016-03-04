@@ -37532,7 +37532,6 @@
 	                ', NY ',
 	                store.zipcode
 	              ),
-	              React.createElement('hr', null),
 	              React.createElement(
 	                'span',
 	                { className: 'details' },
@@ -37540,7 +37539,6 @@
 	                this.formatPhone(store.phone),
 	                ' '
 	              ),
-	              React.createElement('hr', null),
 	              React.createElement(
 	                'span',
 	                { className: 'details' },
@@ -37573,11 +37571,7 @@
 	        React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', placeholder: 'Cuisine' }),
 	        React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' }),
 	        React.createElement('p', null),
-	        React.createElement(
-	          'h3',
-	          null,
-	          'Options:'
-	        )
+	        React.createElement('hr', null)
 	      ),
 	      React.createElement(
 	        'div',
@@ -37638,11 +37632,7 @@
 	          'Flies Number'
 	        )
 	      ),
-	      React.createElement(
-	        'h3',
-	        { className: 'filter-by' },
-	        'Results:'
-	      ),
+	      React.createElement('hr', null),
 	      React.createElement(
 	        'ul',
 	        { className: 'filter-links' },

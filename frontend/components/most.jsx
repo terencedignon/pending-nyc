@@ -95,8 +95,8 @@ var Most = React.createClass({
       <div className="address details">
 
             <span className="details"><i className="fa fa-building fa-border"></i>{store.building} {store.street} </span>
-            <span className="details"><i className="fa fa-building fa-border fa-hide"></i>{store.boro}, NY {store.zipcode}</span><hr/>
-            <span className="details"><i className="fa fa-phone fa-border"></i>{this.formatPhone(store.phone)} </span><hr/>
+            <span className="details"><i className="fa fa-building fa-border fa-hide"></i>{store.boro}, NY {store.zipcode}</span>
+            <span className="details"><i className="fa fa-phone fa-border"></i>{this.formatPhone(store.phone)} </span>
             <span className="details"><i className="fa fa-cutlery fa-border"></i> {store.cuisine_type} </span>
   </div>
 
@@ -119,7 +119,7 @@ var Most = React.createClass({
         <input id="cuisine_type"  onChange={this.cuisineInput} type="text" placeholder="Cuisine"/>
         <input id="boro" onChange={this.boroInput} type="text" placeholder="Boro"/>
           <p/>
-          <h3>Options:</h3>
+          <hr/>
       </div>
       <div className="most-header">
       <a id="score" onClick={this.changeQuery} href="#">Pending.nyc Aggregate Score</a>
@@ -130,7 +130,7 @@ var Most = React.createClass({
      <a id="roach_percentage" onClick={this.changeQuery} href="#">Roach Percent</a>  <a id="roaches" onClick={this.changeQuery} href="#">Roach Number</a>
     <a id="flies_percentage" onClick={this.changeQuery} href="#">Flies Percent</a> <a id="flies" onClick={this.changeQuery} href="#">Flies Number</a>
     </div>
-    <h3 className="filter-by">Results:</h3>
+    <hr/>
     <ul className="filter-links">
       {mostList}
     </ul>

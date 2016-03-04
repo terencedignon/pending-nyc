@@ -29,19 +29,26 @@ namespace :store_data do
 
   task set_case: :environment do
     Store.all.each do |store|
+      if store.cuisine_type =~ /Latin/
+        # debugger
+        store.update(cuisine_type: "Latin")
+      end
+    end
+
+    # Store.all.each do |store|
       # p store.id if store.id % 1000 == 0
       #
       # street = store.street.split(" ").map(&:capitalize).join(" ")
       # boro = store.boro.split(" ").map(&:capitalize).join(" ")
-      cuisine = store.cuisine_type
-      if store.cuisine_type
-        cuisine = store.cuisine_type.split(" ").map(&:capitalize).join("")
-      
+      # cuisine = store.cuisine_type
+      # if store.cuisine_type
+      #   cuisine = store.cuisine_type.split(" ").map(&:capitalize).join("")
+      #
+      #
+      # end
 
-      end
-
-      store.update(cuisine_type: cuisine)
-    end
+      # store.update(cuisine_type: cuisine)
+    # end
   end
 
   task rankings: :environment do

@@ -781,11 +781,11 @@ span.big-header {
   /*margin-left: -120px;*/
   padding: 10px;
   padding-left: 20px;
-  width: 200px;
+  width: 100px;
   font-size: 20px;
   /*border: 2px solid #222;*/
-  border: 1px solid #eee;
-  box-shadow: 2px 2px 5px 0 #ccc;
+  border: 1px solid #ccc;
+  // box-shadow: 2px 2px 5px 0 #ccc;
   font-family: "Helvetica"!important;
 }
 
@@ -799,13 +799,14 @@ span.big-header {
   cursor: pointer;
 font-size: 18px;
 margin: 1px;
-font-family: "lato"!important;
+// font-family: "lato"!important;
 text-transform: uppercase;
 color: #aaa;
 
+
 text-decoration: none;
 // line-height: 20px;
-// background: #f7f7f7;
+background: #f7f7f7;
 padding: 3px 10px 3px 10px;
 border: 1px solid #eee;
 transition: 50ms ease-in-out;
@@ -826,13 +827,15 @@ transition: 50ms ease-in-out;
 .filter-links li {
   margin-bottom: 2px;
   padding: 2px;
+
   // border: 1px solid #f7f7f7;
 }
 
 .expanded-details-row {
-  color: #777;
+  color: #fff;
+  margin-left: 2%;
   // padding-top: 1%;
-  padding-left: 2%;
+  padding-left: 5%;
   // background: #222;
   display: flex;
   flex-direction: row;
@@ -870,7 +873,7 @@ transition: 50ms ease-in-out;
 }
 
 .details i {
-  color: #777;
+  color: #ccc;
   // margin-top: 10px;
   margin-right: 5px;
   // margin-top: 2px;
@@ -900,8 +903,10 @@ span.underline {
 .filter-links a {
   color: steelblue;
   font-weight: strong;
+  text-transform: uppercase;
+  // font-family: "lato";
   text-decoration: none;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .searching {
@@ -951,11 +956,13 @@ span.underline {
 }
 
 .wrapper {
+  // margin-left: 15px;
   margin-top: 5px;
   display: none;
-  padding: 5px;
-  // background: #f7f7f7;
-  border: 3px solid #f7f7f7;
+  padding: 2px;
+  background: #fff;
+
+  // border: 2px solid #eee;
 }
 
 .wrapper hr {
@@ -1073,6 +1080,7 @@ span.underline {
 .fa-plus {
   cursor: pointer;
   margin-right: 5px;
+    padding: 5px 5px 0 5px;
   font-size: 10px;
   color: #777;
   // display: none;
@@ -1083,6 +1091,7 @@ span.underline {
   display: none;
   cursor: pointer;
   margin-right: 5px;
+  padding: 5px 5px 0 5px;
   font-size: 10px;
   color: #777;
   transition: 0.1s ease-in-out;
