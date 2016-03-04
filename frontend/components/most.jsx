@@ -33,7 +33,8 @@ var Most = React.createClass({
     $(e.currentTarget.parentElement).find(".wrapper").css("display", "flex");
     $(e.currentTarget.parentElement).find(".fa-minus").css("display", "inline");
     $(e.currentTarget).css("display", "none");
-    $(e.currentTarget.parentElement).find(".details").css("display", "block");
+    $(e.currentTarget.parentElement).find(".details").show(100);
+    // .css("display", "block");
   },
   collapse: function(e) {
     $(e.currentTarget.parentElement).find(".wrapper").css("display", "none");
@@ -94,9 +95,9 @@ var Most = React.createClass({
       </div>
       <div className="address details">
 
-            <span className="details"><i className="fa fa-building fa-border"></i>{store.building} {store.street} </span>
-            <span className="details"><i className="fa fa-building fa-border fa-hide"></i>{store.boro}, NY {store.zipcode}</span>
-            <span className="details"><i className="fa fa-phone fa-border"></i>{this.formatPhone(store.phone)} </span>
+            <span className="details"><i className="fa fa-building fa-border"></i>{store.building} {store.street} </span> <br/>
+            <span className="details"><i className="fa fa-building fa-border fa-hide"></i>{store.boro}, NY {store.zipcode}</span><br/>
+            <span className="details"><i className="fa fa-phone fa-border"></i>{this.formatPhone(store.phone)} </span><br/>
             <span className="details"><i className="fa fa-cutlery fa-border"></i> {store.cuisine_type} </span>
   </div>
 

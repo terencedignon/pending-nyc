@@ -36366,17 +36366,17 @@
 
 	        if (num >= 25) {
 
-	          return "thumbs-down";
+	          return "thumbs-o-down";
 	        }
 	      }
-	      return "thumbs-up";
+	      return "thumbs-o-up";
 	    }
 	    if (grade <= 13) {
-	      return "thumbs-up";
+	      return "thumbs-o-up";
 	    } else if (grade <= 27) {
 	      return "minus fa-border";
 	    } else {
-	      return "thumbs-down";
+	      return "thumbs-o-down";
 	    }
 	  },
 
@@ -37432,7 +37432,8 @@
 	    $(e.currentTarget.parentElement).find(".wrapper").css("display", "flex");
 	    $(e.currentTarget.parentElement).find(".fa-minus").css("display", "inline");
 	    $(e.currentTarget).css("display", "none");
-	    $(e.currentTarget.parentElement).find(".details").css("display", "block");
+	    $(e.currentTarget.parentElement).find(".details").show(100);
+	    // .css("display", "block");
 	  },
 	  collapse: function (e) {
 	    $(e.currentTarget.parentElement).find(".wrapper").css("display", "none");
@@ -37524,6 +37525,8 @@
 	                store.street,
 	                ' '
 	              ),
+	              ' ',
+	              React.createElement('br', null),
 	              React.createElement(
 	                'span',
 	                { className: 'details' },
@@ -37532,6 +37535,7 @@
 	                ', NY ',
 	                store.zipcode
 	              ),
+	              React.createElement('br', null),
 	              React.createElement(
 	                'span',
 	                { className: 'details' },
@@ -37539,6 +37543,7 @@
 	                this.formatPhone(store.phone),
 	                ' '
 	              ),
+	              React.createElement('br', null),
 	              React.createElement(
 	                'span',
 	                { className: 'details' },

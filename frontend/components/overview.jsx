@@ -54,17 +54,17 @@ var Overview = React.createClass({
 
         if (num >= 25) {
 
-          return "thumbs-down";
+          return "thumbs-o-down";
       }
     }
-    return "thumbs-up";
+    return "thumbs-o-up";
   }
       if (grade <= 13) {
-        return "thumbs-up";
+        return "thumbs-o-up";
       } else if (grade <= 27) {
         return "minus fa-border";
       } else {
-        return "thumbs-down";
+        return "thumbs-o-down";
       }
   },
 
