@@ -171,10 +171,10 @@ var Comparison = React.createClass({
 
     var input = <input type="text" placeholder="Restaurant" onChange={this.inputChange} value={this.state.query}/>;
     var compare = <div/>;
-    var chart = <div>hello</div>;
+    var chart = <div></div>;
     var score = <div/>;
 
-    if (typeof this.state.comparison.name !== "undefined") {
+    if (this.state.comparison && typeof this.state.comparison.name !== "undefined") {
 
         chart = this.setUpChart();
         if (this.state.comparison.calc) {
@@ -210,7 +210,7 @@ var Comparison = React.createClass({
     // <span className="compare-name">Compare With: {input}
 
     var comparisonNameOrLink;
-    if (typeof this.state.comparison.calc !== "undefined") {
+    if (this.state.comparison && typeof this.state.comparison.calc !== "undefined") {
       comparisonNameOrLink = <a href={"#/rest/" + this.state.comparison.id} onClick={this.linkHandler}>{this.state.comparisonText}</a>;
     } else {
       comparisonNameOrLink = this.state.comparisonText;

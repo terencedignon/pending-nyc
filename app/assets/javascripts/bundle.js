@@ -35972,14 +35972,10 @@
 
 	    var input = React.createElement('input', { type: 'text', placeholder: 'Restaurant', onChange: this.inputChange, value: this.state.query });
 	    var compare = React.createElement('div', null);
-	    var chart = React.createElement(
-	      'div',
-	      null,
-	      'hello'
-	    );
+	    var chart = React.createElement('div', null);
 	    var score = React.createElement('div', null);
 
-	    if (typeof this.state.comparison.name !== "undefined") {
+	    if (this.state.comparison && typeof this.state.comparison.name !== "undefined") {
 
 	      chart = this.setUpChart();
 	      if (this.state.comparison.calc) {
@@ -36049,7 +36045,7 @@
 	    // <span className="compare-name">Compare With: {input}
 
 	    var comparisonNameOrLink;
-	    if (typeof this.state.comparison.calc !== "undefined") {
+	    if (this.state.comparison && typeof this.state.comparison.calc !== "undefined") {
 	      comparisonNameOrLink = React.createElement(
 	        'a',
 	        { href: "#/rest/" + this.state.comparison.id, onClick: this.linkHandler },
