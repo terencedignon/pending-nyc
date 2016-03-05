@@ -62,7 +62,7 @@ var Overview = React.createClass({
       if (grade <= 13) {
         return "thumbs-o-up";
       } else if (grade <= 27) {
-        return "minus fa-border";
+        return "minus";
       } else {
         return "thumbs-o-down";
       }

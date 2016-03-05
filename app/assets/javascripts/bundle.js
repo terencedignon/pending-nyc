@@ -24779,7 +24779,12 @@
 	    // <div className="violation-chart">
 	    //   {circleChart}
 	    // </div>
-	    var showDisplay;
+	    var showDisplay = React.createElement(
+	      'div',
+	      { className: 'most-loading' },
+	      React.createElement('i', { className: 'fa fa-circle-o-notch fa-pulse most-spin' })
+	    );
+
 	    if (typeof this.state.store.calc !== "undefined") {
 	      showDisplay = React.createElement(
 	        'div',
@@ -24839,10 +24844,7 @@
 	          violations
 	        )
 	      );
-	    } else {
-	      showDisplay = React.createElement('div', null);
 	    }
-
 	    return React.createElement(
 	      'section',
 	      { className: 'show-container' },
@@ -36070,8 +36072,8 @@
 	        { className: 'comparison-results' },
 	        score
 	      ),
-	      React.createElement('p', null),
-	      'Select By ',
+	      React.createElement('br', null),
+	      'Compare to ',
 	      React.createElement(
 	        'a',
 	        { href: '#', id: 'cuisine_calc', onClick: this.setDefaultComparison },
@@ -36089,8 +36091,7 @@
 	        { href: '#', id: 'boro_calc', onClick: this.setDefaultComparison },
 	        'Boro'
 	      ),
-	      '.  Click markers on map for further comparison.',
-	      React.createElement('p', null),
+	      '.',
 	      React.createElement('p', null),
 	      chart,
 	      React.createElement(
@@ -36264,7 +36265,13 @@
 
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'map-holder' },
+	      React.createElement(
+	        'span',
+	        { className: 'map-header' },
+	        'Select marker on map for  comparison.'
+	      ),
+	      React.createElement('p', null),
 	      React.createElement('div', { id: 'map' })
 	    );
 	  }
@@ -36374,7 +36381,7 @@
 	    if (grade <= 13) {
 	      return "thumbs-o-up";
 	    } else if (grade <= 27) {
-	      return "minus fa-border";
+	      return "minus";
 	    } else {
 	      return "thumbs-o-down";
 	    }
@@ -36970,7 +36977,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'main-map-wrapper' },
-	        React.createElement('i', { className: 'fa fa-spinner fa-pulse' }),
+	        React.createElement('i', { className: 'fa fa-circle-o-notch fa-pulse most-spin' }),
 	        React.createElement('div', { id: 'main-map' })
 	      )
 	    );
@@ -37100,6 +37107,10 @@
 	        $('header').css("border-bottom", "0");
 	        $('.header-wrapper').css("padding-top", "5px");
 	      }
+	    });
+
+	    $(document).on('keypress', '.editable', function (e) {
+	      return e.which != 13;
 	    });
 
 	    var listedResults = this.populateSearch();
@@ -37439,7 +37450,7 @@
 	    $(e.currentTarget.parentElement).find(".wrapper").css("display", "none");
 	    $(e.currentTarget.parentElement).find(".fa-plus").css("display", "inline");
 	    $(e.currentTarget).css("display", "none");
-	    $(e.currentTarget.parentElement).find(".details").css("display", "none");
+	    $(e.currentTarget.parentElement).find(".details").hide("slowly");
 	  },
 	  zipcodeInput: function (e) {
 	    // ApiUtil.autoComplete({ value: e.currentTarget.value, query: "zipcode"});
@@ -37451,6 +37462,22 @@
 
 	  _onStoreChange: function () {
 	    this.setState({ most: StoreStore.getMost() });
+	  },
+	  expandAll: function (e) {
+	    e.preventDefault();
+	    var $root = $(e.currentTarget).parent().children();
+	    $root.find(".details").show("slowly");
+	    $root.find(".wrapper").css("display", "flex");
+	    $root.find(".fa-plus").css("display", "none");
+	    $root.find(".fa-minus").show("slowly");
+	  },
+	  collapseAll: function (e) {
+	    e.preventDefault();
+	    var $root = $(e.currentTarget).parent().children();
+	    $root.find(".details").hide("slowly");
+	    $root.find(".wrapper").hide("slowly");
+	    $root.find(".fa-minus").hide();
+	    $root.find(".fa-plus").show("slowly");
 	  },
 	  updateList: function () {
 	    ApiUtil.fetchMost(this.state);
@@ -37646,6 +37673,10 @@
 	    );
 	  }
 	});
+	//
+	// <span className="top-sentence">Returning <span className="editable" contentEditable="true">50</span> results.</span><p/>
+	// <a href="#" onClick={this.expandAll}><i className="fa-expand fa fa-lg"> Expand</i></a> &nbsp;&nbsp;<a href="#" onClick={this.collapseAll}><i className="fa-compress fa fa-lg"> Collapse</i></a><hr/>
+	//
 
 	module.exports = Most;
 

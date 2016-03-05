@@ -105,6 +105,9 @@ var Header = React.createClass({
       }
     });
 
+    $(document).on('keypress', '.editable', function(e){
+      return e.which != 13;
+    });
 
 
     var listedResults = this.populateSearch();

@@ -180,7 +180,27 @@ header {
   width: 400px;
   height: 400px;
   border-radius: 5%;
-  background: steelblue;
+  background: #f7f7f7;
+}
+
+.map-holder {
+  height: 512px;
+  width: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-header {
+  z-index: 99;
+  background: #fff;
+  padding: 20px;
+  opacity: 0.9;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-family: "helvetica";
+  position: absolute;
+  top: 20px;
+  left: 50px;
 }
 
 .show-name {
@@ -957,14 +977,36 @@ span.underline {
 
 .wrapper {
   // margin-left: 15px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   display: none;
   padding: 2px;
 
-  // background: #777;
+  background: #F7f7f7;
 
   // border: 1px solid #f7f7f7;
+}
+
+.editable {
+  display: inline-block;
+  width: 30px;
+  // max-width: 30px;
+  overflow: hidden;
+  text-align: center;
+  color: steelblue;
+  padding: 2px;
+  border: 1px dashed #eee;
+}
+
+.top-sentence {
+  text-transform: uppercase;
+  font-family: "helvetica";
+  color: #777;
+  font-size: 18px;
+}
+
+.editable:focus {
+  outline: none;
 }
 
 .wrapper hr {
@@ -1052,8 +1094,8 @@ span.underline {
 }
 
 .most-spin {
-  font-size: 200px;
-  color: #eee;
+  font-size: 100px;
+  color: #f7f7f7;
 
 }
 
@@ -1068,7 +1110,7 @@ span.underline {
   top: 125px;
   // bottom: 0;
   display: none;
-  color: steelblue;
+  // color: steelblue;
   // margin-left: auto;
   // margin-right: auto;
   position: absolute;

@@ -40,7 +40,7 @@ var Most = React.createClass({
     $(e.currentTarget.parentElement).find(".wrapper").css("display", "none");
     $(e.currentTarget.parentElement).find(".fa-plus").css("display", "inline");
     $(e.currentTarget).css("display", "none");
-    $(e.currentTarget.parentElement).find(".details").css("display", "none");
+    $(e.currentTarget.parentElement).find(".details").hide("slowly");
   },
   zipcodeInput: function (e) {
     // ApiUtil.autoComplete({ value: e.currentTarget.value, query: "zipcode"});
@@ -52,6 +52,22 @@ var Most = React.createClass({
 
   _onStoreChange: function () {
     this.setState({ most: StoreStore.getMost() });
+  },
+  expandAll: function (e) {
+    e.preventDefault();
+    var $root = $(e.currentTarget).parent().children();
+    $root.find(".details").show("slowly");
+    $root.find(".wrapper").css("display", "flex");
+    $root.find(".fa-plus").css("display", "none");
+    $root.find(".fa-minus").show("slowly");
+  },
+  collapseAll: function (e) {
+    e.preventDefault();
+    var $root = $(e.currentTarget).parent().children();
+    $root.find(".details").hide("slowly");
+    $root.find(".wrapper").hide("slowly");
+    $root.find(".fa-minus").hide();
+    $root.find(".fa-plus").show("slowly");
   },
   updateList: function () {
     ApiUtil.fetchMost(this.state);
@@ -133,11 +149,15 @@ var Most = React.createClass({
     </div>
     <hr/>
     <div className="filter-links">
-      {mostList}
+        {mostList}
     </div>
     </div>
     );
   }
 });
+// 
+// <span className="top-sentence">Returning <span className="editable" contentEditable="true">50</span> results.</span><p/>
+// <a href="#" onClick={this.expandAll}><i className="fa-expand fa fa-lg"> Expand</i></a> &nbsp;&nbsp;<a href="#" onClick={this.collapseAll}><i className="fa-compress fa fa-lg"> Collapse</i></a><hr/>
+//
 
 module.exports = Most;

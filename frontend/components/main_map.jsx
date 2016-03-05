@@ -197,7 +197,7 @@ _onMapChange: function () {
           <input type="text" placeholder="Boro" onChange={this.changeBoro} value={this.state.boro}/>
         </div>
         <div className="main-map-wrapper">
-        <i className="fa fa-spinner fa-pulse"></i>
+        <i className="fa fa-circle-o-notch fa-pulse most-spin"></i>
       <div id="main-map">
       </div>
       </div>

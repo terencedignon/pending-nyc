@@ -107,7 +107,8 @@ _onStoreChange: function () {
     // <div id="street-view"></div>
 
     return (
-      <div>
+      <div className="map-holder">
+         <span className="map-header">Select marker on map for  comparison.</span><p/>
         <div id="map">
         </div>
     </div>

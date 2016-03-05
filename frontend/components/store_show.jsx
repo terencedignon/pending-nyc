@@ -194,7 +194,8 @@ var StoreShow = React.createClass({
         // <div className="violation-chart">
         //   {circleChart}
         // </div>
-  var showDisplay;
+  var showDisplay =  <div className="most-loading"><i className="fa fa-circle-o-notch fa-pulse most-spin"></i></div>;
+
   if (typeof this.state.store.calc !== "undefined") {
     showDisplay =
     <div>
@@ -227,10 +228,7 @@ var StoreShow = React.createClass({
   </div>
 
     </div>;
-  } else {
-    showDisplay = <div/>;
   }
-
   return (
   <section className="show-container">
     {showDisplay}

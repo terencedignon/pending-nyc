@@ -220,8 +220,8 @@ var Comparison = React.createClass({
       <div className="comparison">
         <span key={Math.random()} className="store-name">Relative to  {comparisonNameOrLink} </span>
           <span className="comparison-results">{score}</span>
-          <p/>
-        Select By <a href="#" id="cuisine_calc" onClick={this.setDefaultComparison}>Cuisine</a>, <a href="#" id="zipcode_calc" onClick={this.setDefaultComparison}>Zipcode</a>, or <a href="#" id="boro_calc" onClick={this.setDefaultComparison}>Boro</a>.  Click markers on map for further comparison.<p/>
+          <br/>
+        Compare to <a href="#" id="cuisine_calc" onClick={this.setDefaultComparison}>Cuisine</a>, <a href="#" id="zipcode_calc" onClick={this.setDefaultComparison}>Zipcode</a>, or <a href="#" id="boro_calc" onClick={this.setDefaultComparison}>Boro</a>.
 
     <p/>
         {chart}
