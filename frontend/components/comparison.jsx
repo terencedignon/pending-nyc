@@ -45,6 +45,7 @@ var Comparison = React.createClass({
     if (comparison !== []) {
       this.setState({ comparison: StoreStore.getComparison(), comparisonText: StoreStore.getComparisonType() });
       this.setUpChart();
+      // this.refs.comparison.clear();
       this.chartUpdate();
     }
   },
@@ -73,11 +74,24 @@ var Comparison = React.createClass({
       Ah: "rgba(70, 130, 180, 1)",
       B: "rgba(59,187,48, 0.5)",
       Bh: "rgba(59,187,48, 1)",
-      C: "rgba(251, 149, 23, 0.5)",
-      Ch: "rgba(251, 149, 23, 1)"
+      C: "rgba(128, 0, 0, 0.7)",
+      Ch: "rgba(128, 0, 0, 0.9)"
     }
 
-    chart.datasets[0].bars.forEach(function(bar) {
+    chart.datasets[0].bars.forEach(function(bar, index) {
+      if (bar.value > chart.datasets[1].bars[index].value) {
+            bar.fillColor = colors["C"];
+            bar.strokeColor = colors["C"];
+            bar.highlightFill = colors["Ch"];
+            bar.highlightStroke = colors["Ch"];
+      } else {
+        bar.fillColor = "white";
+        bar.strokeColor = "#777777";
+        bar.highlightFill = "white";
+        bar.highlightStroke = "#222222";
+
+      }
+
     //   if (bar.value <= 13) {
     //     bar.fillColor = colors["A"];
     //     bar.strokeColor = colors["A"];
@@ -167,7 +181,7 @@ var Comparison = React.createClass({
         },
         {
           label: this.state.comparison.name,
-          fillColor: "#eeeeee",
+          fillColor: "#f7f7f7",
            strokeColor: "#777",
            highlightFill: "#eeeeee",
          highlightStroke: "black",
@@ -179,8 +193,8 @@ var Comparison = React.createClass({
 
     // omitXLabels: true,
     var optionHash = {
-      barDatasetSpacing: 3,
-      barValueSpacing: 10,
+      barDatasetSpacing: 5,
+      barValueSpacing: 5,
       animationSteps: 60,
       responsive: false,
         scaleShowGridLines: false,

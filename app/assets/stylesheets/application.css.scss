@@ -112,16 +112,18 @@ header {
 
   padding: 8px;
   padding-left: 20px;
-  width: 200px;
+  width: 300px;
   font-size: 18px;
+  // margin-top: -1px;
   // font-weight: bold;
-  box-shadow: 2px 2px 5px 0 #ccc;
+  box-shadow: 2px 2px 2px 0 #ccc;
   font-family: "Helvetica"!important;
 }
 
-// .header-search input:focus {
-//   box-shadow: 2px 2px 5px 0px #777;
-// }
+.header-search input:focus {
+  // background: #fff;
+  // box-shadow: 2px 2px 5px 0px #777;
+}
 
 .header-links {
   padding: 13px 0;
@@ -139,6 +141,7 @@ header {
 .header-links a {
   text-decoration: none;
   padding: 10px;
+
   /*font-weight: bolder;*/
   font-size: 18px;
   color: #222;
@@ -196,7 +199,7 @@ header {
   color: #000;
   padding: 20px;
   text-align: center;
-  letter-spacing:2px;
+  letter-spacing:1px;
   // opacity: 0.5;
   // font-weight:bold;
   font-size: 18px;
@@ -285,10 +288,11 @@ header {
   /*border: 1px solid #eee;*/
 }
 
-.drop-down a {
+.drop-down a, a:visited {
   font-weight: bold;
   font-family: "montserrat";
   color: #222;
+  text-transform: uppercase;
   text-decoration: none;
 }
 
@@ -460,7 +464,25 @@ footer {
   font-size: 15px;
 }
 
+.store-name-header {
+  // display: block;/
+  // background: #f7f7f7;
+  // text-align: center!important;
+  text-transform: uppercase;
+  // font-style:
+  // text-transform: full-width;
+  text-decoration: underline;
+  // letter-spacing: 2px;
+  // font-weight: bold;
+  padding: 10px 10px 10px 0;
+  color: #222;
+  font-family: "helvetica";
+  font-size: 25px;
+}
+
 .store-name {
+  // display: block;/
+  // background: #f7f7f7;
   // text-align: center!important;
   text-transform: uppercase;
   padding: 10px 10px 10px 0;
@@ -705,8 +727,31 @@ hr.break {
 .fa-thumbs-o-up {
   margin-right: 10px;
   color: black;
-  /*font-size: 30px;*/
+
+  // font-size: 16px;
   opacity: 1;
+}
+
+.most-holder {
+  // display: flex;
+  // flex-direction: row;
+}
+
+.worst {
+  position: relative;
+  display: inline;
+  // padding: 5px;
+  margin: 0 5px;
+  color: steelblue;
+  width: 25%;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-bottom: 2px solid lightblue;
+  transition: 0.05s ease-in-out;
+}
+.worst:hover {
+  // background: #f7f7f7;
+  border-bottom: 2px solid steelblue;
 }
 
 .overview-holder .fa-minus {
@@ -816,34 +861,57 @@ span.big-header {
 
   /*top: 0;*/
   /*z-index: 9999;*/
-  height: 25px;
+  height: 14px;
   // background: #f7f7f7;
   color: #222;
   /*font-weight: bold;*/
   border: 1px solid transparent;
   outline-width: 0;
-  margin-right: 10px;
+  margin-left: 20px;
   /*margin-left: -120px;*/
   padding: 10px;
-  padding-left: 20px;
+  // padding-left: 0;
+  // padding-left: 20px;
   width: 100px;
-  font-size: 20px;
+  font-size: 17px;
   /*border: 2px solid #222;*/
   border: 1px solid #ccc;
   // box-shadow: 2px 2px 5px 0 #ccc;
   font-family: "Helvetica"!important;
+  transition: 0.05s ease-in-out;
+}
+
+.most-drop-down {
+  padding-top: 10px;
+  display: none;
+  position: absolute;
+  min-width: 176px;
+  // min-height: 300px;
+  z-index: 99;
+  top: 30px;
+  // border: 1px solid #eee;
+  border-top: 0;
+  left: -1px;
+  padding: 5px;
+  background: #fff;
+}
+
+.filter-by input:focus {
+  // border: 1px solid transparent;
+  border: 1px solid steelblue;
 }
 
 .most-header {
   margin-bottom: 20px;
-
+  display: none;
 
 }
 
 .most-header a {
   cursor: pointer;
-font-size: 18px;
+font-size: 17px;
 margin: 1px;
+
 // font-family: "lato"!important;
 text-transform: uppercase;
 color: #aaa;
@@ -851,8 +919,8 @@ color: #aaa;
 
 text-decoration: none;
 // line-height: 20px;
-background: #f7f7f7;
-padding: 3px 10px 3px 10px;
+// background: #f7f7f7;
+// padding: 3px 10px 3px 10px;
 border: 1px solid #eee;
 transition: 50ms ease-in-out;
 
@@ -865,6 +933,7 @@ transition: 50ms ease-in-out;
 
 .filter-links {
   list-style: none;
+  // width: 400px;
   // margin-bottom: 100px;
   min-height: 500px;
 }
@@ -1086,13 +1155,14 @@ span.underline {
 
 .logo {
   margin-top: 5px;
-  opacity: 0.95;
+  opacity: 0.90;
   // height: 33px;
   // width: auto;
   float: left;
 }
 
 .logo:hover {
+  opacity: 1;
   // border: 1px solid #f7f7f7;
 }
 
@@ -1286,4 +1356,17 @@ span.underline {
   // margin-right: auto;
   position: absolute;
   z-index: 99999999;
+}
+
+.most-drop-down a {
+  text-decoration: none;
+  display: block;
+  margin-bottom: 2px;
+  color: steelblue;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.most-drop-down a:hover {
+  background: #f7f7f7;
 }

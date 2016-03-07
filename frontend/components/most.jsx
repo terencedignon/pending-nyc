@@ -5,7 +5,7 @@ var BarChart = require("react-chartjs").Bar;
 
 var Most = React.createClass({
   getInitialState: function () {
-    return { query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: ""}
+    return { queryText: "Aggregrate Score", pagination: 10, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: ""}
   },
   componentDidMount: function () {
     ApiUtil.fetchMost(this.state);
@@ -15,6 +15,7 @@ var Most = React.createClass({
     this.storeListener.remove();
   },
   formatPhone: function(n) {
+    if (!n) return "";
     return [
       n.slice(0, 3),
       n.slice(3, 6),
@@ -23,12 +24,15 @@ var Most = React.createClass({
   },
   boroInput: function (e) {
     this.setState({ boro: e.currentTarget.value });
+    if (this.parse) clearInterval(this.parse);
+    this.parse = setInterval(this.updateList, 1500)
     this.updateList();
   },
 
   cuisineInput: function (e) {
     this.setState({ cuisine_type: e.currentTarget.value });
-    this.updateList();
+    if (this.parse) clearInterval(this.parse);
+    this.parse = setInterval(this.updateList, 1500)
   },
   chartUpdate: function (ref) {
     var chart = this.refs[ref].getChart();
@@ -67,12 +71,20 @@ var Most = React.createClass({
   });
   chart.update();
   },
+  toggleBest: function () {
+    var best = "highest";
+    if (this.state.best === "highest") best = "lowest";
+    this.setState({ best: best });
+    setTimeout(function () {
+      this.updateList();
+    }.bind(this), 200)
+  },
   expand: function(e) {
     $(e.currentTarget.parentElement).find(".wrapper").css("display", "flex");
     $(e.currentTarget.parentElement).find(".fa-minus").css("display", "inline");
     $(e.currentTarget).css("display", "none");
     $(e.currentTarget.parentElement).find(".mini-chart").show();
-    $(e.currentTarget.parentElement).find(".details").show(100);
+    $(e.currentTarget.parentElement).find(".details").show(30);
     // .css("display", "block");
   },
   chartData: function (store) {
@@ -104,9 +116,8 @@ var Most = React.createClass({
   zipcodeInput: function (e) {
     // ApiUtil.autoComplete({ value: e.currentTarget.value, query: "zipcode"});
     this.setState({ zipcode: e.currentTarget.value });
-    setTimeout(function () {
-      this.updateList();
-    }.bind(this), 200);
+    if (this.parse) clearInterval(this.parse);
+    this.parse = setInterval(this.updateList, 1500)
   },
 
   _onStoreChange: function () {
@@ -129,6 +140,7 @@ var Most = React.createClass({
     $root.find(".fa-plus").show("slowly");
   },
   updateList: function () {
+    clearInterval(this.parse);
     ApiUtil.fetchMost(this.state);
   },
   resultChange: function(e) {
@@ -137,6 +149,16 @@ var Most = React.createClass({
 
     if (input !== "" ) result = input;
     this.setState({ result: result });
+  },
+  queryHandler: function (e) {
+    $(".most-drop-down").show(30);
+  },
+  paginationHandler: function () {
+    var page = (this.state.pagination === 50 ? 10 : this.state.pagination + 10);
+    this.setState({ pagination: page });
+    setTimeout(function() {
+      this.updateList();
+    }.bind(this), 200);
   },
   setGrade: function (store) {
         imageObject = {
@@ -149,17 +171,24 @@ var Most = React.createClass({
 
           return imageObject[store.calc.grade];
   },
-  changeQuery: function (e) {
+  changeQuery: function (name, e) {
+
     e.preventDefault();
-    this.setState({ query: e.currentTarget.id, most: []})
+    // $('.most-drop-down').hide();
+    this.setState({ queryText: name, query: e.currentTarget.id, most: []})
     this.updateList($.extend(this.state, {query: e.currentTarget.id}));
+    // console.log(  $(e.currentTarget).parent().children());
+    $('.most-drop-down').hide();
+    // $(e.currentTarget).parent().children().hide();
     // var input = e.currentTarget.id;
   },
   render: function () {
 
     setTimeout(function () {
       $('.wrapper').hide()
-    }, 100);
+    }, 0);
+
+    $('.most-drop-down').hide();
 
     var mostList = <div className="most-loading"><i className="fa fa-circle-o-notch fa-spin most-spin"></i></div>  ;
     if (this.state.most.length > 1) {
@@ -172,7 +201,7 @@ var Most = React.createClass({
         // setTimeout(function () {
         //   this.chartUpdate(ref);
         // }.bind(this), 2000);
-        return <div key={Math.random()}><i onClick={this.expand} className="fa fa-plus fa-border"></i>
+        return <div key={index}><i onClick={this.expand} className="fa fa-plus fa-border"></i>
         <i onClick={this.collapse} className="fa fa-minus fa-border"></i>
       <a href={"#/rest/" + store.id} store={store}>{store.name}</a>
 
@@ -206,29 +235,37 @@ var Most = React.createClass({
 
 
     return (
-      <div>
+      <div className="most-holder">
+        <div>
         <div className="filter-by">
-          <h3>Search restaurant data by: </h3> <input className="zipcode" onChange={this.zipcodeInput} type="text" placeholder="Zipcode"/> {this.state.autoZip}
+          <h3>The <div onClick={this.paginationHandler} className="worst">{this.state.pagination}
 
+          </div> restaurants with the <div onClick={this.toggleBest} className="worst">{this.state.best}</div>
+        <div onClick={this.queryHandler} className="worst">{this.state.queryText}
+              <div className="most-drop-down">
+                <a id="score" onClick={this.changeQuery.bind(this, "Aggregate Score")} href="#">Aggregate</a>
+                  <a id="average" onClick={this.changeQuery.bind(this, "Average Score")} href="#">Average</a>
+                    <a id="first_average" onClick={this.changeQuery.bind(this, "Unannounced Average Score")} href="#">Surprise Average</a>
+                      <a id="worst" onClick={this.changeQuery.bind(this, "Inspection Score")} href="#">One-time Score</a>
+              <a id="mice_percentage" onClick={this.changeQuery.bind(this, "Percent of Mice")} href="#">% of Mice</a>  <a id="mice" onClick={this.changeQuery.bind(this, "Number of Mice")} href="#"># of Mice r</a>
+               <a id="roach_percentage" onClick={this.changeQuery.bind(this,"Percent of Roaches")} href="#">% of Roaches</a>  <a id="roaches" onClick={this.changeQuery.bind(this, "Number of Roaches")} href="#"># of Roaches</a>
+              <a id="flies_percentage" onClick={this.changeQuery.bind(this, "Percent of Flies")} href="#">% of Flies</a> <a id="flies" onClick={this.changeQuery.bind(this, "Number of Flies")} href="#"># of Flies </a>
+              </div>
+          </div> in NYC  </h3>
 
-
-        <input id="cuisine_type"  onChange={this.cuisineInput} type="text" placeholder="Cuisine"/>
+        <h3>  Filter by:
+          <input className="zipcode" onChange={this.zipcodeInput} type="text" placeholder="Zipcode"/> {this.state.autoZip}
+     <input id="cuisine_type"  onChange={this.cuisineInput} type="text" placeholder="Cuisine"/>
         <input id="boro" onChange={this.boroInput} type="text" placeholder="Boro"/>
           <p/>
           <hr/>
+          </h3>
       </div>
-      <div className="most-header">
-      <a id="score" onClick={this.changeQuery} href="#">Pending.nyc Aggregate Score</a>
-        <a id="average" onClick={this.changeQuery} href="#">Average</a>
-          <a id="first_average" onClick={this.changeQuery} href="#">Surprise Inspection Average</a><p/>
-            <a id="worst" onClick={this.changeQuery} href="#">Worst</a>
-    <a id="mice_percentage" onClick={this.changeQuery} href="#">Mice Percent</a>  <a id="mice" onClick={this.changeQuery} href="#">Mice Number</a><p/>
-     <a id="roach_percentage" onClick={this.changeQuery} href="#">Roach Percent</a>  <a id="roaches" onClick={this.changeQuery} href="#">Roach Number</a>
-    <a id="flies_percentage" onClick={this.changeQuery} href="#">Flies Percent</a> <a id="flies" onClick={this.changeQuery} href="#">Flies Number</a>
-    </div>
-    <hr/>
 
-    <div className="filter-links">
+    <hr/>
+    </div>
+
+    <div className="filter-links" key="filter-links">
 
         {mostList}
     </div>

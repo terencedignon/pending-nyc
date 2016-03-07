@@ -50,7 +50,6 @@ var Overview = React.createClass({
     if (grade instanceof Array) {
       for (var i = 0; i < grade.length; i++) {
         var num = grade[i];
-        if (num.includes("%")) num = num.slice(0, -1);
 
         if (num >= 25) {
 
@@ -82,7 +81,7 @@ var Overview = React.createClass({
 
     return (
       <span className="overview-holder">
-        <span className="store-name">{this.props.store.name} Overview: <span className="question-highlight">{data.total}
+        <span className="store-name-header">{this.props.store.name}<span className="question-highlight">
           <div className="legend"><span className="a">A:</span> <span className="range">0-13</span>&nbsp;
             <span className="b">B:</span> <span className="range">14-27</span>&nbsp;
               <span className="c">C:</span> <span className="range">28 and up</span></div>

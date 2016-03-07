@@ -24634,8 +24634,8 @@
 	      A: "rgba(70, 130, 180, 0.5)",
 	      Ah: "rgba(70, 130, 180, 1)",
 	      B: "rgba(128, 0, 0, 0.5)",
-	      C: "rgba(128, 0, 0, 0.85)",
-	      Cf: "rgba(128, 0, 0, 0.9)"
+	      C: "rgba(128, 0, 0, 0.7)",
+	      Cf: "rgba(128, 0, 0, 0.8)"
 	    };
 	    // B: "rgba(59,187,48, 0.5)",
 	    // Bh: "rgba(59,187,48, 1)",
@@ -35946,6 +35946,7 @@
 	    if (comparison !== []) {
 	      this.setState({ comparison: StoreStore.getComparison(), comparisonText: StoreStore.getComparisonType() });
 	      this.setUpChart();
+	      // this.refs.comparison.clear();
 	      this.chartUpdate();
 	    }
 	  },
@@ -35973,11 +35974,23 @@
 	      Ah: "rgba(70, 130, 180, 1)",
 	      B: "rgba(59,187,48, 0.5)",
 	      Bh: "rgba(59,187,48, 1)",
-	      C: "rgba(251, 149, 23, 0.5)",
-	      Ch: "rgba(251, 149, 23, 1)"
+	      C: "rgba(128, 0, 0, 0.7)",
+	      Ch: "rgba(128, 0, 0, 0.9)"
 	    };
 
-	    chart.datasets[0].bars.forEach(function (bar) {
+	    chart.datasets[0].bars.forEach(function (bar, index) {
+	      if (bar.value > chart.datasets[1].bars[index].value) {
+	        bar.fillColor = colors["C"];
+	        bar.strokeColor = colors["C"];
+	        bar.highlightFill = colors["Ch"];
+	        bar.highlightStroke = colors["Ch"];
+	      } else {
+	        bar.fillColor = "white";
+	        bar.strokeColor = "#777777";
+	        bar.highlightFill = "white";
+	        bar.highlightStroke = "#222222";
+	      }
+
 	      //   if (bar.value <= 13) {
 	      //     bar.fillColor = colors["A"];
 	      //     bar.strokeColor = colors["A"];
@@ -36049,7 +36062,7 @@
 	        data: storeData
 	      }, {
 	        label: this.state.comparison.name,
-	        fillColor: "#eeeeee",
+	        fillColor: "#f7f7f7",
 	        strokeColor: "#777",
 	        highlightFill: "#eeeeee",
 	        highlightStroke: "black",
@@ -36059,8 +36072,8 @@
 
 	    // omitXLabels: true,
 	    var optionHash = {
-	      barDatasetSpacing: 3,
-	      barValueSpacing: 10,
+	      barDatasetSpacing: 5,
+	      barValueSpacing: 5,
 	      animationSteps: 60,
 	      responsive: false,
 	      scaleShowGridLines: false,
@@ -36591,7 +36604,6 @@
 	    if (grade instanceof Array) {
 	      for (var i = 0; i < grade.length; i++) {
 	        var num = grade[i];
-	        if (num.includes("%")) num = num.slice(0, -1);
 
 	        if (num >= 25) {
 
@@ -36624,13 +36636,11 @@
 	      { className: 'overview-holder' },
 	      React.createElement(
 	        'span',
-	        { className: 'store-name' },
+	        { className: 'store-name-header' },
 	        this.props.store.name,
-	        ' Overview: ',
 	        React.createElement(
 	          'span',
 	          { className: 'question-highlight' },
-	          data.total,
 	          React.createElement(
 	            'div',
 	            { className: 'legend' },
@@ -49615,7 +49625,7 @@
 	  displayName: 'Most',
 
 	  getInitialState: function () {
-	    return { query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: "" };
+	    return { queryText: "Aggregrate Score", pagination: 10, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: "" };
 	  },
 	  componentDidMount: function () {
 	    ApiUtil.fetchMost(this.state);
@@ -49625,16 +49635,20 @@
 	    this.storeListener.remove();
 	  },
 	  formatPhone: function (n) {
+	    if (!n) return "";
 	    return [n.slice(0, 3), n.slice(3, 6), n.slice(6)].join("-");
 	  },
 	  boroInput: function (e) {
 	    this.setState({ boro: e.currentTarget.value });
+	    if (this.parse) clearInterval(this.parse);
+	    this.parse = setInterval(this.updateList, 1500);
 	    this.updateList();
 	  },
 
 	  cuisineInput: function (e) {
 	    this.setState({ cuisine_type: e.currentTarget.value });
-	    this.updateList();
+	    if (this.parse) clearInterval(this.parse);
+	    this.parse = setInterval(this.updateList, 1500);
 	  },
 	  chartUpdate: function (ref) {
 	    var chart = this.refs[ref].getChart();
@@ -49673,12 +49687,20 @@
 	    });
 	    chart.update();
 	  },
+	  toggleBest: function () {
+	    var best = "highest";
+	    if (this.state.best === "highest") best = "lowest";
+	    this.setState({ best: best });
+	    setTimeout(function () {
+	      this.updateList();
+	    }.bind(this), 200);
+	  },
 	  expand: function (e) {
 	    $(e.currentTarget.parentElement).find(".wrapper").css("display", "flex");
 	    $(e.currentTarget.parentElement).find(".fa-minus").css("display", "inline");
 	    $(e.currentTarget).css("display", "none");
 	    $(e.currentTarget.parentElement).find(".mini-chart").show();
-	    $(e.currentTarget.parentElement).find(".details").show(100);
+	    $(e.currentTarget.parentElement).find(".details").show(30);
 	    // .css("display", "block");
 	  },
 	  chartData: function (store) {
@@ -49708,9 +49730,8 @@
 	  zipcodeInput: function (e) {
 	    // ApiUtil.autoComplete({ value: e.currentTarget.value, query: "zipcode"});
 	    this.setState({ zipcode: e.currentTarget.value });
-	    setTimeout(function () {
-	      this.updateList();
-	    }.bind(this), 200);
+	    if (this.parse) clearInterval(this.parse);
+	    this.parse = setInterval(this.updateList, 1500);
 	  },
 
 	  _onStoreChange: function () {
@@ -49733,6 +49754,7 @@
 	    $root.find(".fa-plus").show("slowly");
 	  },
 	  updateList: function () {
+	    clearInterval(this.parse);
 	    ApiUtil.fetchMost(this.state);
 	  },
 	  resultChange: function (e) {
@@ -49741,6 +49763,16 @@
 
 	    if (input !== "") result = input;
 	    this.setState({ result: result });
+	  },
+	  queryHandler: function (e) {
+	    $(".most-drop-down").show(30);
+	  },
+	  paginationHandler: function () {
+	    var page = this.state.pagination === 50 ? 10 : this.state.pagination + 10;
+	    this.setState({ pagination: page });
+	    setTimeout(function () {
+	      this.updateList();
+	    }.bind(this), 200);
 	  },
 	  setGrade: function (store) {
 	    imageObject = {
@@ -49753,17 +49785,24 @@
 
 	    return imageObject[store.calc.grade];
 	  },
-	  changeQuery: function (e) {
+	  changeQuery: function (name, e) {
+
 	    e.preventDefault();
-	    this.setState({ query: e.currentTarget.id, most: [] });
+	    // $('.most-drop-down').hide();
+	    this.setState({ queryText: name, query: e.currentTarget.id, most: [] });
 	    this.updateList($.extend(this.state, { query: e.currentTarget.id }));
+	    // console.log(  $(e.currentTarget).parent().children());
+	    $('.most-drop-down').hide();
+	    // $(e.currentTarget).parent().children().hide();
 	    // var input = e.currentTarget.id;
 	  },
 	  render: function () {
 
 	    setTimeout(function () {
 	      $('.wrapper').hide();
-	    }, 100);
+	    }, 0);
+
+	    $('.most-drop-down').hide();
 
 	    var mostList = React.createElement(
 	      'div',
@@ -49782,7 +49821,7 @@
 	        // }.bind(this), 2000);
 	        return React.createElement(
 	          'div',
-	          { key: Math.random() },
+	          { key: index },
 	          React.createElement('i', { onClick: this.expand, className: 'fa fa-plus fa-border' }),
 	          React.createElement('i', { onClick: this.collapse, className: 'fa fa-minus fa-border' }),
 	          React.createElement(
@@ -49861,87 +49900,110 @@
 
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'most-holder' },
 	      React.createElement(
 	        'div',
-	        { className: 'filter-by' },
+	        null,
 	        React.createElement(
-	          'h3',
-	          null,
-	          'Search restaurant data by: '
+	          'div',
+	          { className: 'filter-by' },
+	          React.createElement(
+	            'h3',
+	            null,
+	            'The ',
+	            React.createElement(
+	              'div',
+	              { onClick: this.paginationHandler, className: 'worst' },
+	              this.state.pagination
+	            ),
+	            ' restaurants with the ',
+	            React.createElement(
+	              'div',
+	              { onClick: this.toggleBest, className: 'worst' },
+	              this.state.best
+	            ),
+	            React.createElement(
+	              'div',
+	              { onClick: this.queryHandler, className: 'worst' },
+	              this.state.queryText,
+	              React.createElement(
+	                'div',
+	                { className: 'most-drop-down' },
+	                React.createElement(
+	                  'a',
+	                  { id: 'score', onClick: this.changeQuery.bind(this, "Aggregate Score"), href: '#' },
+	                  'Aggregate'
+	                ),
+	                React.createElement(
+	                  'a',
+	                  { id: 'average', onClick: this.changeQuery.bind(this, "Average Score"), href: '#' },
+	                  'Average'
+	                ),
+	                React.createElement(
+	                  'a',
+	                  { id: 'first_average', onClick: this.changeQuery.bind(this, "Unannounced Average Score"), href: '#' },
+	                  'Surprise Average'
+	                ),
+	                React.createElement(
+	                  'a',
+	                  { id: 'worst', onClick: this.changeQuery.bind(this, "Inspection Score"), href: '#' },
+	                  'One-time Score'
+	                ),
+	                React.createElement(
+	                  'a',
+	                  { id: 'mice_percentage', onClick: this.changeQuery.bind(this, "Percent of Mice"), href: '#' },
+	                  '% of Mice'
+	                ),
+	                '  ',
+	                React.createElement(
+	                  'a',
+	                  { id: 'mice', onClick: this.changeQuery.bind(this, "Number of Mice"), href: '#' },
+	                  '# of Mice r'
+	                ),
+	                React.createElement(
+	                  'a',
+	                  { id: 'roach_percentage', onClick: this.changeQuery.bind(this, "Percent of Roaches"), href: '#' },
+	                  '% of Roaches'
+	                ),
+	                '  ',
+	                React.createElement(
+	                  'a',
+	                  { id: 'roaches', onClick: this.changeQuery.bind(this, "Number of Roaches"), href: '#' },
+	                  '# of Roaches'
+	                ),
+	                React.createElement(
+	                  'a',
+	                  { id: 'flies_percentage', onClick: this.changeQuery.bind(this, "Percent of Flies"), href: '#' },
+	                  '% of Flies'
+	                ),
+	                ' ',
+	                React.createElement(
+	                  'a',
+	                  { id: 'flies', onClick: this.changeQuery.bind(this, "Number of Flies"), href: '#' },
+	                  '# of Flies '
+	                )
+	              )
+	            ),
+	            ' in NYC  '
+	          ),
+	          React.createElement(
+	            'h3',
+	            null,
+	            '  Filter by:',
+	            React.createElement('input', { className: 'zipcode', onChange: this.zipcodeInput, type: 'text', placeholder: 'Zipcode' }),
+	            ' ',
+	            this.state.autoZip,
+	            React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', placeholder: 'Cuisine' }),
+	            React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' }),
+	            React.createElement('p', null),
+	            React.createElement('hr', null)
+	          )
 	        ),
-	        ' ',
-	        React.createElement('input', { className: 'zipcode', onChange: this.zipcodeInput, type: 'text', placeholder: 'Zipcode' }),
-	        ' ',
-	        this.state.autoZip,
-	        React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', placeholder: 'Cuisine' }),
-	        React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' }),
-	        React.createElement('p', null),
 	        React.createElement('hr', null)
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'most-header' },
-	        React.createElement(
-	          'a',
-	          { id: 'score', onClick: this.changeQuery, href: '#' },
-	          'Pending.nyc Aggregate Score'
-	        ),
-	        React.createElement(
-	          'a',
-	          { id: 'average', onClick: this.changeQuery, href: '#' },
-	          'Average'
-	        ),
-	        React.createElement(
-	          'a',
-	          { id: 'first_average', onClick: this.changeQuery, href: '#' },
-	          'Surprise Inspection Average'
-	        ),
-	        React.createElement('p', null),
-	        React.createElement(
-	          'a',
-	          { id: 'worst', onClick: this.changeQuery, href: '#' },
-	          'Worst'
-	        ),
-	        React.createElement(
-	          'a',
-	          { id: 'mice_percentage', onClick: this.changeQuery, href: '#' },
-	          'Mice Percent'
-	        ),
-	        '  ',
-	        React.createElement(
-	          'a',
-	          { id: 'mice', onClick: this.changeQuery, href: '#' },
-	          'Mice Number'
-	        ),
-	        React.createElement('p', null),
-	        React.createElement(
-	          'a',
-	          { id: 'roach_percentage', onClick: this.changeQuery, href: '#' },
-	          'Roach Percent'
-	        ),
-	        '  ',
-	        React.createElement(
-	          'a',
-	          { id: 'roaches', onClick: this.changeQuery, href: '#' },
-	          'Roach Number'
-	        ),
-	        React.createElement(
-	          'a',
-	          { id: 'flies_percentage', onClick: this.changeQuery, href: '#' },
-	          'Flies Percent'
-	        ),
-	        ' ',
-	        React.createElement(
-	          'a',
-	          { id: 'flies', onClick: this.changeQuery, href: '#' },
-	          'Flies Number'
-	        )
-	      ),
-	      React.createElement('hr', null),
-	      React.createElement(
-	        'div',
-	        { className: 'filter-links' },
+	        { className: 'filter-links', key: 'filter-links' },
 	        mostList
 	      )
 	    );
