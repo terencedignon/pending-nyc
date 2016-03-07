@@ -247,7 +247,7 @@ var Most = React.createClass({
                   <a id="average" onClick={this.changeQuery.bind(this, "Average Score")} href="#">Average</a>
                     <a id="first_average" onClick={this.changeQuery.bind(this, "Unannounced Average Score")} href="#">Surprise Average</a>
                       <a id="worst" onClick={this.changeQuery.bind(this, "Inspection Score")} href="#">One-time Score</a>
-              <a id="mice_percentage" onClick={this.changeQuery.bind(this, "Percent of Mice")} href="#">% of Mice</a>  <a id="mice" onClick={this.changeQuery.bind(this, "Number of Mice")} href="#"># of Mice r</a>
+              <a id="mice_percentage" onClick={this.changeQuery.bind(this, "Percent of Mice")} href="#">% of Mice</a>  <a id="mice" onClick={this.changeQuery.bind(this, "Number of Mice")} href="#"># of Mice</a>
                <a id="roach_percentage" onClick={this.changeQuery.bind(this,"Percent of Roaches")} href="#">% of Roaches</a>  <a id="roaches" onClick={this.changeQuery.bind(this, "Number of Roaches")} href="#"># of Roaches</a>
               <a id="flies_percentage" onClick={this.changeQuery.bind(this, "Percent of Flies")} href="#">% of Flies</a> <a id="flies" onClick={this.changeQuery.bind(this, "Number of Flies")} href="#"># of Flies </a>
               </div>

@@ -49958,7 +49958,7 @@
 	                React.createElement(
 	                  'a',
 	                  { id: 'mice', onClick: this.changeQuery.bind(this, "Number of Mice"), href: '#' },
-	                  '# of Mice r'
+	                  '# of Mice'
 	                ),
 	                React.createElement(
 	                  'a',
