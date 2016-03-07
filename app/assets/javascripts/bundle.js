@@ -50017,18 +50017,6 @@
 	        React.createElement('hr', null)
 	      ),
 	      React.createElement(
-	        'span',
-	        { className: 'worst', onClick: this.expandAll },
-	        'Expand'
-	      ),
-	      '  ',
-	      React.createElement(
-	        'span',
-	        { className: 'worst', onClick: this.collapseAll },
-	        'Collapse'
-	      ),
-	      React.createElement('hr', null),
-	      React.createElement(
 	        'div',
 	        { className: 'filter-links', key: 'filter-links' },
 	        mostList
@@ -50036,6 +50024,7 @@
 	    );
 	  }
 	});
+	// <span className="worst" onClick={this.expandAll}>Expand</span> &nbsp;<span className="worst" onClick={this.collapseAll}>Collapse</span><hr/>
 	// <input type="text" onChange={this.resultChange}/>
 	//
 	// <span className="top-sentence">Returning <span className="editable" contentEditable="true">50</span> results.</span><p/>
