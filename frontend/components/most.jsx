@@ -234,32 +234,35 @@ var Most = React.createClass({
     }
 
 
+    // <h2>Browse</h2>
     return (
       <div className="most-holder">
         <div>
         <div className="filter-by">
-          <h3>The <div onClick={this.paginationHandler} className="worst">{this.state.pagination}
+          <h3>  Filter by:
+                          <input className="zipcode" onChange={this.zipcodeInput} type="text" placeholder="Zipcode"/> {this.state.autoZip}
+                     <input id="cuisine_type"  onChange={this.cuisineInput} type="text" placeholder="Cuisine"/>
+                        <input id="boro" onChange={this.boroInput} type="text" placeholder="Boro"/>
 
-          </div> restaurants with the <div onClick={this.toggleBest} className="worst">{this.state.best}</div>
-        <div onClick={this.queryHandler} className="worst">{this.state.queryText}
-              <div className="most-drop-down">
-                <a id="score" onClick={this.changeQuery.bind(this, "Aggregate Score")} href="#">Aggregate</a>
-                  <a id="average" onClick={this.changeQuery.bind(this, "Average Score")} href="#">Average</a>
-                    <a id="first_average" onClick={this.changeQuery.bind(this, "Unannounced Average Score")} href="#">Surprise Average</a>
-                      <a id="worst" onClick={this.changeQuery.bind(this, "Inspection Score")} href="#">One-time Score</a>
+                          </h3>
+
+          <h3>Restaurants with the <div onClick={this.toggleBest} className="worst">{this.state.best}</div>
+          <div onClick={this.queryHandler} className="worst">{this.state.queryText}
+            <div className="most-drop-down">
+              <a id="score" onClick={this.changeQuery.bind(this, "Aggregate Score")} href="#">Aggregate</a>
+              <a id="average" onClick={this.changeQuery.bind(this, "Average Score")} href="#">Average</a>
+              <a id="first_average" onClick={this.changeQuery.bind(this, "Unannounced Average Score")} href="#">Surprise Average</a>
+              <a id="worst" onClick={this.changeQuery.bind(this, "Inspection Score")} href="#">One-time Score</a>
               <a id="mice_percentage" onClick={this.changeQuery.bind(this, "Percent of Mice")} href="#">% of Mice</a>  <a id="mice" onClick={this.changeQuery.bind(this, "Number of Mice")} href="#"># of Mice</a>
-               <a id="roach_percentage" onClick={this.changeQuery.bind(this,"Percent of Roaches")} href="#">% of Roaches</a>  <a id="roaches" onClick={this.changeQuery.bind(this, "Number of Roaches")} href="#"># of Roaches</a>
+              <a id="roach_percentage" onClick={this.changeQuery.bind(this,"Percent of Roaches")} href="#">% of Roaches</a>  <a id="roaches" onClick={this.changeQuery.bind(this, "Number of Roaches")} href="#"># of Roaches</a>
               <a id="flies_percentage" onClick={this.changeQuery.bind(this, "Percent of Flies")} href="#">% of Flies</a> <a id="flies" onClick={this.changeQuery.bind(this, "Number of Flies")} href="#"># of Flies </a>
-              </div>
-          </div> in NYC  </h3>
+            </div>
+          </div>
+        <br/>Results: <div onClick={this.paginationHandler} className="worst">{this.state.pagination}
 
-        <h3>  Filter by:
-          <input className="zipcode" onChange={this.zipcodeInput} type="text" placeholder="Zipcode"/> {this.state.autoZip}
-     <input id="cuisine_type"  onChange={this.cuisineInput} type="text" placeholder="Cuisine"/>
-        <input id="boro" onChange={this.boroInput} type="text" placeholder="Boro"/>
-          <p/>
-          <hr/>
-          </h3>
+        </div> </h3>
+
+
       </div>
 
     <hr/>

@@ -851,9 +851,14 @@ span.big-header {
 }
 
 .filter-by {
+  margin-top: 5px;
   margin-bottom: 20px;
   /*margin-top: -50px;*/
   font-family: "lato"!important;
+  // background: #eee;
+  border: 2px solid #eee;
+  padding: 5px;
+  padding-left: 20px;
   text-transform: uppercase;
 }
 
@@ -936,6 +941,10 @@ transition: 50ms ease-in-out;
   // width: 400px;
   // margin-bottom: 100px;
   min-height: 500px;
+}
+
+.filter-by h1 {
+  color: #eee;
 }
 
 .filter-links li {

@@ -49898,6 +49898,7 @@
 	      }.bind(this));
 	    }
 
+	    // <h2>Browse</h2>
 	    return React.createElement(
 	      'div',
 	      { className: 'most-holder' },
@@ -49910,13 +49911,17 @@
 	          React.createElement(
 	            'h3',
 	            null,
-	            'The ',
-	            React.createElement(
-	              'div',
-	              { onClick: this.paginationHandler, className: 'worst' },
-	              this.state.pagination
-	            ),
-	            ' restaurants with the ',
+	            '  Filter by:',
+	            React.createElement('input', { className: 'zipcode', onChange: this.zipcodeInput, type: 'text', placeholder: 'Zipcode' }),
+	            ' ',
+	            this.state.autoZip,
+	            React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', placeholder: 'Cuisine' }),
+	            React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' })
+	          ),
+	          React.createElement(
+	            'h3',
+	            null,
+	            'Restaurants with the ',
 	            React.createElement(
 	              'div',
 	              { onClick: this.toggleBest, className: 'worst' },
@@ -49984,19 +49989,14 @@
 	                )
 	              )
 	            ),
-	            ' in NYC  '
-	          ),
-	          React.createElement(
-	            'h3',
-	            null,
-	            '  Filter by:',
-	            React.createElement('input', { className: 'zipcode', onChange: this.zipcodeInput, type: 'text', placeholder: 'Zipcode' }),
-	            ' ',
-	            this.state.autoZip,
-	            React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', placeholder: 'Cuisine' }),
-	            React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' }),
-	            React.createElement('p', null),
-	            React.createElement('hr', null)
+	            React.createElement('br', null),
+	            'Results: ',
+	            React.createElement(
+	              'div',
+	              { onClick: this.paginationHandler, className: 'worst' },
+	              this.state.pagination
+	            ),
+	            ' '
 	          )
 	        ),
 	        React.createElement('hr', null)
