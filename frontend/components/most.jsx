@@ -25,7 +25,11 @@ var Most = React.createClass({
   boroInput: function (e) {
     e.preventDefault();
     var boro = e.currentTarget.value;
-    if (e.currentTarget.id !== "boro") boro = e.currentTarget.id;
+    if (e.currentTarget.id !== "boro") {
+      $('.fa-minus').hide();
+      $('.fa-plus').show();
+      boro = e.currentTarget.id;
+    }
     this.setState({ boro: boro });
     if (this.parse) clearInterval(this.parse);
     this.parse = setInterval(this.updateList, 1500)
@@ -35,7 +39,11 @@ var Most = React.createClass({
   cuisineInput: function (e) {
     e.preventDefault();
     var cuisine = e.currentTarget.value;
-    if (e.currentTarget.id !== "cuisine_type") cuisine = e.currentTarget.id;
+    if (e.currentTarget.id !== "cuisine_type") {
+      cuisine = e.currentTarget.id;
+      $('.fa-minus').hide();
+      $('.fa-plus').show();
+    }
     this.setState({ cuisine_type: cuisine });
     if (this.parse) clearInterval(this.parse);
     this.parse = setInterval(this.updateList, 1500)
@@ -122,7 +130,11 @@ var Most = React.createClass({
   zipcodeInput: function (e) {
     e.preventDefault();
     var zipcode = e.currentTarget.value;
-    if (e.currentTarget.id !== "zipcode") zipcode = e.currentTarget.id;
+    if (e.currentTarget.id !== "zipcode") {
+      zipcode = e.currentTarget.id;
+      $('.fa-minus').hide();
+      $('.fa-plus').show();
+    }
     this.setState({ zipcode: zipcode });
     if (this.parse) clearInterval(this.parse);
     this.parse = setInterval(this.updateList, 1500)
