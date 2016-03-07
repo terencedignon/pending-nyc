@@ -192,11 +192,14 @@ header {
 
 .map-header {
   z-index: 99;
-  background: #222;
-  color: #fff;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
   padding: 20px;
-  opacity: 0.9;
-  font-size: 20px;
+  text-align: center;
+  letter-spacing:2px;
+  // opacity: 0.5;
+  // font-weight:bold;
+  font-size: 18px;
   text-transform: uppercase;
   font-family: "helvetica";
   position: absolute;
@@ -458,6 +461,7 @@ footer {
 }
 
 .store-name {
+  // text-align: center!important;
   text-transform: uppercase;
   padding: 10px 10px 10px 0;
   color: #111;
@@ -717,7 +721,7 @@ hr.break {
 .fa-thumbs-o-down {
   margin-right: 10px;
   color: maroon;
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 

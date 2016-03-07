@@ -40,8 +40,8 @@ var StoreShow = React.createClass({
       A: "rgba(70, 130, 180, 0.5)",
       Ah: "rgba(70, 130, 180, 1)",
       B: "rgba(128, 0, 0, 0.5)",
-      C: "rgba(128, 0, 0, 0.9)",
-      Cf: "rgba(128, 0, 0, 1)"
+      C: "rgba(128, 0, 0, 0.85)",
+      Cf: "rgba(128, 0, 0, 0.9)"
     }
     // B: "rgba(59,187,48, 0.5)",
     // Bh: "rgba(59,187,48, 1)",
@@ -214,7 +214,7 @@ var StoreShow = React.createClass({
               {overview}
               <hr/>
               <span className="store-name">Inspections over time</span>
-              <br/>
+            
               <hr/>
                 {barChart}
               <hr/>
