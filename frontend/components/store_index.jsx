@@ -4,6 +4,9 @@ var StoreStore = require('../stores/store_store.js');
 var SearchActions = require('../actions/search_actions.js');
 var Map = require('./main_map.jsx');
 var StoreActions = require('../actions/store_actions.js');
+var BarChart = require('react-d3/barchart').BarChart;
+var LineChart = require('react-d3/linechart').LineChart;
+var AreaChart = require('react-d3/areachart').AreaChart;
 
 var StoreIndex = React.createClass({
   getInitialState: function () {
@@ -71,6 +74,34 @@ var StoreIndex = React.createClass({
       //     </li>;
     }
 
+    var barData = [
+      {
+        "name": "Series A",
+        "values": [
+          { "x": "AVG", "y":  91},
+          { "x": 2, "y": 290},
+          { "x": 3, "y": 300},
+        ]
+      },
+      {
+        "name": "Series B",
+        "values": [
+          { "x": "AVG", "y":  9},
+          { "x": 2, "y": 49},
+          { "x": 3, "y": 62},
+        ]
+      },
+      {
+        "name": "Series C",
+        "values": [
+          { "x": "AVG", "y":  14},
+          { "x": 2, "y": 77},
+          { "x": 3, "y": 80},
+        ]
+      }
+    ];
+
+
     return (
       <div>
         <div className="trend-holder">
@@ -84,7 +115,7 @@ var StoreIndex = React.createClass({
       </div>
       <div className="show-index">
         <div className="intro-header">
-  
+
           <span className="big-header">NYC restaurant grade analytics</span><p/>
             <div className="about">
 

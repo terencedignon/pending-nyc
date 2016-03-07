@@ -103,7 +103,7 @@ header {
 .header-search input {
   /*position: relative;*/
   z-index: 9999;
-  height: 12px;
+  height: 14px;
   background: #f7f7f7;
   color: #222;
 
@@ -112,7 +112,7 @@ header {
 
   padding: 8px;
   padding-left: 20px;
-  width: 300px;
+  width: 200px;
   font-size: 18px;
   // font-weight: bold;
   box-shadow: 2px 2px 5px 0 #ccc;
@@ -184,7 +184,7 @@ header {
 }
 
 .map-holder {
-  height: 512px;
+  height: 580px;
   width: 400px;
   position: relative;
   overflow: hidden;
@@ -192,7 +192,8 @@ header {
 
 .map-header {
   z-index: 99;
-  background: #fff;
+  background: #222;
+  color: #fff;
   padding: 20px;
   opacity: 0.9;
   font-size: 20px;
@@ -210,6 +211,13 @@ header {
   width: 100%;
   background: #fff;
   top: 20px;
+}
+
+.mini-chart {
+  width: 450px;
+  float: right;
+  overflow: hidden;
+  height: 100px;
 }
 
 .show-container {
@@ -372,7 +380,7 @@ footer {
 .violations {
   // width: 85%;
   color: #222;
-  font-size: 18px;
+  font-size: 16px;
 
 }
 
@@ -455,6 +463,14 @@ footer {
   color: #111;
   font-family: "Helvetica";
   font-size: 20px;
+}
+
+.comparison-to {
+  // display: block;
+  text-transform: uppercase;
+  color: #222;
+  font-family: "Helvetica";
+  font-size: 18px;
 }
 
 
@@ -541,7 +557,7 @@ footer {
   border-radius: 5%;
   margin-top: 30px;
   margin-left: 50px;
-  height: 500px;
+  height: 600px;
   width: 350px;
 }
 /*
@@ -678,6 +694,10 @@ footer {
   // background: #f7f7f7;
 }
 
+hr.break {
+  color: #eee!important;
+}
+
 .fa-thumbs-o-up {
   margin-right: 10px;
   color: black;
@@ -686,7 +706,8 @@ footer {
 }
 
 .overview-holder .fa-minus {
-  margin-right: 11px;
+  margin-right: 14px;
+  margin-left: -3px;
   /*font-size: 20px;*/
   display: inline-block;
   color: #777!important;
@@ -696,7 +717,7 @@ footer {
 .fa-thumbs-o-down {
   margin-right: 10px;
   color: maroon;
-  opacity: 1;
+  opacity: 0.9;
 }
 
 
@@ -853,16 +874,17 @@ transition: 50ms ease-in-out;
 
 .expanded-details-row {
   color: #fff;
-  margin-left: 2%;
+  margin-left: 3%;
   // padding-top: 1%;
-  padding-left: 5%;
+  // padding-left: 5%;
   // background: #222;
   display: flex;
   flex-direction: row;
 }
 
 .address {
-  width: 50%;
+  // background: #fff;
+  width: 30%;
 }
 
 .expanded-details-row div {
@@ -962,10 +984,10 @@ span.underline {
 }
 
 .google-image-holder {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   // background: steelblue
-
+  // margin-right: 10px;
   font-size: 40px;
   margin-top: 0px;
   // margin-bottom: 14px;
@@ -979,10 +1001,10 @@ span.underline {
   // margin-left: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
-  display: none;
-  padding: 2px;
+  // display: none;
+  // padding: 2px;
 
-  background: #F7f7f7;
+  // background: gold;
 
   // border: 1px solid #f7f7f7;
 }
@@ -997,6 +1019,8 @@ span.underline {
   padding: 2px;
   border: 1px dashed #eee;
 }
+
+
 
 .top-sentence {
   text-transform: uppercase;
@@ -1017,10 +1041,14 @@ span.underline {
 
 .google-image-holder img {
   // border-radius: 5%;
+
   border: 2px solid #f7f7f7;
   // opacity: 0.9;
   // margin: 0 auto;
   width: 75%;
+  // height: auto;
+  // min-width: 50px;
+  // min-height: 60px;
 }
 
 .fa-star {
@@ -1211,4 +1239,47 @@ span.underline {
 
 .fa-culinary {
   margin-top: 10px;
+}
+
+.comparison-legend ul {
+  list-style: none;
+}
+.comparison-legend ul li {
+  display: block;
+  // border: 1px solid black;
+  padding-left: 30px;
+  position: relative;
+  margin-bottom: 4px;
+  // border-radius: 5px;
+  padding: 2px 8px 2px 28px;
+  font-size: 14px;
+  cursor: default;
+  -webkit-transition: background-color 200ms ease-in-out;
+  -moz-transition: background-color 200ms ease-in-out;
+  -o-transition: background-color 200ms ease-in-out;
+  transition: background-color 200ms ease-in-out;
+}
+.comparison-legend li span {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  border: 1px solid #eee;
+  height: 100%;
+  // border-radius: 5px;
+}
+
+.map-holder i {
+  font-size: 75px;
+  left: 175px;
+  color: #eee;
+  top: 250px;
+  // bottom: 0;
+  display: none;
+  // color: steelblue;
+  // margin-left: auto;
+  // margin-right: auto;
+  position: absolute;
+  z-index: 99999999;
 }

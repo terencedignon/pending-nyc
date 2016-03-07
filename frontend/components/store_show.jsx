@@ -2,7 +2,6 @@ var React = require('react');
 var ApiUtil = require('../util/api_util.js');
 var StoreStore = require('../stores/store_store.js');
 var BarChart = require("react-chartjs").Bar;
-var PieChart = require("react-chartjs").Pie;
 var Comparison = require('./comparison.jsx');
 var Map = require('./map.jsx');
 var Overview = require('./overview.jsx');
@@ -10,69 +9,64 @@ var Violations = require('./violations.jsx');
 
 var StoreShow = React.createClass({
   getInitialState: function () {
-    return { grade: "P", store: {}, yelp: {}, key: "map" };
+    return { grade: "P", store: {}, yelp: {}, key: "map",  data: {} };
   },
   componentDidMount: function () {
-    function yelpCallback (phone) {
-      ApiUtil.getYelp(phone);
-    };
     this.storeListener = StoreStore.addListener(this._onStoreChange);
-    ApiUtil.fetchStore(this.props.params.id, yelpCallback.bind(this));
+    ApiUtil.fetchStore(this.props.params.id);
   },
   componentWillUnmount: function () {
     this.storeListener.remove();
   },
-  returnImage: function () {
-    var url;
-    // console.log(this.state.store.image_url);
+  setImage: function () {
     if (this.state.store.image_url !== null) {
-      url = this.state.store.image_url.replace("ms.jpg", "348s.jpg");
+      var url = this.state.store.image_url.replace("ms.jpg", "348s.jpg");
       return <img className="show-image" src={url} />;
-    // } else if (typeof this.state.yelp.image_url !== "undefined") {
-    //   console.log(this.state.yelp.image_url);
-    //   url = this.state.yelp.image_url.replace("ms.jpg", "348s.jpg");
-    //   return <img className="show-image" src={url} />;
-  } else {
+    } else {
       return <div className="empty-image"></div>;
     }
   },
   _onStoreChange: function () {
     if (this.state.store !== StoreStore.getStore()) {
-    this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
-  };
-    // console.log(this.state.store.name);
-    // this.setState(this.state);
+      this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
+      this.chartUpdate();
+    };
   },
-
-  violationChart: function () {
-
-    var store = this.state.store;
-    var data = [
-      {
-        value: (store.calc.violations - store.calc.critical),
-        color: "#f7f7f7",
-        hightlight: "#eee",
-        label: "Not-Critical"
-      },
-      {
-        value: store.calc.critical,
-        color: "salmon",
-        hightlight: "salmon",
-        label: "Critical"
-
-      }
-    ];
-    return data;
-  },
-
-  colorAverage: function(num) {
-    if (num <= 13) {
-      return "a";
-    } else if (num <= 27) {
-      return "b";
-    } else {
-      return "c";
+  chartUpdate: function () {
+    var chart = this.refs.chart.getChart();
+    // this.setState({ legend: chart.generateLabels()})
+    var colors = {
+      default: "white",
+      A: "rgba(70, 130, 180, 0.5)",
+      Ah: "rgba(70, 130, 180, 1)",
+      B: "rgba(128, 0, 0, 0.5)",
+      C: "rgba(128, 0, 0, 0.9)",
+      Cf: "rgba(128, 0, 0, 1)"
     }
+    // B: "rgba(59,187,48, 0.5)",
+    // Bh: "rgba(59,187,48, 1)",
+    // C: "rgba(251, 149, 23, 0.5)",
+    // Ch: "rgba(251, 149, 23, 1)"
+
+    chart.datasets[0].bars.forEach(function(bar) {
+      if (bar.value <= 13) {
+        // bar.fillColor = "white";
+        // bar.strokeColor = "#777777";
+        // bar.highlightFill = white;
+        // bar.highlightStroke = "#222222";
+      } else if (bar.value <= 27) {
+        // bar.fillColor = "white";
+        // bar.strokeColor = "#777777";
+        // bar.highlightFill = "white";
+        // bar.highlightStroke = "#222222";
+      } else {
+        bar.fillColor = colors["C"];
+        bar.strokeColor = colors["C"];
+        bar.highlightFill = colors["Cf"];
+        bar.highlightStroke = colors["Cf"];
+    }
+  });
+  chart.update();
   },
 
   chartData: function () {
@@ -83,7 +77,7 @@ var StoreShow = React.createClass({
 
       var date = new Date(inspect.inspection_date);
       var month = date.getMonth() + 1;
-      var year = date.getYear() + 1900;
+      var year = date.getYear() - 100;
       labels.push(month + "/" + year);
       // if (typeof inspect.score !== "number") { inspect.score = 0; }
       data.push(inspect.score);
@@ -96,15 +90,14 @@ var StoreShow = React.createClass({
         {
           label: "My first dataset",
           fillColor: "white",
-           strokeColor: "black",
+           strokeColor: "#777",
            highlightFill: "white",
          highlightStroke: "black",
           data: data
         }
       ]
     };
-
-  return dataset;
+    return dataset;
   },
   selectGrade: function () {
 
@@ -119,23 +112,54 @@ var StoreShow = React.createClass({
       return imageObject[this.state.store.calc.grade]
 
   },
-  translate: function (number) {
-    if (number <= 13) {
-      return "an A";
-    } else if (number <= 27) {
-      return "a B";
-    } else {
-      return "a C"
+
+  setChart: function () {
+
+    setTimeout(function () {
+
+    //  $('#chart').remove();
+    //  $('.canvas-holder').append("<canvas key='chartery' id='chart' width='500' height='150'></canvas>");
+
+    var ctx = document.getElementById("chart").getContext("2d");
+    ctx.canvas.width = 500;
+    ctx.canvas.height = 150;
+   //  animation: false,
+   if (typeof window.myObjBar !== "undefined") myObjBar.destroy();
+    window.myObjBar = new Chart(ctx).Bar(this.state.data, {
+      scaleShowGridLines: false,
+      barStrokeWidth: 0.5
+    });
+
+    var colors = {
+      A: "rgba(70, 130, 180, 1)",
+      B: "rgba(0,128,128, 1)",
+      Bfill: "rgba(150, 150, 150, 1)",
+      C: "rgba(251, 149, 23, 0.9)",
+      Cfill: "rgba(128, 0, 0, 1)"
     }
 
-  },
-  analyzeBy: function () {
+    myObjBar.datasets[0].bars.forEach(function(bar) {
+
+      if (bar.value <= 13) {
+
+     } else if (bar.value <= 27) {
+
+      } else {
+        bar.fillColor = colors["C"];
+        bar.strokeColor = colors["C"];
+        // bar.highlightFill = "rgba(128, 0, 0, 1)";
+        bar.highlightStroke = colors["C"];
+      }
+    });
+    myObjBar.update();
+  }, 2000);
+
 
   },
+
   render: function () {
-
-
     var data;
+    // var legend = <div/>;
     var comparison = <div/>;
     var circleChart = <div></div>;
     var barChart = <div></div>;
@@ -151,34 +175,16 @@ var StoreShow = React.createClass({
       // overview = this.createOverview();
       comparison = <Comparison key={this.state.comparisonKey} store={this.state.store} />;
       overview = <Overview store={this.state.store}/>
-      //VIOLATION LIST
-
       violations = <Violations key={Math.random()} inspections={this.state.store.inspections} />
         //CHART
-
-      // var circleData = this.violationChart();
-      // circleChart = <PieChart data={circleData} width={200} height={200}/>;
-      data = this.chartData();
-      // scaleShowLabels: false
-      var options = {
-        scaleShowGridLines: true
-      }
-      barChart = <BarChart className="bar-chart" data={data} width={500} height={150} options={options} fill={'#3182bd'}    />
+        data = this.chartData();
+        var options = { scaleShowGridLines: false, barStrokeWidth: 0.5};
+        // legend = <span dangerouslySetInnerHTML={{ __html: this.state.legend }} />;
+        barChart = <BarChart ref="chart" className="bar-chart" data={data} options={options} width={500} height={150}fill={'#3182bd'} />
   var grade = <img src={this.selectGrade()}/>;
-      var image = this.returnImage();
+      var image = this.setImage();
     }
-
-
-    // if (typeof this.state.yelp.location !== "undefined") {
-    //   var open = (this.state.yelp.is_closed ? <span className="closed">Closed</span> :
-    //               <span className="open">Open</span>)
-    // // initMap();
-
     var address = <div></div>;
-      // {this.state.yelp.location.display_address[1]}<br/>
-      // {this.state.yelp.location.display_address[0]}
-      // {this.state.yelp.location.display_address[1]}
-      // {this.state.yelp.location.display_address[2]}
 
     address = <div>
       <h2>{this.state.store.name}</h2>
@@ -194,23 +200,28 @@ var StoreShow = React.createClass({
         // <div className="violation-chart">
         //   {circleChart}
         // </div>
+
+  // if (typeof window.myObjBar === "undefined") this.setChart();
+
+
   var showDisplay =  <div className="most-loading"><i className="fa fa-circle-o-notch fa-pulse most-spin"></i></div>;
 
   if (typeof this.state.store.calc !== "undefined") {
     showDisplay =
-    <div>
-  <div className="show-row">
-    <div className="overview">
-      {overview}
-      <hr/>
-      <span className="store-name">Inspections over time</span><br/>
-      <hr/>
-    {barChart}
-      <hr/>
-      {comparison}
-    </div>
-  <div>
-    <div key={Math.random()} className="show-holder">
+      <div>
+        <div className="show-row">
+            <div className="overview">
+              {overview}
+              <hr/>
+              <span className="store-name">Inspections over time</span>
+              <br/>
+              <hr/>
+                {barChart}
+              <hr/>
+              {comparison}
+            </div>
+            <div>
+            <div key={Math.random()} className="show-holder">
         {image}
       <div className="show-grade">
           {grade}

@@ -12,7 +12,6 @@ var Map = React.createClass({
   componentDidMount: function () {
     this.storeListener = StoreStore.addListener(this._onStoreChange);
     this.mapListener = MapStore.addListener(this._onMapChange);
-
     var coordinates = {lat: Number(this.props.lat), lng: Number(this.props.lng)};
 
     map = new google.maps.Map(document.getElementById('map'), {
@@ -25,7 +24,7 @@ var Map = React.createClass({
 
   this.tilesLoaded = google.maps.event.addListener(map, 'tilesloaded', function () {
     var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
-    ApiUtil.fetchMap(options);
+    // ApiUtil.fetchMap(options);
   }.bind(this));
 
   this.idleListener = google.maps.event.addListener(map, 'idle', function() {
@@ -33,8 +32,10 @@ var Map = React.createClass({
       this.mapInterval = setInterval(function () {
       var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
       ApiUtil.fetchMap(options);
+      // $('.map-holder > i').css("display", "block");
+      $('#map').css("opacity", "0.8");
       clearInterval(this.mapInterval)
-    }.bind(this), 1000);
+    }.bind(this), 0);
   }.bind(this));
 
   //
@@ -58,13 +59,12 @@ componentWillUnmount: function () {
   google.maps.event.removeListener(this.tilesLoaded);
 },
 _onMapChange: function () {
+
   // this.setState({ markers: [] });
   var newMarkers = [];
   // this.setState({markers: []});
   MapStore.all().forEach(function(marker) {
-
     var icon;
-
   if (marker.calc.average <= 13) {
       icon = "http://i.imgur.com/E2oZQ4V.png";
 
@@ -97,6 +97,8 @@ _onMapChange: function () {
     marker.setMap(null)
   });
 
+  $('.map-holder > i').css("display", "none");
+  $('#map').css("opacity", "1");
 
   this.setState({ markers: newMarkers});
 },
@@ -108,7 +110,8 @@ _onStoreChange: function () {
 
     return (
       <div className="map-holder">
-         <span className="map-header">Select marker on map for  comparison.</span><p/>
+        <i className="fa fa-circle-o-notch fa-pulse most-spin"></i>
+         <span className="map-header">Select marker for comparison</span><p/>
         <div id="map">
         </div>
     </div>
