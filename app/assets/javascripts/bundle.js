@@ -49648,8 +49648,7 @@
 	    }
 	    this.setState({ boro: boro });
 	    if (this.parse) clearInterval(this.parse);
-	    this.parse = setInterval(this.updateList, 1500);
-	    this.updateList();
+	    this.parse = setInterval(this.updateList, 1000);
 	  },
 
 	  cuisineInput: function (e) {
@@ -49662,7 +49661,7 @@
 	    }
 	    this.setState({ cuisine_type: cuisine });
 	    if (this.parse) clearInterval(this.parse);
-	    this.parse = setInterval(this.updateList, 1500);
+	    this.parse = setInterval(this.updateList, 1000);
 	  },
 	  chartUpdate: function (ref) {
 	    var chart = this.refs[ref].getChart();
@@ -49743,6 +49742,7 @@
 	  },
 	  zipcodeInput: function (e) {
 	    e.preventDefault();
+	    // console.log(e.currentTarget.id);
 	    var zipcode = e.currentTarget.value;
 	    if (e.currentTarget.id !== "zipcode") {
 	      zipcode = e.currentTarget.id;
@@ -49751,7 +49751,7 @@
 	    }
 	    this.setState({ zipcode: zipcode });
 	    if (this.parse) clearInterval(this.parse);
-	    this.parse = setInterval(this.updateList, 1500);
+	    this.parse = setInterval(this.updateList, 1000);
 	  },
 
 	  _onStoreChange: function () {
@@ -49774,6 +49774,7 @@
 	    $root.find(".fa-plus").show(0);
 	  },
 	  updateList: function () {
+
 	    clearInterval(this.parse);
 	    ApiUtil.fetchMost(this.state);
 	  },
@@ -49940,9 +49941,7 @@
 	            'h3',
 	            null,
 	            '  Filter by:',
-	            React.createElement('input', { className: 'zipcode', onChange: this.zipcodeInput, type: 'text', value: this.state.zipcode, placeholder: 'Zipcode' }),
-	            ' ',
-	            this.state.autoZip,
+	            React.createElement('input', { id: 'zipcode', onChange: this.zipcodeInput, type: 'text', value: this.state.zipcode, placeholder: 'Zipcode' }),
 	            React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', value: this.state.cuisine_type, placeholder: 'Cuisine' }),
 	            React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', value: this.state.boro, placeholder: 'Boro' })
 	          ),
