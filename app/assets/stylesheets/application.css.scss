@@ -471,7 +471,7 @@ footer {
   text-transform: uppercase;
   // font-style:
   // text-transform: full-width;
-  text-decoration: underline;
+  // text-decoration: underline;
   // letter-spacing: 2px;
   // font-weight: bold;
   padding: 10px 10px 10px 0;
@@ -890,7 +890,7 @@ span.big-header {
   padding-top: 10px;
   display: none;
   position: absolute;
-  min-width: 176px;
+  min-width: 200px;
   // min-height: 300px;
   z-index: 99;
   top: 30px;
@@ -938,6 +938,7 @@ transition: 50ms ease-in-out;
 
 .filter-links {
   list-style: none;
+  font-size: 17px;
   // width: 400px;
   // margin-bottom: 100px;
   min-height: 500px;
@@ -1027,10 +1028,11 @@ span.underline {
 .filter-links a {
   color: steelblue;
   font-weight: strong;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   // font-family: "lato";
+  margin-top: 1px;
   text-decoration: none;
-  font-size: 17px;
+  // font-size: 17px;
 }
 
 .searching {
@@ -1071,7 +1073,7 @@ span.underline {
   // background: steelblue
   // margin-right: 10px;
   font-size: 40px;
-  margin-top: 0px;
+  margin-top: 2px;
   // margin-bottom: 14px;
   // box-shadow: 2px 2px 0 0 #f7f7f7;
   // margin-right: 5px;
@@ -1083,12 +1085,13 @@ span.underline {
   // margin-left: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
+
   // display: none;
-  // padding: 2px;
+  padding: 10px;
 
-  // background: gold;
+  background: #f1f1f1;
 
-  // border: 1px solid #f7f7f7;
+  border: 2px solid #ccc;
 }
 
 .editable {

@@ -49639,14 +49639,20 @@
 	    return [n.slice(0, 3), n.slice(3, 6), n.slice(6)].join("-");
 	  },
 	  boroInput: function (e) {
-	    this.setState({ boro: e.currentTarget.value });
+	    e.preventDefault();
+	    var boro = e.currentTarget.value;
+	    if (e.currentTarget.id !== "boro") boro = e.currentTarget.id;
+	    this.setState({ boro: boro });
 	    if (this.parse) clearInterval(this.parse);
 	    this.parse = setInterval(this.updateList, 1500);
 	    this.updateList();
 	  },
 
 	  cuisineInput: function (e) {
-	    this.setState({ cuisine_type: e.currentTarget.value });
+	    e.preventDefault();
+	    var cuisine = e.currentTarget.value;
+	    if (e.currentTarget.id !== "cuisine_type") cuisine = e.currentTarget.id;
+	    this.setState({ cuisine_type: cuisine });
 	    if (this.parse) clearInterval(this.parse);
 	    this.parse = setInterval(this.updateList, 1500);
 	  },
@@ -49659,8 +49665,8 @@
 	      A: "rgba(70, 130, 180, 0.5)",
 	      Ah: "rgba(70, 130, 180, 1)",
 	      B: "rgba(128, 0, 0, 0.5)",
-	      C: "rgba(128, 0, 0, 0.9)",
-	      Cf: "rgba(128, 0, 0, 1)"
+	      C: "rgba(0, 0, 0, 0.9)",
+	      Cf: "rgba(128, 0, 0, 0.8)"
 	    };
 	    // B: "rgba(59,187,48, 0.5)",
 	    // Bh: "rgba(59,187,48, 1)",
@@ -49725,11 +49731,13 @@
 	    $(e.currentTarget.parentElement).find(".wrapper").css("display", "none");
 	    $(e.currentTarget.parentElement).find(".fa-plus").css("display", "inline");
 	    $(e.currentTarget).css("display", "none");
-	    $(e.currentTarget.parentElement).find(".details").hide("slowly");
+	    $(e.currentTarget.parentElement).find(".details").hide(30);
 	  },
 	  zipcodeInput: function (e) {
-	    // ApiUtil.autoComplete({ value: e.currentTarget.value, query: "zipcode"});
-	    this.setState({ zipcode: e.currentTarget.value });
+	    e.preventDefault();
+	    var zipcode = e.currentTarget.value;
+	    if (e.currentTarget.id !== "zipcode") zipcode = e.currentTarget.id;
+	    this.setState({ zipcode: zipcode });
 	    if (this.parse) clearInterval(this.parse);
 	    this.parse = setInterval(this.updateList, 1500);
 	  },
@@ -49743,15 +49751,15 @@
 	    $root.find(".details").show(50);
 	    $root.find(".wrapper").css("display", "flex");
 	    $root.find(".fa-plus").css("display", "none");
-	    $root.find(".fa-minus").show("slowly");
+	    $root.find(".fa-minus").show(0);
 	  },
 	  collapseAll: function (e) {
 	    e.preventDefault();
 	    var $root = $(e.currentTarget).parent().children();
-	    $root.find(".details").hide("slowly");
-	    $root.find(".wrapper").hide("slowly");
+	    $root.find(".details").hide(100);
+	    $root.find(".wrapper").hide(100);
 	    $root.find(".fa-minus").hide();
-	    $root.find(".fa-plus").show("slowly");
+	    $root.find(".fa-plus").show(0);
 	  },
 	  updateList: function () {
 	    clearInterval(this.parse);
@@ -49786,15 +49794,10 @@
 	    return imageObject[store.calc.grade];
 	  },
 	  changeQuery: function (name, e) {
-
 	    e.preventDefault();
-	    // $('.most-drop-down').hide();
 	    this.setState({ queryText: name, query: e.currentTarget.id, most: [] });
 	    this.updateList($.extend(this.state, { query: e.currentTarget.id }));
-	    // console.log(  $(e.currentTarget).parent().children());
 	    $('.most-drop-down').hide();
-	    // $(e.currentTarget).parent().children().hide();
-	    // var input = e.currentTarget.id;
 	  },
 	  render: function () {
 
@@ -49866,9 +49869,18 @@
 	                'span',
 	                { className: 'details' },
 	                React.createElement('i', { className: 'fa fa-building fa-border fa-hide' }),
-	                store.boro,
-	                ', NY ',
-	                store.zipcode
+	                React.createElement(
+	                  'a',
+	                  { href: '#', id: store.boro, onClick: this.boroInput },
+	                  store.boro,
+	                  ', NY'
+	                ),
+	                ' ',
+	                React.createElement(
+	                  'a',
+	                  { href: '#', onClick: this.zipcodeInput, id: store.zipcode },
+	                  store.zipcode
+	                )
 	              ),
 	              React.createElement('br', null),
 	              React.createElement(
@@ -49884,7 +49896,11 @@
 	                { className: 'details' },
 	                React.createElement('i', { className: 'fa fa-cutlery fa-border' }),
 	                ' ',
-	                store.cuisine_type,
+	                React.createElement(
+	                  'a',
+	                  { href: '#', id: store.cuisine_type, onClick: this.cuisineInput },
+	                  store.cuisine_type
+	                ),
 	                ' '
 	              )
 	            ),
@@ -49912,11 +49928,11 @@
 	            'h3',
 	            null,
 	            '  Filter by:',
-	            React.createElement('input', { className: 'zipcode', onChange: this.zipcodeInput, type: 'text', placeholder: 'Zipcode' }),
+	            React.createElement('input', { className: 'zipcode', onChange: this.zipcodeInput, type: 'text', value: this.state.zipcode, placeholder: 'Zipcode' }),
 	            ' ',
 	            this.state.autoZip,
-	            React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', placeholder: 'Cuisine' }),
-	            React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', placeholder: 'Boro' })
+	            React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', value: this.state.cuisine_type, placeholder: 'Cuisine' }),
+	            React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', value: this.state.boro, placeholder: 'Boro' })
 	          ),
 	          React.createElement(
 	            'h3',
@@ -49956,7 +49972,7 @@
 	                ),
 	                React.createElement(
 	                  'a',
-	                  { id: 'mice_percentage', onClick: this.changeQuery.bind(this, "Percent of Mice"), href: '#' },
+	                  { id: 'mice_percentage', onClick: this.changeQuery.bind(this, "percentage of Mice"), href: '#' },
 	                  '% of Mice'
 	                ),
 	                '  ',
@@ -49967,7 +49983,7 @@
 	                ),
 	                React.createElement(
 	                  'a',
-	                  { id: 'roach_percentage', onClick: this.changeQuery.bind(this, "Percent of Roaches"), href: '#' },
+	                  { id: 'roach_percentage', onClick: this.changeQuery.bind(this, "Percentage of Roaches"), href: '#' },
 	                  '% of Roaches'
 	                ),
 	                '  ',
@@ -49978,7 +49994,7 @@
 	                ),
 	                React.createElement(
 	                  'a',
-	                  { id: 'flies_percentage', onClick: this.changeQuery.bind(this, "Percent of Flies"), href: '#' },
+	                  { id: 'flies_percentage', onClick: this.changeQuery.bind(this, "Percentage of Flies"), href: '#' },
 	                  '% of Flies'
 	                ),
 	                ' ',
@@ -49995,12 +50011,23 @@
 	              'div',
 	              { onClick: this.paginationHandler, className: 'worst' },
 	              this.state.pagination
-	            ),
-	            ' '
+	            )
 	          )
 	        ),
 	        React.createElement('hr', null)
 	      ),
+	      React.createElement(
+	        'span',
+	        { className: 'worst', onClick: this.expandAll },
+	        'Expand'
+	      ),
+	      '  ',
+	      React.createElement(
+	        'span',
+	        { className: 'worst', onClick: this.collapseAll },
+	        'Collapse'
+	      ),
+	      React.createElement('hr', null),
 	      React.createElement(
 	        'div',
 	        { className: 'filter-links', key: 'filter-links' },
@@ -50009,7 +50036,6 @@
 	    );
 	  }
 	});
-	// <a href="#" onClick={this.expandAll}><i className="fa-expand fa fa-lg"> Expand</i></a> &nbsp;&nbsp;<a href="#" onClick={this.collapseAll}><i className="fa-compress fa fa-lg"> Collapse</i></a><hr/>
 	// <input type="text" onChange={this.resultChange}/>
 	//
 	// <span className="top-sentence">Returning <span className="editable" contentEditable="true">50</span> results.</span><p/>
