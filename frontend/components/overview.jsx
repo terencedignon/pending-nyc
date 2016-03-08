@@ -24,7 +24,7 @@ var Overview = React.createClass({
     data.worst = calc.worst;
     data.inspections = calc.inspections;
     data.best = calc.best;
-    data.last = this.props.store.inspections[0].score;
+    data.last = calc.last;
     data.first_average = calc.first_average;
     data.name = this.formatName(this.props.store.name);
     data.bestDate = new Date(calc.best_date);
@@ -70,10 +70,61 @@ var Overview = React.createClass({
       }
   },
 
+  translateRankings: function (n) {
+    if (n >= 75) {
+      return "A";
+    } else if (n > 25) {
+      return "B";
+    } else {
+      return "C";
+    }
+  },
+  propsRankings: function () {
+    var store = this.props.store;
+    var calc = store.calc;
+    var boro = store.boro_ranking;
+    var zip = store.zipcode_ranking;
+    var cuisine = store.cuisine_ranking;
+
+
+    debugger
+    var data = {
+      boroRecent:  Math.round(100 - (boro.recent.indexOf(store.calc.last) / boro.recent.length).toFixed(2) * 100),
+      boroMice: Math.round(100 - (boro.mice.indexOf(calc.mice_percentage) / boro.mice.length).toFixed(2) * 100),
+      boroRoaches: Math.round(100 - (boro.roaches.indexOf(calc.roach_percentage) / boro.roaches.length).toFixed(2) * 100),
+      boroFlies: Math.round(100 - (boro.flies.indexOf(calc.flies_percentage) / boro.flies.length).toFixed(2) * 100),
+      boroWorst: Math.round(100 - (boro.worst.indexOf(calc.worst) / boro.worst.length).toFixed(2) * 100),
+      boroAverage: Math.round(100 - (boro.average.indexOf(calc.average) / boro.average.length).toFixed(2) * 100),
+      boroFirstAverage: Math.round(100 - (boro.first_average.indexOf(calc.first_average) / boro.first_average.length).toFixed(2) * 100),
+      boroScore: Math.round(100 - (boro.score.indexOf(calc.score) / boro.score.length).toFixed(2) * 100),
+
+      zipcodeRecent:  Math.round(100 - (zip.recent.indexOf(store.calc.last) / zip.recent.length).toFixed(2) * 100),
+      zipcodeMice: Math.round(100 - (zip.mice.indexOf(store.calc.mice_percentage) / zip.mice.length).toFixed(2) * 100),
+      zipcodeRoaches: Math.round(100 - (zip.roaches.indexOf(store.calc.roach_percentage) / zip.roaches.length).toFixed(2) * 100),
+      zipcodeFlies: Math.round(100 - (zip.flies.indexOf(store.calc.flies_percentage) / zip.flies.length).toFixed(2) * 100),
+      zipcodeWorst: Math.round(100 - (zip.worst.indexOf(store.calc.worst) / zip.worst.length).toFixed(2) * 100),
+      zipcodeAverage: Math.round(100 - (zip.average.indexOf(store.calc.average) / zip.average.length).toFixed(2) * 100),
+      zipcodeFirstAverage: Math.round(100 - (zip.first_average.indexOf(store.calc.first_average) / zip.first_average.length).toFixed(2) * 100),
+      zipcodeScore: Math.round(100 - (zip.score.indexOf(calc.score) / zip.score.length).toFixed(2) * 100),
+
+      cuisineRecent:  Math.round(100 - (cuisine.recent.indexOf(store.calc.last) / cuisine.recent.length).toFixed(2) * 100),
+      cuisineMice: Math.round(100 - (cuisine.mice.indexOf(store.calc.mice_percentage) / cuisine.mice.length).toFixed(2) * 100),
+      cuisineRoaches: Math.round(100 - (cuisine.roaches.indexOf(store.calc.roach_percentage) / cuisine.roaches.length).toFixed(2) * 100),
+      cuisineFlies: Math.round(100 - (cuisine.flies.indexOf(store.calc.flies_percentage) / cuisine.flies.length).toFixed(2) * 100),
+      cuisineWorst: Math.round(100 - (cuisine.worst.indexOf(store.calc.worst) / cuisine.worst.length).toFixed(2) * 100),
+      cuisineAverage: Math.round(100 - (cuisine.average.indexOf(store.calc.average) / cuisine.average.length).toFixed(2) * 100),
+      cuisineFirstAverage: Math.round(100 - (cuisine.first_average.indexOf(store.calc.first_average) / cuisine.first_average.length).toFixed(2) * 100),
+      cuisineScore: Math.round(100 - (cuisine.score.indexOf(calc.score) / cuisine.score.length).toFixed(2) * 100)
+    }
+
+    return data;
+  },
+
   render: function () {
 
     var data = this.propsData();
     var store = this.props.store;
+    var rankings = this.propsRankings();
 
   //   <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
   //   BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
@@ -86,88 +137,6 @@ var Overview = React.createClass({
           //       <span className="c">C:</span> <span className="range">28 and up</span></div>
           // <span className="unannounced">An average of best, worst, average, surprise average, and percentage of infestations </span></span></span><p/>
           //
-
-                    // <table>
-          //   <th >
-          //     Recent
-          //   </th>
-          //   <th>
-          //     Avg
-          //   </th>
-          //   <th>
-          //     Surprise Insp.
-          //   </th>
-          //   <th>
-          //     Worst
-          //   </th>
-          //   <th>
-          //     Best
-          //   </th>
-          //   <th>
-          //     Mice
-          //   </th>
-          //   <th>
-          //     Flies
-          //   </th>
-          //   <th>
-          //     Roaches
-          //   </th>
-          //   <tbody>
-          //     <tr>
-          //       <td>
-          //         {data.last}
-          //       </td>
-          //       <td className="bad">
-          //         {data.average}
-          //       </td>
-          //       <td className="bad">
-          //         {data.first_average}
-          //       </td>
-          //       <td className="good">
-          //         {data.worst}
-          //       </td>
-          //       <td className="bad">
-          //         {data.best}
-          //       </td>
-          //       <td className="good">
-          //         {data.mice}
-          //       </td>
-          //       <td className="good">
-          //         {data.flies}
-          //       </td>
-          //       <td className="bad">
-          //         {data.roaches}
-          //       </td>
-          //     </tr>
-          //     <tr>
-          //       <td>
-          //
-          //       </td>
-          //       <td>
-          //         {this.props.store.zipcode_calc.average}
-          //       </td>
-          //       <td>
-          //         {this.props.store.zipcode_calc.first_average}
-          //
-          //       </td>
-          //       <td>
-          //         {data.worst}
-          //       </td>
-          //       <td>
-          //         {data.best}
-          //       </td>
-          //       <td>
-          //         {data.mice}
-          //       </td>
-          //       <td>
-          //         {data.flies}
-                    //       </td>
-          //       <td>
-          //         {data.roaches}
-          //       </td>
-          //     </tr>
-          //   </tbody>
-          // </table>
     return (
       <span className="overview-holder">
         <span className="store-name">{this.props.store.name} Overview: <span className="question-highlight">{this.props.store.calc.score}</span></span><p/>
@@ -222,7 +191,7 @@ var Overview = React.createClass({
           <td className="thumbs">
             <i className={"fa fa-" + this.iconParse(data.best)}></i>
           </td>
-          <td>
+          <td className="subject">
             Best Score
           </td>
           <td className="score">
@@ -292,7 +261,164 @@ var Overview = React.createClass({
           </tbody>
         </table>
         <hr/>
-  </span>
+
+          <table>
+
+            <tbody>
+
+              <th className="subject" colSpan="2">
+
+              </th>
+              <th>{store.zipcode}</th>
+              <th>{store.boro}</th>
+              <th>{store.cuisine_type}</th>
+              <tr className={this.translate(data.last)}>
+                <td className="thumbs">
+                  <i className={"fa fa-" + this.iconParse(data.last)}></i>
+                </td>
+                <td className="subject">
+                  Most Recent Inspection
+                </td>
+                <td className="score" className={this.translateRankings(rankings.zipcodeRecent)}>
+                  {rankings.zipcodeRecent}
+                </td>
+                <td className={this.translateRankings(rankings.boroRecent)}>
+                  {rankings.boroRecent}
+                 </td>
+                 <td className={this.translateRankings(rankings.cuisineRecent)}>
+                   {rankings.cuisineRecent}
+                 </td>
+              </tr>
+              <tr>
+              <td className="thumbs">
+                <i className={"fa fa-" + this.iconParse(data.average)}></i>
+              </td>
+            <td className="subject">
+                Average of {data.inspections} Inspections
+              </td>
+              <td className={this.translateRankings(rankings.zipcodeAverage)}>
+                {rankings.zipcodeAverage}
+              </td>
+              <td className={this.translateRankings(rankings.boroAverage)}>
+                {rankings.boroAverage}
+              </td>
+              <td className={this.translateRankings(rankings.cuisineAverage)}>
+                {rankings.cuisineAverage}
+              </td>
+            </tr>
+            <tr>
+              <td className="thumbs">
+                <i className={"fa fa-" + this.iconParse(data.first_average)}></i>
+              </td>
+              <td className="subject">
+                Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Unannounced
+                  <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span></span>&nbsp; &nbsp;
+              </td>
+              <td className={this.translateRankings(rankings.zipcodeFirstAverage)}>
+                {rankings.zipcodeFirstAverage}
+              </td>
+              <td className={this.translateRankings(rankings.boroFirstAverage)}>
+                {rankings.boroFirstAverage}
+              </td>
+              <td className={this.translateRankings(rankings.cuisineFirstAverage)}>
+                {rankings.cuisineFirstAverage}
+              </td>
+
+          </tr>
+            <tr>
+            <td className="thumbs">
+              <i className={"fa fa-" + this.iconParse(data.best)}></i>
+            </td>
+            <td className="subject">
+              Aggreg Score
+            </td>
+            <td className={this.translateRankings(rankings.zipcodeScore)}>
+              {rankings.zipcodeScore}
+            </td>
+            <td className={this.translateRankings(rankings.boroScore)}>
+              {rankings.boroScore}
+            </td>
+            <td className={this.translateRankings(rankings.cuisineScore)}>
+              {rankings.cuisineScore}
+            </td>
+        </tr>
+          <tr>
+            <td className="thumbs">
+              <i className={"fa fa-" + this.iconParse(data.worst)}></i>
+            </td>
+            <td className="subject">
+              Worst Score
+            </td>
+            <td className={this.translateRankings(rankings.zipcodeWorst)}>
+              {rankings.zipcodeWorst}
+            </td>
+            <td className={this.translateRankings(rankings.boroWorst)}>
+              {rankings.boroWorst}
+            </td>
+            <td className={this.translateRankings(rankings.cuisineWorst)}>
+              {rankings.cuisineWorst}
+            </td>
+        </tr>
+        <tr>
+          <td className="thumbs">
+            <i className={"fa fa-" + this.iconParse(data.mice)}></i>
+          </td>
+          <td className="subject">
+              Probability of Mice
+          </td>
+          <td className={this.translateRankings(rankings.zipcodeMice)}>
+            {rankings.zipcodeMice}
+          </td>
+          <td className={this.translateRankings(rankings.boroMice)}>
+            {rankings.boroMice}
+          </td>
+          <td className={this.translateRankings(rankings.cuisineMice)}>
+            {rankings.cuisineMice}
+          </td>
+      </tr>
+      <tr>
+        <td className="thumbs">
+          <i className={"fa fa-" + this.iconParse(data.flies)}></i>
+        </td>
+        <td className="subject">
+          Probability of Flies
+        </td>
+        <td className={this.translateRankings(rankings.zipcodeFlies)}>
+          {rankings.zipcodeFlies}
+        </td>
+        <td className={this.translateRankings(rankings.boroFlies)}>
+          {rankings.boroFlies}
+        </td>
+        <td className={this.translateRankings(rankings.cuisineFlies)}>
+          {rankings.cuisineFlies}
+        </td>
+
+    </tr>
+    <tr>
+      <td>
+        <i className={"fa fa-" + this.iconParse(data.roaches)}></i>
+      </td>
+      <td className="subject">
+        Probability of Roaches
+      </td>
+      <td className={this.translateRankings(rankings.zipcodeRoaches)}>
+        {rankings.zipcodeRoaches}
+      </td>
+      <td className={this.translateRankings(rankings.boroRoaches)}>
+        {rankings.boroRoaches}
+      </td>
+      <td className={this.translateRankings(rankings.cuisineRoaches)}>
+        {rankings.cuisineRoaches}
+      </td>
+
+  </tr>
+</tbody>
+</table>
+
+
+
+
+    </span>
 );
   }
 

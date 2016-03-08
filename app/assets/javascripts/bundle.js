@@ -36574,7 +36574,7 @@
 	    data.worst = calc.worst;
 	    data.inspections = calc.inspections;
 	    data.best = calc.best;
-	    data.last = this.props.store.inspections[0].score;
+	    data.last = calc.last;
 	    data.first_average = calc.first_average;
 	    data.name = this.formatName(this.props.store.name);
 	    data.bestDate = new Date(calc.best_date);
@@ -36619,10 +36619,60 @@
 	    }
 	  },
 
+	  translateRankings: function (n) {
+	    if (n >= 75) {
+	      return "A";
+	    } else if (n > 25) {
+	      return "B";
+	    } else {
+	      return "C";
+	    }
+	  },
+	  propsRankings: function () {
+	    var store = this.props.store;
+	    var calc = store.calc;
+	    var boro = store.boro_ranking;
+	    var zip = store.zipcode_ranking;
+	    var cuisine = store.cuisine_ranking;
+
+	    debugger;
+	    var data = {
+	      boroRecent: Math.round(100 - (boro.recent.indexOf(store.calc.last) / boro.recent.length).toFixed(2) * 100),
+	      boroMice: Math.round(100 - (boro.mice.indexOf(calc.mice_percentage) / boro.mice.length).toFixed(2) * 100),
+	      boroRoaches: Math.round(100 - (boro.roaches.indexOf(calc.roach_percentage) / boro.roaches.length).toFixed(2) * 100),
+	      boroFlies: Math.round(100 - (boro.flies.indexOf(calc.flies_percentage) / boro.flies.length).toFixed(2) * 100),
+	      boroWorst: Math.round(100 - (boro.worst.indexOf(calc.worst) / boro.worst.length).toFixed(2) * 100),
+	      boroAverage: Math.round(100 - (boro.average.indexOf(calc.average) / boro.average.length).toFixed(2) * 100),
+	      boroFirstAverage: Math.round(100 - (boro.first_average.indexOf(calc.first_average) / boro.first_average.length).toFixed(2) * 100),
+	      boroScore: Math.round(100 - (boro.score.indexOf(calc.score) / boro.score.length).toFixed(2) * 100),
+
+	      zipcodeRecent: Math.round(100 - (zip.recent.indexOf(store.calc.last) / zip.recent.length).toFixed(2) * 100),
+	      zipcodeMice: Math.round(100 - (zip.mice.indexOf(store.calc.mice_percentage) / zip.mice.length).toFixed(2) * 100),
+	      zipcodeRoaches: Math.round(100 - (zip.roaches.indexOf(store.calc.roach_percentage) / zip.roaches.length).toFixed(2) * 100),
+	      zipcodeFlies: Math.round(100 - (zip.flies.indexOf(store.calc.flies_percentage) / zip.flies.length).toFixed(2) * 100),
+	      zipcodeWorst: Math.round(100 - (zip.worst.indexOf(store.calc.worst) / zip.worst.length).toFixed(2) * 100),
+	      zipcodeAverage: Math.round(100 - (zip.average.indexOf(store.calc.average) / zip.average.length).toFixed(2) * 100),
+	      zipcodeFirstAverage: Math.round(100 - (zip.first_average.indexOf(store.calc.first_average) / zip.first_average.length).toFixed(2) * 100),
+	      zipcodeScore: Math.round(100 - (zip.score.indexOf(calc.score) / zip.score.length).toFixed(2) * 100),
+
+	      cuisineRecent: Math.round(100 - (cuisine.recent.indexOf(store.calc.last) / cuisine.recent.length).toFixed(2) * 100),
+	      cuisineMice: Math.round(100 - (cuisine.mice.indexOf(store.calc.mice_percentage) / cuisine.mice.length).toFixed(2) * 100),
+	      cuisineRoaches: Math.round(100 - (cuisine.roaches.indexOf(store.calc.roach_percentage) / cuisine.roaches.length).toFixed(2) * 100),
+	      cuisineFlies: Math.round(100 - (cuisine.flies.indexOf(store.calc.flies_percentage) / cuisine.flies.length).toFixed(2) * 100),
+	      cuisineWorst: Math.round(100 - (cuisine.worst.indexOf(store.calc.worst) / cuisine.worst.length).toFixed(2) * 100),
+	      cuisineAverage: Math.round(100 - (cuisine.average.indexOf(store.calc.average) / cuisine.average.length).toFixed(2) * 100),
+	      cuisineFirstAverage: Math.round(100 - (cuisine.first_average.indexOf(store.calc.first_average) / cuisine.first_average.length).toFixed(2) * 100),
+	      cuisineScore: Math.round(100 - (cuisine.score.indexOf(calc.score) / cuisine.score.length).toFixed(2) * 100)
+	    };
+
+	    return data;
+	  },
+
 	  render: function () {
 
 	    var data = this.propsData();
 	    var store = this.props.store;
+	    var rankings = this.propsRankings();
 
 	    //   <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
 	    //   BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
@@ -36635,88 +36685,6 @@
 	    //       <span className="c">C:</span> <span className="range">28 and up</span></div>
 	    // <span className="unannounced">An average of best, worst, average, surprise average, and percentage of infestations </span></span></span><p/>
 	    //
-
-	    // <table>
-	    //   <th >
-	    //     Recent
-	    //   </th>
-	    //   <th>
-	    //     Avg
-	    //   </th>
-	    //   <th>
-	    //     Surprise Insp.
-	    //   </th>
-	    //   <th>
-	    //     Worst
-	    //   </th>
-	    //   <th>
-	    //     Best
-	    //   </th>
-	    //   <th>
-	    //     Mice
-	    //   </th>
-	    //   <th>
-	    //     Flies
-	    //   </th>
-	    //   <th>
-	    //     Roaches
-	    //   </th>
-	    //   <tbody>
-	    //     <tr>
-	    //       <td>
-	    //         {data.last}
-	    //       </td>
-	    //       <td className="bad">
-	    //         {data.average}
-	    //       </td>
-	    //       <td className="bad">
-	    //         {data.first_average}
-	    //       </td>
-	    //       <td className="good">
-	    //         {data.worst}
-	    //       </td>
-	    //       <td className="bad">
-	    //         {data.best}
-	    //       </td>
-	    //       <td className="good">
-	    //         {data.mice}
-	    //       </td>
-	    //       <td className="good">
-	    //         {data.flies}
-	    //       </td>
-	    //       <td className="bad">
-	    //         {data.roaches}
-	    //       </td>
-	    //     </tr>
-	    //     <tr>
-	    //       <td>
-	    //
-	    //       </td>
-	    //       <td>
-	    //         {this.props.store.zipcode_calc.average}
-	    //       </td>
-	    //       <td>
-	    //         {this.props.store.zipcode_calc.first_average}
-	    //
-	    //       </td>
-	    //       <td>
-	    //         {data.worst}
-	    //       </td>
-	    //       <td>
-	    //         {data.best}
-	    //       </td>
-	    //       <td>
-	    //         {data.mice}
-	    //       </td>
-	    //       <td>
-	    //         {data.flies}
-	    //       </td>
-	    //       <td>
-	    //         {data.roaches}
-	    //       </td>
-	    //     </tr>
-	    //   </tbody>
-	    // </table>
 	    return React.createElement(
 	      'span',
 	      { className: 'overview-holder' },
@@ -36833,7 +36801,7 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              null,
+	              { className: 'subject' },
 	              'Best Score'
 	            ),
 	            React.createElement(
@@ -36945,7 +36913,276 @@
 	          )
 	        )
 	      ),
-	      React.createElement('hr', null)
+	      React.createElement('hr', null),
+	      React.createElement(
+	        'table',
+	        null,
+	        React.createElement(
+	          'tbody',
+	          null,
+	          React.createElement('th', { className: 'subject', colSpan: '2' }),
+	          React.createElement(
+	            'th',
+	            null,
+	            store.zipcode
+	          ),
+	          React.createElement(
+	            'th',
+	            null,
+	            store.boro
+	          ),
+	          React.createElement(
+	            'th',
+	            null,
+	            store.cuisine_type
+	          ),
+	          React.createElement(
+	            'tr',
+	            { className: this.translate(data.last) },
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.last) })
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'subject' },
+	              'Most Recent Inspection'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'score', className: this.translateRankings(rankings.zipcodeRecent) },
+	              rankings.zipcodeRecent
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.boroRecent) },
+	              rankings.boroRecent
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.cuisineRecent) },
+	              rankings.cuisineRecent
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.average) })
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'subject' },
+	              'Average of ',
+	              data.inspections,
+	              ' Inspections'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.zipcodeAverage) },
+	              rankings.zipcodeAverage
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.boroAverage) },
+	              rankings.boroAverage
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.cuisineAverage) },
+	              rankings.cuisineAverage
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.first_average) })
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'subject' },
+	              'Average  ',
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'question-highlight' },
+	                'Unannounced',
+	                React.createElement(
+	                  'span',
+	                  { className: 'unannounced' },
+	                  'The Health Department conducts unannounced inspections of restaurants at least once a year.'
+	                )
+	              ),
+	              '   '
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.zipcodeFirstAverage) },
+	              rankings.zipcodeFirstAverage
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.boroFirstAverage) },
+	              rankings.boroFirstAverage
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.cuisineFirstAverage) },
+	              rankings.cuisineFirstAverage
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.best) })
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'subject' },
+	              'Aggreg Score'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.zipcodeScore) },
+	              rankings.zipcodeScore
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.boroScore) },
+	              rankings.boroScore
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.cuisineScore) },
+	              rankings.cuisineScore
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.worst) })
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'subject' },
+	              'Worst Score'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.zipcodeWorst) },
+	              rankings.zipcodeWorst
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.boroWorst) },
+	              rankings.boroWorst
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.cuisineWorst) },
+	              rankings.cuisineWorst
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.mice) })
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'subject' },
+	              'Probability of Mice'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.zipcodeMice) },
+	              rankings.zipcodeMice
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.boroMice) },
+	              rankings.boroMice
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.cuisineMice) },
+	              rankings.cuisineMice
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.flies) })
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'subject' },
+	              'Probability of Flies'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.zipcodeFlies) },
+	              rankings.zipcodeFlies
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.boroFlies) },
+	              rankings.boroFlies
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.cuisineFlies) },
+	              rankings.cuisineFlies
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              null,
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.roaches) })
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'subject' },
+	              'Probability of Roaches'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.zipcodeRoaches) },
+	              rankings.zipcodeRoaches
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.boroRoaches) },
+	              rankings.boroRoaches
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: this.translateRankings(rankings.cuisineRoaches) },
+	              rankings.cuisineRoaches
+	            )
+	          )
+	        )
+	      )
 	    );
 	  }
 
@@ -49822,7 +50059,7 @@
 	  displayName: 'Most',
 
 	  getInitialState: function () {
-	    return { exclude: 2, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: "" };
+	    return { exclude: 5, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: "" };
 	  },
 	  componentDidMount: function () {
 	    ApiUtil.fetchMost(this.state);
@@ -50011,6 +50248,15 @@
 	    this.updateList($.extend(this.state, { query: e.currentTarget.id }));
 	    $('.most-drop-down').hide();
 	  },
+
+	  setExclude: function () {
+	    var exclude = this.state.exclude + 1;
+	    if (this.state.exclude == 10) exclude = 2;
+	    this.setState({ exclude: exclude });
+	    if (this.parse) clearInterval(this.parse);
+	    this.parse = setInterval(this.updateList, 1000);
+	  },
+
 	  render: function () {
 
 	    setTimeout(function () {
@@ -50222,7 +50468,15 @@
 	              { onClick: this.paginationHandler, className: 'worst' },
 	              this.state.pagination,
 	              React.createElement('br', null)
-	            )
+	            ),
+	            React.createElement('br', null),
+	            'Exclude Restaurants with less than ',
+	            React.createElement(
+	              'span',
+	              { onClick: this.setExclude, className: 'worst' },
+	              this.state.exclude
+	            ),
+	            ' inspections.'
 	          )
 	        )
 	      ),
@@ -50234,7 +50488,6 @@
 	    );
 	  }
 	});
-	// Exclude Restaurants with less than <span className="worst">{this.state.exclude}</span> inspections.
 	// <span className="worst" onClick={this.expandAll}>Expand</span> &nbsp;<span className="worst" onClick={this.collapseAll}>Collapse</span><hr/>
 	// <input type="text" onChange={this.resultChange}/>
 	//

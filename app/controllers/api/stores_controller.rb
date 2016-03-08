@@ -33,8 +33,7 @@ class Api::StoresController < ApplicationController
     order = (params[:best] === "highest" ? "DESC" : "ASC")
 
     @stores = Store.ransack(cuisine_type_cont: params[:cuisine_type], zipcode_eq: params[:zipcode], boro_cont: params[:boro])
-    .result.includes(:calc, :inspections).order("calcs.#{params[:query]} #{order}").limit(params[:pagination])
-
+    .result.includes(:calc).where("calcs.inspections > #{params[:exclude].to_i - 1}").order("calcs.#{params[:query]} #{order}").limit(params[:pagination])
 
 
     render :index

@@ -5,7 +5,7 @@ var BarChart = require("react-chartjs").Bar;
 
 var Most = React.createClass({
   getInitialState: function () {
-    return { exclude: 2, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: ""}
+    return { exclude: 5, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: ""}
   },
   componentDidMount: function () {
     ApiUtil.fetchMost(this.state);
@@ -201,6 +201,15 @@ var Most = React.createClass({
     $('.most-drop-down').hide();
 
   },
+
+  setExclude: function () {
+    var exclude = this.state.exclude + 1;
+    if (this.state.exclude == 10) exclude = 2;
+    this.setState({ exclude: exclude });
+    if (this.parse) clearInterval(this.parse);
+    this.parse = setInterval(this.updateList, 1000)
+  },
+
   render: function () {
 
     setTimeout(function () {
@@ -279,6 +288,7 @@ var Most = React.createClass({
           </div>
         <br/>Results: <div onClick={this.paginationHandler} className="worst">{this.state.pagination}<br/>
       </div>
+      <br/>Exclude Restaurants with less than <span onClick={this.setExclude} className="worst">{this.state.exclude}</span> inspections.
          </h3>
 
 
@@ -293,7 +303,6 @@ var Most = React.createClass({
     );
   }
 });
-// Exclude Restaurants with less than <span className="worst">{this.state.exclude}</span> inspections.
 // <span className="worst" onClick={this.expandAll}>Expand</span> &nbsp;<span className="worst" onClick={this.collapseAll}>Collapse</span><hr/>
 // <input type="text" onChange={this.resultChange}/>
 //

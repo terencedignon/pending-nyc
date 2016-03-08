@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160304012849) do
+ActiveRecord::Schema.define(version: 20160308201120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,20 @@ ActiveRecord::Schema.define(version: 20160304012849) do
     t.integer  "worst_first_average"
     t.integer  "worst_first_average_id"
     t.integer  "score"
-    t.string   "rankings"
+  end
+
+  create_table "rankings", force: :cascade do |t|
+    t.integer  "macro_calc_id"
+    t.string   "average"
+    t.string   "score"
+    t.string   "first_average"
+    t.string   "mice"
+    t.string   "roaches"
+    t.string   "flies"
+    t.string   "worst"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "recent"
   end
 
   create_table "stores", force: :cascade do |t|

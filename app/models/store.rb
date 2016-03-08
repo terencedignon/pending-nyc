@@ -10,6 +10,25 @@ class Store < ActiveRecord::Base
   )
 
   has_one(
+  :zipcode_ranking,
+  through: :zipcode_calc,
+  source: :ranking,
+  )
+
+  has_one(
+  :boro_ranking,
+  through: :boro_calc,
+  source: :ranking,
+  )
+
+  has_one(
+  :cuisine_ranking,
+  through: :cuisine_calc,
+  source: :ranking,
+  )
+
+
+  has_one(
     :boro_calc,
     class_name: "MacroCalc",
     foreign_key: :name,
@@ -22,6 +41,8 @@ class Store < ActiveRecord::Base
     foreign_key: :name,
     primary_key: :cuisine_type
   )
+
+
 
 
   has_many :inspections
