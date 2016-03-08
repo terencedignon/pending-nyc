@@ -1382,3 +1382,39 @@ span.underline {
 .most-drop-down a:hover {
   background: #f7f7f7;
 }
+
+.overview-holder table {
+  padding: 5px;
+  box-shadow: 2px 2px 2px 0 #f7f7f7;
+  // border: 1px solid #eee;
+  // background: salmon;
+  // font-family: "lato";
+  font-weight: normal;
+  // padding: 0;
+
+}
+
+.overview-holder td {
+  padding: 0;
+  margin-top: 5px;
+  padding-left: 5px;
+  margin-bottom: 5px;
+  // padding-right: 5px;
+}
+
+.overview-holder td.score, td.grade{
+  min-width: 75px;
+  text-align: center;
+}
+
+.overview-holder td.subject {
+  border: 1px solid #f7f7f7;
+}
+
+.overview-holder tr:nth-child(2n+1) {
+  background: #f7f7f7;
+}
+
+.overview-holder td.thumbs {
+  background: #fff;
+}

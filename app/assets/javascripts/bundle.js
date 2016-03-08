@@ -36567,9 +36567,9 @@
 	    return num > 0 ? Math.round(num / div * 100) + "%" : "0";
 	  },
 	  translate: function (number) {
-	    if (number <= 13) return "an A";
-	    if (number <= 27) return "a B";
-	    return "a C";
+	    if (number <= 13) return "A";
+	    if (number <= 27) return "B";
+	    return "C";
 	  },
 	  propsData: function () {
 	    var calc = this.props.store.calc;
@@ -36584,9 +36584,12 @@
 	    data.name = this.formatName(this.props.store.name);
 	    data.bestDate = new Date(calc.best_date);
 	    data.worstDate = new Date(calc.worst_date);
-	    data.flies = this.percentageCalc(calc.flies, calc.inspections);
-	    data.mice = this.percentageCalc(calc.mice, calc.inspections);
-	    data.roaches = this.percentageCalc(calc.roaches, calc.inspections);
+	    data.flies = calc.flies_percentage;
+	    data.mice = calc.mice_percentage;
+	    data.roaches = calc.roach_percentage;
+	    // data.flies = this.percentageCalc(calc.flies, calc.inspections);
+	    // data.mice = this.percentageCalc(calc.mice, calc.inspections);
+	    // data.roaches = this.percentageCalc(calc.roaches, calc.inspections);
 
 	    data.total = Math.round((data.last + data.average + data.worst + data.best + calc.flies / calc.inspections * 100 + calc.mice / calc.inspections * 100 + calc.roaches / calc.inspections * 100 + data.first_average) / 8);
 
@@ -36624,6 +36627,7 @@
 	  render: function () {
 
 	    var data = this.propsData();
+	    var store = this.props.store;
 
 	    //   <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
 	    //   BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
@@ -36631,124 +36635,324 @@
 	    //   <Comparison store={this.props.store}/>
 	    // </div>
 
+	    //     <div className="legend"><span className="a">A:</span> <span className="range">0-13</span>&nbsp;
+	    //     <span className="b">B:</span> <span className="range">14-27</span>&nbsp;
+	    //       <span className="c">C:</span> <span className="range">28 and up</span></div>
+	    // <span className="unannounced">An average of best, worst, average, surprise average, and percentage of infestations </span></span></span><p/>
+	    //
+
+	    // <table>
+	    //   <th >
+	    //     Recent
+	    //   </th>
+	    //   <th>
+	    //     Avg
+	    //   </th>
+	    //   <th>
+	    //     Surprise Insp.
+	    //   </th>
+	    //   <th>
+	    //     Worst
+	    //   </th>
+	    //   <th>
+	    //     Best
+	    //   </th>
+	    //   <th>
+	    //     Mice
+	    //   </th>
+	    //   <th>
+	    //     Flies
+	    //   </th>
+	    //   <th>
+	    //     Roaches
+	    //   </th>
+	    //   <tbody>
+	    //     <tr>
+	    //       <td>
+	    //         {data.last}
+	    //       </td>
+	    //       <td className="bad">
+	    //         {data.average}
+	    //       </td>
+	    //       <td className="bad">
+	    //         {data.first_average}
+	    //       </td>
+	    //       <td className="good">
+	    //         {data.worst}
+	    //       </td>
+	    //       <td className="bad">
+	    //         {data.best}
+	    //       </td>
+	    //       <td className="good">
+	    //         {data.mice}
+	    //       </td>
+	    //       <td className="good">
+	    //         {data.flies}
+	    //       </td>
+	    //       <td className="bad">
+	    //         {data.roaches}
+	    //       </td>
+	    //     </tr>
+	    //     <tr>
+	    //       <td>
+	    //
+	    //       </td>
+	    //       <td>
+	    //         {this.props.store.zipcode_calc.average}
+	    //       </td>
+	    //       <td>
+	    //         {this.props.store.zipcode_calc.first_average}
+	    //
+	    //       </td>
+	    //       <td>
+	    //         {data.worst}
+	    //       </td>
+	    //       <td>
+	    //         {data.best}
+	    //       </td>
+	    //       <td>
+	    //         {data.mice}
+	    //       </td>
+	    //       <td>
+	    //         {data.flies}
+	    //       </td>
+	    //       <td>
+	    //         {data.roaches}
+	    //       </td>
+	    //     </tr>
+	    //   </tbody>
+	    // </table>
 	    return React.createElement(
 	      'span',
 	      { className: 'overview-holder' },
 	      React.createElement(
 	        'span',
-	        { className: 'store-name-header' },
+	        { className: 'store-name' },
 	        this.props.store.name,
+	        ' Overview: ',
 	        React.createElement(
 	          'span',
 	          { className: 'question-highlight' },
-	          React.createElement(
-	            'div',
-	            { className: 'legend' },
-	            React.createElement(
-	              'span',
-	              { className: 'a' },
-	              'A:'
-	            ),
-	            ' ',
-	            React.createElement(
-	              'span',
-	              { className: 'range' },
-	              '0-13'
-	            ),
-	            ' ',
-	            React.createElement(
-	              'span',
-	              { className: 'b' },
-	              'B:'
-	            ),
-	            ' ',
-	            React.createElement(
-	              'span',
-	              { className: 'range' },
-	              '14-27'
-	            ),
-	            ' ',
-	            React.createElement(
-	              'span',
-	              { className: 'c' },
-	              'C:'
-	            ),
-	            ' ',
-	            React.createElement(
-	              'span',
-	              { className: 'range' },
-	              '28 and up'
-	            )
-	          ),
-	          React.createElement(
-	            'span',
-	            { className: 'unannounced' },
-	            'An average of best, worst, average, surprise average, and percentage of infestations '
-	          )
+	          this.props.store.calc.score
 	        )
 	      ),
 	      React.createElement('p', null),
 	      React.createElement(
-	        'span',
-	        { className: 'inspection-detail' },
-	        React.createElement('i', { className: "fa fa-" + this.iconParse(data.last) }),
-	        'Most recent: ',
-	        data.last,
-	        ', ',
-	        this.translate(data.last),
-	        '. '
-	      ),
-	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.average) }),
-	      'Average: ',
-	      data.average,
-	      ', ',
-	      this.translate(data.average),
-	      ' ',
-	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.first_average) }),
-	      'Average ',
-	      React.createElement(
-	        'span',
-	        { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'question-highlight' },
-	        'unannounced inspection',
+	        'table',
+	        null,
 	        React.createElement(
-	          'span',
-	          { className: 'unannounced' },
-	          'The Health Department conducts unannounced inspections of restaurants at least once a year.'
+	          'tbody',
+	          null,
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.last) })
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Most Recent Inspection'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'score' },
+	              data.last
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'grade' },
+	              this.translate(data.last)
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.average) })
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Average of ',
+	              data.inspections,
+	              ' Inspections'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'score' },
+	              data.average
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'grade' },
+	              this.translate(data.average)
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.first_average) })
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Avg of ',
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'question-highlight' },
+	                'Unannounced Inspections',
+	                React.createElement(
+	                  'span',
+	                  { className: 'unannounced' },
+	                  'The Health Department conducts unannounced inspections of restaurants at least once a year.'
+	                )
+	              ),
+	              '  '
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'score' },
+	              data.first_average
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'grade' },
+	              this.translate(data.first_average)
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.best) })
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Best Score'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'score' },
+	              data.best
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'grade' },
+	              this.translate(data.best)
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.worst) })
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Worst Score'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'score' },
+	              data.worst
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'grade' },
+	              this.translate(data.worst)
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.mice) })
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Probability of Mice'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'score' },
+	              data.mice,
+	              '%'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'grade' },
+	              this.translate(data.mice)
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.flies) })
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'subject' },
+	              'Probability of Flies'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'score' },
+	              data.flies,
+	              '%'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'grade' },
+	              this.translate(data.flies)
+	            )
+	          ),
+	          React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	              'td',
+	              null,
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.roaches) })
+	            ),
+	            React.createElement(
+	              'td',
+	              null,
+	              'Probability of Roaches'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'score' },
+	              data.roaches,
+	              '%'
+	            ),
+	            React.createElement(
+	              'td',
+	              { className: 'grade' },
+	              this.translate(data.roaches)
+	            )
+	          )
 	        )
-	      ),
-	      ': ',
-	      data.first_average,
-	      ', ',
-	      this.translate(data.first_average),
-	      '.',
-	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-" + this.iconParse([data.mice, data.roaches, data.flies]) }),
-	      'Of ',
-	      data.inspections,
-	      ' inspections,  ',
-	      data.mice,
-	      ' found mice, ',
-	      data.flies,
-	      ' found flies, and ',
-	      data.roaches,
-	      ' found roaches. ',
-	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.worst) }),
-	      'Worst: ',
-	      data.worst,
-	      ' on ',
-	      data.worstDate.toDateString(),
-	      '.',
-	      React.createElement('br', null),
-	      React.createElement('i', { className: "fa fa-" + this.iconParse(data.best) }),
-	      'Best: ',
-	      data.best,
-	      ' on ',
-	      data.bestDate.toDateString(),
-	      '.',
-	      React.createElement('p', null)
+	      )
 	    );
 	  }
 
@@ -49625,7 +49829,7 @@
 	  displayName: 'Most',
 
 	  getInitialState: function () {
-	    return { queryText: "Aggregrate Score", pagination: 10, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: "" };
+	    return { exclude: 2, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: "" };
 	  },
 	  componentDidMount: function () {
 	    ApiUtil.fetchMost(this.state);
@@ -50021,11 +50225,11 @@
 	            React.createElement(
 	              'div',
 	              { onClick: this.paginationHandler, className: 'worst' },
-	              this.state.pagination
+	              this.state.pagination,
+	              React.createElement('br', null)
 	            )
 	          )
-	        ),
-	        React.createElement('hr', null)
+	        )
 	      ),
 	      React.createElement(
 	        'div',
@@ -50035,6 +50239,7 @@
 	    );
 	  }
 	});
+	// Exclude Restaurants with less than <span className="worst">{this.state.exclude}</span> inspections.
 	// <span className="worst" onClick={this.expandAll}>Expand</span> &nbsp;<span className="worst" onClick={this.collapseAll}>Collapse</span><hr/>
 	// <input type="text" onChange={this.resultChange}/>
 	//

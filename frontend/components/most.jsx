@@ -5,7 +5,7 @@ var BarChart = require("react-chartjs").Bar;
 
 var Most = React.createClass({
   getInitialState: function () {
-    return { queryText: "Aggregrate Score", pagination: 10, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: ""}
+    return { exclude: 2, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: ""}
   },
   componentDidMount: function () {
     ApiUtil.fetchMost(this.state);
@@ -275,14 +275,12 @@ var Most = React.createClass({
               <a id="flies_percentage" onClick={this.changeQuery.bind(this, "Percentage of Flies")} href="#">% of Flies</a> <a id="flies" onClick={this.changeQuery.bind(this, "Number of Flies")} href="#"># of Flies </a>
             </div>
           </div>
-        <br/>Results: <div onClick={this.paginationHandler} className="worst">{this.state.pagination}
-        </div>
+        <br/>Results: <div onClick={this.paginationHandler} className="worst">{this.state.pagination}<br/>
+      </div>
          </h3>
 
 
       </div>
-
-    <hr/>
     </div>
 
     <div className="filter-links" key="filter-links">
@@ -293,6 +291,7 @@ var Most = React.createClass({
     );
   }
 });
+// Exclude Restaurants with less than <span className="worst">{this.state.exclude}</span> inspections.
 // <span className="worst" onClick={this.expandAll}>Expand</span> &nbsp;<span className="worst" onClick={this.collapseAll}>Collapse</span><hr/>
 // <input type="text" onChange={this.resultChange}/>
 //
