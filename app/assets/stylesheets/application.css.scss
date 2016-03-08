@@ -1421,12 +1421,12 @@ span.underline {
 }
 
 .overview-holder tr:nth-child(2n+1) td:nth-child(0n+2) {
-  background: #f7f7f7;
+  background: ivory;
   color: #222;
 }
 
 .overview-holder td.A {
-  background: steelblue;
+  background: rgba(70, 130, 180, 0.8);
   color: white;
 }
 
@@ -1460,7 +1460,7 @@ span.underline {
 }
 
 .overview-holder td.subject {
-  // border: 1px solid #f7f7f7;
+  // background: wheat;
 }
 
 

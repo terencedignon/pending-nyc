@@ -35965,9 +35965,10 @@
 	  },
 
 	  chartUpdate: function () {
-	    var chart = this.refs.comparison.getChart();
 
-	    this.setState({ legend: chart.generateLegend() });
+	    var chart = this.refs.comparison.getChart();
+	    chart.datasets[1].label = this.state.comparison.name;
+
 	    // this.setState({ legend: chart.generateLabels()})
 	    var colors = {
 	      A: "rgba(70, 130, 180, 0.5)",
@@ -36010,6 +36011,7 @@
 	    });
 	    chart.update();
 	    this.forceUpdate();
+	    this.setState({ legend: chart.generateLegend() });
 	  },
 
 	  setUpChart: function () {
