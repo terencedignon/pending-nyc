@@ -36881,13 +36881,12 @@
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Probability of Mice'
+	              'Historic Probability of Mice'
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'score' },
-	              data.mice,
-	              '%'
+	              data.mice
 	            ),
 	            React.createElement(
 	              'td',
@@ -36906,13 +36905,12 @@
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Probability of Flies'
+	              'Historic Probability of Flies'
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'score' },
-	              data.flies,
-	              '%'
+	              data.flies
 	            ),
 	            React.createElement(
 	              'td',
@@ -36931,13 +36929,12 @@
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Probability of Roaches'
+	              'Historic Probability of Roaches'
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'score' },
-	              data.roaches,
-	              '%'
+	              data.roaches
 	            ),
 	            React.createElement(
 	              'td',

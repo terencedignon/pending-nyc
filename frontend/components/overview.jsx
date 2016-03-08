@@ -251,10 +251,10 @@ var Overview = React.createClass({
           <i className={"fa fa-" + this.iconParse(data.mice)}></i>
         </td>
         <td className="subject">
-          Probability of Mice
+          Historic Probability of Mice
         </td>
         <td className="score">
-          {data.mice}%
+          {data.mice}
         </td>
         <td className={"grade " + this.translate(data.mice)}>
             {this.translate(data.mice)}
@@ -265,10 +265,10 @@ var Overview = React.createClass({
         <i className={"fa fa-" + this.iconParse(data.flies)}></i>
       </td>
       <td className="subject">
-        Probability of Flies
+        Historic Probability of Flies
       </td>
       <td className="score">
-        {data.flies}%
+        {data.flies}
       </td>
       <td className={"grade " + this.translate(data.flies)}>
           {this.translate(data.flies)}
@@ -279,10 +279,10 @@ var Overview = React.createClass({
       <i className={"fa fa-" + this.iconParse(data.roaches)}></i>
     </td>
     <td className="subject">
-      Probability of Roaches
+      Historic Probability of Roaches
     </td>
     <td className="score">
-      {data.roaches}%
+      {data.roaches}
     </td>
     <td className={"grade " + this.translate(data.roaches)}>
         {this.translate(data.roaches)}
