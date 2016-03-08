@@ -175,17 +175,17 @@ var Overview = React.createClass({
         <table>
 
           <tbody>
-            <tr>
+            <tr className={this.translate(data.last)}>
               <td className="thumbs">
                 <i className={"fa fa-" + this.iconParse(data.last)}></i>
               </td>
-              <td >
+              <td className="subject">
                 Most Recent Inspection
               </td>
               <td className="score">
                 {data.last}
               </td>
-              <td className="grade">
+              <td className={"grade " + this.translate(data.last)}>
                  {this.translate(data.last)}
                </td>
             </tr>
@@ -193,32 +193,32 @@ var Overview = React.createClass({
             <td className="thumbs">
               <i className={"fa fa-" + this.iconParse(data.average)}></i>
             </td>
-            <td>
+          <td className="subject">
               Average of {data.inspections} Inspections
             </td>
             <td className="score">
               {data.average}
             </td>
-            <td className="grade">
+            <td className={"grade " + this.translate(data.average)}>
               {this.translate(data.average)}
             </td>
           </tr>
-          <tr>
+          <tr className={this.translate(data.first_average)}>
             <td className="thumbs">
               <i className={"fa fa-" + this.iconParse(data.first_average)}></i>
             </td>
-            <td>
+            <td className="subject">
               Avg of <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Unannounced Inspections
-                <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span></span> &nbsp;  
+                <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span></span> &nbsp;
             </td>
             <td className="score">
               {data.first_average}
             </td>
-            <td className="grade">
+            <td className={"grade " + this.translate(data.first_average)}>
                {this.translate(data.first_average)}
              </td>
         </tr>
-        <tr>
+          <tr className={this.translate(data.best)}>
           <td className="thumbs">
             <i className={"fa fa-" + this.iconParse(data.best)}></i>
           </td>
@@ -228,39 +228,39 @@ var Overview = React.createClass({
           <td className="score">
             {data.best}
           </td>
-          <td className="grade">
+          <td className={"grade " + this.translate(data.best)}>
             {this.translate(data.best)}
           </td>
       </tr>
-        <tr>
+        <tr className={this.translate(data.worst)}>
           <td className="thumbs">
             <i className={"fa fa-" + this.iconParse(data.worst)}></i>
           </td>
-          <td>
+          <td className="subject">
             Worst Score
           </td>
           <td className="score">
             {data.worst}
           </td>
-          <td className="grade">
+          <td className={"grade " + this.translate(data.worst)}>
             {this.translate(data.worst)}
           </td>
       </tr>
-      <tr>
+      <tr className={this.translate(data.mice)}>
         <td className="thumbs">
           <i className={"fa fa-" + this.iconParse(data.mice)}></i>
         </td>
-        <td>
+        <td className="subject">
           Probability of Mice
         </td>
         <td className="score">
           {data.mice}%
         </td>
-        <td className="grade">
+        <td className={"grade " + this.translate(data.mice)}>
             {this.translate(data.mice)}
         </td>
     </tr>
-    <tr>
+    <tr className={this.translate(data.flies)}>
       <td className="thumbs">
         <i className={"fa fa-" + this.iconParse(data.flies)}></i>
       </td>
@@ -270,30 +270,28 @@ var Overview = React.createClass({
       <td className="score">
         {data.flies}%
       </td>
-      <td className="grade">
+      <td className={"grade " + this.translate(data.flies)}>
           {this.translate(data.flies)}
       </td>
   </tr>
-  <tr>
+  <tr className={this.translate(data.roaches)}>
     <td>
       <i className={"fa fa-" + this.iconParse(data.roaches)}></i>
     </td>
-    <td>
+    <td className="subject">
       Probability of Roaches
     </td>
     <td className="score">
       {data.roaches}%
     </td>
-    <td className="grade">
+    <td className={"grade " + this.translate(data.roaches)}>
         {this.translate(data.roaches)}
     </td>
 </tr>
 
           </tbody>
         </table>
-
-
-
+        <hr/>
   </span>
 );
   }

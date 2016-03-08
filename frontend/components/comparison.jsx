@@ -74,8 +74,8 @@ var Comparison = React.createClass({
       Ah: "rgba(70, 130, 180, 1)",
       B: "rgba(59,187,48, 0.5)",
       Bh: "rgba(59,187,48, 1)",
-      C: "rgba(128, 0, 0, 0.7)",
-      Ch: "rgba(128, 0, 0, 0.9)"
+      C: "rgba(128, 0, 0, 0.75)",
+      Ch: "rgba(128, 0, 0, 1)"
     }
 
     chart.datasets[0].bars.forEach(function(bar, index) {
@@ -311,7 +311,7 @@ var Comparison = React.createClass({
       var colors = {
         A: "rgba(70, 130, 180, 1)",
         B: "rgba(0,128,128, 1)",
-        C: "rgba(128, 0, 0, 0.7)"
+        C: "rgba(128, 0, 0, 0.9)"
       }
 
       comparisonChart.datasets[0].bars.forEach(function(bar, index) {
@@ -334,8 +334,7 @@ var Comparison = React.createClass({
 
     return (
       <div className="comparison">
-        <span key={Math.random()} className="store-name">Relative to:</span><br/>
-        <span className="comparison-to"> {comparisonNameOrLink} </span><br/>
+        <span key={Math.random()} className="store-name">Relative to {comparisonNameOrLink} </span><br/>
            <span className="comparison-results">{score}</span>
           <br/>
         — Compare with <a href="#" id="cuisine_calc" onClick={this.setDefaultComparison}>Cuisine</a>, <a href="#" id="zipcode_calc" onClick={this.setDefaultComparison}>Zipcode</a>, or <a href="#" id="boro_calc" onClick={this.setDefaultComparison}>Boro</a>.

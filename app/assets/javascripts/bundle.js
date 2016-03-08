@@ -24634,8 +24634,8 @@
 	      A: "rgba(70, 130, 180, 0.5)",
 	      Ah: "rgba(70, 130, 180, 1)",
 	      B: "rgba(128, 0, 0, 0.5)",
-	      C: "rgba(128, 0, 0, 0.7)",
-	      Cf: "rgba(128, 0, 0, 0.8)"
+	      C: "rgba(128, 0, 0, 0.75)",
+	      Cf: "rgba(128, 0, 0, 1)"
 	    };
 	    // B: "rgba(59,187,48, 0.5)",
 	    // Bh: "rgba(59,187,48, 1)",
@@ -35974,8 +35974,8 @@
 	      Ah: "rgba(70, 130, 180, 1)",
 	      B: "rgba(59,187,48, 0.5)",
 	      Bh: "rgba(59,187,48, 1)",
-	      C: "rgba(128, 0, 0, 0.7)",
-	      Ch: "rgba(128, 0, 0, 0.9)"
+	      C: "rgba(128, 0, 0, 0.75)",
+	      Ch: "rgba(128, 0, 0, 1)"
 	    };
 
 	    chart.datasets[0].bars.forEach(function (bar, index) {
@@ -36228,7 +36228,7 @@
 	        var colors = {
 	          A: "rgba(70, 130, 180, 1)",
 	          B: "rgba(0,128,128, 1)",
-	          C: "rgba(128, 0, 0, 0.7)"
+	          C: "rgba(128, 0, 0, 0.9)"
 	        };
 
 	        comparisonChart.datasets[0].bars.forEach(function (bar, index) {
@@ -36250,13 +36250,7 @@
 	      React.createElement(
 	        'span',
 	        { key: Math.random(), className: 'store-name' },
-	        'Relative to:'
-	      ),
-	      React.createElement('br', null),
-	      React.createElement(
-	        'span',
-	        { className: 'comparison-to' },
-	        ' ',
+	        'Relative to ',
 	        comparisonNameOrLink,
 	        ' '
 	      ),
@@ -36745,7 +36739,7 @@
 	          null,
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: this.translate(data.last) },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -36753,7 +36747,7 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              null,
+	              { className: 'subject' },
 	              'Most Recent Inspection'
 	            ),
 	            React.createElement(
@@ -36763,7 +36757,7 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'grade' },
+	              { className: "grade " + this.translate(data.last) },
 	              this.translate(data.last)
 	            )
 	          ),
@@ -36777,7 +36771,7 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              null,
+	              { className: 'subject' },
 	              'Average of ',
 	              data.inspections,
 	              ' Inspections'
@@ -36789,13 +36783,13 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'grade' },
+	              { className: "grade " + this.translate(data.average) },
 	              this.translate(data.average)
 	            )
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: this.translate(data.first_average) },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -36803,7 +36797,7 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              null,
+	              { className: 'subject' },
 	              'Avg of ',
 	              React.createElement(
 	                'span',
@@ -36824,13 +36818,13 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'grade' },
+	              { className: "grade " + this.translate(data.first_average) },
 	              this.translate(data.first_average)
 	            )
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: this.translate(data.best) },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -36848,13 +36842,13 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'grade' },
+	              { className: "grade " + this.translate(data.best) },
 	              this.translate(data.best)
 	            )
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: this.translate(data.worst) },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -36862,7 +36856,7 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              null,
+	              { className: 'subject' },
 	              'Worst Score'
 	            ),
 	            React.createElement(
@@ -36872,13 +36866,13 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'grade' },
+	              { className: "grade " + this.translate(data.worst) },
 	              this.translate(data.worst)
 	            )
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: this.translate(data.mice) },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -36886,7 +36880,7 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              null,
+	              { className: 'subject' },
 	              'Probability of Mice'
 	            ),
 	            React.createElement(
@@ -36897,13 +36891,13 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'grade' },
+	              { className: "grade " + this.translate(data.mice) },
 	              this.translate(data.mice)
 	            )
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: this.translate(data.flies) },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -36922,13 +36916,13 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'grade' },
+	              { className: "grade " + this.translate(data.flies) },
 	              this.translate(data.flies)
 	            )
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: this.translate(data.roaches) },
 	            React.createElement(
 	              'td',
 	              null,
@@ -36936,7 +36930,7 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              null,
+	              { className: 'subject' },
 	              'Probability of Roaches'
 	            ),
 	            React.createElement(
@@ -36947,12 +36941,13 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'grade' },
+	              { className: "grade " + this.translate(data.roaches) },
 	              this.translate(data.roaches)
 	            )
 	          )
 	        )
-	      )
+	      ),
+	      React.createElement('hr', null)
 	    );
 	  }
 
