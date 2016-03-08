@@ -208,7 +208,7 @@ var Overview = React.createClass({
               <i className={"fa fa-" + this.iconParse(data.first_average)}></i>
             </td>
             <td className="subject">
-              Avg of <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Unannounced Inspections
+              Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Unannounced
                 <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span></span> &nbsp;
             </td>
             <td className="score">
@@ -251,7 +251,7 @@ var Overview = React.createClass({
           <i className={"fa fa-" + this.iconParse(data.mice)}></i>
         </td>
         <td className="subject">
-          Historic Probability of Mice
+            Probability of Mice
         </td>
         <td className="score">
           {data.mice}
@@ -265,7 +265,7 @@ var Overview = React.createClass({
         <i className={"fa fa-" + this.iconParse(data.flies)}></i>
       </td>
       <td className="subject">
-        Historic Probability of Flies
+        Probability of Flies
       </td>
       <td className="score">
         {data.flies}
@@ -279,7 +279,7 @@ var Overview = React.createClass({
       <i className={"fa fa-" + this.iconParse(data.roaches)}></i>
     </td>
     <td className="subject">
-      Historic Probability of Roaches
+      Probability of Roaches
     </td>
     <td className="score">
       {data.roaches}

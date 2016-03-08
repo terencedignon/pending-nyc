@@ -36799,11 +36799,11 @@
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Avg of ',
+	              'Average  ',
 	              React.createElement(
 	                'span',
 	                { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'question-highlight' },
-	                'Unannounced Inspections',
+	                'Unannounced',
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },
@@ -36882,7 +36882,7 @@
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Historic Probability of Mice'
+	              'Probability of Mice'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36906,7 +36906,7 @@
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Historic Probability of Flies'
+	              'Probability of Flies'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36930,7 +36930,7 @@
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Historic Probability of Roaches'
+	              'Probability of Roaches'
 	            ),
 	            React.createElement(
 	              'td',
