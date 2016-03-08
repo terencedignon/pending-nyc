@@ -146,7 +146,7 @@ var Overview = React.createClass({
           <tbody>
             <tr className={this.translate(data.last)}>
               <td className="thumbs">
-                <i className={"fa fa-" + this.iconParse(data.last)}></i>
+
               </td>
               <td className="subject">
                 Most Recent Inspection
@@ -160,7 +160,7 @@ var Overview = React.createClass({
             </tr>
             <tr className={this.translate(data.average)}>
             <td className="thumbs">
-              <i className={"fa fa-" + this.iconParse(data.average)}></i>
+
             </td>
           <td className="subject">
               Average of {data.inspections} Inspections
@@ -174,7 +174,7 @@ var Overview = React.createClass({
           </tr>
           <tr className={this.translate(data.first_average)}>
             <td className="thumbs">
-              <i className={"fa fa-" + this.iconParse(data.first_average)}></i>
+
             </td>
             <td className="subject">
               Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Unannounced
@@ -189,7 +189,7 @@ var Overview = React.createClass({
         </tr>
           <tr className={this.translate(data.best)}>
           <td className="thumbs">
-            <i className={"fa fa-" + this.iconParse(data.best)}></i>
+
           </td>
           <td className="subject">
             Best Score
@@ -203,7 +203,7 @@ var Overview = React.createClass({
       </tr>
         <tr className={this.translate(data.worst)}>
           <td className="thumbs">
-            <i className={"fa fa-" + this.iconParse(data.worst)}></i>
+
           </td>
           <td className="subject">
             Worst Score
@@ -217,7 +217,7 @@ var Overview = React.createClass({
       </tr>
       <tr className={this.translate(data.mice)}>
         <td className="thumbs">
-          <i className={"fa fa-" + this.iconParse(data.mice)}></i>
+
         </td>
         <td className="subject">
             Probability of Mice
@@ -231,7 +231,7 @@ var Overview = React.createClass({
     </tr>
     <tr className={this.translate(data.flies)}>
       <td className="thumbs">
-        <i className={"fa fa-" + this.iconParse(data.flies)}></i>
+
       </td>
       <td className="subject">
         Probability of Flies
@@ -245,7 +245,7 @@ var Overview = React.createClass({
   </tr>
   <tr className={this.translate(data.roaches)}>
     <td>
-      <i className={"fa fa-" + this.iconParse(data.roaches)}></i>
+
     </td>
     <td className="subject">
       Probability of Roaches
@@ -262,6 +262,8 @@ var Overview = React.createClass({
         </table>
         <hr/>
 
+      <span className="store-name">Percent of restaurants greater than or equal to</span>
+
           <table>
 
             <tbody>
@@ -274,7 +276,7 @@ var Overview = React.createClass({
               <th>{store.cuisine_type}</th>
               <tr className={this.translate(data.last)}>
                 <td className="thumbs">
-                  <i className={"fa fa-" + this.iconParse(data.last)}></i>
+
                 </td>
                 <td className="subject">
                   Most Recent Inspection
@@ -291,7 +293,6 @@ var Overview = React.createClass({
               </tr>
               <tr>
               <td className="thumbs">
-                <i className={"fa fa-" + this.iconParse(data.average)}></i>
               </td>
             <td className="subject">
                 Average of {data.inspections} Inspections
@@ -308,7 +309,7 @@ var Overview = React.createClass({
             </tr>
             <tr>
               <td className="thumbs">
-                <i className={"fa fa-" + this.iconParse(data.first_average)}></i>
+
               </td>
               <td className="subject">
                 Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Unannounced
@@ -327,7 +328,7 @@ var Overview = React.createClass({
           </tr>
             <tr>
             <td className="thumbs">
-              <i className={"fa fa-" + this.iconParse(data.best)}></i>
+
             </td>
             <td className="subject">
               Aggreg Score
@@ -344,7 +345,7 @@ var Overview = React.createClass({
         </tr>
           <tr>
             <td className="thumbs">
-              <i className={"fa fa-" + this.iconParse(data.worst)}></i>
+
             </td>
             <td className="subject">
               Worst Score
@@ -361,7 +362,7 @@ var Overview = React.createClass({
         </tr>
         <tr>
           <td className="thumbs">
-            <i className={"fa fa-" + this.iconParse(data.mice)}></i>
+
           </td>
           <td className="subject">
               Probability of Mice
@@ -378,7 +379,7 @@ var Overview = React.createClass({
       </tr>
       <tr>
         <td className="thumbs">
-          <i className={"fa fa-" + this.iconParse(data.flies)}></i>
+
         </td>
         <td className="subject">
           Probability of Flies
@@ -396,7 +397,7 @@ var Overview = React.createClass({
     </tr>
     <tr>
       <td>
-        <i className={"fa fa-" + this.iconParse(data.roaches)}></i>
+
       </td>
       <td className="subject">
         Probability of Roaches

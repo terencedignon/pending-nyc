@@ -36709,11 +36709,7 @@
 	          React.createElement(
 	            'tr',
 	            { className: this.translate(data.last) },
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.last) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36733,11 +36729,7 @@
 	          React.createElement(
 	            'tr',
 	            { className: this.translate(data.average) },
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.average) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36759,11 +36751,7 @@
 	          React.createElement(
 	            'tr',
 	            { className: this.translate(data.first_average) },
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.first_average) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36794,11 +36782,7 @@
 	          React.createElement(
 	            'tr',
 	            { className: this.translate(data.best) },
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.best) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36818,11 +36802,7 @@
 	          React.createElement(
 	            'tr',
 	            { className: this.translate(data.worst) },
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.worst) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36842,11 +36822,7 @@
 	          React.createElement(
 	            'tr',
 	            { className: this.translate(data.mice) },
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.mice) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36866,11 +36842,7 @@
 	          React.createElement(
 	            'tr',
 	            { className: this.translate(data.flies) },
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.flies) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36890,11 +36862,7 @@
 	          React.createElement(
 	            'tr',
 	            { className: this.translate(data.roaches) },
-	            React.createElement(
-	              'td',
-	              null,
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.roaches) })
-	            ),
+	            React.createElement('td', null),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36914,6 +36882,11 @@
 	        )
 	      ),
 	      React.createElement('hr', null),
+	      React.createElement(
+	        'span',
+	        { className: 'store-name' },
+	        'Percent of restaurants greater than or equal to'
+	      ),
 	      React.createElement(
 	        'table',
 	        null,
@@ -36939,11 +36912,7 @@
 	          React.createElement(
 	            'tr',
 	            { className: this.translate(data.last) },
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.last) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36968,11 +36937,7 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.average) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36999,11 +36964,7 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.first_average) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -37039,11 +37000,7 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.best) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -37068,11 +37025,7 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.worst) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -37097,11 +37050,7 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.mice) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -37126,11 +37075,7 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement(
-	              'td',
-	              { className: 'thumbs' },
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.flies) })
-	            ),
+	            React.createElement('td', { className: 'thumbs' }),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -37155,11 +37100,7 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement(
-	              'td',
-	              null,
-	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.roaches) })
-	            ),
+	            React.createElement('td', null),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },

@@ -731,7 +731,7 @@ hr.break {
 .fa-thumbs-o-up {
   margin-right: 10px;
   color: black;
-
+  // display: none;
   // font-size: 16px;
   opacity: 1;
 }
@@ -761,6 +761,7 @@ hr.break {
 .overview-holder .fa-minus {
   margin-right: 14px;
   margin-left: -3px;
+  display: none;
   /*font-size: 20px;*/
   display: inline-block;
   color: #777!important;
@@ -768,6 +769,7 @@ hr.break {
 }
 
 .fa-thumbs-o-down {
+  // display: none;
   margin-right: 10px;
   color: maroon;
   opacity: 0.8;
@@ -1392,9 +1394,10 @@ span.underline {
 }
 
 .overview-holder table {
-  // padding: 5px;
+  padding: 5px;
   // box-shadow: 2px 2px 2px 0 #f7f7f7;
   // border: 1px solid #f7f7f7;
+
   // border-left: 0;
   // background: salmon;
   // font-family: "lato";
@@ -1517,4 +1520,5 @@ span.underline {
 
 .overview-holder td.thumbs {
   background: #fff;
+  // color: #fff;
 }
