@@ -334,10 +334,10 @@ var Comparison = React.createClass({
 
     return (
       <div className="comparison">
-        <span key={Math.random()} className="store-name">Relative to {comparisonNameOrLink} </span><br/>
-           <span className="comparison-results">{score}</span>
-          <br/>
-        — Compare with <a href="#" id="cuisine_calc" onClick={this.setDefaultComparison}>Cuisine</a>, <a href="#" id="zipcode_calc" onClick={this.setDefaultComparison}>Zipcode</a>, or <a href="#" id="boro_calc" onClick={this.setDefaultComparison}>Boro</a>.
+        <span key={Math.random()} className="store-name">Relative to {comparisonNameOrLink} </span>
+           <span className="comparison-results">{score}</span><br/>
+
+        Compare with <a href="#" id="cuisine_calc" onClick={this.setDefaultComparison}>Cuisine</a>, <a href="#" id="zipcode_calc" onClick={this.setDefaultComparison}>Zipcode</a>, or <a href="#" id="boro_calc" onClick={this.setDefaultComparison}>Boro</a>.
 
     <p/>
       <span className="comparison-legend" key={Math.random()} dangerouslySetInnerHTML={{ __html: this.state.legend }} />

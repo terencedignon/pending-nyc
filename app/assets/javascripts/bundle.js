@@ -36254,14 +36254,13 @@
 	        comparisonNameOrLink,
 	        ' '
 	      ),
-	      React.createElement('br', null),
 	      React.createElement(
 	        'span',
 	        { className: 'comparison-results' },
 	        score
 	      ),
 	      React.createElement('br', null),
-	      '— Compare with ',
+	      'Compare with ',
 	      React.createElement(
 	        'a',
 	        { href: '#', id: 'cuisine_calc', onClick: this.setDefaultComparison },
@@ -36763,7 +36762,7 @@
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: this.translate(data.average) },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },

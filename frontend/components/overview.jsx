@@ -189,7 +189,7 @@ var Overview = React.createClass({
                  {this.translate(data.last)}
                </td>
             </tr>
-            <tr>
+            <tr className={this.translate(data.average)}>
             <td className="thumbs">
               <i className={"fa fa-" + this.iconParse(data.average)}></i>
             </td>
