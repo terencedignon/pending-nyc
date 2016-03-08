@@ -101,7 +101,9 @@ var Most = React.createClass({
     // .css("display", "block");
   },
   chartData: function (store) {
-    var labels = ["Avg", "Surprise", "Flies %", "Mice %", "Roach %", "Best", "Worst"];
+    var labels = ["", "", "", "", "", "", ""];
+
+    // var labels = ["Avg", "Surprise", "Flies %", "Mice %", "Roach %", "Best", "Worst"];
     var data = [store.calc.average, store.calc.first_average, store.calc.flies_percentage, store.calc.mice_percentage, store.calc.roach_percentage, store.calc.best, store.calc.worst];
 
     var dataset = {
@@ -218,7 +220,7 @@ var Most = React.createClass({
         // setTimeout(function () {
         //   this.chartUpdate(ref);
         // }.bind(this), 2000);
-        return <div key={index}><i onClick={this.expand} className="fa fa-plus fa-border"></i>
+        return <div className="most-hidden" key={index}><i onClick={this.expand} className="fa fa-plus fa-border"></i>
         <i onClick={this.collapse} className="fa fa-minus fa-border"></i>
       <a href={"#/rest/" + store.id} store={store}>{store.name}</a>
 

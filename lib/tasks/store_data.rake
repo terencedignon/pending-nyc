@@ -16,6 +16,13 @@ namespace :store_data do
 
   ###add function that removes errant stores
 
+  task set_rankings: :environment do
+    MacroCalc.all.each do |macro|
+      ids = Store.where(boro: macro.name).includes(:calc).order("calcs.score DESC").map(&:id)
+      MacroCalc.update(rankings: ids)
+    end
+  end
+
   task set_last: :environment do
     Store.includes(:calc).each do |store|
       last_inspection = store.inspections.order(inspection_date: :desc)

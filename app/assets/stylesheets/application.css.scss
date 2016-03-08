@@ -199,7 +199,7 @@ header {
   color: #000;
   padding: 20px;
   text-align: center;
-  letter-spacing:1px;
+  // letter-spacing:1px;
   // opacity: 0.5;
   // font-weight:bold;
   font-size: 18px;
@@ -222,6 +222,7 @@ header {
 .mini-chart {
   width: 450px;
   float: right;
+  margin-top: 5px;
   overflow: hidden;
   height: 100px;
 }
@@ -484,11 +485,14 @@ footer {
   // display: block;/
   // background: #f7f7f7;
   // text-align: center!important;
+  // text-decoration: underline;
   text-transform: uppercase;
   padding: 10px 10px 10px 0;
-  color: #111;
+  color: #222;
+  // background: ivory;
   font-family: "Helvetica";
   font-size: 20px;
+  // border-bottom: 1px solid #eee;
 }
 
 .comparison-to {
@@ -1031,12 +1035,12 @@ span.underline {
 
 .filter-links a {
   color: steelblue;
-  font-weight: strong;
-  // text-transform: uppercase;
+  // font-weight: strong;
+  text-transform: uppercase;
   // font-family: "lato";
   margin-top: 1px;
   text-decoration: none;
-  // font-size: 17px;
+  font-size: 17px;
 }
 
 .searching {
@@ -1093,9 +1097,9 @@ span.underline {
   // display: none;
   padding: 10px;
 
-  background: #f1f1f1;
+  // background: lightblue;
 
-  border: 2px solid #ccc;
+  border: 1px solid #f7f7f7;
 }
 
 .editable {
@@ -1388,12 +1392,13 @@ span.underline {
 }
 
 .overview-holder table {
-  padding: 10px 5px;
+  // padding: 5px;
   // box-shadow: 2px 2px 2px 0 #f7f7f7;
-  border: 1px solid #eee;
+  // border: 1px solid #f7f7f7;
   // border-left: 0;
   // background: salmon;
   // font-family: "lato";
+  font-size: 17px;
   font-weight: normal;
   // padding: 0;
 
@@ -1405,34 +1410,43 @@ span.underline {
 }
 
 .overview-holder tr.C {
-  background: rgba(128, 0, 0, 0.7)!important;
+  background: rgba(128, 0, 0, 0.75)!important;
   color: #fff;
 }
 // .overview-holder td.B {
-//   background: rgba(0, 100, 0, 0.7)!important;
+//   background: rgba(0, 100, 0, 0.75)!important;
 //   color: #fff;
 // }
 
 //
 .overview-holder tr.C td.subject {
   padding-right: 10px;
+  // background: #fff;
   // background: #f7f7f7;
-  background: #fff;
+  background: ivory;
   color: #222;
   // font-weight: bold;
   // color: maroon;
 }
 
-.overview-holder tr:nth-child(2n+1) td:nth-child(0n+2) {
-  background: wheat;
-  color: #222;
+.overview-holder tr:nth-child(2n+1){
+  background: ivory;
+  // background: rgba(180, 180, 0, 0.1);
+  // color: black;
+  padding-right: 20px;
 }
 
-// .overview-holder td.A {
-//   background: rgba(70, 130, 180, 0.8);
-//   color: white;
+// .overview-holder tr:nth-child(2n+1) td:nth-child(0n+3) {
+//   background: ivory;
+//   color: #222;
+//   // padding-right: 20px;
 // }
 
+.overview-holder td.A {
+  background: rgba(70, 130, 180, 0.75);
+  color: white;
+}
+//
 // .overview-holder td.B {
 //   background: rgba(0, 100, 0, 0.5);
 //   color: white;
@@ -1466,6 +1480,11 @@ span.underline {
   // background: wheat;
 }
 
+.details > a {
+  text-decoration: none;
+  text-transform: none;
+  // color: #222;
+}
 
 .overview-holder td.thumbs {
   background: #fff;

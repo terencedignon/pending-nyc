@@ -49914,7 +49914,9 @@
 	    // .css("display", "block");
 	  },
 	  chartData: function (store) {
-	    var labels = ["Avg", "Surprise", "Flies %", "Mice %", "Roach %", "Best", "Worst"];
+	    var labels = ["", "", "", "", "", "", ""];
+
+	    // var labels = ["Avg", "Surprise", "Flies %", "Mice %", "Roach %", "Best", "Worst"];
 	    var data = [store.calc.average, store.calc.first_average, store.calc.flies_percentage, store.calc.mice_percentage, store.calc.roach_percentage, store.calc.best, store.calc.worst];
 
 	    var dataset = {
@@ -50034,7 +50036,7 @@
 	        // }.bind(this), 2000);
 	        return React.createElement(
 	          'div',
-	          { key: index },
+	          { className: 'most-hidden', key: index },
 	          React.createElement('i', { onClick: this.expand, className: 'fa fa-plus fa-border' }),
 	          React.createElement('i', { onClick: this.collapse, className: 'fa fa-minus fa-border' }),
 	          React.createElement(
