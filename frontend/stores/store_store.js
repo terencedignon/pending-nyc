@@ -79,6 +79,7 @@ StoreStore.__onDispatch = function (payload) {
       break;
     //outdated map function?
     case StoreConstants.GET_COMPARISON:
+    if (payload.data instanceof Array) payload.data = payload.data[0];
       _comparison = payload.data;
       _comparisonType = payload.type;
       this.__emitChange();

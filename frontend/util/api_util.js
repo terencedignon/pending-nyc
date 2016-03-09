@@ -116,7 +116,8 @@ var ApiUtil = {
   fetchComparison: function (id, type) {
     $.ajax({
       method: "GET",
-      url: "api/stores/" + id,
+      url: "api/stores/comparison",
+      data: {id: id},
       success: function(data) {
         StoreActions.getComparison(data, type);
 

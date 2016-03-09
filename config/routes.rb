@@ -11,6 +11,7 @@ Rails.application.routes.draw do
         get 'trending'
         post 'most'
         get 'auto_complete'
+        get 'comparison'
       end
     end
 

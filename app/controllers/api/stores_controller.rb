@@ -28,6 +28,11 @@ class Api::StoresController < ApplicationController
     end
   end
 
+  def comparison
+    @stores = Store.includes(:calc).where(id: params[:id])
+    render :index
+  end
+
   def most
     # debugger
     order = (params[:best] === "highest" ? "DESC" : "ASC")
