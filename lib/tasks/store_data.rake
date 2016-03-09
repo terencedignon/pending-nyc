@@ -16,27 +16,97 @@ namespace :store_data do
 
   ###add function that removes errant stores
 
+  task set_street_macro: :environment do
+    streets = Store.all.map { |store| store.street }.uniq
+
+
+    streets.each do |street|
+
+      mice = 0
+      flies = 0
+      stores = 0
+      roaches = 0
+      inspections = 0
+      violations = 0
+      critical = 0
+      first_average = []
+      average = []
+      worst_average = 0
+      worst_average_id = nil
+      worst_first_average = 0
+      worst_first_average_id = nil
+      worst = 0
+      worst_id = nil
+
+      Store.where(street: street).includes(:calc).each do |store|
+        next unless store.calc
+        stores += 1
+        mice += store.calc.mice
+        flies += store.calc.flies
+        roaches += store.calc.roaches
+        inspections += store.calc.inspections
+        violations += store.calc.violations
+        critical += store.calc.critical
+        first_average.push(store.calc.first_average)
+        average.push(store.calc.average)
+        if store.calc.first_average > worst_first_average
+          worst_first_average = store.calc.first_average
+          worst_first_average_id = store.id
+        end
+        if store.calc.average > worst_average
+          worst_average = store.calc.average
+          worst_average_id = store.id
+        end
+        if store.calc.worst > worst
+          worst = store.calc.worst
+          worst_id = store.id
+        end
+      end
+
+      MacroCalc.create(
+        name: street,
+        inspections: inspections,
+        stores: stores,
+        mice: mice,
+        flies: flies,
+        roaches: roaches,
+        first_average: first_average.inject(:+) / first_average.length,
+        average: average.inject(:+) / average.length,
+        violations: violations,
+        critical: critical,
+        worst: worst,
+        worst_id: worst_id,
+        worst_average: worst_average,
+        worst_average_id: worst_average_id,
+        worst_first_average: worst_first_average,
+        worst_first_average_id: worst_first_average_id
+      )
+
+
+    end
+  end
+
   task set_rankings: :environment do
     MacroCalc.all.each do |macro|
 
-      score = Store.ransack(boro_or_cuisine_type_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.score ASC")
+      score = Store.ransack(boro_or_cuisine_type_or_street_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.score ASC")
                 .map{ |store| store.calc.score }
-      average = Store.ransack(boro_or_cuisine_type_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.average ASC")
+      average = Store.ransack(boro_or_cuisine_type_or_street_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.average ASC")
                 .map{ |store| store.calc.average }
-      first_average = Store.ransack(boro_or_cuisine_type_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.first_average ASC")
+      first_average = Store.ransack(boro_or_cuisine_type_or_street_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.first_average ASC")
                 .map{ |store| store.calc.first_average }
-      flies = Store.ransack(boro_or_cuisine_type_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.flies_percentage ASC")
+      flies = Store.ransack(boro_or_cuisine_type_or_street_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.flies_percentage ASC")
                 .map{ |store| store.calc.flies_percentage }
-      roach = Store.ransack(boro_or_cuisine_type_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.roach_percentage ASC")
+      roach = Store.ransack(boro_or_cuisine_type_or_street_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.roach_percentage ASC")
                 .map{ |store| store.calc.roach_percentage}
-      mice = Store.ransack(boro_or_cuisine_type_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.mice_percentage ASC")
+      mice = Store.ransack(boro_or_cuisine_type_or_street_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.mice_percentage ASC")
                 .map{ |store| store.calc.mice_percentage }
 
-      worst = Store.ransack(boro_or_cuisine_type_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.worst ASC")
+      worst = Store.ransack(boro_or_cuisine_type_or_street_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.worst ASC")
                           .map{ |store| store.calc.worst }
 
 
-      recent = Store.ransack(boro_or_cuisine_type_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.last ASC")
+      recent = Store.ransack(boro_or_cuisine_type_or_street_or_zipcode_eq: macro.name).result.includes(:calc).order("calcs.last ASC")
                           .map{ |store| store.calc.last }
 
       Ranking.create(macro_calc_id: macro.id,  recent: recent, worst: worst, score: score, average: average, first_average: first_average,

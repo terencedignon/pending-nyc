@@ -750,12 +750,13 @@ hr.break {
   width: 25%;
   cursor: pointer;
   border: 1px solid transparent;
-  border-bottom: 2px solid lightblue;
+  border-bottom: 2px solid transparent;
   transition: 0.05s ease-in-out;
 }
 .worst:hover {
   // background: #f7f7f7;
-  border-bottom: 2px solid steelblue;
+  color: #222;
+  // border: 2px solid steelblue;
 }
 
 .overview-holder .fa-minus {
@@ -1043,6 +1044,12 @@ span.underline {
   margin-top: 1px;
   text-decoration: none;
   font-size: 17px;
+  transition: 0.4 ease-in-out;
+}
+
+.filter-links a:hover {
+  // text-decoration: underline;
+  color: #333;
 }
 
 .searching {

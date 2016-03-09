@@ -24623,6 +24623,7 @@
 	  _onStoreChange: function () {
 	    if (this.state.store !== StoreStore.getStore()) {
 	      this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
+	      this.setChart();
 	      this.chartUpdate();
 	    };
 	  },
@@ -24643,22 +24644,17 @@
 	    // Ch: "rgba(251, 149, 23, 1)"
 
 	    chart.datasets[0].bars.forEach(function (bar) {
-	      if (bar.value <= 13) {
-	        // bar.fillColor = "white";
-	        // bar.strokeColor = "#777777";
-	        // bar.highlightFill = white;
-	        // bar.highlightStroke = "#222222";
-	      } else if (bar.value <= 27) {
-	          // bar.fillColor = "white";
-	          // bar.strokeColor = "#777777";
-	          // bar.highlightFill = "white";
-	          // bar.highlightStroke = "#222222";
-	        } else {
-	            bar.fillColor = colors["C"];
-	            bar.strokeColor = colors["C"];
-	            bar.highlightFill = colors["Cf"];
-	            bar.highlightStroke = colors["Cf"];
-	          }
+	      if (bar.value <= 27) {
+	        bar.fillColor = "white";
+	        bar.strokeColor = "#777777";
+	        bar.highlightFill = "white";
+	        bar.highlightStroke = "#222222";
+	      } else {
+	        bar.fillColor = colors["C"];
+	        bar.strokeColor = colors["C"];
+	        bar.highlightFill = colors["C"];
+	        bar.highlightStroke = colors["C"];
+	      }
 	    });
 	    chart.update();
 	  },
@@ -24731,10 +24727,15 @@
 
 	      myObjBar.datasets[0].bars.forEach(function (bar) {
 
-	        if (bar.value <= 13) {} else if (bar.value <= 27) {} else {
+	        if (bar.value <= 27) {
+	          bar.fillColor = "white";
+	          bar.strokeColor = "#eeeeee";
+	          bar.highlightFill = "white";
+	          bar.highlightStroke = "#777777";
+	        } else {
 	          bar.fillColor = colors["C"];
 	          bar.strokeColor = colors["C"];
-	          // bar.highlightFill = "rgba(128, 0, 0, 1)";
+	          bar.highlightFill = colors["C"];
 	          bar.highlightStroke = colors["C"];
 	        }
 	      });
@@ -50004,7 +50005,7 @@
 	  displayName: 'Most',
 
 	  getInitialState: function () {
-	    return { exclude: 5, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: "" };
+	    return { exclude: 5, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", street: "", autoZip: "", result: "50", zipcode: "", cuisine_type: "" };
 	  },
 	  componentDidMount: function () {
 	    ApiUtil.fetchMost(this.state);
@@ -50039,6 +50040,18 @@
 	      $('.fa-plus').show();
 	    }
 	    this.setState({ cuisine_type: cuisine });
+	    if (this.parse) clearInterval(this.parse);
+	    this.parse = setInterval(this.updateList, 1000);
+	  },
+	  streetInput: function (e) {
+	    e.preventDefault();
+	    var street = e.currentTarget.value;
+	    if (e.currentTarget.id !== "street") {
+	      street = e.currentTarget.id;
+	      $('.fa-minus').hide();
+	      $('.fa-plus').show();
+	    }
+	    this.setState({ street: street });
 	    if (this.parse) clearInterval(this.parse);
 	    this.parse = setInterval(this.updateList, 1000);
 	  },
@@ -50263,8 +50276,11 @@
 	                React.createElement('i', { className: 'fa fa-building fa-border' }),
 	                store.building,
 	                ' ',
-	                store.street,
-	                ' '
+	                React.createElement(
+	                  'a',
+	                  { href: '#', id: store.street, onClick: this.streetInput },
+	                  store.street
+	                )
 	              ),
 	              ' ',
 	              React.createElement('br', null),
@@ -50331,6 +50347,7 @@
 	            'h3',
 	            null,
 	            '  Filter by:',
+	            React.createElement('input', { id: 'street', onChange: this.streetInput, type: 'text', value: this.state.street, placeholder: 'Street' }),
 	            React.createElement('input', { id: 'zipcode', onChange: this.zipcodeInput, type: 'text', value: this.state.zipcode, placeholder: 'Zipcode' }),
 	            React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', value: this.state.cuisine_type, placeholder: 'Cuisine' }),
 	            React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', value: this.state.boro, placeholder: 'Boro' })

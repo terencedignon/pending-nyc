@@ -5,7 +5,7 @@ var BarChart = require("react-chartjs").Bar;
 
 var Most = React.createClass({
   getInitialState: function () {
-    return { exclude: 5, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", autoZip: "", result: "50", zipcode: "", cuisine_type: ""}
+    return { exclude: 5, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", street: "", autoZip: "", result: "50", zipcode: "", cuisine_type: ""}
   },
   componentDidMount: function () {
     ApiUtil.fetchMost(this.state);
@@ -44,6 +44,18 @@ var Most = React.createClass({
       $('.fa-plus').show();
     }
     this.setState({ cuisine_type: cuisine });
+    if (this.parse) clearInterval(this.parse);
+    this.parse = setInterval(this.updateList, 1000)
+  },
+  streetInput: function (e) {
+    e.preventDefault();
+    var street = e.currentTarget.value;
+    if (e.currentTarget.id !== "street") {
+      street = e.currentTarget.id;
+      $('.fa-minus').hide();
+      $('.fa-plus').show();
+    }
+    this.setState({ street: street });
     if (this.parse) clearInterval(this.parse);
     this.parse = setInterval(this.updateList, 1000)
   },
@@ -245,7 +257,7 @@ var Most = React.createClass({
       </div>
       <div className="address details">
 
-            <span className="details"><i className="fa fa-building fa-border"></i>{store.building} {store.street} </span> <br/>
+            <span className="details"><i className="fa fa-building fa-border"></i>{store.building} <a href="#" id={store.street} onClick={this.streetInput}>{store.street}</a></span> <br/>
             <span className="details"><i className="fa fa-building fa-border fa-hide"></i><a href="#" id={store.boro} onClick={this.boroInput}>{store.boro}, NY</a> <a href="#" onClick={this.zipcodeInput} id={store.zipcode}>{store.zipcode}</a></span><br/>
             <span className="details"><i className="fa fa-phone fa-border"></i>{this.formatPhone(store.phone)} </span><br/>
             <span className="details"><i className="fa fa-cutlery fa-border"></i> <a href="#" id={store.cuisine_type} onClick={this.cuisineInput}>{store.cuisine_type}</a> </span>
@@ -268,6 +280,7 @@ var Most = React.createClass({
         <div>
         <div className="filter-by">
           <h3>  Filter by:
+                <input id="street" onChange={this.streetInput} type="text" value={this.state.street} placeholder="Street"/>
                           <input id="zipcode" onChange={this.zipcodeInput} type="text" value={this.state.zipcode} placeholder="Zipcode"/>
                      <input id="cuisine_type"  onChange={this.cuisineInput} type="text" value={this.state.cuisine_type} placeholder="Cuisine"/>
                         <input id="boro" onChange={this.boroInput} type="text" value={this.state.boro} placeholder="Boro"/>

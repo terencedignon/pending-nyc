@@ -29,6 +29,7 @@ var StoreShow = React.createClass({
   _onStoreChange: function () {
     if (this.state.store !== StoreStore.getStore()) {
       this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
+      this.setChart();
       this.chartUpdate();
     };
   },
@@ -49,21 +50,16 @@ var StoreShow = React.createClass({
     // Ch: "rgba(251, 149, 23, 1)"
 
     chart.datasets[0].bars.forEach(function(bar) {
-      if (bar.value <= 13) {
-        // bar.fillColor = "white";
-        // bar.strokeColor = "#777777";
-        // bar.highlightFill = white;
-        // bar.highlightStroke = "#222222";
-      } else if (bar.value <= 27) {
-        // bar.fillColor = "white";
-        // bar.strokeColor = "#777777";
-        // bar.highlightFill = "white";
-        // bar.highlightStroke = "#222222";
+      if (bar.value <= 27) {
+         bar.fillColor = "white";
+         bar.strokeColor = "#777777";
+         bar.highlightFill = "white"
+         bar.highlightStroke = "#222222";
       } else {
         bar.fillColor = colors["C"];
         bar.strokeColor = colors["C"];
-        bar.highlightFill = colors["Cf"];
-        bar.highlightStroke = colors["Cf"];
+        bar.highlightFill = colors["C"]
+        bar.highlightStroke = colors["C"];
     }
   });
   chart.update();
@@ -140,14 +136,15 @@ var StoreShow = React.createClass({
 
     myObjBar.datasets[0].bars.forEach(function(bar) {
 
-      if (bar.value <= 13) {
-
-     } else if (bar.value <= 27) {
-
+      if (bar.value <= 27) {
+         bar.fillColor = "white";
+         bar.strokeColor = "#eeeeee";
+         bar.highlightFill = "white"
+         bar.highlightStroke = "#777777";
       } else {
         bar.fillColor = colors["C"];
         bar.strokeColor = colors["C"];
-        // bar.highlightFill = "rgba(128, 0, 0, 1)";
+        bar.highlightFill = colors["C"]
         bar.highlightStroke = colors["C"];
       }
     });
@@ -181,7 +178,7 @@ var StoreShow = React.createClass({
         var options = { scaleShowGridLines: false, barStrokeWidth: 0.5};
         // legend = <span dangerouslySetInnerHTML={{ __html: this.state.legend }} />;
         barChart = <BarChart ref="chart" className="bar-chart" data={data} options={options} width={500} height={150}fill={'#3182bd'} />
-  var grade = <img src={this.selectGrade()}/>;
+var grade = <img src={this.selectGrade()}/>;
       var image = this.setImage();
     }
     var address = <div></div>;

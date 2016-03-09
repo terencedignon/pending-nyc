@@ -10,6 +10,19 @@ class Store < ActiveRecord::Base
   )
 
   has_one(
+  :street_calc,
+  class_name: "MacroCalc",
+  foreign_key: :name,
+  primary_key: :street
+  )
+
+  has_one(
+    :street_ranking,
+    through: :street_calc,
+    source: :ranking
+  )
+
+  has_one(
   :zipcode_ranking,
   through: :zipcode_calc,
   source: :ranking,
