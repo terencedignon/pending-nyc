@@ -262,7 +262,7 @@ var Overview = React.createClass({
         </table>
         <hr/>
 
-      <span className="store-name">Percent of restaurants greater than or equal to</span>
+      <span className="store-name">Percentile of restaurants that {store.name} is greater than or equal to</span>
 
           <table>
 

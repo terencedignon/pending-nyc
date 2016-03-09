@@ -36887,7 +36887,9 @@
 	      React.createElement(
 	        'span',
 	        { className: 'store-name' },
-	        'Percent of restaurants greater than or equal to'
+	        'Percentile of restaurants that ',
+	        store.name,
+	        ' is greater than or equal to'
 	      ),
 	      React.createElement(
 	        'table',
