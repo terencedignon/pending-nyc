@@ -137,6 +137,7 @@ var Overview = React.createClass({
           //       <span className="c">C:</span> <span className="range">28 and up</span></div>
           // <span className="unannounced">An average of best, worst, average, surprise average, and percentage of infestations </span></span></span><p/>
           //
+          // <a href="#" onClick={this.findOtherLikeThis}>Find other restaurants like this in your area</a>
     return (
       <span className="overview-holder">
         <span className="store-name">{this.props.store.name} Overview: <span className="question-highlight">{this.props.store.calc.score}</span></span><p/>
@@ -145,7 +146,6 @@ var Overview = React.createClass({
               <i className="fa fa-building fa-border"></i>{store.building} {store.street} {store.boro}, NY {store.zipcode}<br/>
               <i className="fa fa-phone fa-border"></i>{store.phone} <br/>
               <i className="fa fa-cutlery fa-border"></i> {store.cuisine_type}<br/>
-              <a href="#" onClick={this.findOtherLikeThis}>Find other restaurants like this in your area</a>
         </span>
         <hr/>
         <table>

@@ -24603,7 +24603,7 @@
 	  displayName: 'StoreShow',
 
 	  getInitialState: function () {
-	    return { grade: "P", store: {}, yelp: {}, key: "map", data: {} };
+	    return { grade: "P", store: {}, mapKey: Math.random(), yelp: {}, key: "map", data: {} };
 	  },
 	  componentDidMount: function () {
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
@@ -36401,6 +36401,8 @@
 	  },
 
 	  componentWillUnmount: function () {
+	    // delete map;
+
 	    this.storeListener.remove();
 	    this.mapListener.remove();
 	    google.maps.event.removeListener(this.idleListener);
@@ -36654,6 +36656,7 @@
 	    //       <span className="c">C:</span> <span className="range">28 and up</span></div>
 	    // <span className="unannounced">An average of best, worst, average, surprise average, and percentage of infestations </span></span></span><p/>
 	    //
+	    // <a href="#" onClick={this.findOtherLikeThis}>Find other restaurants like this in your area</a>
 	    return React.createElement(
 	      'span',
 	      { className: 'overview-holder' },
@@ -36688,12 +36691,7 @@
 	        React.createElement('i', { className: 'fa fa-cutlery fa-border' }),
 	        ' ',
 	        store.cuisine_type,
-	        React.createElement('br', null),
-	        React.createElement(
-	          'a',
-	          { href: '#', onClick: this.findOtherLikeThis },
-	          'Find other restaurants like this in your area'
-	        )
+	        React.createElement('br', null)
 	      ),
 	      React.createElement('hr', null),
 	      React.createElement(

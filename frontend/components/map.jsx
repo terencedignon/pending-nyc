@@ -53,6 +53,8 @@ var Map = React.createClass({
 },
 
 componentWillUnmount: function () {
+  // delete map;
+
   this.storeListener.remove();
   this.mapListener.remove();
   google.maps.event.removeListener(this.idleListener);

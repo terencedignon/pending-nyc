@@ -9,7 +9,7 @@ var Violations = require('./violations.jsx');
 
 var StoreShow = React.createClass({
   getInitialState: function () {
-    return { grade: "P", store: {}, yelp: {}, key: "map",  data: {} };
+    return { grade: "P", store: {}, mapKey: Math.random(), yelp: {}, key: "map",  data: {} };
   },
   componentDidMount: function () {
     this.storeListener = StoreStore.addListener(this._onStoreChange);
@@ -17,6 +17,7 @@ var StoreShow = React.createClass({
   },
   componentWillUnmount: function () {
     this.storeListener.remove();
+
   },
   setImage: function () {
     if (this.state.store.image_url !== null) {
