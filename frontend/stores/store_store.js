@@ -67,9 +67,9 @@ StoreStore.__onDispatch = function (payload) {
     case StoreConstants.USER_LOCATION:
       var location = payload.data.coords;
       _location = { lat: location.latitude, lng: location.longitude };
-      var json = $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I", function(data) {
+      // var json = $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I", function(data) {
         //nothing yet
-      });
+      // });
       this.__emitChange();
       break;
 

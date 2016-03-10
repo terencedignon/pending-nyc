@@ -91,7 +91,6 @@ var Header = React.createClass({
     if (e.target.tagName === "I") $('.settings-drop-down').css("display", "block") ;
   },
   render: function () {
-
     $(window).scroll(function() {
       if ($(this).scrollTop() > 1) {
         $('header').css("opacity", "0.9");
@@ -112,6 +111,7 @@ var Header = React.createClass({
     var listedResults = this.populateSearch();
 
     return (
+
       <header>
         <div className="header-wrapper">
         <div className="logo">

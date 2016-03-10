@@ -47,7 +47,7 @@
 	var Router = __webpack_require__(1).Router;
 	var IndexRoute = __webpack_require__(1).IndexRoute;
 	var Route = __webpack_require__(1).Route;
-	// History = require('history/lib/createBrowserHistory');
+	var history = __webpack_require__(207).createHashHistory();
 	BrowserHistory = __webpack_require__(207);
 	var ReactDOM = __webpack_require__(212);
 	var React = __webpack_require__(5);
@@ -91,7 +91,7 @@
 	// <IndexRoute component={StoreIndex}
 	var route = React.createElement(
 	  Router,
-	  null,
+	  { history: history },
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
@@ -24700,49 +24700,6 @@
 	    return imageObject[this.state.store.calc.grade];
 	  },
 
-	  setChart: function () {
-
-	    setTimeout(function () {
-
-	      //  $('#chart').remove();
-	      //  $('.canvas-holder').append("<canvas key='chartery' id='chart' width='500' height='150'></canvas>");
-
-	      var ctx = document.getElementById("chart").getContext("2d");
-	      ctx.canvas.width = 500;
-	      ctx.canvas.height = 150;
-	      //  animation: false,
-	      if (typeof window.myObjBar !== "undefined") myObjBar.destroy();
-	      window.myObjBar = new Chart(ctx).Bar(this.state.data, {
-	        scaleShowGridLines: false,
-	        barStrokeWidth: 0.5
-	      });
-
-	      var colors = {
-	        A: "rgba(70, 130, 180, 1)",
-	        B: "rgba(0,128,128, 1)",
-	        Bfill: "rgba(150, 150, 150, 1)",
-	        C: "rgba(251, 149, 23, 0.9)",
-	        Cfill: "rgba(128, 0, 0, 1)"
-	      };
-
-	      myObjBar.datasets[0].bars.forEach(function (bar) {
-
-	        if (bar.value <= 27) {
-	          bar.fillColor = "white";
-	          bar.strokeColor = "#eeeeee";
-	          bar.highlightFill = "white";
-	          bar.highlightStroke = "#777777";
-	        } else {
-	          bar.fillColor = colors["C"];
-	          bar.strokeColor = colors["C"];
-	          bar.highlightFill = colors["C"];
-	          bar.highlightStroke = colors["C"];
-	        }
-	      });
-	      myObjBar.update();
-	    }, 2000);
-	  },
-
 	  render: function () {
 	    var data;
 	    // var legend = <div/>;
@@ -25603,9 +25560,9 @@
 	    case StoreConstants.USER_LOCATION:
 	      var location = payload.data.coords;
 	      _location = { lat: location.latitude, lng: location.longitude };
-	      var json = $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I", function (data) {
-	        //nothing yet
-	      });
+	      // var json = $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I", function(data) {
+	      //nothing yet
+	      // });
 	      this.__emitChange();
 	      break;
 
@@ -36359,6 +36316,7 @@
 	    return { markers: [] };
 	  },
 	  componentDidMount: function () {
+
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
 	    this.mapListener = MapStore.addListener(this._onMapChange);
 	    var coordinates = { lat: Number(this.props.lat), lng: Number(this.props.lng) };
@@ -36371,10 +36329,10 @@
 	      zoom: 14
 	    });
 
-	    this.tilesLoaded = google.maps.event.addListener(map, 'tilesloaded', function () {
-	      var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
-	      // ApiUtil.fetchMap(options);
-	    }.bind(this));
+	    // this.tilesLoaded = google.maps.event.addListener(map, 'tilesloaded', function () {
+	    //   var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
+	    //   // ApiUtil.fetchMap(options);
+	    // }.bind(this));
 
 	    this.idleListener = google.maps.event.addListener(map, 'idle', function () {
 	      clearInterval(this.mapInterval);
@@ -36445,8 +36403,9 @@
 
 	    $('.map-holder > i').css("display", "none");
 	    $('#map').css("opacity", "1");
-
-	    this.setState({ markers: newMarkers });
+	    setTimeout(function () {
+	      this.setState({ markers: newMarkers });
+	    }.bind(this), 1000);
 	  },
 	  _onStoreChange: function () {
 	    // this.setState(this.state);
@@ -37417,7 +37376,7 @@
 
 	    var coordinates = { lat: 40.7127, lng: -74.0059 };
 
-	    map = new google.maps.Map(document.getElementById('main-map'), {
+	    mainMap = new google.maps.Map(document.getElementById('main-map'), {
 	      center: coordinates,
 	      disableDefaultUI: true,
 	      zoom: 12
@@ -37427,7 +37386,7 @@
 	    // google.maps.event.addListener(map, 'tilesloaded', function () {
 	    setTimeout(function () {
 
-	      var options = { bounds: map.getBounds().toJSON(), query: {
+	      var options = { bounds: mainMap.getBounds().toJSON(), query: {
 	          boro: this.state.boro,
 	          zipcode: this.state.zipcode,
 	          name: this.state.name,
@@ -37439,8 +37398,8 @@
 	      }.bind(this), 10000);
 	    }.bind(this), 2000);
 
-	    google.maps.event.addListener(map, 'idle', function () {
-	      var options = { bounds: map.getBounds().toJSON(), query: {
+	    google.maps.event.addListener(mainMap, 'idle', function () {
+	      var options = { bounds: mainMap.getBounds().toJSON(), query: {
 	          boro: this.state.boro,
 	          zipcode: this.state.zipcode,
 	          name: this.state.name,
@@ -37489,7 +37448,7 @@
 	      var coordinates = { lat: Number(marker.lat), lng: Number(marker.lng) };
 	      var newMarker = new google.maps.Marker({
 	        position: coordinates,
-	        map: map,
+	        map: mainMap,
 	        icon: icon,
 	        title: marker.name,
 	        id: marker.id
@@ -37533,7 +37492,7 @@
 	    this.timeout = setInterval(function () {
 	      $('.main-map-wrapper > i').css("display", "block");
 	      $('#main-map').css("opacity", "0.8");
-	      var options = { bounds: map.getBounds().toJSON(), query: {
+	      var options = { bounds: mainMap.getBounds().toJSON(), query: {
 	          boro: this.state.boro,
 	          zipcode: this.state.zipcode,
 	          name: this.state.name,
@@ -49676,7 +49635,6 @@
 	    if (e.target.tagName === "I") $('.settings-drop-down').css("display", "block");
 	  },
 	  render: function () {
-
 	    $(window).scroll(function () {
 	      if ($(this).scrollTop() > 1) {
 	        $('header').css("opacity", "0.9");

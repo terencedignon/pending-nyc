@@ -106,54 +106,10 @@ var StoreShow = React.createClass({
       Z: "http://i.imgur.com/fksRyj5.jpg"
     };
 
-      return imageObject[this.state.store.calc.grade]
+      return imageObject[this.state.store.calc.grade];
 
   },
 
-  setChart: function () {
-
-    setTimeout(function () {
-
-    //  $('#chart').remove();
-    //  $('.canvas-holder').append("<canvas key='chartery' id='chart' width='500' height='150'></canvas>");
-
-    var ctx = document.getElementById("chart").getContext("2d");
-    ctx.canvas.width = 500;
-    ctx.canvas.height = 150;
-   //  animation: false,
-   if (typeof window.myObjBar !== "undefined") myObjBar.destroy();
-    window.myObjBar = new Chart(ctx).Bar(this.state.data, {
-      scaleShowGridLines: false,
-      barStrokeWidth: 0.5
-    });
-
-    var colors = {
-      A: "rgba(70, 130, 180, 1)",
-      B: "rgba(0,128,128, 1)",
-      Bfill: "rgba(150, 150, 150, 1)",
-      C: "rgba(251, 149, 23, 0.9)",
-      Cfill: "rgba(128, 0, 0, 1)"
-    }
-
-    myObjBar.datasets[0].bars.forEach(function(bar) {
-
-      if (bar.value <= 27) {
-         bar.fillColor = "white";
-         bar.strokeColor = "#eeeeee";
-         bar.highlightFill = "white"
-         bar.highlightStroke = "#777777";
-      } else {
-        bar.fillColor = colors["C"];
-        bar.strokeColor = colors["C"];
-        bar.highlightFill = colors["C"]
-        bar.highlightStroke = colors["C"];
-      }
-    });
-    myObjBar.update();
-  }, 2000);
-
-
-  },
 
   render: function () {
     var data;

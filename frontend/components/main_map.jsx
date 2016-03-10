@@ -23,7 +23,7 @@ var Map = React.createClass({
 
     var coordinates = {lat: 40.7127, lng: -74.0059};
 
-    map = new google.maps.Map(document.getElementById('main-map'), {
+    mainMap = new google.maps.Map(document.getElementById('main-map'), {
       center: coordinates,
       disableDefaultUI: true,
       zoom: 12
@@ -34,7 +34,7 @@ var Map = React.createClass({
   // google.maps.event.addListener(map, 'tilesloaded', function () {
   setTimeout(function() {
 
-  var options = {bounds: map.getBounds().toJSON(), query: {
+  var options = {bounds: mainMap.getBounds().toJSON(), query: {
       boro: this.state.boro,
       zipcode: this.state.zipcode,
       name: this.state.name,
@@ -46,8 +46,8 @@ var Map = React.createClass({
     }.bind(this), 10000);
   }.bind(this), 2000);
 
-  google.maps.event.addListener(map, 'idle', function() {
-      var options = {bounds: map.getBounds().toJSON(), query: {
+  google.maps.event.addListener(mainMap, 'idle', function() {
+      var options = {bounds: mainMap.getBounds().toJSON(), query: {
         boro: this.state.boro,
         zipcode: this.state.zipcode,
         name: this.state.name,
@@ -100,7 +100,7 @@ _onMapChange: function () {
     var coordinates = {lat: Number(marker.lat), lng: Number(marker.lng) };
     var newMarker = new google.maps.Marker({
       position: coordinates,
-      map: map,
+      map: mainMap,
       icon: icon,
       title: marker.name,
       id: marker.id
@@ -146,7 +146,7 @@ _onMapChange: function () {
     this.timeout = setInterval(function () {
       $('.main-map-wrapper > i').css("display", "block");
         $('#main-map').css("opacity", "0.8");
-      var options = { bounds: map.getBounds().toJSON(), query: {
+      var options = { bounds: mainMap.getBounds().toJSON(), query: {
         boro: this.state.boro,
         zipcode: this.state.zipcode,
         name: this.state.name,

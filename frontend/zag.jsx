@@ -1,7 +1,7 @@
 var Router = require('react-router').Router;
 var IndexRoute = require('react-router').IndexRoute;
 var Route = require('react-router').Route;
-// History = require('history/lib/createBrowserHistory');
+var history = require('history').createHashHistory();
 BrowserHistory = require('history');
 var ReactDOM = require('react-dom');
 var React = require('react');
@@ -38,7 +38,7 @@ var App = React.createClass({
 
 // <IndexRoute component={StoreIndex}
 var route = (
-  <Router>
+  <Router history={history}>
     <Route path="/" component={App}>
 
     <IndexRoute component={StoreIndex} />

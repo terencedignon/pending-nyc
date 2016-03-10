@@ -10,6 +10,7 @@ var Map = React.createClass({
     return { markers: [] };
   },
   componentDidMount: function () {
+
     this.storeListener = StoreStore.addListener(this._onStoreChange);
     this.mapListener = MapStore.addListener(this._onMapChange);
     var coordinates = {lat: Number(this.props.lat), lng: Number(this.props.lng)};
@@ -22,10 +23,10 @@ var Map = React.createClass({
       zoom: 14
     });
 
-  this.tilesLoaded = google.maps.event.addListener(map, 'tilesloaded', function () {
-    var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
-    // ApiUtil.fetchMap(options);
-  }.bind(this));
+  // this.tilesLoaded = google.maps.event.addListener(map, 'tilesloaded', function () {
+  //   var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
+  //   // ApiUtil.fetchMap(options);
+  // }.bind(this));
 
   this.idleListener = google.maps.event.addListener(map, 'idle', function() {
       clearInterval(this.mapInterval);
@@ -37,6 +38,7 @@ var Map = React.createClass({
       clearInterval(this.mapInterval)
     }.bind(this), 0);
   }.bind(this));
+
 
   //
   // var panorama;
@@ -101,8 +103,9 @@ _onMapChange: function () {
 
   $('.map-holder > i').css("display", "none");
   $('#map').css("opacity", "1");
-
-  this.setState({ markers: newMarkers});
+  setTimeout(function () {
+    this.setState({ markers: newMarkers});
+  }.bind(this), 1000);
 },
 _onStoreChange: function () {
   // this.setState(this.state);
