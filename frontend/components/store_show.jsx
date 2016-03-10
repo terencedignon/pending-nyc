@@ -9,14 +9,23 @@ var Violations = require('./violations.jsx');
 
 var StoreShow = React.createClass({
   getInitialState: function () {
-    return { grade: "P", store: {}, mapKey: Math.random(), yelp: {}, key: "map",  data: {} };
+    return { grade: "P", store: {}, hash: window.location.hash, mapKey: Math.random(), yelp: {}, key: "map",  data: {} };
   },
   componentDidMount: function () {
     this.storeListener = StoreStore.addListener(this._onStoreChange);
+    // this.backButtonListener = setInterval(function () {
+    //   if (window.location.hash !== this.state.hash) {
+    //     ApiUtil.fetchStore(this.props.params.id);
+    //     this.setState({ hash: window.location.hash });
+    //     // this.forceUpdate();
+    //   }
+    // }.bind(this), 100);
     ApiUtil.fetchStore(this.props.params.id);
   },
   componentWillUnmount: function () {
+    clearInterval(this.backButtonListener);
     this.storeListener.remove();
+    // console.log("hello");
 
   },
   setImage: function () {

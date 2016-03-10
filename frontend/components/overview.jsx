@@ -86,8 +86,6 @@ var Overview = React.createClass({
     var zip = store.zipcode_ranking;
     var cuisine = store.cuisine_ranking;
 
-
-
     var data = {
       boroRecent:  Math.round(100 - (boro.recent.indexOf(store.calc.last) / boro.recent.length).toFixed(2) * 100),
       boroMice: Math.round(100 - (boro.mice.indexOf(calc.mice_percentage) / boro.mice.length).toFixed(2) * 100),

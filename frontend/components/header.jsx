@@ -15,7 +15,7 @@ var Header = React.createClass({
   linkHandler: function (e) {
     e.preventDefault();
     this.setState({ search: "", results: [] });
-    console.log(e.currentTarget.id);
+  
     ApiUtil.fetchStore(e.currentTarget.id);
     SearchActions.clearResults();
     this.history.pushState(null, "/rest/" + e.currentTarget.id, {});

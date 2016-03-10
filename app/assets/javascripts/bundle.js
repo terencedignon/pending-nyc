@@ -24603,14 +24603,23 @@
 	  displayName: 'StoreShow',
 
 	  getInitialState: function () {
-	    return { grade: "P", store: {}, mapKey: Math.random(), yelp: {}, key: "map", data: {} };
+	    return { grade: "P", store: {}, hash: window.location.hash, mapKey: Math.random(), yelp: {}, key: "map", data: {} };
 	  },
 	  componentDidMount: function () {
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
+	    // this.backButtonListener = setInterval(function () {
+	    //   if (window.location.hash !== this.state.hash) {
+	    //     ApiUtil.fetchStore(this.props.params.id);
+	    //     this.setState({ hash: window.location.hash });
+	    //     // this.forceUpdate();
+	    //   }
+	    // }.bind(this), 100);
 	    ApiUtil.fetchStore(this.props.params.id);
 	  },
 	  componentWillUnmount: function () {
+	    clearInterval(this.backButtonListener);
 	    this.storeListener.remove();
+	    // console.log("hello");
 	  },
 	  setImage: function () {
 	    if (this.state.store.image_url !== null) {
@@ -49553,7 +49562,7 @@
 	  linkHandler: function (e) {
 	    e.preventDefault();
 	    this.setState({ search: "", results: [] });
-	    console.log(e.currentTarget.id);
+
 	    ApiUtil.fetchStore(e.currentTarget.id);
 	    SearchActions.clearResults();
 	    this.history.pushState(null, "/rest/" + e.currentTarget.id, {});
