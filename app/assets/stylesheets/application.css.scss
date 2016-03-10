@@ -675,9 +675,22 @@ footer {
   padding: 5px;
 
   /*background: #f7f7f7;*/
-  box-shadow: 2px 2px 0 0 #ccc;
+  // box-shadow: 2px 2px 0 0 #ccc;
 
 }
+
+.overview-address {
+  display: block;
+  padding: 0px 25px;
+  font-size: 14px;
+  border: 1px solid #f7f7f7;
+  // background: #f7f7f7;
+}
+
+.overview-address a {
+  color: steelblue;
+}
+
 
 .options input {
   top: 0;

@@ -10,17 +10,16 @@ var Header = React.createClass({
     return { search: "", searching: "", results: [] };
   },
   componentDidMount: function () {
-    // this.storeListener = StoreStore.addListener(this._onStoreChange);
     this.searchListener = SearchStore.addListener(this._onSearchChange);
 },
   linkHandler: function (e) {
-    function yelpCallback () {
-      // this.setState({ searching: "Done!"});
-    };
+    e.preventDefault();
     this.setState({ search: "", results: [] });
-    this.history.pushState(null, "#/rest/" + e.currentTarget.id, {});
-    ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this));
+    console.log(e.currentTarget.id);
+    ApiUtil.fetchStore(e.currentTarget.id);
     SearchActions.clearResults();
+    this.history.pushState(null, "/rest/" + e.currentTarget.id, {});
+
 
     $('.drop-down').css("display", "none");
   },

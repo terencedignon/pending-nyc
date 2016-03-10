@@ -289,50 +289,6 @@ var Comparison = React.createClass({
       comparisonNameOrLink = this.state.comparisonText;
     }
 
-    $('document').ready(function() {
-
-      // window.comparisonChart && window.comparisonChart.clear() && window.comparisonChart.destroy();
-      // $('#comparison-chart').remove();
-      // $('.canvas-holder').append("<canvas id='comparison-chart' width='500' height='325'></canvas>");
-
-      setTimeout(function () {
-      var ctx = document.getElementById("comparison-chart").getContext("2d");
-      // console.log(window.comparisonChart);
-      ctx.canvas.width = 500;
-      ctx.canvas.height = 350;
-      window.comparisonChart = new Chart(ctx).Bar(this.state.data, {
-        animationSteps: 45,
-        responsive: false,
-        scaleShowGridLines: false,
-        barStrokeWidth: 0.5,
-        barDatasetSpacing: 3,
-        barValueSpacing: 10
-      });
-      // window.comparisonChart.destroy();
-
-      var colors = {
-        A: "rgba(70, 130, 180, 1)",
-        B: "rgba(0,128,128, 1)",
-        C: "rgba(128, 0, 0, 0.9)"
-      }
-
-      comparisonChart.datasets[0].bars.forEach(function(bar, index) {
-        if (bar.value <= comparisonChart.datasets[1].bars[index].value) {
-
-        } else {
-          // bar.fillColor = colors["C"];
-          // bar.strokeColor = colors["C"];
-          // bar.highlightFill = colors["C"];
-          // bar.highlightStroke = colors["C"];
-        }
-      });
-
-
-      // comparisonChart.update();
-    }.bind(this), 0);
-
-  }.bind(this));
-
 
     return (
       <div className="comparison">

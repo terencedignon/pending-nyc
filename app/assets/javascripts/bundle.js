@@ -47,8 +47,8 @@
 	var Router = __webpack_require__(1).Router;
 	var IndexRoute = __webpack_require__(1).IndexRoute;
 	var Route = __webpack_require__(1).Route;
-	var History = __webpack_require__(207).History;
-	var BrowserHistory = __webpack_require__(1).BrowserHistory;
+	// History = require('history/lib/createBrowserHistory');
+	BrowserHistory = __webpack_require__(207);
 	var ReactDOM = __webpack_require__(212);
 	var React = __webpack_require__(5);
 	var StoreShow = __webpack_require__(213);
@@ -91,7 +91,7 @@
 	// <IndexRoute component={StoreIndex}
 	var route = React.createElement(
 	  Router,
-	  { history: BrowserHistory },
+	  null,
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
@@ -24623,7 +24623,7 @@
 	  _onStoreChange: function () {
 	    if (this.state.store !== StoreStore.getStore()) {
 	      this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
-	      this.setChart();
+	      // this.setChart();
 	      this.chartUpdate();
 	    };
 	  },
@@ -24763,7 +24763,14 @@
 	      violations = React.createElement(Violations, { key: Math.random(), inspections: this.state.store.inspections });
 	      //CHART
 	      data = this.chartData();
-	      var options = { scaleShowGridLines: false, barStrokeWidth: 0.5 };
+	      // cornerRadius: 0
+	      // tooltipCaretSize: 8,
+	      var options = {
+	        scaleShowGridLines: false,
+	        barStrokeWidth: 0.5,
+	        tooltipFontFamily: "Helvetica"
+
+	      };
 	      // legend = <span dangerouslySetInnerHTML={{ __html: this.state.legend }} />;
 	      barChart = React.createElement(BarChart, { ref: 'chart', className: 'bar-chart', data: data, options: options, width: 500, height: 150, fill: '#3182bd' });
 	      var grade = React.createElement('img', { src: this.selectGrade() });
@@ -36209,46 +36216,6 @@
 	      comparisonNameOrLink = this.state.comparisonText;
 	    }
 
-	    $('document').ready(function () {
-
-	      // window.comparisonChart && window.comparisonChart.clear() && window.comparisonChart.destroy();
-	      // $('#comparison-chart').remove();
-	      // $('.canvas-holder').append("<canvas id='comparison-chart' width='500' height='325'></canvas>");
-
-	      setTimeout(function () {
-	        var ctx = document.getElementById("comparison-chart").getContext("2d");
-	        // console.log(window.comparisonChart);
-	        ctx.canvas.width = 500;
-	        ctx.canvas.height = 350;
-	        window.comparisonChart = new Chart(ctx).Bar(this.state.data, {
-	          animationSteps: 45,
-	          responsive: false,
-	          scaleShowGridLines: false,
-	          barStrokeWidth: 0.5,
-	          barDatasetSpacing: 3,
-	          barValueSpacing: 10
-	        });
-	        // window.comparisonChart.destroy();
-
-	        var colors = {
-	          A: "rgba(70, 130, 180, 1)",
-	          B: "rgba(0,128,128, 1)",
-	          C: "rgba(128, 0, 0, 0.9)"
-	        };
-
-	        comparisonChart.datasets[0].bars.forEach(function (bar, index) {
-	          if (bar.value <= comparisonChart.datasets[1].bars[index].value) {} else {
-	            // bar.fillColor = colors["C"];
-	            // bar.strokeColor = colors["C"];
-	            // bar.highlightFill = colors["C"];
-	            // bar.highlightStroke = colors["C"];
-	          }
-	        });
-
-	        // comparisonChart.update();
-	      }.bind(this), 0);
-	    }.bind(this));
-
 	    return React.createElement(
 	      'div',
 	      { className: 'comparison' },
@@ -36638,7 +36605,6 @@
 	    var zip = store.zipcode_ranking;
 	    var cuisine = store.cuisine_ranking;
 
-	    debugger;
 	    var data = {
 	      boroRecent: Math.round(100 - (boro.recent.indexOf(store.calc.last) / boro.recent.length).toFixed(2) * 100),
 	      boroMice: Math.round(100 - (boro.mice.indexOf(calc.mice_percentage) / boro.mice.length).toFixed(2) * 100),
@@ -36703,6 +36669,33 @@
 	        )
 	      ),
 	      React.createElement('p', null),
+	      React.createElement(
+	        'span',
+	        { className: 'overview-address' },
+	        React.createElement('i', { className: 'fa fa-building fa-border' }),
+	        store.building,
+	        ' ',
+	        store.street,
+	        ' ',
+	        store.boro,
+	        ', NY ',
+	        store.zipcode,
+	        React.createElement('br', null),
+	        React.createElement('i', { className: 'fa fa-phone fa-border' }),
+	        store.phone,
+	        ' ',
+	        React.createElement('br', null),
+	        React.createElement('i', { className: 'fa fa-cutlery fa-border' }),
+	        ' ',
+	        store.cuisine_type,
+	        React.createElement('br', null),
+	        React.createElement(
+	          'a',
+	          { href: '#', onClick: this.findOtherLikeThis },
+	          'Find other restaurants like this in your area'
+	        )
+	      ),
+	      React.createElement('hr', null),
 	      React.createElement(
 	        'table',
 	        null,
@@ -36888,7 +36881,7 @@
 	      React.createElement(
 	        'span',
 	        { className: 'store-name' },
-	        'Percentile of restaurants that ',
+	        'Percent of restaurants that ',
 	        store.name,
 	        ' is greater than or equal to'
 	      ),
@@ -36898,21 +36891,25 @@
 	        React.createElement(
 	          'tbody',
 	          null,
-	          React.createElement('th', { className: 'subject', colSpan: '2' }),
 	          React.createElement(
-	            'th',
+	            'tr',
 	            null,
-	            store.zipcode
-	          ),
-	          React.createElement(
-	            'th',
-	            null,
-	            store.boro
-	          ),
-	          React.createElement(
-	            'th',
-	            null,
-	            store.cuisine_type
+	            React.createElement('th', { className: 'subject', colSpan: '2' }),
+	            React.createElement(
+	              'th',
+	              null,
+	              store.zipcode
+	            ),
+	            React.createElement(
+	              'th',
+	              null,
+	              store.boro
+	            ),
+	            React.createElement(
+	              'th',
+	              null,
+	              store.cuisine_type
+	            )
 	          ),
 	          React.createElement(
 	            'tr',
@@ -37796,7 +37793,7 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;!function() {
 	  var d3 = {
-	    version: "3.5.15"
+	    version: "3.5.16"
 	  };
 	  var d3_arraySlice = [].slice, d3_array = function(list) {
 	    return d3_arraySlice.call(list);
@@ -38416,9 +38413,10 @@
 	      return d3_selectAll(selector, this);
 	    };
 	  }
+	  var d3_nsXhtml = "http://www.w3.org/1999/xhtml";
 	  var d3_nsPrefix = {
 	    svg: "http://www.w3.org/2000/svg",
-	    xhtml: "http://www.w3.org/1999/xhtml",
+	    xhtml: d3_nsXhtml,
 	    xlink: "http://www.w3.org/1999/xlink",
 	    xml: "http://www.w3.org/XML/1998/namespace",
 	    xmlns: "http://www.w3.org/2000/xmlns/"
@@ -38601,7 +38599,7 @@
 	  function d3_selection_creator(name) {
 	    function create() {
 	      var document = this.ownerDocument, namespace = this.namespaceURI;
-	      return namespace && namespace !== document.documentElement.namespaceURI ? document.createElementNS(namespace, name) : document.createElement(name);
+	      return namespace === d3_nsXhtml && document.documentElement.namespaceURI === d3_nsXhtml ? document.createElement(name) : document.createElementNS(namespace, name);
 	    }
 	    function createNS() {
 	      return this.ownerDocument.createElementNS(name.space, name.local);
@@ -49593,17 +49591,15 @@
 	    return { search: "", searching: "", results: [] };
 	  },
 	  componentDidMount: function () {
-	    // this.storeListener = StoreStore.addListener(this._onStoreChange);
 	    this.searchListener = SearchStore.addListener(this._onSearchChange);
 	  },
 	  linkHandler: function (e) {
-	    function yelpCallback() {
-	      // this.setState({ searching: "Done!"});
-	    };
+	    e.preventDefault();
 	    this.setState({ search: "", results: [] });
-	    this.history.pushState(null, "#/rest/" + e.currentTarget.id, {});
-	    ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this));
+	    console.log(e.currentTarget.id);
+	    ApiUtil.fetchStore(e.currentTarget.id);
 	    SearchActions.clearResults();
+	    this.history.pushState(null, "/rest/" + e.currentTarget.id, {});
 
 	    $('.drop-down').css("display", "none");
 	  },

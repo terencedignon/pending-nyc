@@ -87,7 +87,7 @@ var Overview = React.createClass({
     var cuisine = store.cuisine_ranking;
 
 
-    debugger
+
     var data = {
       boroRecent:  Math.round(100 - (boro.recent.indexOf(store.calc.last) / boro.recent.length).toFixed(2) * 100),
       boroMice: Math.round(100 - (boro.mice.indexOf(calc.mice_percentage) / boro.mice.length).toFixed(2) * 100),
@@ -141,6 +141,13 @@ var Overview = React.createClass({
       <span className="overview-holder">
         <span className="store-name">{this.props.store.name} Overview: <span className="question-highlight">{this.props.store.calc.score}</span></span><p/>
 
+        <span className="overview-address">
+              <i className="fa fa-building fa-border"></i>{store.building} {store.street} {store.boro}, NY {store.zipcode}<br/>
+              <i className="fa fa-phone fa-border"></i>{store.phone} <br/>
+              <i className="fa fa-cutlery fa-border"></i> {store.cuisine_type}<br/>
+              <a href="#" onClick={this.findOtherLikeThis}>Find other restaurants like this in your area</a>
+        </span>
+        <hr/>
         <table>
 
           <tbody>
@@ -262,18 +269,19 @@ var Overview = React.createClass({
         </table>
         <hr/>
 
-      <span className="store-name">Percentile of restaurants that {store.name} is greater than or equal to</span>
+      <span className="store-name">Percent of restaurants that {store.name} is greater than or equal to</span>
 
           <table>
 
             <tbody>
-
+              <tr>
               <th className="subject" colSpan="2">
 
               </th>
               <th>{store.zipcode}</th>
               <th>{store.boro}</th>
               <th>{store.cuisine_type}</th>
+              </tr>
               <tr className={this.translate(data.last)}>
                 <td className="thumbs">
 

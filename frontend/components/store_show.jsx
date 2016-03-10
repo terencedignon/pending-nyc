@@ -29,7 +29,7 @@ var StoreShow = React.createClass({
   _onStoreChange: function () {
     if (this.state.store !== StoreStore.getStore()) {
       this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
-      this.setChart();
+      // this.setChart();
       this.chartUpdate();
     };
   },
@@ -175,7 +175,14 @@ var StoreShow = React.createClass({
       violations = <Violations key={Math.random()} inspections={this.state.store.inspections} />
         //CHART
         data = this.chartData();
-        var options = { scaleShowGridLines: false, barStrokeWidth: 0.5};
+        // cornerRadius: 0
+        // tooltipCaretSize: 8,
+        var options = {
+          scaleShowGridLines: false,
+          barStrokeWidth: 0.5,
+          tooltipFontFamily: "Helvetica",
+
+        };
         // legend = <span dangerouslySetInnerHTML={{ __html: this.state.legend }} />;
         barChart = <BarChart ref="chart" className="bar-chart" data={data} options={options} width={500} height={150}fill={'#3182bd'} />
 var grade = <img src={this.selectGrade()}/>;
