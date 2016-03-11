@@ -37571,7 +37571,7 @@
 	    return React.createElement(
 	      "footer",
 	      null,
-	      "developed by",
+	      "developed by ",
 	      React.createElement(
 	        "a",
 	        { href: "http://terencedignon.com" },
