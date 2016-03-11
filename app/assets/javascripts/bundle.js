@@ -44,12 +44,12 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var ReactDOM = __webpack_require__(212);
+	var React = __webpack_require__(5);
 	var Router = __webpack_require__(1).Router;
 	var IndexRoute = __webpack_require__(1).IndexRoute;
 	var Route = __webpack_require__(1).Route;
 	var History = __webpack_require__(207).createHashHistory();
-	var ReactDOM = __webpack_require__(212);
-	var React = __webpack_require__(5);
 
 	var StoreShow = __webpack_require__(213);
 	var StoreIndex = __webpack_require__(259);
@@ -67,7 +67,6 @@
 	      'div',
 	      { className: 'body-container' },
 	      React.createElement(Header, null),
-	      React.createElement(Sidebar, null),
 	      React.createElement(
 	        'div',
 	        { className: 'container' },

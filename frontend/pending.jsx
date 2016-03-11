@@ -1,9 +1,9 @@
+var ReactDOM = require('react-dom');
+var React = require('react');
 var Router = require('react-router').Router;
 var IndexRoute = require('react-router').IndexRoute;
 var Route = require('react-router').Route;
 var History = require('history').createHashHistory();
-var ReactDOM = require('react-dom');
-var React = require('react');
 
 var StoreShow = require('./components/store_show.jsx');
 var StoreIndex = require('./components/store_index.jsx');
@@ -18,7 +18,6 @@ var App = React.createClass({
     return (
       <div className="body-container">
         <Header />
-        <Sidebar />
           <div className="container">
               <div className="main">
                 {this.props.children}
