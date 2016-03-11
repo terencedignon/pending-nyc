@@ -37122,11 +37122,10 @@
 	  getInitialState: function () {
 	    return { searching: false, markers: [], markerSetting: "average", newMarkers: [], zipcode: "", boro: "", cuisine_type: "", name: "" };
 	  },
+
 	  componentDidMount: function () {
 
-	    // setInterval(function () {
-	    //   this.setState({ markers: MapStore.getMainMap() });
-	    // }.bind(this), 3000);
+	    this.setState({ markers: MapStore.getMainMap() });
 
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
 	    this.mapListener = MapStore.addListener(this._onMapChange);
@@ -37140,16 +37139,17 @@
 
 	    });
 
-	    // google.maps.event.addListener(map, 'tilesloaded', function () {
 	    setTimeout(function () {
-
 	      var options = { bounds: mainMap.getBounds().toJSON(), query: {
 	          boro: this.state.boro,
 	          zipcode: this.state.zipcode,
 	          name: this.state.name,
 	          cuisine_type: this.state.cuisine_type
-	        } };
+	        }
+	      };
+
 	      ApiUtil.fetchMainMap(options);
+
 	      setTimeout(function () {
 	        this._onMapChange();
 	      }.bind(this), 10000);
@@ -37161,38 +37161,25 @@
 	          zipcode: this.state.zipcode,
 	          name: this.state.name,
 	          cuisine_type: this.state.cuisine_type
-	        } };
-
+	        }
+	      };
 	      ApiUtil.fetchMainMap(options);
 	      setTimeout(function () {
 	        this._onMapChange();
 	      }.bind(this), 500);
 	    }.bind(this));
-
-	    //
-	    // var panorama;
-	    // panorama = new google.maps.StreetViewPanorama(
-	    //   document.getElementById('street-view'),
-	    //   {
-	    //     position: coordinates,
-	    //     disableDefaultUI: true,
-	    //     streetViewControl: false,
-	    //     pov: {heading: 165, pitch: 0},
-	    //     zoom: 1
-	    //   });
 	  },
 
 	  componentWillUnmount: function () {
 	    this.storeListener.remove();
 	    this.mapListener.remove();
 	  },
+
 	  _onMapChange: function () {
 
-	    // this.setState({ markers: [] });
 	    var newMarkers = [];
-	    // this.setState({markers: []});
-	    MapStore.getMainMap().forEach(function (marker) {
 
+	    MapStore.getMainMap().forEach(function (marker) {
 	      var icon;
 
 	      if (marker.calc.average <= 13) {
@@ -37202,7 +37189,12 @@
 	      } else {
 	        icon = "http://i.imgur.com/ejjOVXB.png";
 	      }
-	      var coordinates = { lat: Number(marker.lat), lng: Number(marker.lng) };
+
+	      var coordinates = {
+	        lat: Number(marker.lat),
+	        lng: Number(marker.lng)
+	      };
+
 	      var newMarker = new google.maps.Marker({
 	        position: coordinates,
 	        map: mainMap,
@@ -37228,22 +37220,27 @@
 
 	    this.setState({ markers: newMarkers });
 	  },
+
 	  changeName: function (e) {
 	    this.setState({ name: e.currentTarget.value });
 	    this.mapUpdate();
 	  },
+
 	  changeCuisine: function (e) {
 	    this.setState({ cuisine_type: e.currentTarget.value });
 	    this.mapUpdate();
 	  },
+
 	  changeZipcode: function (e) {
 	    this.setState({ zipcode: e.currentTarget.value });
 	    this.mapUpdate();
 	  },
+
 	  changeBoro: function (e) {
 	    this.setState({ boro: e.currentTarget.value });
 	    this.mapUpdate();
 	  },
+
 	  mapUpdate: function () {
 	    clearInterval(this.timeout);
 	    this.timeout = setInterval(function () {
@@ -37262,16 +37259,15 @@
 	      clearInterval(this.timeout);
 	    }.bind(this), 1000);
 	  },
-	  changeSettings: function (e) {
 
+	  changeSettings: function (e) {
 	    this.setState({ markerSetting: e.currentTarget.id });
 	  },
-	  _onStoreChange: function () {
-	    // this.setState({map: StoreStore.getMap()});
 
-	  },
-	  render: function () {
-	    var restaurants = MapStore.getMainMap().map(function (store) {
+	  _onStoreChange: function () {},
+
+	  setRestaurants: function () {
+	    return MapStore.getMainMap().map(function (store) {
 	      return React.createElement(
 	        'div',
 	        { className: 'main-map-store' },
@@ -37295,10 +37291,10 @@
 	        )
 	      );
 	    });
+	  },
 
-	    // <div id="street-view"></div>
-	    // <i className="fa fa-reply"></i>
-	    // <input type="checkbox" name="cuisine" value="American"/>American<br/>
+	  render: function () {
+	    var restaurants = this.setRestaurants();
 
 	    return React.createElement(
 	      'div',
@@ -37318,10 +37314,7 @@
 	        React.createElement('div', { id: 'main-map' })
 	      )
 	    );
-	    // <hr/>
-	    // {restaurants}
 	  }
-
 	});
 
 	module.exports = Map;
@@ -49313,16 +49306,13 @@
 	  linkHandler: function (e) {
 	    e.preventDefault();
 	    this.setState({ search: "", results: [] });
-
 	    ApiUtil.fetchStore(e.currentTarget.id);
 	    SearchActions.clearResults();
 	    this.history.pushState(null, "/rest/" + e.currentTarget.id, {});
-
 	    $('.drop-down').css("display", "none");
 	  },
 
 	  componentWillUnmount: function () {
-	    // this.storeListener.remove();
 	    this.searchListener.remove();
 	  },
 
@@ -49355,14 +49345,12 @@
 	  },
 
 	  hideSettings: function () {
-
 	    $('.settings-drop-down').css("display", "none");
 	  },
 
 	  _onStoreChange: function () {},
 
 	  _onSearchChange: function () {
-
 	    this.setState({ results: SearchStore.all() });
 	  },
 
@@ -49377,8 +49365,8 @@
 	  },
 
 	  search: function (e) {
-	    clearInterval(this.searchInterval);
 
+	    clearInterval(this.searchInterval);
 	    this.setState({ searching: React.createElement('i', { className: 'fa fa-circle-o-notch fa-spin fa-lg' }) });
 	    query = e.currentTarget.value;
 	    this.setState({ search: query });
@@ -49392,7 +49380,7 @@
 	        this.setState({ searching: "" });
 	      }.bind(this), 1000);
 	    }
-	    // this.setState({ searching: "Searching..."});
+
 	    ApiUtil.search(query, callback.bind(this));
 	    clearInterval(this.searchInterval);
 	  },
@@ -49406,12 +49394,10 @@
 	    $(window).scroll(function () {
 	      if ($(this).scrollTop() > 1) {
 	        $('header').css("opacity", "0.9");
-	        $('.header-wrapper').css("height", "50px");
 	        $('header').css("border-bottom", "2px solid #f7f7f7");
 	      } else {
 	        $('header').css("opacity", "1");
 	        $('header').css("border-bottom", "0");
-	        $('.header-wrapper').css("padding-top", "5px");
 	      }
 	    });
 	  },

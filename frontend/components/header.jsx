@@ -18,16 +18,13 @@ var Header = React.createClass({
   linkHandler: function (e) {
     e.preventDefault();
     this.setState({ search: "", results: [] });
-
     ApiUtil.fetchStore(e.currentTarget.id);
     SearchActions.clearResults();
     this.history.pushState(null, "/rest/" + e.currentTarget.id, {});
-
     $('.drop-down').css("display", "none");
   },
 
   componentWillUnmount: function () {
-    // this.storeListener.remove();
     this.searchListener.remove();
   },
 
@@ -52,17 +49,13 @@ var Header = React.createClass({
   },
 
   hideSettings: function () {
-
     $('.settings-drop-down').css("display", "none");
-
   },
 
   _onStoreChange: function () { },
 
   _onSearchChange: function () {
-
     this.setState({ results: SearchStore.all() });
-
   },
 
   redirectHome: function () {
@@ -76,8 +69,8 @@ var Header = React.createClass({
   },
 
   search: function (e) {
-    clearInterval(this.searchInterval);
 
+    clearInterval(this.searchInterval);
     this.setState({ searching: <i className="fa fa-circle-o-notch fa-spin fa-lg"></i>})
     query = e.currentTarget.value;
     this.setState({ search: query });
@@ -91,7 +84,7 @@ var Header = React.createClass({
         this.setState({ searching: ""});
       }.bind(this), 1000);
     }
-    // this.setState({ searching: "Searching..."});
+
     ApiUtil.search(query, callback.bind(this));
     clearInterval(this.searchInterval);
   },
@@ -101,16 +94,14 @@ var Header = React.createClass({
   },
 
   setHeaderAnimation: function () {
-
+    
     $(window).scroll(function() {
       if ($(this).scrollTop() > 1) {
         $('header').css("opacity", "0.9");
-        $('.header-wrapper').css("height", "50px");
         $('header').css("border-bottom", "2px solid #f7f7f7");
       } else {
         $('header').css("opacity", "1");
         $('header').css("border-bottom", "0");
-        $('.header-wrapper').css("padding-top", "5px");
       }
     });
 
