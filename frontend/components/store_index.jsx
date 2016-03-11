@@ -1,18 +1,16 @@
 var React = require('react');
-var ApiUtil = require('../util/api_util.js');
+var ApiUtil = require('../util/api_util');
 var StoreStore = require('../stores/store_store.js');
+var SearchStore = require('../stores/search_store.js');
 var SearchActions = require('../actions/search_actions.js');
-var Map = require('./main_map.jsx');
 var StoreActions = require('../actions/store_actions.js');
-var BarChart = require('react-d3/barchart').BarChart;
-var LineChart = require('react-d3/linechart').LineChart;
-var AreaChart = require('react-d3/areachart').AreaChart;
 
 var StoreIndex = React.createClass({
   getInitialState: function () {
     return { mostVisited: [], trending: [] };
   // },
 },
+
   componentDidMount: function () {
     // navigator.geolocation.getCurrentPosition(function (data) {
     //   StoreActions.getUserLocation(data);
@@ -26,17 +24,17 @@ var StoreIndex = React.createClass({
     }, 60000);
     this.searchListener = SearchStore.addListener(this._onSearchChange);
   },
+
   componentWillUnmount: function () {
     this.storeListener.remove();
     clearInterval(this.trendingInterval);
     this.searchListener.remove();
   },
+
   _onStoreChange: function () {
     this.setState({ mostVisited: StoreStore.getMostVisited(), trending: StoreStore.getTrending() });
   },
-  // _onSearchChange: function () {
-  //   this.setState({ results: SearchStore.all() });
-  // },
+
   hoverImage: function (e) {
     // var store = this.state.mostVisited[e.currentTarget.id];
     // $(e.currentTarget).css("opacity", "0.75");
@@ -60,45 +58,25 @@ var StoreIndex = React.createClass({
       mostVisitedItems = this.state.mostVisited.map(function(visited) {
         return <a key={Math.random()} href={"#/rest/" + visited.id}><span className="trending-item" key={Math.random()}>{visited.name}</span></a>;
       });
-      // mostVisitedList = this.state.mostVisited.map(function(store, index) {
-      //   var url = "";
-      //   if (store.image_url) {
-      //     url = store.image_url.replace("ms.jpg", "ls.jpg");
-      //   } else {
-      //     url = "https://cocoavillagepublishing.com/sites/cocoavillagepublishing.com/files/legacy/images/square250-sizeexample-250x250.jpg";
-      //   }
-      //   return <li key={Math.random()}>
-      //     <a href={"#/rest/" + store.id}><img id={index} onMouseOver={this.hoverImage} src={url}/>
-      //     <span className='image-hover-info'>{store.name}</span></a>
-      //     </li>;
-    }
 
-    var barData = [
-      {
-        "name": "Series A",
-        "values": [
-          { "x": "AVG", "y":  91},
-          { "x": 2, "y": 290},
-          { "x": 3, "y": 300},
-        ]
-      },
-      {
-        "name": "Series B",
-        "values": [
-          { "x": "AVG", "y":  9},
-          { "x": 2, "y": 49},
-          { "x": 3, "y": 62},
-        ]
-      },
-      {
-        "name": "Series C",
-        "values": [
-          { "x": "AVG", "y":  14},
-          { "x": 2, "y": 77},
-          { "x": 3, "y": 80},
-        ]
-      }
-    ];
+      mostVisitedList = this.state.mostVisited.map(function(store, index) {
+        console.log("inside");
+        console.log(this.StoreStore.getMostVisited());
+        var url = "";
+        if (store.image_url) {
+          url = store.image_url.replace("ms.jpg", "ls.jpg");
+        } else {
+          url = "https://cocoavillagepublishing.com/sites/cocoavillagepublishing.com/files/legacy/images/square250-sizeexample-250x250.jpg";
+        }
+
+        return (
+          <li key={Math.random()}>
+          <a href={"#/rest/" + store.id}><img id={index} onMouseOver={this.hoverImage} src={url}/>
+          <span className='image-hover-info'>{store.name}</span></a>
+          </li>
+        );
+      });
+    }
 
 
     return (
@@ -106,13 +84,14 @@ var StoreIndex = React.createClass({
         <div className="trend-holder">
 
           <span className="trending">Most Active:</span>
-          {mostVisitedItems}<hr/>
+        <hr/>
 
           <span className="trending">Trending:</span>
           {trendItems}<p/>
 
       </div>
       <div className="show-index">
+        {mostVisitedList}
         <div className="intro-header">
 
           <span className="big-header">NYC restaurant grade analytics</span><p/>

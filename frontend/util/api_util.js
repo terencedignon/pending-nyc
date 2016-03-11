@@ -3,7 +3,6 @@ var StoreActions = require('../actions/store_actions.js');
 var MapActions = require('../actions/map_actions.js');
 
 var ApiUtil = {
-
   fetchBrowse: function(query) {
     $.ajax({
       method: "GET",

@@ -104,7 +104,7 @@ class Api::StoresController < ApplicationController
   # end
 
   def most_visited
-    @stores = Store.all.order(visit_count: :desc).page(params[:page]).per(3)
+    @stores = Store.all.order(visit_count: :desc).limit(3)
     render :index
   end
 

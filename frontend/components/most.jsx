@@ -7,13 +7,16 @@ var Most = React.createClass({
   getInitialState: function () {
     return { exclude: 5, queryText: "Aggregrate Score", pagination: 20, best: "highest", query: "score", most: [], boro: "", street: "", autoZip: "", result: "50", zipcode: "", cuisine_type: ""}
   },
+
   componentDidMount: function () {
     ApiUtil.fetchMost(this.state);
     this.storeListener = StoreStore.addListener(this._onStoreChange);
   },
+
   componentWillUnmount: function () {
     this.storeListener.remove();
   },
+
   formatPhone: function(n) {
     if (!n) return "";
     return [
@@ -22,6 +25,7 @@ var Most = React.createClass({
       n.slice(6)
     ].join("-")
   },
+
   boroInput: function (e) {
     e.preventDefault();
     var boro = e.currentTarget.value;
