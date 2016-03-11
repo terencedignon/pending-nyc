@@ -120,11 +120,19 @@ var Comparison = React.createClass({
        datasets: [
         {
           label: this.props.store.name,
-          data: storeData
+          data: storeData,
+          fillColor: "white",
+          strokeColor: "#222",
+          highlightFill: "white",
+          highlightStroke: "black",
         },
         {
           label: this.state.comparison.name,
-          data: compData
+          data: compData,
+          fillColor: "#f7f7f7",
+          strokeColor: "#777",
+          highlightFill: "#eeeeee",
+          highlightStroke: "black"
         }
       ]
     };
