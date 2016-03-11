@@ -45,27 +45,6 @@ SearchStore.__onDispatch = function (payload) {
       this.__emitChange();
       break;
   }
-  //
-  // if (payload.actionType === SearchConstants.FETCH_SEARCH) {
-  //   _results = payload.data;
-  //   this.__emitChange();
-  // } else if (payload.actionType === SearchConstants.CLEAR_RESULTS) {
-  //   _results = [];
-  //   this.__emitChange();
-  // } else if (payload.actionType === SearchConstants.FETCH_COMPARISON) {
-  //   _comparison = payload.data;
-  //   this.__emitChange();
-  // } else if (payload.actionType === SearchConstants.CLEAR_COMPARISON) {
-  //   _comparison = [];
-  // } else if (payload.actionType === SearchConstants.AUTO_COMPLETE) {
-  //   _autoComplete = payload.data;
-  //   this.__emitChange();
-  //
-  // } else if (payload.actionType === SearchConstants.FETCH_MOST) {
-  //   _most = [];
-  //   this.__emitChange();
-  // }
-
 };
 
 module.exports = SearchStore;
