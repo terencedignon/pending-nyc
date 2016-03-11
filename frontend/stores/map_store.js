@@ -15,24 +15,19 @@ MapStore.getMainMap = function () {
 };
 
 MapStore.__onDispatch = function (payload) {
+
   switch (payload.actionType) {
+
     case MapConstants.FETCH_MAP:
       _map = payload.data;
       this.__emitChange();
       break;
+
     case MapConstants.FETCH_MAIN_MAP:
       _mainMap = payload.data;
       break;
-  }
-  // 
-  // if (payload.actionType === MapConstants.FETCH_MAP) {
-  //   _map = payload.data;
-  //   this.__emitChange();
-  // } else if (payload.actionType === MapConstants.FETCH_MAIN_MAP) {
-  //   _mainMap = payload.data;
-  //   // this.__emitChange();
-  // }
 
+  }
 };
 
 module.exports = MapStore;
