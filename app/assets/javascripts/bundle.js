@@ -47,24 +47,18 @@
 	var Router = __webpack_require__(1).Router;
 	var IndexRoute = __webpack_require__(1).IndexRoute;
 	var Route = __webpack_require__(1).Route;
-	var history = __webpack_require__(207).createHashHistory();
-	BrowserHistory = __webpack_require__(207);
+	var History = __webpack_require__(207).createHashHistory();
 	var ReactDOM = __webpack_require__(212);
 	var React = __webpack_require__(5);
+
 	var StoreShow = __webpack_require__(213);
 	var StoreIndex = __webpack_require__(259);
-	var SearchStore = __webpack_require__(254);
-	var StoreStore = __webpack_require__(222);
 	var Header = __webpack_require__(295);
-	var Sidebar = __webpack_require__(296);
 	var Map = __webpack_require__(260);
-	var MapStore = __webpack_require__(256);
-	var Browse = __webpack_require__(297);
 	var Footer = __webpack_require__(298);
 	var Most = __webpack_require__(299);
 	var About = __webpack_require__(300);
 
-	// <Sidebar />
 	var App = React.createClass({
 	  displayName: 'App',
 
@@ -73,6 +67,7 @@
 	      'div',
 	      { className: 'body-container' },
 	      React.createElement(Header, null),
+	      React.createElement(Sidebar, null),
 	      React.createElement(
 	        'div',
 	        { className: 'container' },
@@ -88,16 +83,14 @@
 
 	});
 
-	// <IndexRoute component={StoreIndex}
 	var route = React.createElement(
 	  Router,
-	  { history: history },
+	  { history: History },
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
 	    React.createElement(IndexRoute, { component: StoreIndex }),
 	    React.createElement(Route, { path: 'rest/:id', component: StoreShow }),
-	    React.createElement(Route, { path: 'browse', component: Browse }),
 	    React.createElement(Route, { path: 'about', component: About }),
 	    React.createElement(Route, { path: 'top', component: Most }),
 	    React.createElement(Route, { path: 'map', component: Map })
@@ -49741,188 +49734,8 @@
 	module.exports = Header;
 
 /***/ },
-/* 296 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(5);
-	var SearchStore = __webpack_require__(254);
-	// var History = require('react-router').History;
-	var ApiUtil = __webpack_require__(214);
-
-	var SideBar = React.createClass({
-	  displayName: 'SideBar',
-
-	  // mixins: [History],
-	  getInitialState: function () {
-	    return { results: [] };
-	  },
-	  componentDidMount: function () {
-	    // this.storeListener = StoreStore.addListener(this._onStoreChange);
-	    this.searchListener = SearchStore.addListener(this._onSearchChange);
-	  },
-	  linkHandler: function (e) {
-	    function yelpCallback(phone) {
-	      ApiUtil.getYelp(phone);
-	    };
-	    ApiUtil.fetchStore(e.currentTarget.id, yelpCallback.bind(this));
-	  },
-	  componentWillUnmount: function () {
-	    // this.storeListener.remove();
-	    this.searchListener.remove();
-	  },
-	  _onStoreChange: function () {},
-	  _onSearchChange: function () {
-	    this.setState({ results: SearchStore.all() });
-	  },
-
-	  render: function () {
-	    var listedResults;
-	    if (this.state.results.length > 0) {
-	      listedResults = this.state.results.map(function (result) {
-	        return React.createElement(
-	          'li',
-	          { key: Math.random() },
-	          React.createElement(
-	            'a',
-	            { href: true, onClick: this.linkHandler, href: '#', id: result.id, href: "#/rest/" + result.id },
-	            result.name
-	          )
-	        );
-	      }.bind(this));
-	    } else {
-	      listedResults = React.createElement('li', null);
-	    }
-
-	    return React.createElement(
-	      'div',
-	      { className: 'sidebar' },
-	      React.createElement(
-	        'ul',
-	        null,
-	        listedResults
-	      )
-	    );
-	  }
-
-	});
-
-	module.exports = SideBar;
-
-/***/ },
-/* 297 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(5);
-	var ApiUtil = __webpack_require__(214);
-	var StoreStore = __webpack_require__(222);
-
-	var Browse = React.createClass({
-	  displayName: 'Browse',
-
-	  getInitialState: function () {
-	    return { filters: StoreStore.getFilters(), filter: "", browse: [] };
-	  },
-	  componentDidMount: function () {
-	    this.storeListener = StoreStore.addListener(this._onStoreChange);
-	    ApiUtil.fetchFilters();
-	  },
-	  componentWillUnmount: function () {
-	    this.storeListener.remove();
-	  },
-	  isSelected: function (el) {
-	    if (el === this.state.filter) return "selected";
-	    return "";
-	  },
-	  fetchBrowse: function (e) {
-	    var query = {};
-	    query = [this.state.filter, e.currentTarget.id];
-
-	    ApiUtil.fetchBrowse(query);
-	  },
-	  headerHandler: function (e) {
-	    this.setState({ filter: e.currentTarget.id });
-	  },
-	  _onStoreChange: function () {
-	    this.setState({ filters: StoreStore.getFilters(), browse: StoreStore.getBrowse() });
-	  },
-	  render: function () {
-	    var detailBrowse = React.createElement('div', null);
-	    var detailResults = React.createElement('div', null);
-	    if (this.state.filter !== "") {
-	      detailBrowse = this.state.filters[this.state.filter].map(function (filter) {
-	        return React.createElement(
-	          'div',
-	          { onClick: this.fetchBrowse, id: filter, className: 'browse-second-level', key: Math.random() },
-	          filter
-	        );
-	      }.bind(this));
-	    }
-	    if (this.state.browse.length !== 0) {
-
-	      detailResults = this.state.browse.map(function (store) {
-
-	        return React.createElement(
-	          'div',
-	          { className: 'browse-list-item', key: Math.random() },
-	          React.createElement('span', { className: 'badge' }),
-	          store.name
-	        );
-	      });
-	      detailResults = React.createElement(
-	        'div',
-	        { className: 'list-holder' },
-	        ' ',
-	        detailResults,
-	        ' '
-	      );
-	    }
-
-	    // <span className="browse-intro">Browse By:</span><br/>
-
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'span',
-	          { onClick: this.headerHandler, id: 'boro', className: "browse-header " + this.isSelected("boro") },
-	          'Borough'
-	        ),
-	        React.createElement(
-	          'span',
-	          { onClick: this.headerHandler, id: 'zipcode', className: "browse-header " + this.isSelected("zipcode") },
-	          'Zipcode'
-	        ),
-	        React.createElement(
-	          'span',
-	          { onClick: this.headerHandler, id: 'cuisine_type', className: "browse-header " + this.isSelected("cuisine_type") },
-	          'Cuisine'
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'browse-second' },
-	        React.createElement(
-	          'div',
-	          { className: 'detail-browse' },
-	          detailBrowse
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'detail-holder' },
-	          detailResults
-	        )
-	      )
-	    );
-	  }
-
-	});
-
-	module.exports = Browse;
-
-/***/ },
+/* 296 */,
+/* 297 */,
 /* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
