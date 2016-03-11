@@ -6,59 +6,57 @@ var StoreStore = require('../stores/store_store.js');
 var SearchActions = require('../actions/search_actions.js');
 var StoreActions = require('../actions/store_actions.js');
 var BarChart = require('react-chartjs').Bar;
-var LineChart = require('react-chartjs').Line;
-// var BarChart = require('react-chartjs').Bar;
 
 var Comparison = React.createClass({
+
   getInitialState: function () {
     return { legend: "", data: {}, query: "", comparisons: [], comparisonText: "", comparison: {} };
   },
-  componentDidMount: function () {
-    setTimeout(function () {
 
+  componentDidMount: function () {
+
+    setTimeout(function () {
       StoreActions.getComparison(this.props.store.cuisine_calc, "all other restaurants that serve " + this.props.store.cuisine_type);
       this.setState({ comparisonText: "all other restaurants that serve " + this.props.store.cuisine_type });
-      // this.setState({ comparison: this.props.store.zipcode_calc });
-    }.bind(this), 500);
-
-
-    setTimeout(function () {
       this.chartUpdate();
-    }.bind(this), 1000);
+    }.bind(this), 500);
 
     this.searchListener = SearchStore.addListener(this.onSearchChange);
     this.storeListener = StoreStore.addListener(this.onStoreChange);
   },
+
   componentWillUnmount: function () {
     this.searchListener.remove();
     this.storeListener.remove();
   },
+
   onSearchChange: function () {
     this.setState({ comparisons: SearchStore.comparison() });
   },
-  getComparisonText: function (comparison) {
-  },
+
   onStoreChange: function () {
     var comparison = StoreStore.getComparison();
-
 
     if (comparison !== []) {
       this.setState({ comparison: StoreStore.getComparison(), comparisonText: StoreStore.getComparisonType() });
       this.setUpChart();
-      // this.refs.comparison.clear();
       this.chartUpdate();
     }
   },
+
   inputChange: function (e) {
+
     clearInterval(this.comparisonQuery);
     this.setState({ query: e.currentTarget.value });
     this.comparisonQuery = setInterval(this.autoSearch, 500);
 
   },
+
   autoSearch: function () {
     ApiUtil.comparison(this.state.query);
     clearInterval(this.comparisonQuery);
   },
+
   comparisonHandler: function (e) {
     e.preventDefault();
     ApiUtil.fetchComparison(e.currentTarget.id);
@@ -67,48 +65,26 @@ var Comparison = React.createClass({
   chartUpdate: function () {
 
     var chart = this.refs.comparison.getChart();
+    //set new label
     chart.datasets[1].label = this.state.comparison.name;
 
-    // this.setState({ legend: chart.generateLabels()})
     var colors = {
-      A: "rgba(70, 130, 180, 0.5)",
-      Ah: "rgba(70, 130, 180, 1)",
-      B: "rgba(59,187,48, 0.5)",
-      Bh: "rgba(59,187,48, 1)",
-      C: "rgba(128, 0, 0, 0.75)",
-      Ch: "rgba(128, 0, 0, 1)"
+      cFill: "rgba(128, 0, 0, 0.75)",
+      cStroke: "rgba(128, 0, 0, 1)"
     }
 
-    chart.datasets[0].bars.forEach(function(bar, index) {
+    chart.datasets[0].bars.forEach(function(bar, index) {    
       if (bar.value > chart.datasets[1].bars[index].value) {
-            bar.fillColor = colors["C"];
-            bar.strokeColor = colors["C"];
-            bar.highlightFill = colors["Ch"];
-            bar.highlightStroke = colors["Ch"];
+            bar.fillColor = colors["cFill"];
+            bar.strokeColor = colors["cFill"];
+            bar.highlightFill = colors["cStroke"];
+            bar.highlightStroke = colors["cStroke"];
       } else {
         bar.fillColor = "white";
         bar.strokeColor = "#777777";
         bar.highlightFill = "white";
         bar.highlightStroke = "#222222";
-
       }
-
-    //   if (bar.value <= 13) {
-    //     bar.fillColor = colors["A"];
-    //     bar.strokeColor = colors["A"];
-    //     bar.highlightFill = colors["Ah"];
-    //     bar.highlightStroke = colors["Ah"];
-    //   } else if (bar.value <= 27) {
-    //     bar.fillColor = colors["B"];
-    //     bar.strokeColor = colors["B"];
-    //     bar.highlightFill = colors["Bh"];
-    //     bar.highlightStroke = colors["Bh"];
-    //   } else {
-    //     bar.fillColor = colors["C"];
-    //     bar.strokeColor = colors["C"];
-    //     bar.highlightFill = colors["Ch"];
-    //     bar.highlightStroke = colors["Ch"];
-    // }
   });
   chart.update();
   this.forceUpdate();
