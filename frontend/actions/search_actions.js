@@ -29,16 +29,18 @@ var SearchActions = {
       data: data
     });
   },
+
   autoComplete: function (data) {
     Dispatcher.dispatch({
       actionType: SearchConstants.AUTO_COMPLETE,
       data: data
     });
   },
+
   clearResults: function () {
     Dispatcher.dispatch({
-    actionType: SearchConstants.CLEAR_RESULTS
-  });
+      actionType: SearchConstants.CLEAR_RESULTS
+    });
   }
 };
 
