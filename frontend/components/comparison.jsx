@@ -73,7 +73,7 @@ var Comparison = React.createClass({
       cStroke: "rgba(128, 0, 0, 1)"
     }
 
-    chart.datasets[0].bars.forEach(function(bar, index) {    
+    chart.datasets[0].bars.forEach(function(bar, index) {
       if (bar.value > chart.datasets[1].bars[index].value) {
             bar.fillColor = colors["cFill"];
             bar.strokeColor = colors["cFill"];
@@ -92,17 +92,11 @@ var Comparison = React.createClass({
   },
 
   setUpChart: function () {
-    var labelStore = [];
-    var dataStore = [];
 
-    var labelComparison = [];
-    var dataComparison = [];
-
-    var labels = [
-      "AVG", "FIRST AVG", "MICE", "FLIES", "ROACHES"
-    ];
-
+    var labelStore, dataStore, labelComparison, dataComparison;
+    var labels = ["AVG", "SURPRISE", "MICE", "FLIES", "ROACHES"];
     var store = this.props.store.calc;
+    var comparison = this.state.comparison;
 
     var storeData = [
       store.average,
@@ -111,63 +105,39 @@ var Comparison = React.createClass({
       store.flies_percentage,
       store.roach_percentage
     ];
-    var comparison = this.state.comparison;
+
     if (typeof comparison.average === "undefined") comparison = this.state.comparison.calc;
-    var compData = [
-      comparison.average,
-      comparison.first_average,
-      Math.round((comparison.mice / comparison.inspections) * 100),
-      Math.round((comparison.flies / comparison.inspections) * 100),
-      Math.round((comparison.roaches / comparison.inspections) * 100)
-    ];
+      var compData = [
+        comparison.average,
+        comparison.first_average,
+        Math.round((comparison.mice / comparison.inspections) * 100),
+        Math.round((comparison.flies / comparison.inspections) * 100),
+        Math.round((comparison.roaches / comparison.inspections) * 100)
+      ];
 
+      // fillColor: "white",
+      // strokeColor: "#222",
+      // highlightFill: "white",
+      // highlightStroke: "black",
 
-    // this.props.store.inspections.forEach(function(inspect) {
-    //   var date = new Date(inspect.inspection_date);
-    //   var month = date.getMonth() + 1;
-    //   var year = date.getYear() + 1900;
-    //   labelStore.unshift(month + "/" + year);
-    //   // if (typeof inspect.score !== "number") { inspect.score = 0; }
-    //   dataStore.unshift(inspect.score);
-    //   // return {x: month + "/" + year, y: inspect.score};
-    // }.bind(this));
-    //
-    //
-    //
-    // this.state.comparison.inspections.forEach(function(inspect) {
-    //   var date = new Date(inspect.inspection_date);
-    //   var month = date.getMonth() + 1;
-    //   var year = date.getYear() + 1900;
-    //   labelComparison.unshift(month + "/" + year);
-    //   // if (typeof inspect.score !== "number") { inspect.score = 0; }
-    //   dataComparison.unshift(inspect.score);
-    //   // return {x: month + "/" + year, y: inspect.score};
-    // }.bind(this));
-
-
+      // fillColor: "#f7f7f7",
+      // strokeColor: "#777",
+      // highlightFill: "#eeeeee",
+      // highlightStroke: "black",
+      
     var dataset = {
-
       labels: labels,
-      datasets: [
+       datasets: [
         {
           label: this.props.store.name,
-          fillColor: "white",
-           strokeColor: "#222",
-           highlightFill: "white",
-         highlightStroke: "black",
           data: storeData
         },
         {
           label: this.state.comparison.name,
-          fillColor: "#f7f7f7",
-           strokeColor: "#777",
-           highlightFill: "#eeeeee",
-         highlightStroke: "black",
           data: compData
         }
       ]
     };
-
 
     // omitXLabels: true,
     var optionHash = {
@@ -181,22 +151,22 @@ var Comparison = React.createClass({
         barValueSpacing: 10,
         tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>kb"
     }
-    // var chart = new Chart($('div')).Bar(dataset, optionHash);
-    // legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-    // // scaleShowGridLines: false,
-    // debugger
+
     return <BarChart ref="comparison" key="comparison" className="comparison-chart" data={dataset} width={500} height={325} options={optionHash}/>;
-    // this.setState({ data: dataset })
-},
+  },
+
   resetComparison: function () {
     this.setState({comparison: []});
     SearchActions.clearComparison();
     StoreActions.clearComparison();
   },
+
   linkHandler: function (e) {
     ApiUtil.fetchStore(this.state.comparison.id);
   },
+
   setDefaultComparison: function (e) {
+
     e.preventDefault();
 
     var comparisonText;
@@ -212,12 +182,11 @@ var Comparison = React.createClass({
     setTimeout(function () {
       this.chartUpdate();
     }.bind(this), 0)
+
   },
 
-  // scoreProcessing: function ()
-
   render: function () {
-    // if (typeof window.comparisonChart !== "undefined") comparisonChart.destroy();
+
     var input = <input type="text" placeholder="Restaurant" onChange={this.inputChange} value={this.state.query}/>;
     var compare = <div/>;
     var chart = <div></div>;
@@ -250,13 +219,6 @@ var Comparison = React.createClass({
     }
 
     var searchLIS = <div></div>;
-    // if (SearchStore.comparison().length > 0) {
-    //   var searchResults = SearchStore.comparison();
-    //   searchLIS = searchResults.map(function(store) {
-    //     return <li key={Math.random()}><a onClick={this.comparisonHandler} id={store.id} href="#">{store.name}</a></li>;
-    //   }.bind(this));
-    // };
-    // <span className="compare-name">Compare With: {input}
 
     var comparisonNameOrLink;
     if (this.state.comparison && typeof this.state.comparison.calc !== "undefined") {
