@@ -192,32 +192,30 @@ var Comparison = React.createClass({
     if (this.state.comparison && typeof this.state.comparison.name !== "undefined") {
         chart = this.setUpChart();
         score = this.setScore();
-      }
-
-
+    }
 
     var comparisonNameOrLink;
+
     if (this.state.comparison && typeof this.state.comparison.calc !== "undefined") {
       comparisonNameOrLink = <a href={"#/rest/" + this.state.comparison.id} onClick={this.linkHandler}>{this.state.comparisonText}</a>;
     } else {
       comparisonNameOrLink = this.state.comparisonText;
     }
 
-
     return (
       <div className="comparison">
         <span key={Math.random()} className="store-name">Relative to {comparisonNameOrLink} </span>
-           <span className="comparison-results">{score}</span><br/>
-
-        Compare with <a href="#" id="cuisine_calc" onClick={this.setDefaultComparison}>Cuisine</a>, <a href="#" id="zipcode_calc" onClick={this.setDefaultComparison}>Zipcode</a>, or <a href="#" id="boro_calc" onClick={this.setDefaultComparison}>Boro</a>.
-
-    <p/>
-      <span className="comparison-legend" key={Math.random()} dangerouslySetInnerHTML={{ __html: this.state.legend }} />
-      {chart}
-
-        </div>
-  );
-}
+           <span className="comparison-results">
+              {score}
+            </span>
+            <br/>
+            Compare with <a href="#" id="cuisine_calc" onClick={this.setDefaultComparison}>Cuisine</a>, <a href="#" id="zipcode_calc" onClick={this.setDefaultComparison}>Zipcode</a>, or <a href="#" id="boro_calc" onClick={this.setDefaultComparison}>Boro</a>.
+            <p/>
+        <span className="comparison-legend" key={Math.random()} dangerouslySetInnerHTML={{ __html: this.state.legend }} />
+        {chart}
+      </div>
+    );
+  }
 
 });
 

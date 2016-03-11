@@ -36003,6 +36003,7 @@
 	    }
 
 	    var comparisonNameOrLink;
+
 	    if (this.state.comparison && typeof this.state.comparison.calc !== "undefined") {
 	      comparisonNameOrLink = React.createElement(
 	        'a',
@@ -49300,12 +49301,15 @@
 	  displayName: 'Header',
 
 	  mixins: [History],
+
 	  getInitialState: function () {
 	    return { search: "", searching: "", results: [] };
 	  },
+
 	  componentDidMount: function () {
 	    this.searchListener = SearchStore.addListener(this._onSearchChange);
 	  },
+
 	  linkHandler: function (e) {
 	    e.preventDefault();
 	    this.setState({ search: "", results: [] });
@@ -49316,10 +49320,12 @@
 
 	    $('.drop-down').css("display", "none");
 	  },
+
 	  componentWillUnmount: function () {
 	    // this.storeListener.remove();
 	    this.searchListener.remove();
 	  },
+
 	  populateSearch: function () {
 	    if (this.state.results.length > 0) {
 	      $('.drop-down').css("display", "flex");
@@ -49347,27 +49353,29 @@
 	      return React.createElement('li', null);
 	    }
 	  },
+
 	  hideSettings: function () {
 
 	    $('.settings-drop-down').css("display", "none");
 	  },
+
 	  _onStoreChange: function () {},
+
 	  _onSearchChange: function () {
+
 	    this.setState({ results: SearchStore.all() });
 	  },
+
 	  redirectHome: function () {
 	    this.history.pushState(null, "/", {});
 	  },
-	  hover: function (e) {
-	    // debugger
 
-	    // $(e.currentTarget).find("div").css("display", "block");
-	    // ("<div class='arrow-up'></div>");
-	    // $(e.currentTarget).find("div").css("display", "block")("<div class='mouseover'>" + name + "</div>");
-	  },
+	  hover: function (e) {},
+
 	  mouseLeave: function (e) {
 	    $(e.currentTarget).find('div').css("display", "none");
 	  },
+
 	  search: function (e) {
 	    clearInterval(this.searchInterval);
 
@@ -49376,6 +49384,7 @@
 	    this.setState({ search: query });
 	    this.searchInterval = setInterval(this.autoSearch, 1000);
 	  },
+
 	  autoSearch: function () {
 	    function callback(data) {
 	      this.setState({ searching: React.createElement('i', { className: 'fa fa-check fa-lg' }) });
@@ -49387,10 +49396,13 @@
 	    ApiUtil.search(query, callback.bind(this));
 	    clearInterval(this.searchInterval);
 	  },
+
 	  settingsDropDown: function (e) {
 	    if (e.target.tagName === "I") $('.settings-drop-down').css("display", "block");
 	  },
-	  render: function () {
+
+	  setHeaderAnimation: function () {
+
 	    $(window).scroll(function () {
 	      if ($(this).scrollTop() > 1) {
 	        $('header').css("opacity", "0.9");
@@ -49402,12 +49414,14 @@
 	        $('.header-wrapper').css("padding-top", "5px");
 	      }
 	    });
+	  },
 
-	    $(document).on('keypress', '.editable', function (e) {
-	      return e.which != 13;
-	    });
-
+	  render: function () {
+	    this.setHeaderAnimation();
 	    var listedResults = this.populateSearch();
+
+	    // <a href="#" onMouseOut={this.mouseLeave} onMouseOver={this.hover.bind(this, "Internals")}><img src="http://i.imgur.com/Wu8hnv7.png"/></a>
+	    // {headerLinks}
 
 	    return React.createElement(
 	      'header',
@@ -49480,8 +49494,6 @@
 	        )
 	      )
 	    );
-	    // <a href="#" onMouseOut={this.mouseLeave} onMouseOver={this.hover.bind(this, "Internals")}><img src="http://i.imgur.com/Wu8hnv7.png"/></a>
-	    // {headerLinks}
 	  }
 	});
 
@@ -49555,18 +49567,19 @@
 	    return React.createElement(
 	      "footer",
 	      null,
-	      "developed by ",
+	      "developed by",
 	      React.createElement(
 	        "a",
 	        { href: "http://terencedignon.com" },
 	        "terence dignon"
 	      ),
-	      ".  ",
+	      " (",
 	      React.createElement(
 	        "a",
 	        { href: "http://github.com/terencedignon/pending-nyc" },
 	        "github repo"
-	      )
+	      ),
+	      ")"
 	    );
 	  }
 	});
