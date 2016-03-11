@@ -36090,48 +36090,29 @@
 	      zoom: 14
 	    });
 
-	    // this.tilesLoaded = google.maps.event.addListener(map, 'tilesloaded', function () {
-	    //   var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
-	    //   // ApiUtil.fetchMap(options);
-	    // }.bind(this));
-
 	    this.idleListener = google.maps.event.addListener(map, 'idle', function () {
 	      clearInterval(this.mapInterval);
 	      this.mapInterval = setInterval(function () {
 	        var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
 	        ApiUtil.fetchMap(options);
-	        // $('.map-holder > i').css("display", "block");
+
 	        $('#map').css("opacity", "0.8");
 	        clearInterval(this.mapInterval);
 	      }.bind(this), 0);
 	    }.bind(this));
-
-	    //
-	    // var panorama;
-	    // panorama = new google.maps.StreetViewPanorama(
-	    //   document.getElementById('street-view'),
-	    //   {
-	    //     position: coordinates,
-	    //     disableDefaultUI: true,
-	    //     streetViewControl: false,
-	    //     pov: {heading: 165, pitch: 0},
-	    //     zoom: 1
-	    //   });
 	  },
 
 	  componentWillUnmount: function () {
-	    // delete map;
 
 	    this.storeListener.remove();
 	    this.mapListener.remove();
 	    google.maps.event.removeListener(this.idleListener);
 	    google.maps.event.removeListener(this.tilesLoaded);
 	  },
+
 	  _onMapChange: function () {
 
-	    // this.setState({ markers: [] });
 	    var newMarkers = [];
-	    // this.setState({markers: []});
 	    MapStore.all().forEach(function (marker) {
 	      var icon;
 	      if (marker.calc.average <= 13) {
@@ -36168,9 +36149,8 @@
 	      this.setState({ markers: newMarkers });
 	    }.bind(this), 1000);
 	  },
-	  _onStoreChange: function () {
-	    // this.setState(this.state);
-	  },
+
+	  _onStoreChange: function () {},
 	  render: function () {
 	    // <div id="street-view"></div>
 
@@ -36187,7 +36167,6 @@
 	      React.createElement('div', { id: 'map' })
 	    );
 	  }
-
 	});
 
 	module.exports = Map;
@@ -36284,6 +36263,11 @@
 	  },
 	  hideUnannounced: function (e) {
 	    $(e.currentTarget).find('.unannounced').css("display", "none");
+	  },
+
+	  formatPhone: function (n) {
+	    if (!n) return "";
+	    return [n.slice(0, 3), n.slice(3, 6), n.slice(6)].join("-");
 	  },
 
 	  iconParse: function (grade) {
@@ -36401,8 +36385,8 @@
 	        store.zipcode,
 	        React.createElement('br', null),
 	        React.createElement('i', { className: 'fa fa-phone fa-border' }),
-	        store.phone,
 	        ' ',
+	        this.formatPhone(store.phone),
 	        React.createElement('br', null),
 	        React.createElement('i', { className: 'fa fa-cutlery fa-border' }),
 	        ' ',

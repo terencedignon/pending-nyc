@@ -49,6 +49,16 @@ var Overview = React.createClass({
     $(e.currentTarget).find('.unannounced').css("display", "none");
   },
 
+  formatPhone: function(n) {
+    if (!n) return "";
+    return [
+      n.slice(0, 3),
+      n.slice(3, 6),
+      n.slice(6)
+    ].join("-")
+  },
+
+
   iconParse: function (grade) {
     if (grade instanceof Array) {
       for (var i = 0; i < grade.length; i++) {
@@ -142,7 +152,7 @@ var Overview = React.createClass({
 
         <span className="overview-address">
               <i className="fa fa-building fa-border"></i>{store.building} {store.street} {store.boro}, NY {store.zipcode}<br/>
-              <i className="fa fa-phone fa-border"></i>{store.phone} <br/>
+              <i className="fa fa-phone fa-border"></i> {this.formatPhone(store.phone)}<br/>
               <i className="fa fa-cutlery fa-border"></i> {store.cuisine_type}<br/>
         </span>
         <hr/>
