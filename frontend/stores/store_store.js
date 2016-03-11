@@ -57,6 +57,7 @@ StoreStore.getYelp = function () {
 };
 
 StoreStore.__onDispatch = function (payload) {
+
   switch (payload.actionType) {
 
     case StoreConstants.GET_STORE:
@@ -68,7 +69,7 @@ StoreStore.__onDispatch = function (payload) {
       var location = payload.data.coords;
       _location = { lat: location.latitude, lng: location.longitude };
       // var json = $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I", function(data) {
-        //nothing yet
+        //user geolocation -- nothing yet
       // });
       this.__emitChange();
       break;
@@ -77,7 +78,7 @@ StoreStore.__onDispatch = function (payload) {
       _browse = payload.data;
       this.__emitChange();
       break;
-    //outdated map function?
+
     case StoreConstants.GET_COMPARISON:
     if (payload.data instanceof Array) payload.data = payload.data[0];
       _comparison = payload.data;
@@ -95,14 +96,10 @@ StoreStore.__onDispatch = function (payload) {
       this.__emitChange();
       break;
 
-    //outdated yelp function
-
     case StoreConstants.GET_FILTERS:
       _filters = payload.data;
       this.__emitChange();
       break;
-
-    //outdated most visited?
 
     case StoreConstants.CLEAR_COMPARISON:
       _comparison = {};
@@ -110,69 +107,6 @@ StoreStore.__onDispatch = function (payload) {
       break;
 
   }
-
-
-  // if (payload.actionType === StoreConstants.GET_STORE) {
-  //   _store = payload.data;
-  //   this.__emitChange();
-  //   }
-  // else if (payload.actionType === StoreConstants.USER_LOCATION) {
-  //   var location = payload.data.coords;
-  //   _location = {lat: location.latitude, lng: location.longitude};
-  //   var json = $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I", function(data) {
-  //     debugger
-  //   });
-  //
-  //   this.__emitChange();
-  // }
-  //
-  // else if (payload.actionType === StoreConstants.GET_BROWSE) {
-  //   _browse = payload.data;
-  //   this.__emitChange();
-  // }
-  //
-  // else if (payload.actionType === StoreConstants.UPDATE_MAP) {
-  //   _map = payload.data;
-  //
-  // }
-
-  // else if (payload.actionType === StoreConstants.GET_COMPARISON) {
-  //   _comparison = payload.data;
-  //   _comparisonType = payload.type;
-  //   this.__emitChange();
-  // }
-  //
-  // else if (payload.actionType === StoreConstants.GET_TRENDING) {
-  //   _trending = payload.data;
-  //   this.__emitChange();
-  // }
-
-  // else if (payload.actionType === StoreConstants.GET_MOST) {
-  //
-  //   _most = payload.data;
-  //   this.__emitChange();
-  // }
-
-  // else if (payload.actionType === StoreConstants.GET_YELP) {
-  //   _yelp = payload.data;
-  //   this.__emitChange();
-  // }
-
-  // else if (payload.actionType === StoreConstants.FETCH_FILTERS) {
-  //   _filters = payload.data;
-  //   this.__emitChange();
-  // }
-  //
-  // else if (payload.actionType === StoreConstants.GET_MOST_VISITED) {
-  //   _mostVisited = payload.data;
-  //   this.__emitChange();
-  // }
-  //
-  // else if (payload.actionType === StoreConstants.CLEAR_COMPARISON) {
-  //   _comparison = {};
-  //   this.__emitChange();
-  // }
-
 };
 
 module.exports = StoreStore;
