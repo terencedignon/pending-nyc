@@ -25,6 +25,8 @@ var StoreIndex = React.createClass({
     this.searchListener = SearchStore.addListener(this._onSearchChange);
   },
 
+  _onSearchChange: function () {},
+
   componentWillUnmount: function () {
     this.storeListener.remove();
     clearInterval(this.trendingInterval);
