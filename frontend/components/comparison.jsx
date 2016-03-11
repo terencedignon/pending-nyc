@@ -115,16 +115,6 @@ var Comparison = React.createClass({
         Math.round((comparison.roaches / comparison.inspections) * 100)
       ];
 
-      // fillColor: "white",
-      // strokeColor: "#222",
-      // highlightFill: "white",
-      // highlightStroke: "black",
-
-      // fillColor: "#f7f7f7",
-      // strokeColor: "#777",
-      // highlightFill: "#eeeeee",
-      // highlightStroke: "black",
-      
     var dataset = {
       labels: labels,
        datasets: [
@@ -145,20 +135,16 @@ var Comparison = React.createClass({
       barValueSpacing: 5,
       animationSteps: 60,
       responsive: false,
-        scaleShowGridLines: false,
-        barStrokeWidth: 0.5,
-        barDatasetSpacing: 3,
-        barValueSpacing: 10,
-        tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>kb"
+      scaleShowGridLines: false,
+      barStrokeWidth: 0.5,
+      barDatasetSpacing: 3,
+      barValueSpacing: 10,
+      tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>kb"
     }
 
-    return <BarChart ref="comparison" key="comparison" className="comparison-chart" data={dataset} width={500} height={325} options={optionHash}/>;
-  },
-
-  resetComparison: function () {
-    this.setState({comparison: []});
-    SearchActions.clearComparison();
-    StoreActions.clearComparison();
+    return (
+      <BarChart ref="comparison" key="comparison" className="comparison-chart" data={dataset} width={500} height={325} options={optionHash}/>
+    );
   },
 
   linkHandler: function (e) {
@@ -185,6 +171,17 @@ var Comparison = React.createClass({
 
   },
 
+  setScore: function () {
+
+    var comparisonScore = (typeof this.state.comparison.calc === "undefined" ? this.state.comparison.score : this.state.comparison.calc.score);
+    var score = this.props.store.calc.score - comparisonScore;
+
+    if (score > 0) { return <span className="positive-score">{"+ " + score}</span>; } else
+    if (score > 0) { return <span className="negative-score">{score}</span>; }
+    else { return <span className="neutral-score">{score}</span>; }
+
+  },
+
   render: function () {
 
     var input = <input type="text" placeholder="Restaurant" onChange={this.inputChange} value={this.state.query}/>;
@@ -193,32 +190,11 @@ var Comparison = React.createClass({
     var score = <div/>;
 
     if (this.state.comparison && typeof this.state.comparison.name !== "undefined") {
-
         chart = this.setUpChart();
-        if (this.state.comparison.calc) {
-        score = this.props.store.calc.score - this.state.comparison.calc.score;
-        if (score > 0) {
-          score = <span className="positive-score">{"+ " + score}</span>;
-        } else if (score < 0) {
-          score = <span className="negative-score">{score}</span>;
-        } else {
-          score = <span className="neutral-score">{score}</span>;
-        }
-      } else {
-        score = this.props.store.calc.score - this.state.comparison.score;
-        if (score > 0) {
-          score = <span className="positive-score">{"+ " + score}</span>;
-        } else if (score < 0) {
-          score = <span className="negative-score">{score}</span>;
-        } else {
-          score = <span className="neutral-score">{score}</span>;
-        }
+        score = this.setScore();
       }
-       compare = <h3>{this.state.comparison.name}</h3>;
-        input = <span>{this.state.comparison.name} <i onClick={this.resetComparison} className="fa fa-times"></i></span>;
-    }
 
-    var searchLIS = <div></div>;
+
 
     var comparisonNameOrLink;
     if (this.state.comparison && typeof this.state.comparison.calc !== "undefined") {
@@ -238,9 +214,7 @@ var Comparison = React.createClass({
     <p/>
       <span className="comparison-legend" key={Math.random()} dangerouslySetInnerHTML={{ __html: this.state.legend }} />
       {chart}
-      <ul>
-          {searchLIS}
-        </ul>
+
         </div>
   );
 }

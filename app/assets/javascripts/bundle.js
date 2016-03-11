@@ -52,9 +52,9 @@
 	var History = __webpack_require__(208).createHashHistory();
 
 	var StoreShow = __webpack_require__(213);
-	var StoreIndex = __webpack_require__(259);
-	var Header = __webpack_require__(295);
-	var Map = __webpack_require__(260);
+	var StoreIndex = __webpack_require__(258);
+	var Header = __webpack_require__(294);
+	var Map = __webpack_require__(259);
 	var Footer = __webpack_require__(296);
 	var Most = __webpack_require__(297);
 	var About = __webpack_require__(298);
@@ -24587,9 +24587,9 @@
 	var StoreStore = __webpack_require__(222);
 	var BarChart = __webpack_require__(243).Bar;
 	var Comparison = __webpack_require__(253);
-	var Map = __webpack_require__(255);
-	var Overview = __webpack_require__(257);
-	var Violations = __webpack_require__(258);
+	var Map = __webpack_require__(254);
+	var Overview = __webpack_require__(256);
+	var Violations = __webpack_require__(257);
 
 	var StoreShow = React.createClass({
 	  displayName: 'StoreShow',
@@ -35809,9 +35809,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(147);
-	var SearchStore = __webpack_require__(254);
+	var SearchStore = __webpack_require__(295);
 	var ApiUtil = __webpack_require__(214);
-	var SearchStore = __webpack_require__(254);
+	var SearchStore = __webpack_require__(295);
 	var StoreStore = __webpack_require__(222);
 	var SearchActions = __webpack_require__(215);
 	var StoreActions = __webpack_require__(221);
@@ -35914,16 +35914,6 @@
 	    if (typeof comparison.average === "undefined") comparison = this.state.comparison.calc;
 	    var compData = [comparison.average, comparison.first_average, Math.round(comparison.mice / comparison.inspections * 100), Math.round(comparison.flies / comparison.inspections * 100), Math.round(comparison.roaches / comparison.inspections * 100)];
 
-	    // fillColor: "white",
-	    // strokeColor: "#222",
-	    // highlightFill: "white",
-	    // highlightStroke: "black",
-
-	    // fillColor: "#f7f7f7",
-	    // strokeColor: "#777",
-	    // highlightFill: "#eeeeee",
-	    // highlightStroke: "black",
-
 	    var dataset = {
 	      labels: labels,
 	      datasets: [{
@@ -35951,12 +35941,6 @@
 	    return React.createElement(BarChart, { ref: 'comparison', key: 'comparison', className: 'comparison-chart', data: dataset, width: 500, height: 325, options: optionHash });
 	  },
 
-	  resetComparison: function () {
-	    this.setState({ comparison: [] });
-	    SearchActions.clearComparison();
-	    StoreActions.clearComparison();
-	  },
-
 	  linkHandler: function (e) {
 	    ApiUtil.fetchStore(this.state.comparison.id);
 	  },
@@ -35980,6 +35964,32 @@
 	    }.bind(this), 0);
 	  },
 
+	  setScore: function () {
+
+	    var comparisonScore = typeof this.state.comparison.calc === "undefined" ? this.state.comparison.score : this.state.comparison.calc.score;
+	    var score = this.props.store.calc.score - comparisonScore;
+
+	    if (score > 0) {
+	      return React.createElement(
+	        'span',
+	        { className: 'positive-score' },
+	        "+ " + score
+	      );
+	    } else if (score > 0) {
+	      return React.createElement(
+	        'span',
+	        { className: 'negative-score' },
+	        score
+	      );
+	    } else {
+	      return React.createElement(
+	        'span',
+	        { className: 'neutral-score' },
+	        score
+	      );
+	    }
+	  },
+
 	  render: function () {
 
 	    var input = React.createElement('input', { type: 'text', placeholder: 'Restaurant', onChange: this.inputChange, value: this.state.query });
@@ -35988,66 +35998,9 @@
 	    var score = React.createElement('div', null);
 
 	    if (this.state.comparison && typeof this.state.comparison.name !== "undefined") {
-
 	      chart = this.setUpChart();
-	      if (this.state.comparison.calc) {
-	        score = this.props.store.calc.score - this.state.comparison.calc.score;
-	        if (score > 0) {
-	          score = React.createElement(
-	            'span',
-	            { className: 'positive-score' },
-	            "+ " + score
-	          );
-	        } else if (score < 0) {
-	          score = React.createElement(
-	            'span',
-	            { className: 'negative-score' },
-	            score
-	          );
-	        } else {
-	          score = React.createElement(
-	            'span',
-	            { className: 'neutral-score' },
-	            score
-	          );
-	        }
-	      } else {
-	        score = this.props.store.calc.score - this.state.comparison.score;
-	        if (score > 0) {
-	          score = React.createElement(
-	            'span',
-	            { className: 'positive-score' },
-	            "+ " + score
-	          );
-	        } else if (score < 0) {
-	          score = React.createElement(
-	            'span',
-	            { className: 'negative-score' },
-	            score
-	          );
-	        } else {
-	          score = React.createElement(
-	            'span',
-	            { className: 'neutral-score' },
-	            score
-	          );
-	        }
-	      }
-	      compare = React.createElement(
-	        'h3',
-	        null,
-	        this.state.comparison.name
-	      );
-	      input = React.createElement(
-	        'span',
-	        null,
-	        this.state.comparison.name,
-	        ' ',
-	        React.createElement('i', { onClick: this.resetComparison, className: 'fa fa-times' })
-	      );
+	      score = this.setScore();
 	    }
-
-	    var searchLIS = React.createElement('div', null);
 
 	    var comparisonNameOrLink;
 	    if (this.state.comparison && typeof this.state.comparison.calc !== "undefined") {
@@ -36097,12 +36050,7 @@
 	      '.',
 	      React.createElement('p', null),
 	      React.createElement('span', { className: 'comparison-legend', key: Math.random(), dangerouslySetInnerHTML: { __html: this.state.legend } }),
-	      chart,
-	      React.createElement(
-	        'ul',
-	        null,
-	        searchLIS
-	      )
+	      chart
 	    );
 	  }
 
@@ -36114,65 +36062,10 @@
 /* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(216);
-	var SearchConstants = __webpack_require__(220);
-	var Store = __webpack_require__(224).Store;
-	var SearchStore = new Store(AppDispatcher);
-
-	_autoComplete = [];
-	_most = [];
-	_results = [];
-	_comparison = [];
-
-	SearchStore.all = function () {
-	  return _results.slice();
-	};
-
-	SearchStore.autoComplete = function () {
-	  return _autoComplete;
-	};
-
-	SearchStore.comparison = function () {
-	  return _comparison;
-	};
-
-	SearchStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case SearchConstants.FETCH_SEARCH:
-	      _results = payload.data;
-	      this.__emitChange();
-	      break;
-	    case SearchConstants.CLEAR_RESULTS:
-	      _results = [];
-	      this.__emitChange();
-	      break;
-	    case SearchConstants.FETCH_COMPARISON:
-	      _comparison = [];
-	      break;
-	    case SearchConstants.CLEAR_COMPARISON:
-	      _comparison = [];
-	      break;
-	    case SearchConstants.AUTO_COMPLETE:
-	      _autoComplete = payload.data;
-	      this.__emitChange();
-	      break;
-	    case SearchConstants.FETCH_MOST:
-	      _most = [];
-	      this.__emitChange();
-	      break;
-	  }
-	};
-
-	module.exports = SearchStore;
-
-/***/ },
-/* 255 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var React = __webpack_require__(147);
 	var StoreStore = __webpack_require__(222);
 	var ApiUtil = __webpack_require__(214);
-	var MapStore = __webpack_require__(256);
+	var MapStore = __webpack_require__(255);
 	var History = __webpack_require__(159).History;
 
 	var Map = React.createClass({
@@ -36299,7 +36192,7 @@
 	module.exports = Map;
 
 /***/ },
-/* 256 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(224).Store;
@@ -36337,11 +36230,11 @@
 	module.exports = MapStore;
 
 /***/ },
-/* 257 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(147);
-	var Map = __webpack_require__(255);
+	var Map = __webpack_require__(254);
 	var Comparison = __webpack_require__(253);
 
 	var Overview = React.createClass({
@@ -36954,7 +36847,7 @@
 	module.exports = Overview;
 
 /***/ },
-/* 258 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(147);
@@ -37040,18 +36933,18 @@
 	module.exports = Violations;
 
 /***/ },
-/* 259 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(147);
 	var ApiUtil = __webpack_require__(214);
 	var StoreStore = __webpack_require__(222);
 	var SearchActions = __webpack_require__(215);
-	var Map = __webpack_require__(260);
+	var Map = __webpack_require__(259);
 	var StoreActions = __webpack_require__(221);
-	var BarChart = __webpack_require__(261).BarChart;
-	var LineChart = __webpack_require__(284).LineChart;
-	var AreaChart = __webpack_require__(290).AreaChart;
+	var BarChart = __webpack_require__(260).BarChart;
+	var LineChart = __webpack_require__(283).LineChart;
+	var AreaChart = __webpack_require__(289).AreaChart;
 
 	var StoreIndex = React.createClass({
 	  displayName: 'StoreIndex',
@@ -37210,13 +37103,13 @@
 	module.exports = StoreIndex;
 
 /***/ },
-/* 260 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(147);
 	var StoreStore = __webpack_require__(222);
 	var ApiUtil = __webpack_require__(214);
-	var MapStore = __webpack_require__(256);
+	var MapStore = __webpack_require__(255);
 	var History = __webpack_require__(159).History;
 
 	var Map = React.createClass({
@@ -37433,26 +37326,26 @@
 	module.exports = Map;
 
 /***/ },
-/* 261 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	exports.BarChart = __webpack_require__(262);
+	exports.BarChart = __webpack_require__(261);
 
 
 /***/ },
-/* 262 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
-	var DataSeries = __webpack_require__(264);
-	var utils = __webpack_require__(267);
+	var d3 = __webpack_require__(262);
+	var DataSeries = __webpack_require__(263);
+	var utils = __webpack_require__(266);
 
-	var $__0=      __webpack_require__(268),Chart=$__0.Chart,XAxis=$__0.XAxis,YAxis=$__0.YAxis;
-	var $__1=     __webpack_require__(277),CartesianChartPropsMixin=$__1.CartesianChartPropsMixin,ViewBoxMixin=$__1.ViewBoxMixin;
+	var $__0=      __webpack_require__(267),Chart=$__0.Chart,XAxis=$__0.XAxis,YAxis=$__0.YAxis;
+	var $__1=     __webpack_require__(276),CartesianChartPropsMixin=$__1.CartesianChartPropsMixin,ViewBoxMixin=$__1.ViewBoxMixin;
 
 	module.exports = React.createClass({
 
@@ -37608,7 +37501,7 @@
 
 
 /***/ },
-/* 263 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;!function() {
@@ -47167,14 +47060,14 @@
 	}();
 
 /***/ },
-/* 264 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
-	var BarContainer = __webpack_require__(265);
+	var d3 = __webpack_require__(262);
+	var BarContainer = __webpack_require__(264);
 
 	module.exports = React.createClass({
 
@@ -47221,14 +47114,14 @@
 
 
 /***/ },
-/* 265 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var Bar = __webpack_require__(266);
-	var shade = __webpack_require__(267).shade;
+	var Bar = __webpack_require__(265);
+	var shade = __webpack_require__(266).shade;
 
 	module.exports = React.createClass({displayName: "exports",
 
@@ -47279,7 +47172,7 @@
 
 
 /***/ },
-/* 266 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47319,10 +47212,10 @@
 
 
 /***/ },
-/* 267 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var d3 = __webpack_require__(263);
+	var d3 = __webpack_require__(262);
 
 
 	exports.calculateScales = function(chartWidth, chartHeight, xValues, yValues)  {
@@ -47477,38 +47370,38 @@
 
 
 /***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	exports.XAxis = __webpack_require__(268).XAxis;
+	exports.YAxis = __webpack_require__(268).YAxis;
+	exports.Chart = __webpack_require__(274).Chart;
+	exports.LegendChart = __webpack_require__(274).LegendChart;
+	exports.Legend = __webpack_require__(281);
+	exports.Voronoi = __webpack_require__(282);
+
+
+/***/ },
 /* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	exports.XAxis = __webpack_require__(269).XAxis;
-	exports.YAxis = __webpack_require__(269).YAxis;
-	exports.Chart = __webpack_require__(275).Chart;
-	exports.LegendChart = __webpack_require__(275).LegendChart;
-	exports.Legend = __webpack_require__(282);
-	exports.Voronoi = __webpack_require__(283);
+	exports.XAxis = __webpack_require__(269);
+	exports.YAxis = __webpack_require__(273);
 
 
 /***/ },
 /* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
-	exports.XAxis = __webpack_require__(270);
-	exports.YAxis = __webpack_require__(274);
-
-
-/***/ },
-/* 270 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
-	var AxisTicks = __webpack_require__(271);
-	var AxisLine = __webpack_require__(272);
-	var Label = __webpack_require__(273);
+	var d3 = __webpack_require__(262);
+	var AxisTicks = __webpack_require__(270);
+	var AxisLine = __webpack_require__(271);
+	var Label = __webpack_require__(272);
 
 	module.exports = React.createClass({
 
@@ -47607,13 +47500,13 @@
 
 
 /***/ },
-/* 271 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
+	var d3 = __webpack_require__(262);
 
 	module.exports = React.createClass({
 
@@ -47802,13 +47695,13 @@
 
 
 /***/ },
-/* 272 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
+	var d3 = __webpack_require__(262);
 
 	module.exports = React.createClass({
 
@@ -47878,7 +47771,7 @@
 
 
 /***/ },
-/* 273 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47972,16 +47865,16 @@
 
 
 /***/ },
-/* 274 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
-	var AxisTicks = __webpack_require__(271);
-	var AxisLine = __webpack_require__(272);
-	var Label = __webpack_require__(273);
+	var d3 = __webpack_require__(262);
+	var AxisTicks = __webpack_require__(270);
+	var AxisLine = __webpack_require__(271);
+	var Label = __webpack_require__(272);
 
 	module.exports = React.createClass({
 
@@ -48085,23 +47978,23 @@
 
 
 /***/ },
-/* 275 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	exports.BasicChart = __webpack_require__(276);
-	exports.Chart = __webpack_require__(280);
-	exports.LegendChart = __webpack_require__(281);
+	exports.BasicChart = __webpack_require__(275);
+	exports.Chart = __webpack_require__(279);
+	exports.LegendChart = __webpack_require__(280);
 
 
 /***/ },
-/* 276 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var mixins = __webpack_require__(277);
+	var mixins = __webpack_require__(276);
 
 	module.exports = React.createClass({
 
@@ -48172,22 +48065,22 @@
 
 
 /***/ },
-/* 277 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	exports.CartesianChartPropsMixin = __webpack_require__(278);
-	exports.ViewBoxMixin = __webpack_require__(279);
+	exports.CartesianChartPropsMixin = __webpack_require__(277);
+	exports.ViewBoxMixin = __webpack_require__(278);
 
 
 /***/ },
-/* 278 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
+	var d3 = __webpack_require__(262);
 
 	module.exports =  {
 
@@ -48251,7 +48144,7 @@
 
 
 /***/ },
-/* 279 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -48293,14 +48186,14 @@
 
 
 /***/ },
-/* 280 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var LegendChart = __webpack_require__(281);
-	var BasicChart = __webpack_require__(276);
+	var LegendChart = __webpack_require__(280);
+	var BasicChart = __webpack_require__(275);
 
 	module.exports = React.createClass({
 
@@ -48345,14 +48238,14 @@
 
 
 /***/ },
-/* 281 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var Legend = __webpack_require__(282);
-	var d3 = __webpack_require__(263);
+	var Legend = __webpack_require__(281);
+	var d3 = __webpack_require__(262);
 
 	module.exports = React.createClass({
 
@@ -48461,13 +48354,13 @@
 
 
 /***/ },
-/* 282 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
+	var d3 = __webpack_require__(262);
 
 	module.exports = React.createClass({
 
@@ -48554,13 +48447,13 @@
 
 
 /***/ },
-/* 283 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
+	var d3 = __webpack_require__(262);
 
 	var Polygon = React.createClass({displayName: "Polygon",
 
@@ -48621,25 +48514,25 @@
 
 
 /***/ },
-/* 284 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	exports.LineChart = __webpack_require__(285);
+	exports.LineChart = __webpack_require__(284);
 
 
 /***/ },
-/* 285 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
-	var $__0=      __webpack_require__(268),Chart=$__0.Chart,XAxis=$__0.XAxis,YAxis=$__0.YAxis;
-	var DataSeries = __webpack_require__(286);
-	var utils = __webpack_require__(267);
-	var $__1=     __webpack_require__(277),CartesianChartPropsMixin=$__1.CartesianChartPropsMixin,ViewBoxMixin=$__1.ViewBoxMixin;
+	var d3 = __webpack_require__(262);
+	var $__0=      __webpack_require__(267),Chart=$__0.Chart,XAxis=$__0.XAxis,YAxis=$__0.YAxis;
+	var DataSeries = __webpack_require__(285);
+	var utils = __webpack_require__(266);
+	var $__1=     __webpack_require__(276),CartesianChartPropsMixin=$__1.CartesianChartPropsMixin,ViewBoxMixin=$__1.ViewBoxMixin;
 
 	module.exports = React.createClass({
 
@@ -48772,15 +48665,15 @@
 
 
 /***/ },
-/* 286 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
-	var VoronoiCircleContainer = __webpack_require__(287);
-	var Line = __webpack_require__(289);
+	var d3 = __webpack_require__(262);
+	var VoronoiCircleContainer = __webpack_require__(286);
+	var Line = __webpack_require__(288);
 
 	module.exports = React.createClass({
 
@@ -48885,15 +48778,15 @@
 
 
 /***/ },
-/* 287 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
-	var shade = __webpack_require__(267).shade;
-	var VoronoiCircle = __webpack_require__(288);
+	var d3 = __webpack_require__(262);
+	var shade = __webpack_require__(266).shade;
+	var VoronoiCircle = __webpack_require__(287);
 
 	module.exports = React.createClass({
 
@@ -48966,13 +48859,13 @@
 
 
 /***/ },
-/* 288 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
+	var d3 = __webpack_require__(262);
 
 	module.exports = React.createClass({
 
@@ -49010,7 +48903,7 @@
 
 
 /***/ },
-/* 289 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49057,24 +48950,24 @@
 
 
 /***/ },
-/* 290 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	exports.AreaChart = __webpack_require__(291);
+	exports.AreaChart = __webpack_require__(290);
 
 
 /***/ },
-/* 291 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
-	var DataSeries = __webpack_require__(292);
-	var $__0=      __webpack_require__(268),Chart=$__0.Chart,XAxis=$__0.XAxis,YAxis=$__0.YAxis;
-	var $__1=     __webpack_require__(277),CartesianChartPropsMixin=$__1.CartesianChartPropsMixin,ViewBoxMixin=$__1.ViewBoxMixin;
+	var d3 = __webpack_require__(262);
+	var DataSeries = __webpack_require__(291);
+	var $__0=      __webpack_require__(267),Chart=$__0.Chart,XAxis=$__0.XAxis,YAxis=$__0.YAxis;
+	var $__1=     __webpack_require__(276),CartesianChartPropsMixin=$__1.CartesianChartPropsMixin,ViewBoxMixin=$__1.ViewBoxMixin;
 
 	module.exports = React.createClass({
 
@@ -49237,14 +49130,14 @@
 
 
 /***/ },
-/* 292 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
-	var AreaContainer = __webpack_require__(293);
+	var d3 = __webpack_require__(262);
+	var AreaContainer = __webpack_require__(292);
 
 	module.exports = React.createClass({
 
@@ -49286,15 +49179,15 @@
 
 
 /***/ },
-/* 293 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(147);
-	var d3 = __webpack_require__(263);
-	var shade = __webpack_require__(267).shade;
-	var Area = __webpack_require__(294);
+	var d3 = __webpack_require__(262);
+	var shade = __webpack_require__(266).shade;
+	var Area = __webpack_require__(293);
 
 	module.exports = React.createClass({
 
@@ -49355,7 +49248,7 @@
 
 
 /***/ },
-/* 294 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49394,12 +49287,12 @@
 
 
 /***/ },
-/* 295 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(147);
 	var ApiUtil = __webpack_require__(214);
-	var SearchStore = __webpack_require__(254);
+	var SearchStore = __webpack_require__(295);
 	var SearchActions = __webpack_require__(215);
 	var History = __webpack_require__(159).History;
 
@@ -49593,6 +49486,61 @@
 	});
 
 	module.exports = Header;
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(216);
+	var SearchConstants = __webpack_require__(220);
+	var Store = __webpack_require__(224).Store;
+	var SearchStore = new Store(AppDispatcher);
+
+	_autoComplete = [];
+	_most = [];
+	_results = [];
+	_comparison = [];
+
+	SearchStore.all = function () {
+	  return _results.slice();
+	};
+
+	SearchStore.autoComplete = function () {
+	  return _autoComplete;
+	};
+
+	SearchStore.comparison = function () {
+	  return _comparison;
+	};
+
+	SearchStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case SearchConstants.FETCH_SEARCH:
+	      _results = payload.data;
+	      this.__emitChange();
+	      break;
+	    case SearchConstants.CLEAR_RESULTS:
+	      _results = [];
+	      this.__emitChange();
+	      break;
+	    case SearchConstants.FETCH_COMPARISON:
+	      _comparison = [];
+	      break;
+	    case SearchConstants.CLEAR_COMPARISON:
+	      _comparison = [];
+	      break;
+	    case SearchConstants.AUTO_COMPLETE:
+	      _autoComplete = payload.data;
+	      this.__emitChange();
+	      break;
+	    case SearchConstants.FETCH_MOST:
+	      _most = [];
+	      this.__emitChange();
+	      break;
+	  }
+	};
+
+	module.exports = SearchStore;
 
 /***/ },
 /* 296 */
