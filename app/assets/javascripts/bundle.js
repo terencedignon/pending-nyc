@@ -36276,7 +36276,6 @@
 	        var num = grade[i];
 
 	        if (num >= 25) {
-
 	          return "thumbs-o-down";
 	        }
 	      }
@@ -36345,18 +36344,6 @@
 	    var store = this.props.store;
 	    var rankings = this.propsRankings();
 
-	    //   <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
-	    //   BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
-	    // <div className="comparison">
-	    //   <Comparison store={this.props.store}/>
-	    // </div>
-
-	    //     <div className="legend"><span className="a">A:</span> <span className="range">0-13</span>&nbsp;
-	    //     <span className="b">B:</span> <span className="range">14-27</span>&nbsp;
-	    //       <span className="c">C:</span> <span className="range">28 and up</span></div>
-	    // <span className="unannounced">An average of best, worst, average, surprise average, and percentage of infestations </span></span></span><p/>
-	    //
-	    // <a href="#" onClick={this.findOtherLikeThis}>Find other restaurants like this in your area</a>
 	    return React.createElement(
 	      'span',
 	      { className: 'overview-holder' },

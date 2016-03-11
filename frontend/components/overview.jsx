@@ -65,12 +65,11 @@ var Overview = React.createClass({
         var num = grade[i];
 
         if (num >= 25) {
-
           return "thumbs-o-down";
+        }
       }
+      return "thumbs-o-up";
     }
-    return "thumbs-o-up";
-  }
       if (grade <= 13) {
         return "thumbs-o-up";
       } else if (grade <= 27) {
@@ -134,18 +133,6 @@ var Overview = React.createClass({
     var store = this.props.store;
     var rankings = this.propsRankings();
 
-  //   <span className="store-name"><strong className="overview-emphasis">Analyze</strong></span><br/>
-  //   BY <a href="#" onClick={this.analyzeBy}>{this.props.store.cuisine_type.trim() + " Cuisine"}</a>  <a href="#">{this.props.store.zipcode}</a>  <a href="#">{this.props.store.boro[0] + this.props.store.boro.slice(1).toLowerCase()}</a><br/>
-  // <div className="comparison">
-  //   <Comparison store={this.props.store}/>
-  // </div>
-
-          //     <div className="legend"><span className="a">A:</span> <span className="range">0-13</span>&nbsp;
-          //     <span className="b">B:</span> <span className="range">14-27</span>&nbsp;
-          //       <span className="c">C:</span> <span className="range">28 and up</span></div>
-          // <span className="unannounced">An average of best, worst, average, surprise average, and percentage of infestations </span></span></span><p/>
-          //
-          // <a href="#" onClick={this.findOtherLikeThis}>Find other restaurants like this in your area</a>
     return (
       <span className="overview-holder">
         <span className="store-name">{this.props.store.name} Overview: <span className="question-highlight">{this.props.store.calc.score}</span></span><p/>
@@ -156,12 +143,11 @@ var Overview = React.createClass({
               <i className="fa fa-cutlery fa-border"></i> {store.cuisine_type}<br/>
         </span>
         <hr/>
-        <table>
 
+        <table>
           <tbody>
             <tr className={this.translate(data.last)}>
               <td className="thumbs">
-
               </td>
               <td className="subject">
                 Most Recent Inspection
@@ -174,110 +160,102 @@ var Overview = React.createClass({
                </td>
             </tr>
             <tr className={this.translate(data.average)}>
-            <td className="thumbs">
-
-            </td>
-          <td className="subject">
+              <td className="thumbs">
+              </td>
+              <td className="subject">
               Average of {data.inspections} Inspections
-            </td>
-            <td className="score">
-              {data.average}
-            </td>
-            <td className={"grade " + this.translate(data.average)}>
-              {this.translate(data.average)}
-            </td>
-          </tr>
-          <tr className={this.translate(data.first_average)}>
-            <td className="thumbs">
-
-            </td>
-            <td className="subject">
-              Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Unannounced
+              </td>
+              <td className="score">
+                {data.average}
+              </td>
+              <td className={"grade " + this.translate(data.average)}>
+                {this.translate(data.average)}
+              </td>
+            </tr>
+            <tr className={this.translate(data.first_average)}>
+              <td className="thumbs">
+              </td>
+              <td className="subject">
+                Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Unannounced
                 <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span></span> &nbsp;
-            </td>
-            <td className="score">
-              {data.first_average}
-            </td>
-            <td className={"grade " + this.translate(data.first_average)}>
-               {this.translate(data.first_average)}
+              </td>
+              <td className="score">
+                {data.first_average}
+              </td>
+              <td className={"grade " + this.translate(data.first_average)}>
+                {this.translate(data.first_average)}
              </td>
+           </tr>
+           <tr className={this.translate(data.best)}>
+             <td className="thumbs">
+             </td>
+             <td className="subject">
+               Best Score
+             </td>
+             <td className="score">
+               {data.best}
+             </td>
+             <td className={"grade " + this.translate(data.best)}>
+               {this.translate(data.best)}
+             </td>
+           </tr>
+           <tr className={this.translate(data.worst)}>
+             <td className="thumbs">
+             </td>
+           <td className="subject">
+             Worst Score
+           </td>
+           <td className="score">
+             {data.worst}
+           </td>
+           <td className={"grade " + this.translate(data.worst)}>
+             {this.translate(data.worst)}
+           </td>
+         </tr>
+         <tr className={this.translate(data.mice)}>
+           <td className="thumbs">
+           </td>
+           <td className="subject">
+             Probability of Mice
+           </td>
+           <td className="score">
+             {data.mice}
+           </td>
+           <td className={"grade " + this.translate(data.mice)}>
+             {this.translate(data.mice)}
+           </td>
+         </tr>
+        <tr className={this.translate(data.flies)}>
+          <td className="thumbs">
+          </td>
+          <td className="subject">
+            Probability of Flies
+          </td>
+          <td className="score">
+            {data.flies}
+          </td>
+          <td className={"grade " + this.translate(data.flies)}>
+            {this.translate(data.flies)}
+          </td>
         </tr>
-          <tr className={this.translate(data.best)}>
-          <td className="thumbs">
-
+        <tr className={this.translate(data.roaches)}>
+          <td>
           </td>
           <td className="subject">
-            Best Score
+            Probability of Roaches
           </td>
           <td className="score">
-            {data.best}
+            {data.roaches}
           </td>
-          <td className={"grade " + this.translate(data.best)}>
-            {this.translate(data.best)}
+          <td className={"grade " + this.translate(data.roaches)}>
+            {this.translate(data.roaches)}
           </td>
-      </tr>
-        <tr className={this.translate(data.worst)}>
-          <td className="thumbs">
+        </tr>
+      </tbody>
+    </table>
+    <hr/>
 
-          </td>
-          <td className="subject">
-            Worst Score
-          </td>
-          <td className="score">
-            {data.worst}
-          </td>
-          <td className={"grade " + this.translate(data.worst)}>
-            {this.translate(data.worst)}
-          </td>
-      </tr>
-      <tr className={this.translate(data.mice)}>
-        <td className="thumbs">
-
-        </td>
-        <td className="subject">
-            Probability of Mice
-        </td>
-        <td className="score">
-          {data.mice}
-        </td>
-        <td className={"grade " + this.translate(data.mice)}>
-            {this.translate(data.mice)}
-        </td>
-    </tr>
-    <tr className={this.translate(data.flies)}>
-      <td className="thumbs">
-
-      </td>
-      <td className="subject">
-        Probability of Flies
-      </td>
-      <td className="score">
-        {data.flies}
-      </td>
-      <td className={"grade " + this.translate(data.flies)}>
-          {this.translate(data.flies)}
-      </td>
-  </tr>
-  <tr className={this.translate(data.roaches)}>
-    <td>
-
-    </td>
-    <td className="subject">
-      Probability of Roaches
-    </td>
-    <td className="score">
-      {data.roaches}
-    </td>
-    <td className={"grade " + this.translate(data.roaches)}>
-        {this.translate(data.roaches)}
-    </td>
-</tr>
-
-          </tbody>
-        </table>
-        <hr/>
-
-      <span className="store-name">Percent of restaurants that {store.name} is greater than or equal to</span>
+    <span className="store-name">Percent of restaurants that {store.name} is greater than or equal to</span>
 
           <table>
 
