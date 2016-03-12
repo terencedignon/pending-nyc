@@ -94,10 +94,10 @@ var Header = React.createClass({
   },
 
   setHeaderAnimation: function () {
-    
+
     $(window).scroll(function() {
       if ($(this).scrollTop() > 1) {
-        $('header').css("opacity", "0.9");
+        // $('header').css("opacity", "0.9");
         $('header').css("border-bottom", "2px solid #f7f7f7");
       } else {
         $('header').css("opacity", "1");

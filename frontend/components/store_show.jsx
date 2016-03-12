@@ -6,6 +6,9 @@ var Comparison = require('./comparison.jsx');
 var Map = require('./map.jsx');
 var Overview = require('./overview.jsx');
 var Violations = require('./violations.jsx');
+var Parallax = require('react-parallax');
+var SparkScroll = require("react-spark-scroll-gsap");
+
 
 var StoreShow = React.createClass({
   getInitialState: function () {
@@ -23,6 +26,7 @@ var StoreShow = React.createClass({
     ApiUtil.fetchStore(this.props.params.id);
   },
   componentWillUnmount: function () {
+    $('.show-holder').hide();
     clearInterval(this.backButtonListener);
     this.storeListener.remove();
     // console.log("hello");
@@ -30,12 +34,21 @@ var StoreShow = React.createClass({
   },
   setImage: function () {
     if (this.state.store.image_url !== null) {
-      var url = this.state.store.image_url.replace("ms.jpg", "348s.jpg");
-      return <img className="show-image" src={url} />;
+      var url = this.state.store.image_url.replace("ms.jpg", "o.jpg");
+
+          setTimeout(function() {
+            $('.show-holder').parallax({imageSrc: url, speed: 0.95});
+          }, 1000);
+          // return <img id="show-image" className="show-image" src={url} />;
+
     } else {
-      return <div className="empty-image"></div>;
-    }
-  },
+      setTimeout(function () {
+        var url = "http://www.publicdomainpictures.net/pictures/120000/nahled/blue-background-gradient-texture.jpg";
+    $('.show-holder').parallax({imageSrc: url, speed: 0.95 });
+      // return <div className="empty-image"></div>;
+    }, 1000);
+  }
+},
   _onStoreChange: function () {
     if (this.state.store !== StoreStore.getStore()) {
       this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
@@ -121,6 +134,8 @@ var StoreShow = React.createClass({
 
 
   render: function () {
+
+
     var data;
     // var legend = <div/>;
     var comparison = <div/>;
@@ -164,6 +179,7 @@ var grade = <img src={this.selectGrade()}/>;
 
 
 
+
   // <LineChart className="chart" data={data} width="600" height="250" />
   // {barChart}
 
@@ -180,6 +196,7 @@ var grade = <img src={this.selectGrade()}/>;
     showDisplay =
       <div>
         <div className="show-row">
+
             <div className="overview">
               {overview}
               <hr/>
@@ -190,9 +207,10 @@ var grade = <img src={this.selectGrade()}/>;
               <hr/>
               {comparison}
             </div>
-            <div>
+
+            <div className="right-holder">
             <div key={Math.random()} className="show-holder">
-        {image}
+
       <div className="show-grade">
           {grade}
     </div>
@@ -203,7 +221,7 @@ var grade = <img src={this.selectGrade()}/>;
     </div>
   </div>
   <span className="store-name">Violation Record</span><br/>
-  <div className="violations">
+<div className="violations">
     Total: {this.state.store.calc.violations} : Critical: {this.state.store.calc.critical}
     {violations}
   </div>
@@ -212,7 +230,7 @@ var grade = <img src={this.selectGrade()}/>;
   }
   return (
   <section className="show-container">
-    {showDisplay}
+      {showDisplay}
 </section>
 
       );

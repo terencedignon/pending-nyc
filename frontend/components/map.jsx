@@ -14,14 +14,30 @@ var Map = React.createClass({
     this.storeListener = StoreStore.addListener(this._onStoreChange);
     this.mapListener = MapStore.addListener(this._onMapChange);
     var coordinates = {lat: Number(this.props.lat), lng: Number(this.props.lng)};
-
-    map = new google.maps.Map(document.getElementById('map'), {
+    var mapOptions = {
       center: coordinates,
       zoomControl: false,
       streetViewControl: false,
       mapTypeControl: false,
-      zoom: 14
-    });
+      zoom: 12,
+    };
+
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // scroll:{x:$(window).scrollLeft(),y:$(window).scrollTop()}
+
+    // var offset=$(map.getDiv()).offset();
+    //   map.panBy(((mapOptions.scroll.x-offset.left)/3),((mapOptions.scroll.y-offset.top)/3));
+    //   google.maps.event.addDomListener(window, 'scroll', function(){
+    //     var scrollY=$(window).scrollTop() * 0.1,
+    //       scrollX=$(window).scrollLeft() * 0.1,
+    //       scroll=map.get('scroll');
+    //         if(scroll){
+    //             map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));
+    //           }
+    //           map.set('scroll',{x:scrollX,y:scrollY});
+    // }.bind(this));
+
 
     this.idleListener = google.maps.event.addListener(map, 'idle', function() {
       clearInterval(this.mapInterval);
@@ -29,7 +45,7 @@ var Map = React.createClass({
       var options = {bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type}
       ApiUtil.fetchMap(options);
 
-      $('#map').css("opacity", "0.8");
+      $('#map').css("opacity", "0.99");
       clearInterval(this.mapInterval)
       }.bind(this), 0);
     }.bind(this));

@@ -256,7 +256,8 @@ var Overview = React.createClass({
     <hr/>
 
     <span className="store-name">Percent of restaurants that {store.name} is greater than or equal to</span>
-          <table>
+    <p/>
+        <table>
 
             <tbody>
               <tr>

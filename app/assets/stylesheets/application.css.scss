@@ -61,7 +61,7 @@
 
 
 body {
-  width: 65%;
+  width: 75%;
   margin: 0 auto;
   // background: #f7f7f7;
   font-family: "Helvetica", Helvetica;
@@ -74,7 +74,7 @@ header {
   /*margin-bottom: 100px;*/
   background: #fff;
   position: fixed;
-  width: 100%;
+  // width: 100%;
   z-index: 9999999999;
 }
 
@@ -84,7 +84,7 @@ header {
   padding-top: 5px;
   // /*background: #fff;*/
   height: 60px;
-  margin: 0 auto;
+  // margin: 0 auto;
   // transition: all 0.3s ease-in-out;
 }
 
@@ -127,7 +127,7 @@ header {
 
 .header-links {
   padding: 13px 0;
-  float: left;
+  float: right;
   // display: inline;
   margin-left: 5%;
   z-index: 999;
@@ -135,6 +135,7 @@ header {
 
 .body-container {
   width: 100%;
+  margin: 0 auto;
 
 }
 
@@ -154,7 +155,7 @@ header {
 }
 
 .container {
-  width: 100%;
+  width: 90%;
   height: auto;
   margin: 0 auto;
   // min-height: 400px;
@@ -181,13 +182,14 @@ header {
 
 .empty-image {
   width: 400px;
-  height: 400px;
-  border-radius: 5%;
+  height: 600px;
+  // border-radius: 5%;
+  // background: transparent;
   background: #f7f7f7;
 }
 
 .map-holder {
-  height: 580px;
+  height: 600px;
   width: 400px;
   position: relative;
   overflow: hidden;
@@ -235,9 +237,10 @@ header {
 
 .show-holder {
   /*margin-top: -10px;*/
-  height: 350px;
-  width: 350px;
+  min-height: 500px;
+  min-width: 350px;
   // border: 1px solid #000;
+  background: tranparent;
   margin-top: 10px;
   margin-left: 50px;
   /*margin-top: -10px;*/
@@ -248,6 +251,10 @@ header {
   overflow: hidden;
   /*height: auto;*/
   position: relative;
+}
+
+.right-holder {
+  margin-left: 5%;
 }
 
 .show-image {
@@ -303,7 +310,7 @@ header {
   width: 100%;
   margin-top: 20px;
   margin-bottom: 10px;
-  background: white;
+  background: transparent;
   display: flex;
   flex-direction: row;
 }
@@ -313,14 +320,14 @@ header {
   width: 75px;
   height: 75px;
   position: absolute;
-  right: 0;
+  right: 0px;
   top: 0;
   z-index: 99;
 }
 
 .show-grade img {
   width: 100%;
-  border-radius: 0px 5px 5px 0px;
+  border-radius: 0px 0px 5px 0px;
   height: auto;
 }
 
@@ -354,6 +361,9 @@ header {
   font-family: "Helvetica";
   font-size: 17px;
   /*width: 100%;*/
+  min-height: 400px;
+  min-width: 400px;
+  background: transparent;
   margin-right: 10px;
 
   padding: 5px;
@@ -466,19 +476,15 @@ footer {
 }
 
 .store-name-header {
-  // display: block;/
-  // background: #f7f7f7;
-  // text-align: center!important;
   text-transform: uppercase;
-  // font-style:
-  // text-transform: full-width;
-  // text-decoration: underline;
-  // letter-spacing: 2px;
-  // font-weight: bold;
   padding: 10px 10px 10px 0;
-  color: #222;
-  font-family: "helvetica";
-  font-size: 25px;
+  color: #444;
+  // background: ivory;
+  letter-spacing: -2px;
+  font-weight: bolder;
+  line-height: 44px;
+  font-family: "arial";
+  font-size: 30px;
 }
 
 .store-name {
@@ -588,7 +594,7 @@ footer {
   margin-top: 30px;
   margin-left: 50px;
   height: 600px;
-  width: 350px;
+  width: 400px;
 }
 /*
 #map:hover {
@@ -808,12 +814,10 @@ span.big-header {
   margin: 0 auto;
   font-weight: bolder;
   background: white;
-  // opacity: 0.8;
   text-align: center;
   font-family: "Montserrat"!important;
   text-transform: uppercase;
   letter-spacing: 5px;
-  /*letter-spacing: 10px;*/
   color: black;
 }
 
@@ -1415,6 +1419,12 @@ span.underline {
   background: #f7f7f7;
 }
 
+.parallax-window {
+    min-height: 400px;
+    min-width: 400px;
+    background: transparent;
+}
+
 .overview-holder table {
   padding: 5px;
   // box-shadow: 2px 2px 2px 0 #f7f7f7;
@@ -1466,11 +1476,11 @@ span.underline {
 .overview-holder td.subject {
   padding-right: 10px;
   background: #fff;
-  background: #f7f7f7;
+  // background: #f7f7f7;
   // background: gold;
   // background: rgba(211, 211, 211, 1);
   color: #222;
-  border: 1px solid #eee;
+  // border: 1px solid #eee;
   // font-weight: bold;
   // color: maroon;
 }

@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require parallax
 //= require bundle
 //= require_tree .
