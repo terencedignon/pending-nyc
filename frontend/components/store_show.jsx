@@ -6,8 +6,8 @@ var Comparison = require('./comparison.jsx');
 var Map = require('./map.jsx');
 var Overview = require('./overview.jsx');
 var Violations = require('./violations.jsx');
-var Parallax = require('react-parallax');
-var SparkScroll = require("react-spark-scroll-gsap");
+// var Parallax = require('react-parallax');
+// var SparkScroll = require("react-spark-scroll-gsap");
 
 
 var StoreShow = React.createClass({
@@ -26,7 +26,8 @@ var StoreShow = React.createClass({
     ApiUtil.fetchStore(this.props.params.id);
   },
   componentWillUnmount: function () {
-    $('.show-holder').hide();
+    $('.show-holder').remove();
+    // console.log("hey");
     clearInterval(this.backButtonListener);
     this.storeListener.remove();
     // console.log("hello");
@@ -37,16 +38,20 @@ var StoreShow = React.createClass({
       var url = this.state.store.image_url.replace("ms.jpg", "o.jpg");
 
           setTimeout(function() {
-            $('.show-holder').parallax({imageSrc: url, speed: 0.95});
-          }, 1000);
+            $('.show-holder').parallax({imageSrc: url, speed: 0.9});
+          }, 0);
           // return <img id="show-image" className="show-image" src={url} />;
 
     } else {
       setTimeout(function () {
-        var url = "http://www.publicdomainpictures.net/pictures/120000/nahled/blue-background-gradient-texture.jpg";
-    $('.show-holder').parallax({imageSrc: url, speed: 0.95 });
+        $('.show-holder').parallax({
+          imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=90&heading=235&pitch=10&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
+          speed: 0.99
+        });
+    //     var url = "http://www.publicdomainpictures.net/pictures/120000/nahled/blue-background-gradient-texture.jpg";
+    // $('.show-holder').parallax({imageSrc: url, speed: 0.95 });
       // return <div className="empty-image"></div>;
-    }, 1000);
+    }.bind(this), 0);
   }
 },
   _onStoreChange: function () {
@@ -165,7 +170,7 @@ var StoreShow = React.createClass({
 
         };
         // legend = <span dangerouslySetInnerHTML={{ __html: this.state.legend }} />;
-        barChart = <BarChart ref="chart" className="bar-chart" data={data} options={options} width={500} height={150}fill={'#3182bd'} />
+        barChart = <BarChart ref="chart" className="bar-chart" data={data} options={options} width={400} height={150}fill={'#3182bd'} />
 var grade = <img src={this.selectGrade()}/>;
       var image = this.setImage();
     }
@@ -202,23 +207,24 @@ var grade = <img src={this.selectGrade()}/>;
               <hr/>
               <span className="store-name">Inspections over time</span>
 
-              <hr/>
                 {barChart}
-              <hr/>
+
+
               {comparison}
             </div>
 
             <div className="right-holder">
-            <div key={Math.random()} className="show-holder">
+              <div key={Math.random()} className="show-holder">
+                {image}
+                <div className="show-grade">
+                  {grade}
+                </div>
+              </div>
+              <div>
+                {this.map}
+              </div>
+            </div>
 
-      <div className="show-grade">
-          {grade}
-    </div>
-    </div>
-      <div>
-          {this.map}
-      </div>
-    </div>
   </div>
   <span className="store-name">Violation Record</span><br/>
 <div className="violations">
@@ -229,9 +235,9 @@ var grade = <img src={this.selectGrade()}/>;
     </div>;
   }
   return (
-  <section className="show-container">
+  <div className="show-container">
       {showDisplay}
-</section>
+</div>
 
       );
   }

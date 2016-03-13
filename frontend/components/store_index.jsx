@@ -44,6 +44,9 @@ var StoreIndex = React.createClass({
   },
 
   render: function () {
+
+
+
     var trendItems = <span></span>;
 
     if (this.state.trending) {

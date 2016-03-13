@@ -135,116 +135,116 @@ var Overview = React.createClass({
 
     return (
       <span className="overview-holder">
-        <span className="store-name">{this.props.store.name} Overview: <span className="question-highlight">{this.props.store.calc.score}</span></span><p/>
+        <span className="store-name-header">{this.props.store.name} </span>
 
         <span className="overview-address">
-              <i className="fa fa-building fa-border"></i>{store.building} {store.street} {store.boro}, NY {store.zipcode}<br/>
-              <i className="fa fa-phone fa-border"></i> {this.formatPhone(store.phone)}<br/>
-              <i className="fa fa-cutlery fa-border"></i> {store.cuisine_type}<br/>
+            {store.building} {store.street} {store.boro}, NY {store.zipcode}<br/>
+              {this.formatPhone(store.phone)}<br/>
+               {store.cuisine_type}<br/>
         </span>
-        <hr/>
+
 
         <table>
           <tbody>
-            <tr className={this.translate(data.last)}>
+            <tr>
               <td className="thumbs">
               </td>
               <td className="subject">
                 Most Recent Inspection
               </td>
-              <td className="score">
+              <td className={"grade " + this.translate(data.last)}>
                 {data.last}
               </td>
               <td className={"grade " + this.translate(data.last)}>
                  {this.translate(data.last)}
                </td>
             </tr>
-            <tr className={this.translate(data.average)}>
+            <tr>
               <td className="thumbs">
               </td>
               <td className="subject">
               Average of {data.inspections} Inspections
               </td>
-              <td className="score">
+              <td className={"grade " + this.translate(data.average)}>
                 {data.average}
               </td>
               <td className={"grade " + this.translate(data.average)}>
                 {this.translate(data.average)}
               </td>
             </tr>
-            <tr className={this.translate(data.first_average)}>
+            <tr>
               <td className="thumbs">
               </td>
               <td className="subject">
                 Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Unannounced
                 <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span></span> &nbsp;
               </td>
-              <td className="score">
+              <td className={"grade " + this.translate(data.first_average)}>
                 {data.first_average}
               </td>
               <td className={"grade " + this.translate(data.first_average)}>
                 {this.translate(data.first_average)}
              </td>
            </tr>
-           <tr className={this.translate(data.best)}>
+           <tr>
              <td className="thumbs">
              </td>
              <td className="subject">
                Best Score
              </td>
-             <td className="score">
+             <td className={"grade " + this.translate(data.best)}>
                {data.best}
              </td>
              <td className={"grade " + this.translate(data.best)}>
                {this.translate(data.best)}
              </td>
            </tr>
-           <tr className={this.translate(data.worst)}>
+           <tr>
              <td className="thumbs">
              </td>
            <td className="subject">
              Worst Score
            </td>
-           <td className="score">
+           <td className={"grade " + this.translate(data.worst)}>
              {data.worst}
            </td>
            <td className={"grade " + this.translate(data.worst)}>
              {this.translate(data.worst)}
            </td>
          </tr>
-         <tr className={this.translate(data.mice)}>
+         <tr>
            <td className="thumbs">
            </td>
            <td className="subject">
              Probability of Mice
            </td>
-           <td className="score">
+           <td className={"grade " + this.translate(data.mice)}>
              {data.mice}
            </td>
            <td className={"grade " + this.translate(data.mice)}>
              {this.translate(data.mice)}
            </td>
          </tr>
-        <tr className={this.translate(data.flies)}>
+        <tr>
           <td className="thumbs">
           </td>
           <td className="subject">
             Probability of Flies
           </td>
-          <td className="score">
+          <td className={"grade " + this.translate(data.flies)}>
             {data.flies}
           </td>
           <td className={"grade " + this.translate(data.flies)}>
             {this.translate(data.flies)}
           </td>
         </tr>
-        <tr className={this.translate(data.roaches)}>
-          <td>
+        <tr>
+          <td className="thumbs">
           </td>
           <td className="subject">
             Probability of Roaches
           </td>
-          <td className="score">
+          <td className={"grade " + this.translate(data.roaches)}>
             {data.roaches}
           </td>
           <td className={"grade " + this.translate(data.roaches)}>
@@ -253,15 +253,15 @@ var Overview = React.createClass({
         </tr>
       </tbody>
     </table>
-    <hr/>
+
 
     <span className="store-name">Percent of restaurants that {store.name} is greater than or equal to</span>
-    <p/>
+
         <table>
 
             <tbody>
               <tr>
-              <th className="subject" colSpan="2">
+              <th className="subject">
 
               </th>
               <th>{store.zipcode}</th>
@@ -390,7 +390,7 @@ var Overview = React.createClass({
 
     </tr>
     <tr>
-      <td>
+      <td className="thumbs">
 
       </td>
       <td className="subject">

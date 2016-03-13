@@ -97,8 +97,8 @@ var Header = React.createClass({
 
     $(window).scroll(function() {
       if ($(this).scrollTop() > 1) {
-        // $('header').css("opacity", "0.9");
-        $('header').css("border-bottom", "2px solid #f7f7f7");
+        $('header').css("opacity", "0.95");
+        // $('header-wrapper').css("border-bottom", "2px solid #f7f7f7");
       } else {
         $('header').css("opacity", "1");
         $('header').css("border-bottom", "0");

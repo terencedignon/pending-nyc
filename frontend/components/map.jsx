@@ -20,23 +20,23 @@ var Map = React.createClass({
       streetViewControl: false,
       mapTypeControl: false,
       zoom: 12,
+      scroll:{x:$(window).scrollLeft(),y:$(window).scrollTop()}
     };
 
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    // scroll:{x:$(window).scrollLeft(),y:$(window).scrollTop()}
 
-    // var offset=$(map.getDiv()).offset();
-    //   map.panBy(((mapOptions.scroll.x-offset.left)/3),((mapOptions.scroll.y-offset.top)/3));
-    //   google.maps.event.addDomListener(window, 'scroll', function(){
-    //     var scrollY=$(window).scrollTop() * 0.1,
-    //       scrollX=$(window).scrollLeft() * 0.1,
-    //       scroll=map.get('scroll');
-    //         if(scroll){
-    //             map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));
-    //           }
-    //           map.set('scroll',{x:scrollX,y:scrollY});
-    // }.bind(this));
+    var offset=$(map.getDiv()).offset();
+      map.panBy(((mapOptions.scroll.x-offset.left)/30),((mapOptions.scroll.y-offset.top)/30));
+      google.maps.event.addDomListener(window, 'scroll', function(){
+        var scrollY=$(window).scrollTop() * 0.2,
+          scrollX=$(window).scrollLeft() * 0.2,
+          scroll=map.get('scroll');
+            if(scroll){
+                map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));
+              }
+              map.set('scroll',{x:scrollX,y:scrollY});
+    }.bind(this));
 
 
     this.idleListener = google.maps.event.addListener(map, 'idle', function() {
