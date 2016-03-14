@@ -36446,7 +36446,7 @@
 	      React.createElement(
 	        'span',
 	        { className: 'overview-address' },
-	        React.createElement('i', { className: 'fa fa-building fa-border' }),
+	        React.createElement('i', { className: 'fa fa-building' }),
 	        ' ',
 	        store.building,
 	        ' ',
@@ -36456,11 +36456,11 @@
 	        ', NY ',
 	        store.zipcode,
 	        React.createElement('br', null),
-	        React.createElement('i', { className: 'fa fa-phone fa-border' }),
+	        React.createElement('i', { className: 'fa fa-phone' }),
 	        ' ',
 	        this.formatPhone(store.phone),
 	        React.createElement('br', null),
-	        React.createElement('i', { className: 'fa fa-cutlery fa-border' }),
+	        React.createElement('i', { className: 'fa fa-cutlery' }),
 	        ' ',
 	        store.cuisine_type,
 	        React.createElement('br', null)
