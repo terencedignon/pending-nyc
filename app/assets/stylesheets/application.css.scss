@@ -289,7 +289,7 @@ header {
 
   // margin-top: 120px;
   height: 400px;
-  width: 450px;
+  width: 500px;
   // border-radius: 25%;
 
   // border: 1px solid #000;
@@ -307,7 +307,7 @@ header {
 }
 
 .right-holder {
-  margin-left: 4%;
+  margin-left: 2%;
   // margin: 0 auo;
 }
 
@@ -564,7 +564,7 @@ footer {
   // text-align: center!important;
   // text-decoration: underline;
   text-transform: uppercase;
-  padding: 10px 25px;
+  padding: 15px 25px;
   // padding: 10px 10px 10px 10px;
   // background: #444;
   color: #444;
@@ -785,11 +785,11 @@ footer {
   // background: #fff;
   background: #f7f7f7;
   border: 1px solid #eee;
-  border-bottom: 0;
+  // border-bottom: 0;
   // border-bottom: 2px solid #ccc;
   // border: 1px solid #eee;
-  // border-left: 0;
-  // border-right: 0;
+  border-left: 0;
+  border-right: 0;
   // background: brown;
   color: #444;
   // text-transform: uppercase;
@@ -927,17 +927,17 @@ hr.break {
 
 span.big-header {
   display: block;
-  font-size: 90px;
-  padding: 50px;
-  width: 80%;
+  font-size: 70px;
+  padding: 20px 50px;
+  // width: 80%;
   margin: 0 auto;
   font-weight: bold;
-  background: rgba(0, 0, 0, 0.9);
-  // text-align: center;
-  font-family: "Arial"!important;
+  background: rgba(255, 255, 255, 0.99);
+  text-align: center;
+  font-family: "Helvetica"!important;
   text-transform: uppercase;
-  letter-spacing: 5px;
-  color: #fff;
+  letter-spacing: 2px;
+  color: #222;
 }
 
 
@@ -1202,19 +1202,20 @@ span.underline {
   // color: #222;
 }
 .about h1 {
-  font-size: 40px;
-  // text-align: center;
+  font-size: 30px;
+  text-align: center;
   // font-family: "lato";
-  font-family: "montserrat";
+  font-family: "helvetica";
   // box-shadow: 5px 5px 1px 2px #ccc;
   padding: 30px 50px;
-  width: 80%;
+  // width: 80%;
+  cursor: pointer;
   margin: 0 auto;
   margin-bottom: 20px;
   letter-spacing: 5px;
   // opacity: 0.9;
   // text-align: right;
-  background: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.99);
   // font-weight: bolder;
   color: #222;
   // padding: 20px;
