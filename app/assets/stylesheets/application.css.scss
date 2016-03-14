@@ -916,7 +916,7 @@ hr.break {
 
 
 .intro-header {
-  background: url("http://www.venetian.com/content/dam/lasvegas/venetian/master/main/home/restaurants/lavo/lavo-restaurant.jpg") no-repeat;
+  background: url("https://img1.etsystatic.com/031/0/6123453/il_fullxfull.604043653_ogri.jpg") no-repeat;
   // background-size: cover;
   width: auto;
   height: 100%;
@@ -927,20 +927,21 @@ hr.break {
 
 span.big-header {
   display: block;
-  font-size: 75px;
+  font-size: 50px;
   padding: 20px 50px;
   // width: 80%;
   margin: 0 auto;
   font-weight: bold;
-  background: rgba(255, 255, 255, .1);
+  // background: #2;
+  background: rgba(255, 255, 255, 1);
   text-align: center;
-  border: 1px solid transparent;
+  // border: 1px solid black;
   font-family: "Helvetica"!important;
   text-transform: uppercase;
-  letter-spacing: -2px;
-  color: #fff;
+  letter-spacing: 2px;
+  color: #222;
   cursor: pointer;
-  transition: 0.1s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 
@@ -1221,22 +1222,22 @@ span.underline {
   // opacity: 0.9;
   text-align: center;
   border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(255, 255, 255, 1);
+  color: #222;
   // padding: 20px;
   // opacity: 0.5;
   text-transform: uppercase;
-  transition: 0.1s ease-in-out;
+  transition: 0.2s ease-in-out;
   // font-weight: normal;
 }
 
 .about h1:hover {
   border: 1px solid white;
-  background: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.9);
   // font-weight: bolder;
   color: #222;
 }
-// 
+//
 // span.big-header:hover {
 //   // border: 1px solid white;
 //   background: rgba(255, 255, 255, 0.2);
