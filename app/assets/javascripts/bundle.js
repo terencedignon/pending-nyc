@@ -37064,10 +37064,12 @@
 	var SearchStore = __webpack_require__(254);
 	var SearchActions = __webpack_require__(215);
 	var StoreActions = __webpack_require__(221);
+	var History = __webpack_require__(159).History;
 
 	var StoreIndex = React.createClass({
 	  displayName: 'StoreIndex',
 
+	  mixins: [History],
 	  getInitialState: function () {
 	    return { mostVisited: [], trending: [] };
 	    // },
@@ -37097,6 +37099,10 @@
 
 	  _onStoreChange: function () {
 	    this.setState({ mostVisited: StoreStore.getMostVisited(), trending: StoreStore.getTrending() });
+	  },
+
+	  toMost: function () {
+	    this.history.pushState(null, "top", {});
 	  },
 
 	  hoverImage: function (e) {
@@ -37189,7 +37195,7 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'show-index' },
+	        { onClick: this.toMost, className: 'show-index' },
 	        mostVisitedList,
 	        React.createElement(
 	          'div',
@@ -37205,17 +37211,17 @@
 	            { className: 'about' },
 	            React.createElement(
 	              'h1',
-	              null,
+	              { onClick: this.toMost },
 	              '22,488   restaurants'
 	            ),
 	            React.createElement(
 	              'h1',
-	              null,
+	              { onClick: this.toMost },
 	              ' 154,159  inspections '
 	            ),
 	            React.createElement(
 	              'h1',
-	              null,
+	              { onClick: this.toMost },
 	              ' 463,245 violations'
 	            )
 	          )

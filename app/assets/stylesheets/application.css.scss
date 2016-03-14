@@ -934,11 +934,13 @@ span.big-header {
   font-weight: bold;
   background: rgba(255, 255, 255, .1);
   text-align: center;
-  border: 1px solid white;
+  border: 1px solid transparent;
   font-family: "Helvetica"!important;
   text-transform: uppercase;
   letter-spacing: -2px;
   color: #fff;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
 }
 
 
@@ -1218,15 +1220,29 @@ span.underline {
   letter-spacing: 5px;
   // opacity: 0.9;
   text-align: center;
-  // border: 1px solid white;
-  background: rgba(255, 255, 255, 1);
-  // font-weight: bolder;
-  color: #222;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
   // padding: 20px;
   // opacity: 0.5;
   text-transform: uppercase;
+  transition: 0.1s ease-in-out;
   // font-weight: normal;
 }
+
+.about h1:hover {
+  border: 1px solid white;
+  background: rgba(255, 255, 255, 1);
+  // font-weight: bolder;
+  color: #222;
+}
+// 
+// span.big-header:hover {
+//   // border: 1px solid white;
+//   background: rgba(255, 255, 255, 0.2);
+//   // font-weight: bolder;
+//   // color: #222;
+// }
 
 .google-image-holder {
   width: 90px;

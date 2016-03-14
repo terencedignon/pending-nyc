@@ -4,8 +4,11 @@ var StoreStore = require('../stores/store_store.js');
 var SearchStore = require('../stores/search_store.js');
 var SearchActions = require('../actions/search_actions.js');
 var StoreActions = require('../actions/store_actions.js');
+var History = require('react-router').History;
+
 
 var StoreIndex = React.createClass({
+  mixins: [History],
   getInitialState: function () {
     return { mostVisited: [], trending: [] };
   // },
@@ -35,6 +38,10 @@ var StoreIndex = React.createClass({
 
   _onStoreChange: function () {
     this.setState({ mostVisited: StoreStore.getMostVisited(), trending: StoreStore.getTrending() });
+  },
+
+  toMost: function () {
+    this.history.pushState(null, "top", {});
   },
 
   hoverImage: function (e) {
@@ -95,19 +102,19 @@ var StoreIndex = React.createClass({
           {trendItems}<p/>
 
       </div>
-      <div className="show-index">
+      <div onClick={this.toMost} className="show-index">
         {mostVisitedList}
         <div className="intro-header">
 
           <span className="big-header">NYC restaurant grade analytics</span><p/>
             <div className="about">
 
-              <h1>
+              <h1 onClick={this.toMost}>
 
 
                 22,488   restaurants</h1>
-              <h1> 154,159  inspections </h1>
-              <h1> 463,245 violations</h1>
+              <h1 onClick={this.toMost}> 154,159  inspections </h1>
+              <h1 onClick={this.toMost}> 463,245 violations</h1>
 
       </div>
       </div>
