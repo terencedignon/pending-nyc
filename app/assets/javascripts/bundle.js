@@ -24622,14 +24622,14 @@
 	      var url = this.state.store.image_url.replace("ms.jpg", "o.jpg");
 
 	      setTimeout(function () {
-	        $('.show-holder').parallax({ imageSrc: url, speed: 0.99 });
+	        $('.show-holder').parallax({ imageSrc: url, speed: 0.9 });
 	      }, 0);
 	      // return <img id="show-image" className="show-image" src={url} />;
 	    } else {
 	        setTimeout(function () {
 	          $('.show-holder').parallax({
 	            imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=90&heading=235&pitch=10&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
-	            speed: 0.99
+	            speed: 0.9
 	          });
 	          // var url = "http://www.publicdomainpictures.net/pictures/120000/nahled/blue-background-gradient-texture.jpg";
 	          // $('.show-holder').parallax({imageSrc: url, speed: 0.95 });
