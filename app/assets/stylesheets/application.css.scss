@@ -420,7 +420,7 @@ header {
 .overview {
   font-family: "Helvetica";
   font-size: 16px;
-  border: 1px solid #eee;
+  border: 1px solid #ccc;
   margin-left: 30px;
   /*width: 100%;*/
   min-height: 400px;
@@ -540,21 +540,22 @@ footer {
 .store-name-header {
   text-transform: uppercase;
   padding: 20px 20px;
-  background: #fff;
+  // background: #f7f7f7;
   color: #333;
+  border-bottom: 0;
   // border: 1px solid #ccc;
   // border: 1px solid #eee;
   // text-align: center;
   // background: #444;
   // text-align: left;
   // background: ivory;
-  letter-spacing: -1px;
+  letter-spacing: -2px;
   display: block;
   max-width: 500px;
   // font-weight: bold;
   line-height: 44px;
   font-family: "Arial";
-  font-size: 50px;
+  font-size: 35px;
 }
 
 .store-name {
@@ -782,7 +783,7 @@ footer {
   padding: 15px 25px;
   max-width: 480px;
   // background: #fff;
-  background: #f7f7f7;
+  // background: #f7f7f7;
   border: 1px solid #eee;
   // border-bottom: 2px solid #ccc;
   // border: 1px solid #eee;
@@ -1544,7 +1545,7 @@ span.underline {
 }
 
 .overview-holder table {
-  padding: 15px 15px;
+  padding: 15px 25px;
   // box-shadow: 2px 2px 2px 2px #f7f7f7;
   // border: 1px solid steelblue;
   // text-transform: uppercase;
@@ -1638,14 +1639,14 @@ span.underline {
 //   color: #222;
 //   // padding-right: 20px;
 // }
-//
+
 // .overview-holder td.A {
 //   // border: 1px solid #eee;
 //   background: rgba(70, 130, 180, 0.75);
 //   color: white;
 //   text-align: center;
 // }
-
+//
 // .overview-holder td.B {
 //   background: rgba(0, 100, 0, 0.75);
 //   color: white;
