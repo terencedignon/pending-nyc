@@ -35964,7 +35964,7 @@
 	    var comparisonText;
 	    var comparison = this.props.store[e.currentTarget.id];
 	    if (e.currentTarget.id.includes("zipcode")) {
-	      comparisonText = "all other restaurants in " + this.props.store.zipcode;
+	      comparisonText = "all other restaurants in the zipcode " + this.props.store.zipcode;
 	    } else if (e.currentTarget.id.includes("cuisine")) {
 	      comparisonText = "all other restaurants that serve " + this.props.store.cuisine_type;
 	    } else {

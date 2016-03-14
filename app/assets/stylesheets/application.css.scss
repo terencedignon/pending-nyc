@@ -307,7 +307,7 @@ header {
 }
 
 .right-holder {
-  margin-left: 3%;
+  margin-left: 4%;
   // margin: 0 auo;
 }
 
@@ -420,7 +420,7 @@ header {
 .overview {
   font-family: "Helvetica";
   font-size: 16px;
-  border: 1px solid #eee;
+  border: 1px solid #ccc;
   margin-left: 30px;
   /*width: 100%;*/
   min-height: 400px;
@@ -570,7 +570,7 @@ footer {
   // letter-spacing: 1px;
   // text-align: center;
   max-width: 500px;
-  border: 1px solid #eee;
+  border: 1px solid #ccc;
   border-left: 0;
   border-right: 0;
   // background: ivory;
@@ -609,8 +609,8 @@ footer {
 
 }
 
-.comparison .title {
-  max-width: 400px;
+.comparison-title {
+  max-width: 300px;
   // padding: 0;
 }
 
@@ -706,6 +706,7 @@ footer {
 
 .main-page-holder {
   width: 100%;
+  background: #fff;
   /*margin-top: 20px;*/
   /*background: teal;*/
   position: relative;
@@ -714,6 +715,8 @@ footer {
 .options {
   position: absolute;
   z-index: 99;
+  width: 100%;
+  background: #fff;
   left: 0;
   top: -50px;
   // /*margin-bottom: 20px;*/
@@ -776,11 +779,12 @@ footer {
 .overview-address {
   display: block;
   margin: 0;
-  padding: 10px 25px;
+  padding: 15px 25px;
   max-width: 480px;
   // background: #fff;
-  // background: #f7f7f7;
+  background: #f7f7f7;
   border: 1px solid #eee;
+  // border-bottom: 2px solid #ccc;
   // border: 1px solid #eee;
   // border-left: 0;
   // border-right: 0;
@@ -841,7 +845,7 @@ footer {
 
 .show-index {
   background: #fff;
-  width: 95%;
+  width: 97%;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
@@ -866,7 +870,7 @@ hr.break {
 }
 
 .most-holder {
-  width: 95%;
+  width: 97%;
   margin: 0 auto;
   background: #fff;
   // display: flex;
@@ -1364,7 +1368,7 @@ span.underline {
 }
 
 .main-map-wrapper {
-
+  background: #fff;
 }
 
 .main-map-wrapper i {
@@ -1581,10 +1585,10 @@ span.underline {
   color: white;
 }
 
-.overview-holder tr.C {
-  background: rgba(128, 0, 0, 0.75)!important;
-  color: #fff;
-}
+// .overview-holder tr.C {
+//   background: rgba(128, 0, 0, 0.5)!important;
+//   color: #fff;
+// }
 .overview-holder td.B {
   // border: 1px solid #eee;
   // background: rgba(0, 100, 0, 0.75)!important;
@@ -1603,7 +1607,7 @@ span.underline {
   padding: 0 10px;
   // background: #fff;
   // font-style: italic;
-  // letter-spacing: 0.5px;
+  letter-spacing: 0.2px;
   color: #444;
   background: #fff;
   // background: gold;
@@ -1635,17 +1639,17 @@ span.underline {
 //   // padding-right: 20px;
 // }
 //
-.overview-holder td.A {
-  // border: 1px solid #eee;
-  background: rgba(70, 130, 180, 0.75);
-  color: white;
-  text-align: center;
-}
+// .overview-holder td.A {
+//   // border: 1px solid #eee;
+//   background: rgba(70, 130, 180, 0.75);
+//   color: white;
+//   text-align: center;
+// }
 
-.overview-holder td.B {
-  background: rgba(0, 100, 0, 0.75);
-  color: white;
-}
+// .overview-holder td.B {
+//   background: rgba(0, 100, 0, 0.75);
+//   color: white;
+// }
 
 
 .overview-holder td {
