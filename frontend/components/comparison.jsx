@@ -151,7 +151,7 @@ var Comparison = React.createClass({
     }
 
     return (
-      <BarChart ref="comparison" key="comparison" className="comparison-chart" data={dataset} width={500} height={325} options={optionHash}/>
+      <BarChart ref="comparison" key="comparison" className="comparison-chart" data={dataset} width={400} height={200} options={optionHash}/>
     );
   },
 
@@ -212,13 +212,13 @@ var Comparison = React.createClass({
 
     return (
       <div className="comparison">
-        <span key={Math.random()} className="store-name">Relative to {comparisonNameOrLink}
-           <span className="comparison-results">
-              {score}
-            </span>
+        <span key={Math.random()} className="store-name"><span className="comparison-title">Relative to {comparisonNameOrLink}</span>
           </span>
+
             <br/>
+            <span className="comparison-options">
             Compare with <a href="#" id="cuisine_calc" onClick={this.setDefaultComparison}>Cuisine</a>, <a href="#" id="zipcode_calc" onClick={this.setDefaultComparison}>Zipcode</a>, or <a href="#" id="boro_calc" onClick={this.setDefaultComparison}>Boro</a>.
+          </span>
             <p/>
         <span className="comparison-legend" key={Math.random()} dangerouslySetInnerHTML={{ __html: this.state.legend }} />
         {chart}

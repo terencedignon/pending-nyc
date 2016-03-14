@@ -25,12 +25,12 @@ var Map = React.createClass({
 
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-
+    //
     // var offset=$(map.getDiv()).offset();
     //   map.panBy(((mapOptions.scroll.x-offset.left)/30),((mapOptions.scroll.y-offset.top)/30));
     //   google.maps.event.addDomListener(window, 'scroll', function(){
-    //     var scrollY=$(window).scrollTop() * 0.2,
-    //       scrollX=$(window).scrollLeft() * 0.2,
+    //     var scrollY=$(window).scrollTop() * 0.1,
+    //       scrollX=$(window).scrollLeft() * 0.0,
     //       scroll=map.get('scroll');
     //         if(scroll){
     //             map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));

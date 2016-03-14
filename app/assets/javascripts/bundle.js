@@ -24622,18 +24622,18 @@
 	      var url = this.state.store.image_url.replace("ms.jpg", "o.jpg");
 
 	      setTimeout(function () {
-	        $('.show-holder').parallax({ imageSrc: url, speed: 0.5 });
+	        $('.show-holder').parallax({ imageSrc: url, speed: 0.99 });
 	      }, 0);
 	      // return <img id="show-image" className="show-image" src={url} />;
 	    } else {
 	        setTimeout(function () {
 	          $('.show-holder').parallax({
 	            imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=90&heading=235&pitch=10&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
-	            speed: 0.5
+	            speed: 0.99
 	          });
-	          //     var url = "http://www.publicdomainpictures.net/pictures/120000/nahled/blue-background-gradient-texture.jpg";
+	          // var url = "http://www.publicdomainpictures.net/pictures/120000/nahled/blue-background-gradient-texture.jpg";
 	          // $('.show-holder').parallax({imageSrc: url, speed: 0.95 });
-	          // return <div className="empty-image"></div>;
+	          //   return <div className="empty-image"></div>;
 	        }.bind(this), 0);
 	      }
 	  },
@@ -24790,12 +24790,12 @@
 	            'div',
 	            { className: 'overview' },
 	            overview,
-	            React.createElement('hr', null),
 	            React.createElement(
 	              'span',
 	              { className: 'store-name' },
 	              'Inspections over time'
 	            ),
+	            React.createElement('br', null),
 	            barChart,
 	            comparison
 	          ),
@@ -24818,24 +24818,14 @@
 	              this.map
 	            )
 	          )
-	        ),
-	        React.createElement(
-	          'span',
-	          { className: 'store-name' },
-	          'Violation Record'
-	        ),
-	        React.createElement('br', null),
-	        React.createElement(
-	          'div',
-	          { className: 'violations' },
-	          'Total: ',
-	          this.state.store.calc.violations,
-	          ' : Critical: ',
-	          this.state.store.calc.critical,
-	          violations
 	        )
 	      );
 	    }
+	    // <span className="store-name">Violation Record</span><br/>
+	    // <div className="violations">
+	    //   Total: {this.state.store.calc.violations} : Critical: {this.state.store.calc.critical}
+	    //   {violations}
+	    // </div>
 	    return React.createElement(
 	      'div',
 	      { className: 'show-container' },
@@ -35960,7 +35950,7 @@
 	      tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>kb"
 	    };
 
-	    return React.createElement(BarChart, { ref: 'comparison', key: 'comparison', className: 'comparison-chart', data: dataset, width: 500, height: 325, options: optionHash });
+	    return React.createElement(BarChart, { ref: 'comparison', key: 'comparison', className: 'comparison-chart', data: dataset, width: 400, height: 200, options: optionHash });
 	  },
 
 	  linkHandler: function (e) {
@@ -36042,34 +36032,37 @@
 	      React.createElement(
 	        'span',
 	        { key: Math.random(), className: 'store-name' },
-	        'Relative to ',
-	        comparisonNameOrLink,
 	        React.createElement(
 	          'span',
-	          { className: 'comparison-results' },
-	          score
+	          { className: 'comparison-title' },
+	          'Relative to ',
+	          comparisonNameOrLink
 	        )
 	      ),
 	      React.createElement('br', null),
-	      'Compare with ',
 	      React.createElement(
-	        'a',
-	        { href: '#', id: 'cuisine_calc', onClick: this.setDefaultComparison },
-	        'Cuisine'
+	        'span',
+	        { className: 'comparison-options' },
+	        'Compare with ',
+	        React.createElement(
+	          'a',
+	          { href: '#', id: 'cuisine_calc', onClick: this.setDefaultComparison },
+	          'Cuisine'
+	        ),
+	        ', ',
+	        React.createElement(
+	          'a',
+	          { href: '#', id: 'zipcode_calc', onClick: this.setDefaultComparison },
+	          'Zipcode'
+	        ),
+	        ', or ',
+	        React.createElement(
+	          'a',
+	          { href: '#', id: 'boro_calc', onClick: this.setDefaultComparison },
+	          'Boro'
+	        ),
+	        '.'
 	      ),
-	      ', ',
-	      React.createElement(
-	        'a',
-	        { href: '#', id: 'zipcode_calc', onClick: this.setDefaultComparison },
-	        'Zipcode'
-	      ),
-	      ', or ',
-	      React.createElement(
-	        'a',
-	        { href: '#', id: 'boro_calc', onClick: this.setDefaultComparison },
-	        'Boro'
-	      ),
-	      '.',
 	      React.createElement('p', null),
 	      React.createElement('span', { className: 'comparison-legend', key: Math.random(), dangerouslySetInnerHTML: { __html: this.state.legend } }),
 	      chart
@@ -36168,11 +36161,12 @@
 
 	    map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
+	    //
 	    // var offset=$(map.getDiv()).offset();
 	    //   map.panBy(((mapOptions.scroll.x-offset.left)/30),((mapOptions.scroll.y-offset.top)/30));
 	    //   google.maps.event.addDomListener(window, 'scroll', function(){
-	    //     var scrollY=$(window).scrollTop() * 0.2,
-	    //       scrollX=$(window).scrollLeft() * 0.2,
+	    //     var scrollY=$(window).scrollTop() * 0.1,
+	    //       scrollX=$(window).scrollLeft() * 0.0,
 	    //       scroll=map.get('scroll');
 	    //         if(scroll){
 	    //             map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));
@@ -36361,20 +36355,26 @@
 	  },
 
 	  iconParse: function (grade) {
-	    if (grade instanceof Array) {
-	      for (var i = 0; i < grade.length; i++) {
-	        var num = grade[i];
-
-	        if (num >= 25) {
-	          return "thumbs-o-down";
-	        }
-	      }
-	      return "thumbs-o-up";
-	    }
 	    if (grade <= 13) {
 	      return "thumbs-o-up";
 	    } else if (grade <= 27) {
 	      return "minus";
+	    } else {
+	      return "thumbs-o-down";
+	    }
+	  },
+
+	  rankingsParse: function (array) {
+	    var avg = 0;
+
+	    array.forEach(function (n) {
+	      avg += n;
+	    });
+
+	    avg = avg / array.length;
+	    // console.log(avg);
+	    if (avg >= 50) {
+	      return "thumbs-o-up";
 	    } else {
 	      return "thumbs-o-down";
 	    }
@@ -36465,7 +36465,11 @@
 	        store.cuisine_type,
 	        React.createElement('br', null)
 	      ),
-	      React.createElement('hr', null),
+	      React.createElement(
+	        'span',
+	        { className: 'store-name' },
+	        'Inspections Overview'
+	      ),
 	      React.createElement(
 	        'table',
 	        null,
@@ -36475,11 +36479,15 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.last) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Most Recent Inspection'
+	              'Most Recent'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36495,13 +36503,16 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.average) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
 	              'Average of ',
-	              data.inspections,
-	              ' Inspections'
+	              data.inspections
 	            ),
 	            React.createElement(
 	              'td',
@@ -36517,7 +36528,11 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.first_average) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36525,7 +36540,7 @@
 	              React.createElement(
 	                'span',
 	                { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'question-highlight' },
-	                'Unannounced',
+	                'Surprise',
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },
@@ -36548,11 +36563,15 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.best) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Best Score'
+	              'Best'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36568,11 +36587,15 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.worst) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Worst Score'
+	              'Worst'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36588,11 +36611,15 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.mice) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Probability of Mice'
+	              'Pcnt. with Mice'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36608,11 +36635,15 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.flies) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Probability of Flies'
+	              'Pcnt. with Flies'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36628,11 +36659,15 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.iconParse(data.roaches) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Probability of Roaches'
+	              'Pcnt. with Roaches'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36663,7 +36698,7 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('th', { className: 'subject' }),
+	            React.createElement('th', { colSpan: '2', className: 'subject' }),
 	            React.createElement(
 	              'th',
 	              null,
@@ -36683,11 +36718,15 @@
 	          React.createElement(
 	            'tr',
 	            { className: this.translate(data.last) },
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.rankingsParse([rankings.zipcodeRecent, rankings.boroRecent, rankings.cuisineRecent]) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Most Recent Inspection'
+	              'Most Recent'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36708,13 +36747,16 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.rankingsParse([rankings.zipcodeAverage, rankings.boroAverage, rankings.cuisineAverage]) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
 	              'Average of ',
-	              data.inspections,
-	              ' Inspections'
+	              data.inspections
 	            ),
 	            React.createElement(
 	              'td',
@@ -36735,7 +36777,11 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.rankingsParse([rankings.zipcodeFirstAverage, rankings.boroFirstAverage, rankings.cuisineFirstAverage]) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36743,7 +36789,7 @@
 	              React.createElement(
 	                'span',
 	                { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'question-highlight' },
-	                'Unannounced',
+	                'Surprise',
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },
@@ -36771,7 +36817,11 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.rankingsParse([rankings.zipcodeScore, rankings.boroScore, rankings.cuisineScore]) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
@@ -36796,11 +36846,15 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.rankingsParse([rankings.zipcodeWorst, rankings.boroWorst, rankings.cuisineWorst]) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Worst Score'
+	              'Worst'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36821,11 +36875,15 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.rankingsParse([rankings.zipcodeMice, rankings.boroMice, rankings.cuisineMice]) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Probability of Mice'
+	              'Pcnt. with Mice'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36846,11 +36904,15 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.rankingsParse([rankings.zipcodeFlies, rankings.boroFlies, rankings.cuisineFlies]) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Probability of Flies'
+	              'Pcnt. with Flies'
 	            ),
 	            React.createElement(
 	              'td',
@@ -36871,11 +36933,15 @@
 	          React.createElement(
 	            'tr',
 	            null,
-	            React.createElement('td', { className: 'thumbs' }),
+	            React.createElement(
+	              'td',
+	              { className: 'thumbs' },
+	              React.createElement('i', { className: "fa fa-" + this.rankingsParse([rankings.zipcodeRoaches, rankings.boroRoaches, rankings.cuisineRoaches]) })
+	            ),
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Probability of Roaches'
+	              'Pcnt. with Roaches'
 	            ),
 	            React.createElement(
 	              'td',
