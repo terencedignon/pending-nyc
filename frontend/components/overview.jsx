@@ -138,12 +138,12 @@ var Overview = React.createClass({
         <span className="store-name-header">{this.props.store.name} </span>
 
         <span className="overview-address">
-            {store.building} {store.street} {store.boro}, NY {store.zipcode}<br/>
-              {this.formatPhone(store.phone)}<br/>
-               {store.cuisine_type}<br/>
+            <i className="fa fa-building fa-border"></i> {store.building} {store.street} {store.boro}, NY {store.zipcode}<br/>
+            <i className="fa fa-phone fa-border"></i> {this.formatPhone(store.phone)}<br/>
+            <i className="fa fa-cutlery fa-border"></i> {store.cuisine_type}<br/>
         </span>
 
-
+        <hr/>
         <table>
           <tbody>
             <tr>

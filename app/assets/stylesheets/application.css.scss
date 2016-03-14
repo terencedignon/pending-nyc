@@ -411,7 +411,7 @@ header {
 .overview {
   font-family: "Helvetica";
   font-size: 16px;
-  // border: 1px solid #eee;
+  border: 1px solid #eee;
   margin-left: 30px;
   /*width: 100%;*/
   min-height: 400px;
@@ -531,19 +531,19 @@ footer {
 .store-name-header {
   text-transform: uppercase;
   padding: 10px 20px;
-  // background: #444;
-  color: #444;;
+  background: #444;
+  color: #fff;;
   // border: 1px solid #eee;
   // text-align: center;
   // background: #444;
   // text-align: left;
   // background: ivory;
-  letter-spacing: -2px;
+  letter-spacing: -1px;
   display: block;
   max-width: 500px;
-  font-weight: bold;
+  // font-weight: bold;
   line-height: 44px;
-  font-family: "Lato"!important;
+  font-family: "Arial";
   font-size: 50px;
 }
 
@@ -553,16 +553,17 @@ footer {
   // text-align: center!important;
   // text-decoration: underline;
   text-transform: uppercase;
-  padding: 5px 20px;
+  padding: 10px 20px;
   // padding: 10px 10px 10px 10px;
   // background: #f7f7f7;
   color: #444;
+  // letter-spacing: 1px;
   // text-align: center;
   max-width: 500px;
   // background: ivory;
   // letter-spacing: 0.5px;
   // font-weight: bold;
-  font-family: "helvetica";
+  font-family: "arial";
   font-size: 18px;
   // border: 1px solid #eee;
 }
@@ -762,15 +763,16 @@ footer {
   padding: 10px 25px;
   max-width: 480px;
   background: #fff;
-  // border: 1px solid #eee;
+  border: 1px solid #eee;
   // border: 1px solid #eee;
   // border-left: 0;
   // border-right: 0;
   // background: brown;
   color: #444;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   font-size: 15px;
   text-align: left;
+  font-family: "arial";
   // border-radius: 0 0 10px 10px;
   // text-align: right;
   // font-family: "lato";
@@ -779,6 +781,7 @@ footer {
   // color: white;
   // border: 1px solid #444;
 }
+
 
 .overview-address a {
   color: steelblue;
