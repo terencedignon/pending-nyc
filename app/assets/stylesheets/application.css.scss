@@ -937,7 +937,7 @@ span.big-header {
   // border: 1px solid white;
   font-family: "Helvetica"!important;
   text-transform: uppercase;
-  letter-spacing: -2px;
+  letter-spacing: -5px;
   color: #fff;
 }
 
@@ -1180,6 +1180,7 @@ span.underline {
   text-transform: uppercase;
   // font-family: "lato";
   margin-top: 1px;
+  opacity: 0.75;
   text-decoration: none;
   font-size: 17px;
   transition: 0.4 ease-in-out;
@@ -1187,7 +1188,7 @@ span.underline {
 
 .filter-links a:hover {
   // text-decoration: underline;
-  color: #333;
+  opacity: 1;
 }
 
 .searching {
@@ -1203,22 +1204,22 @@ span.underline {
   // color: #222;
 }
 .about h1 {
-  font-size: 40px;
+  font-size: 60px;
   // text-align: center;
   // font-family: "lato";
   font-family: "helvetica";
   // box-shadow: 5px 5px 1px 2px #ccc;
-  padding: 30px 50px;
+  padding: 20px 50px;
   // width: 80%;
   font-weight: bolder;
   cursor: pointer;
   margin: 0 auto;
   margin-bottom: 20px;
-  letter-spacing: 10px;
+  letter-spacing: 2px;
   // opacity: 0.9;
   // text-align: right;
   // border: 1px solid white;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 1);
   // font-weight: bolder;
   color: #222;
   // padding: 20px;
