@@ -123,6 +123,13 @@ var StoreShow = React.createClass({
     };
     return dataset;
   },
+
+  openMap: function () {
+    $('.load-map').hide();
+    $('.map-holder').css("height", "1000");
+    // this.forceUpdate();
+  },
+
   selectGrade: function () {
 
     imageObject = {
@@ -142,6 +149,8 @@ var StoreShow = React.createClass({
 
 
     var data;
+    this.map = <Map key={this.state.mapKey} camis={this.state.store.camis} cuisine_type={this.state.store.cuisine_type} name={this.state.store.name} lat={this.state.store.lat} lng={this.state.store.lng}/>;
+
     // var legend = <div/>;
     var comparison = <div/>;
     var circleChart = <div></div>;
@@ -154,7 +163,7 @@ var StoreShow = React.createClass({
 
 
       ///OVERVIEW
-      this.map = <Map key={this.state.mapKey} camis={this.state.store.camis} cuisine_type={this.state.store.cuisine_type} name={this.state.store.name} lat={this.state.store.lat} lng={this.state.store.lng}/>;
+
       // overview = this.createOverview();
       comparison = <Comparison key={this.state.comparisonKey} store={this.state.store} />;
       overview = <Overview store={this.state.store}/>
@@ -219,6 +228,9 @@ var grade = <img src={this.selectGrade()}/>;
                 <div className="show-grade">
                   {grade}
                 </div>
+              </div>
+              <div className="load-map">
+                <span onClick={this.openMap} className="store-name-header">Load Map</span>
               </div>
               <div>
                 {this.map}

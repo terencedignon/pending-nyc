@@ -24704,6 +24704,13 @@
 	    };
 	    return dataset;
 	  },
+
+	  openMap: function () {
+	    $('.load-map').hide();
+	    $('.map-holder').css("height", "1000");
+	    // this.forceUpdate();
+	  },
+
 	  selectGrade: function () {
 
 	    imageObject = {
@@ -24720,6 +24727,8 @@
 	  render: function () {
 
 	    var data;
+	    this.map = React.createElement(Map, { key: this.state.mapKey, camis: this.state.store.camis, cuisine_type: this.state.store.cuisine_type, name: this.state.store.name, lat: this.state.store.lat, lng: this.state.store.lng });
+
 	    // var legend = <div/>;
 	    var comparison = React.createElement('div', null);
 	    var circleChart = React.createElement('div', null);
@@ -24731,7 +24740,7 @@
 	    if (typeof this.state.store !== "undefined" && typeof this.state.store.calc !== "undefined") {
 
 	      ///OVERVIEW
-	      this.map = React.createElement(Map, { key: this.state.mapKey, camis: this.state.store.camis, cuisine_type: this.state.store.cuisine_type, name: this.state.store.name, lat: this.state.store.lat, lng: this.state.store.lng });
+
 	      // overview = this.createOverview();
 	      comparison = React.createElement(Comparison, { key: this.state.comparisonKey, store: this.state.store });
 	      overview = React.createElement(Overview, { store: this.state.store });
@@ -24810,6 +24819,15 @@
 	                'div',
 	                { className: 'show-grade' },
 	                grade
+	              )
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'load-map' },
+	              React.createElement(
+	                'span',
+	                { onClick: this.openMap, className: 'store-name-header' },
+	                'Load Map'
 	              )
 	            ),
 	            React.createElement(
