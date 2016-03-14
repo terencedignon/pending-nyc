@@ -151,7 +151,7 @@ var Comparison = React.createClass({
     }
 
     return (
-      <BarChart ref="comparison" key="comparison" className="comparison-chart" data={dataset} width={400} height={200} options={optionHash}/>
+      <BarChart ref="comparison" key="comparison" className="comparison-chart" data={dataset} width={350} height={200} options={optionHash}/>
     );
   },
 

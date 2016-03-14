@@ -170,7 +170,7 @@ var StoreShow = React.createClass({
 
         };
         // legend = <span dangerouslySetInnerHTML={{ __html: this.state.legend }} />;
-        barChart = <BarChart ref="chart" className="bar-chart" data={data} options={options} width={400} height={150}fill={'#3182bd'} />
+        barChart = <BarChart ref="chart" className="bar-chart" data={data} options={options} width={350} height={200} fill={'#3182bd'} />
 var grade = <img src={this.selectGrade()}/>;
       var image = this.setImage();
     }

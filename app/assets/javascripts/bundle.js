@@ -24747,7 +24747,7 @@
 
 	      };
 	      // legend = <span dangerouslySetInnerHTML={{ __html: this.state.legend }} />;
-	      barChart = React.createElement(BarChart, { ref: 'chart', className: 'bar-chart', data: data, options: options, width: 400, height: 150, fill: '#3182bd' });
+	      barChart = React.createElement(BarChart, { ref: 'chart', className: 'bar-chart', data: data, options: options, width: 350, height: 200, fill: '#3182bd' });
 	      var grade = React.createElement('img', { src: this.selectGrade() });
 	      var image = this.setImage();
 	    }
@@ -35950,7 +35950,7 @@
 	      tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>kb"
 	    };
 
-	    return React.createElement(BarChart, { ref: 'comparison', key: 'comparison', className: 'comparison-chart', data: dataset, width: 400, height: 200, options: optionHash });
+	    return React.createElement(BarChart, { ref: 'comparison', key: 'comparison', className: 'comparison-chart', data: dataset, width: 350, height: 200, options: optionHash });
 	  },
 
 	  linkHandler: function (e) {
@@ -37381,7 +37381,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'header-search' },
-	          React.createElement('input', { type: 'text', onChange: this.search, placeholder: 'Search...', value: this.state.search }),
+	          React.createElement('input', { type: 'text', onChange: this.search, value: this.state.search }),
 	          React.createElement(
 	            'span',
 	            { className: 'searching' },

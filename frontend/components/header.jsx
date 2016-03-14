@@ -123,7 +123,7 @@ var Header = React.createClass({
           </a>
         </div>
         <div className="header-search">
-          <input type="text" onChange={this.search} placeholder="Search..." value={this.state.search} />
+          <input type="text" onChange={this.search} value={this.state.search} />
           <span className="searching">
            {this.state.searching}
           </span>
