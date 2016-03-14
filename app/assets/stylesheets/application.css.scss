@@ -17,19 +17,19 @@
  @import "font-awesome-sprockets";
  @import "font-awesome";
 
-//  @font-face {
-//     font-family: 'Lato', Helvetica;
-//     src: font_url('Lato-Regular.otf') format('opentype');
-//     font-weight: normal;
-//     font-style: normal;
-// }
-//
-//  @font-face {
-//     font-family: 'Montserrat', Helvetica;
-//     src: font_url('Montserrat-Regular.otf') format('opentype');
-//     font-weight: normal;
-//     font-style: normal;
-// }
+ @font-face {
+    font-family: 'Lato', Helvetica;
+    src: font_url('Lato-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+ @font-face {
+    font-family: 'Montserrat', Helvetica;
+    src: font_url('Montserrat-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 @media (min-width: 100px) and (max-width: 800px) {
   /*.header-search input {
