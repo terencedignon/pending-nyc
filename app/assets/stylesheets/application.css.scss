@@ -927,17 +927,18 @@ hr.break {
 
 span.big-header {
   display: block;
-  font-size: 70px;
+  font-size: 100px;
   padding: 20px 50px;
   // width: 80%;
   margin: 0 auto;
   font-weight: bold;
-  background: rgba(255, 255, 255, 0.99);
-  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  // text-align: right;
+  // border: 1px solid white;
   font-family: "Helvetica"!important;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #222;
+  letter-spacing: -2px;
+  color: #fff;
 }
 
 
@@ -1202,20 +1203,22 @@ span.underline {
   // color: #222;
 }
 .about h1 {
-  font-size: 30px;
-  text-align: center;
+  font-size: 40px;
+  // text-align: center;
   // font-family: "lato";
   font-family: "helvetica";
   // box-shadow: 5px 5px 1px 2px #ccc;
   padding: 30px 50px;
   // width: 80%;
+  font-weight: bolder;
   cursor: pointer;
   margin: 0 auto;
   margin-bottom: 20px;
-  letter-spacing: 5px;
+  letter-spacing: 10px;
   // opacity: 0.9;
   // text-align: right;
-  background: rgba(255, 255, 255, 0.99);
+  // border: 1px solid white;
+  background: rgba(255, 255, 255, 0.95);
   // font-weight: bolder;
   color: #222;
   // padding: 20px;
