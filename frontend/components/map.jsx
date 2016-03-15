@@ -20,23 +20,141 @@ var Map = React.createClass({
       streetViewControl: false,
       mapTypeControl: false,
       zoom: 12,
+      styles: [
+    {
+        "featureType": "landscape",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 65
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 51
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 30
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 40
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.province",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "lightness": -25
+            },
+            {
+                "saturation": -100
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "hue": "#ffff00"
+            },
+            {
+                "lightness": -25
+            },
+            {
+                "saturation": -97
+            }
+        ]
+    }
+],
+scroll:{x:$(window).scrollLeft(),y:$(window).scrollTop()}
     };
-    // scroll:{x:$(window).scrollLeft(),y:$(window).scrollTop()}
 
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    //
-    // var offset=$(map.getDiv()).offset();
-    //   map.panBy(((mapOptions.scroll.x-offset.left)/30),((mapOptions.scroll.y-offset.top)/30));
-    //   google.maps.event.addDomListener(window, 'scroll', function(){
-    //     var scrollY=$(window).scrollTop() * 0.1,
-    //       scrollX=$(window).scrollLeft() * 0.0,
-    //       scroll=map.get('scroll');
-    //         if(scroll){
-    //             map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));
-    //           }
-    //           map.set('scroll',{x:scrollX,y:scrollY});
-    // }.bind(this));
+
+    var offset=$(map.getDiv()).offset();
+      map.panBy(((mapOptions.scroll.x-offset.left)/30),((mapOptions.scroll.y-offset.top)/30));
+      google.maps.event.addDomListener(window, 'scroll', function(){
+        var scrollY=$(window).scrollTop() * -0.5,
+          scrollX=$(window).scrollLeft() * 0.5,
+          scroll=map.get('scroll');
+            if(scroll){
+                map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));
+              }
+              map.set('scroll',{x:scrollX,y:scrollY});
+    }.bind(this));
 
 
     this.idleListener = google.maps.event.addListener(map, 'idle', function() {

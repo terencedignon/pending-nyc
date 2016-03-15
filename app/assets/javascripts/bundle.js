@@ -24628,7 +24628,7 @@
 	    } else {
 	        setTimeout(function () {
 	          $('.show-holder').parallax({
-	            imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=90&heading=235&pitch=10&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
+	            imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1500x1500&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=60&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
 	            speed: 0.2
 	          });
 	          // var url = "http://www.publicdomainpictures.net/pictures/120000/nahled/blue-background-gradient-texture.jpg";
@@ -36157,118 +36157,193 @@
 	var History = __webpack_require__(159).History;
 
 	var Map = React.createClass({
-	  displayName: 'Map',
+	    displayName: 'Map',
 
-	  mixins: [History],
-	  getInitialState: function () {
-	    return { markers: [] };
-	  },
-	  componentDidMount: function () {
+	    mixins: [History],
+	    getInitialState: function () {
+	        return { markers: [] };
+	    },
+	    componentDidMount: function () {
 
-	    this.storeListener = StoreStore.addListener(this._onStoreChange);
-	    this.mapListener = MapStore.addListener(this._onMapChange);
-	    var coordinates = { lat: Number(this.props.lat), lng: Number(this.props.lng) };
-	    var mapOptions = {
-	      center: coordinates,
-	      zoomControl: false,
-	      streetViewControl: false,
-	      mapTypeControl: false,
-	      zoom: 12
-	    };
-	    // scroll:{x:$(window).scrollLeft(),y:$(window).scrollTop()}
+	        this.storeListener = StoreStore.addListener(this._onStoreChange);
+	        this.mapListener = MapStore.addListener(this._onMapChange);
+	        var coordinates = { lat: Number(this.props.lat), lng: Number(this.props.lng) };
+	        var mapOptions = {
+	            center: coordinates,
+	            zoomControl: false,
+	            streetViewControl: false,
+	            mapTypeControl: false,
+	            zoom: 12,
+	            styles: [{
+	                "featureType": "landscape",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 65
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "poi",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 51
+	                }, {
+	                    "visibility": "simplified"
+	                }]
+	            }, {
+	                "featureType": "road.highway",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "visibility": "simplified"
+	                }]
+	            }, {
+	                "featureType": "road.arterial",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 30
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "road.local",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 40
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "transit",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "visibility": "simplified"
+	                }]
+	            }, {
+	                "featureType": "administrative.province",
+	                "stylers": [{
+	                    "visibility": "off"
+	                }]
+	            }, {
+	                "featureType": "water",
+	                "elementType": "labels",
+	                "stylers": [{
+	                    "visibility": "on"
+	                }, {
+	                    "lightness": -25
+	                }, {
+	                    "saturation": -100
+	                }]
+	            }, {
+	                "featureType": "water",
+	                "elementType": "geometry",
+	                "stylers": [{
+	                    "hue": "#ffff00"
+	                }, {
+	                    "lightness": -25
+	                }, {
+	                    "saturation": -97
+	                }]
+	            }],
+	            scroll: { x: $(window).scrollLeft(), y: $(window).scrollTop() }
+	        };
 
-	    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	        map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-	    //
-	    // var offset=$(map.getDiv()).offset();
-	    //   map.panBy(((mapOptions.scroll.x-offset.left)/30),((mapOptions.scroll.y-offset.top)/30));
-	    //   google.maps.event.addDomListener(window, 'scroll', function(){
-	    //     var scrollY=$(window).scrollTop() * 0.1,
-	    //       scrollX=$(window).scrollLeft() * 0.0,
-	    //       scroll=map.get('scroll');
-	    //         if(scroll){
-	    //             map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));
-	    //           }
-	    //           map.set('scroll',{x:scrollX,y:scrollY});
-	    // }.bind(this));
+	        var offset = $(map.getDiv()).offset();
+	        map.panBy((mapOptions.scroll.x - offset.left) / 30, (mapOptions.scroll.y - offset.top) / 30);
+	        google.maps.event.addDomListener(window, 'scroll', function () {
+	            var scrollY = $(window).scrollTop() * -0.5,
+	                scrollX = $(window).scrollLeft() * 0.5,
+	                scroll = map.get('scroll');
+	            if (scroll) {
+	                map.panBy(-((scroll.x - scrollX) / 3), -((scroll.y - scrollY) / 3));
+	            }
+	            map.set('scroll', { x: scrollX, y: scrollY });
+	        }.bind(this));
 
-	    this.idleListener = google.maps.event.addListener(map, 'idle', function () {
-	      clearInterval(this.mapInterval);
-	      this.mapInterval = setInterval(function () {
-	        var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
-	        ApiUtil.fetchMap(options);
+	        this.idleListener = google.maps.event.addListener(map, 'idle', function () {
+	            clearInterval(this.mapInterval);
+	            this.mapInterval = setInterval(function () {
+	                var options = { bounds: map.getBounds().toJSON(), cuisine_type: this.props.cuisine_type };
+	                ApiUtil.fetchMap(options);
 
-	        $('#map').css("opacity", "0.99");
-	        clearInterval(this.mapInterval);
-	      }.bind(this), 0);
-	    }.bind(this));
-	  },
+	                $('#map').css("opacity", "0.99");
+	                clearInterval(this.mapInterval);
+	            }.bind(this), 0);
+	        }.bind(this));
+	    },
 
-	  componentWillUnmount: function () {
+	    componentWillUnmount: function () {
 
-	    this.storeListener.remove();
-	    this.mapListener.remove();
-	    google.maps.event.removeListener(this.idleListener);
-	    google.maps.event.removeListener(this.tilesLoaded);
-	  },
+	        this.storeListener.remove();
+	        this.mapListener.remove();
+	        google.maps.event.removeListener(this.idleListener);
+	        google.maps.event.removeListener(this.tilesLoaded);
+	    },
 
-	  _onMapChange: function () {
+	    _onMapChange: function () {
 
-	    var newMarkers = [];
-	    MapStore.all().forEach(function (marker) {
-	      var icon;
-	      if (marker.calc.average <= 13) {
-	        icon = "http://i.imgur.com/E2oZQ4V.png";
-	      } else if (marker.calc.score <= 27) {
-	        icon = "http://i.imgur.com/h0qBo2q.png";
-	      } else {
-	        icon = "http://i.imgur.com/ejjOVXB.png";
-	      }
-	      var coordinates = { lat: Number(marker.lat), lng: Number(marker.lng) };
-	      var newMarker = new google.maps.Marker({
-	        position: coordinates,
-	        map: map,
-	        icon: icon,
-	        title: marker.name,
-	        id: marker.id
-	      });
+	        var newMarkers = [];
+	        MapStore.all().forEach(function (marker) {
+	            var icon;
+	            if (marker.calc.average <= 13) {
+	                icon = "http://i.imgur.com/E2oZQ4V.png";
+	            } else if (marker.calc.score <= 27) {
+	                icon = "http://i.imgur.com/h0qBo2q.png";
+	            } else {
+	                icon = "http://i.imgur.com/ejjOVXB.png";
+	            }
+	            var coordinates = { lat: Number(marker.lat), lng: Number(marker.lng) };
+	            var newMarker = new google.maps.Marker({
+	                position: coordinates,
+	                map: map,
+	                icon: icon,
+	                title: marker.name,
+	                id: marker.id
+	            });
 
-	      google.maps.event.addListener(newMarker, 'click', function () {
-	        ApiUtil.fetchComparison(newMarker.id, newMarker.title);
-	        // this.history.pushState(null, "rest/" + newMarker.id, {});
-	      }.bind(this));
+	            google.maps.event.addListener(newMarker, 'click', function () {
+	                ApiUtil.fetchComparison(newMarker.id, newMarker.title);
+	                // this.history.pushState(null, "rest/" + newMarker.id, {});
+	            }.bind(this));
 
-	      newMarkers.push(newMarker);
-	    }.bind(this));
+	            newMarkers.push(newMarker);
+	        }.bind(this));
 
-	    this.state.markers.forEach(function (marker) {
-	      marker.setMap(null);
-	    });
+	        this.state.markers.forEach(function (marker) {
+	            marker.setMap(null);
+	        });
 
-	    $('.map-holder > i').css("display", "none");
-	    $('#map').css("opacity", "1");
-	    setTimeout(function () {
-	      this.setState({ markers: newMarkers });
-	    }.bind(this), 1000);
-	  },
+	        $('.map-holder > i').css("display", "none");
+	        $('#map').css("opacity", "1");
+	        setTimeout(function () {
+	            this.setState({ markers: newMarkers });
+	        }.bind(this), 1000);
+	    },
 
-	  _onStoreChange: function () {},
-	  render: function () {
-	    // <div id="street-view"></div>
+	    _onStoreChange: function () {},
+	    render: function () {
+	        // <div id="street-view"></div>
 
-	    return React.createElement(
-	      'div',
-	      { className: 'map-holder' },
-	      React.createElement('i', { className: 'fa fa-circle-o-notch fa-pulse most-spin' }),
-	      React.createElement(
-	        'span',
-	        { className: 'map-header' },
-	        'Select marker for comparison'
-	      ),
-	      React.createElement('p', null),
-	      React.createElement('div', { id: 'map' })
-	    );
-	  }
+	        return React.createElement(
+	            'div',
+	            { className: 'map-holder' },
+	            React.createElement('i', { className: 'fa fa-circle-o-notch fa-pulse most-spin' }),
+	            React.createElement(
+	                'span',
+	                { className: 'map-header' },
+	                'Select marker for comparison'
+	            ),
+	            React.createElement('p', null),
+	            React.createElement('div', { id: 'map' })
+	        );
+	    }
 	});
 
 	module.exports = Map;
