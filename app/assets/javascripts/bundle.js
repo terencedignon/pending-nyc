@@ -24628,7 +24628,7 @@
 	    } else {
 	        setTimeout(function () {
 	          $('.show-holder').parallax({
-	            imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1500x1500&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=60&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
+	            imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
 	            speed: 0.2
 	          });
 	          // var url = "http://www.publicdomainpictures.net/pictures/120000/nahled/blue-background-gradient-texture.jpg";
@@ -37557,10 +37557,8 @@
 	    componentDidMount: function () {
 
 	        this.setState({ markers: MapStore.getMainMap() });
-
 	        this.storeListener = StoreStore.addListener(this._onStoreChange);
 	        this.mapListener = MapStore.addListener(this._onMapChange);
-
 	        var coordinates = { lat: 40.7127, lng: -74.0059 };
 
 	        mainMap = new google.maps.Map(document.getElementById('main-map'), {
@@ -37659,7 +37657,7 @@
 
 	            setTimeout(function () {
 	                this._onMapChange();
-	            }.bind(this), 10000);
+	            }.bind(this), 100);
 	        }.bind(this), 2000);
 
 	        google.maps.event.addListener(mainMap, 'idle', function () {
@@ -37701,14 +37699,35 @@
 	                lat: Number(marker.lat),
 	                lng: Number(marker.lng)
 	            };
-
+	            console.log(marker);
 	            var newMarker = new google.maps.Marker({
 	                position: coordinates,
 	                map: mainMap,
 	                icon: icon,
+	                lat: marker.lat,
+	                lng: marker.lng,
+	                image: marker.image_url,
 	                title: marker.name,
 	                id: marker.id
 	            });
+
+	            google.maps.event.addListener(newMarker, 'mouseover', function () {
+	                // $('.options-info').remove();
+	                // $('.main-page-holder').append("<div class=options-info><div>");
+
+	                var image = "<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">";
+	                if (!newMarker.image_url) image = "<img src=https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location=" + newMarker.lat + "," + newMarker.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I >";
+
+	                // if (newMarker.image_url) {
+	                $('.options-info').html("<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">");
+	                // } else {
+	                //   $('.options-info').html("")
+	                // }
+	                //   $('.options-info').parallax({ imageSrc: marker.image_url.replace("ms.jpg", "348s.jpg"),
+	                // zIndex: 100, speed: 0.9});
+	                console.log(newMarker.image);
+	                console.log(newMarker.title);
+	            }.bind(this));
 
 	            google.maps.event.addListener(newMarker, 'click', function () {
 	                this.history.pushState(null, "rest/" + newMarker.id, {});
@@ -37814,6 +37833,7 @@
 	                React.createElement('input', { type: 'text', placeholder: 'Zipcode', onChange: this.changeZipcode, value: this.state.zipcode }),
 	                React.createElement('input', { type: 'text', placeholder: 'Boro', onChange: this.changeBoro, value: this.state.boro })
 	            ),
+	            React.createElement('div', { className: 'options-info' }),
 	            React.createElement(
 	                'div',
 	                { className: 'main-map-wrapper' },

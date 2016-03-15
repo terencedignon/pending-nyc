@@ -45,7 +45,7 @@ var StoreShow = React.createClass({
     } else {
       setTimeout(function () {
         $('.show-holder').parallax({
-          imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1500x1500&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=60&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
+          imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
           speed: 0.2
         });
         // var url = "http://www.publicdomainpictures.net/pictures/120000/nahled/blue-background-gradient-texture.jpg";
