@@ -211,12 +211,11 @@ _onMapChange: function () {
     google.maps.event.addListener(newMarker, 'mouseover', function () {
       // $('.options-info').remove();
       // $('.main-page-holder').append("<div class=options-info><div>");
-
-      var image = "<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">";
-      if (!newMarker.image_url) image = "<img src=https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location=" + newMarker.lat + "," + newMarker.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I >";
-
+      var image;
+      if (newMarker.image) image = "<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">";
+      if (!newMarker.image) image = "<img src=https://maps.googleapis.com/maps/api/streetview?size=500x500&location=" + newMarker.lat + "," + newMarker.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I />";
       // if (newMarker.image_url) {
-      $('.options-info').html("<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">");
+      $('.options-info').html(image);
       // } else {
       //   $('.options-info').html("")
       // }
