@@ -920,7 +920,7 @@ hr.break {
 
 
 .intro-header {
-  background: url("http://40.media.tumblr.com/0b1e545d4ff51efddfc87e15eeb8ef78/tumblr_mymzusAZWg1r1vvzio1_1280.jpg") no-repeat;
+  background: url("http://4.bp.blogspot.com/-BkjJC4ylreI/T8LZgllmODI/AAAAAAAAAUI/17QdbHdHQx0/s1600/27_3_ne_052712.JPG") no-repeat;
   // background-size: cover;
   width: 80%;
   margin-top: 20px;
@@ -935,25 +935,45 @@ span.big-header {
   // width: 80%;
   overflow: hidden;
   display: block;
-  font-size: 115px;
+  font-size: 100px;
   // display: none;
-  padding: 20px 20px;
+  padding: 20px 50px;
   // width: 80%;
   margin-bottom: 30px;
   margin: 0 auto;
   font-weight: bolder;
+
   // background: #2;
-  background: rgba(255, 255, 255, .1);
+  background: rgba(128, 0, 0, .1);
   // text-align: center;
-  // border: 1px solid white;
+  border: 1px solid transparent;
   font-family: "Helvetica"!important;
   text-transform: uppercase;
-  // letter-spacing: 5px;
+  letter-spacing: -5px;
   color: #fff;
   cursor: pointer;
+  transition: 0.5s ease-in-out;
+}
+
+.load-map {
+  // margin: 100px;
+  cursor: pointer;
+  width: 500px;
+  text-align: center;
+  margin: 50px 0;
+  background: #fff;
+  color: #444;
+  letter-spacing: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid #eee;
   transition: 0.2s ease-in-out;
 }
 
+.load-map:hover {
+  // background: #f7f7f7;
+  border: 2px solid #ccc;
+}
 
 
 .trending-item {
@@ -1264,7 +1284,7 @@ span.underline {
 }
 //
 span.big-header:hover {
-  // border: 1px solid white;
+  border: 1px solid transparent;
   background: rgba(255, 255, 255, 0.2);
   // font-weight: bolder;
   color: #fff;

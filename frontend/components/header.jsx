@@ -22,6 +22,7 @@ var Header = React.createClass({
     SearchActions.clearResults();
     this.history.pushState(null, "/rest/" + e.currentTarget.id, {});
     $('.drop-down').css("display", "none");
+    $('.load-map').show();
   },
 
   componentWillUnmount: function () {
