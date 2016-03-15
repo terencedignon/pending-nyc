@@ -24728,7 +24728,7 @@
 
 	    var data;
 	    this.map = React.createElement(Map, { key: this.state.mapKey, camis: this.state.store.camis, cuisine_type: this.state.store.cuisine_type, name: this.state.store.name, lat: this.state.store.lat, lng: this.state.store.lng });
-
+	    $('footer').hide();
 	    // var legend = <div/>;
 	    var comparison = React.createElement('div', null);
 	    var circleChart = React.createElement('div', null);
@@ -24738,6 +24738,7 @@
 	    var store = this.state.store;
 
 	    if (typeof this.state.store !== "undefined" && typeof this.state.store.calc !== "undefined") {
+	      $('footer').show();
 
 	      ///OVERVIEW
 

@@ -150,7 +150,7 @@ var StoreShow = React.createClass({
 
     var data;
     this.map = <Map key={this.state.mapKey} camis={this.state.store.camis} cuisine_type={this.state.store.cuisine_type} name={this.state.store.name} lat={this.state.store.lat} lng={this.state.store.lng}/>;
-
+    $('footer').hide();
     // var legend = <div/>;
     var comparison = <div/>;
     var circleChart = <div></div>;
@@ -160,7 +160,7 @@ var StoreShow = React.createClass({
     var store = this.state.store;
 
     if (typeof this.state.store !== "undefined" && typeof this.state.store.calc !== "undefined") {
-
+      $('footer').show();
 
       ///OVERVIEW
 
