@@ -108,17 +108,14 @@ var StoreIndex = React.createClass({
 
           <span className="big-header">NYC restaurant grade analytics</span><p/>
 
+          <div className="about">
+
+            <h1 onClick={this.toMost}> 22,488 restaurants </h1>
+            <h1 onClick={this.toMost}> 154,159  inspections</h1>
+            <h1 onClick={this.toMost}> 463,245 violations</h1>
+
+          </div>
       </div>
-      <div className="about">
-
-        <h1 onClick={this.toMost}>
-
-
-          22,488   restaurants</h1>
-        <h1 onClick={this.toMost}> 154,159  inspections </h1>
-        <h1 onClick={this.toMost}> 463,245 violations</h1>
-
-</div>
         </div>
 
         </div>

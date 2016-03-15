@@ -37299,25 +37299,25 @@
 	            { className: 'big-header' },
 	            'NYC restaurant grade analytics'
 	          ),
-	          React.createElement('p', null)
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'about' },
+	          React.createElement('p', null),
 	          React.createElement(
-	            'h1',
-	            { onClick: this.toMost },
-	            '22,488   restaurants'
-	          ),
-	          React.createElement(
-	            'h1',
-	            { onClick: this.toMost },
-	            ' 154,159  inspections '
-	          ),
-	          React.createElement(
-	            'h1',
-	            { onClick: this.toMost },
-	            ' 463,245 violations'
+	            'div',
+	            { className: 'about' },
+	            React.createElement(
+	              'h1',
+	              { onClick: this.toMost },
+	              ' 22,488 restaurants '
+	            ),
+	            React.createElement(
+	              'h1',
+	              { onClick: this.toMost },
+	              ' 154,159  inspections'
+	            ),
+	            React.createElement(
+	              'h1',
+	              { onClick: this.toMost },
+	              ' 463,245 violations'
+	            )
 	          )
 	        )
 	      )
