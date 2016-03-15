@@ -941,12 +941,12 @@ span.big-header {
   // width: 80%;
   margin-bottom: 30px;
   margin: 0 auto;
-  // font-weight: bolder;
+  font-weight: bolder;
   // background: #2;
   background: rgba(255, 255, 255, .1);
   // text-align: center;
   // border: 1px solid white;
-  font-family: "Montserrat"!important;
+  font-family: "Helvetica"!important;
   text-transform: uppercase;
   // letter-spacing: 5px;
   color: #fff;
@@ -1014,12 +1014,22 @@ span.big-header {
   margin-top: 5px;
   margin-bottom: 20px;
   /*margin-top: -50px;*/
-  font-family: "lato"!important;
+  // font-weight: normal!important;
+  // font-family: "Helvetica"!important;
   // background: #eee;
-  // border: 2px solid #eee;
-  padding: 5px;
+  border: 1px solid #eee;
+  padding: 20px;
   padding-left: 20px;
   text-transform: uppercase;
+}
+
+.most-header-text {
+  font-family: "helvetica";
+  // letter-spacing: 0;
+  // letter-spacing: -1px;
+  // font-weight: bolder;
+  color: #444;
+  font-size: 17px;
 }
 
 .filter-by input {
@@ -1335,7 +1345,7 @@ span.big-header:hover {
 }
 
 .about h3 {
-  font-size: 25px;
+  font-size: 10px;
   // margin-right: -20px;
   // font-family: "lato";
   font-family: "montserrat";
@@ -1491,10 +1501,10 @@ span.big-header:hover {
 
 .most-text {
   // margin-top: .3em;
-  font-family: "montserrat";
-  color: #222;
+  font-family: "Helvetica";
+  color: #444;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: bolder;
 }
 
 .most-index {

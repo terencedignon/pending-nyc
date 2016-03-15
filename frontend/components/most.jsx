@@ -283,15 +283,15 @@ var Most = React.createClass({
       <div className="most-holder">
         <div>
         <div className="filter-by">
-          <h3>  Filter by:
+          <span className="most-header-text">
+          Filter by:
                 <input id="street" onChange={this.streetInput} type="text" value={this.state.street} placeholder="Street"/>
                           <input id="zipcode" onChange={this.zipcodeInput} type="text" value={this.state.zipcode} placeholder="Zipcode"/>
                      <input id="cuisine_type"  onChange={this.cuisineInput} type="text" value={this.state.cuisine_type} placeholder="Cuisine"/>
                         <input id="boro" onChange={this.boroInput} type="text" value={this.state.boro} placeholder="Boro"/>
 
-                          </h3>
-
-          <h3>Restaurants with the <div onClick={this.toggleBest} className="worst">{this.state.best}</div>
+                        <hr/>
+          Restaurants with the <div onClick={this.toggleBest} className="worst">{this.state.best}</div>
           <div onClick={this.queryHandler} className="worst">{this.state.queryText}
             <div className="most-drop-down">
               <a id="score" onClick={this.changeQuery.bind(this, "Aggregate Score")} href="#">Aggregate</a>
@@ -306,7 +306,7 @@ var Most = React.createClass({
         <br/>Results: <div onClick={this.paginationHandler} className="worst">{this.state.pagination}<br/>
       </div>
       <br/>Exclude Restaurants with less than <span onClick={this.setExclude} className="worst">{this.state.exclude}</span> inspections.
-         </h3>
+      </span>
 
 
       </div>

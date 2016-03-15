@@ -38061,17 +38061,14 @@
 	          'div',
 	          { className: 'filter-by' },
 	          React.createElement(
-	            'h3',
-	            null,
-	            '  Filter by:',
+	            'span',
+	            { className: 'most-header-text' },
+	            'Filter by:',
 	            React.createElement('input', { id: 'street', onChange: this.streetInput, type: 'text', value: this.state.street, placeholder: 'Street' }),
 	            React.createElement('input', { id: 'zipcode', onChange: this.zipcodeInput, type: 'text', value: this.state.zipcode, placeholder: 'Zipcode' }),
 	            React.createElement('input', { id: 'cuisine_type', onChange: this.cuisineInput, type: 'text', value: this.state.cuisine_type, placeholder: 'Cuisine' }),
-	            React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', value: this.state.boro, placeholder: 'Boro' })
-	          ),
-	          React.createElement(
-	            'h3',
-	            null,
+	            React.createElement('input', { id: 'boro', onChange: this.boroInput, type: 'text', value: this.state.boro, placeholder: 'Boro' }),
+	            React.createElement('hr', null),
 	            'Restaurants with the ',
 	            React.createElement(
 	              'div',
