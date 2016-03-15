@@ -37544,207 +37544,283 @@
 	var History = __webpack_require__(159).History;
 
 	var Map = React.createClass({
-	  displayName: 'Map',
+	    displayName: 'Map',
 
 
-	  mixins: [History],
+	    mixins: [History],
 
-	  getInitialState: function () {
-	    return { searching: false, markers: [], markerSetting: "average", newMarkers: [], zipcode: "", boro: "", cuisine_type: "", name: "" };
-	  },
+	    getInitialState: function () {
+	        return { searching: false, markers: [], markerSetting: "average", newMarkers: [], zipcode: "", boro: "", cuisine_type: "", name: "" };
+	    },
 
-	  componentDidMount: function () {
+	    componentDidMount: function () {
 
-	    this.setState({ markers: MapStore.getMainMap() });
+	        this.setState({ markers: MapStore.getMainMap() });
 
-	    this.storeListener = StoreStore.addListener(this._onStoreChange);
-	    this.mapListener = MapStore.addListener(this._onMapChange);
+	        this.storeListener = StoreStore.addListener(this._onStoreChange);
+	        this.mapListener = MapStore.addListener(this._onMapChange);
 
-	    var coordinates = { lat: 40.7127, lng: -74.0059 };
+	        var coordinates = { lat: 40.7127, lng: -74.0059 };
 
-	    mainMap = new google.maps.Map(document.getElementById('main-map'), {
-	      center: coordinates,
-	      disableDefaultUI: true,
-	      zoom: 12
+	        mainMap = new google.maps.Map(document.getElementById('main-map'), {
+	            center: coordinates,
+	            disableDefaultUI: true,
+	            zoom: 12,
+	            styles: [{
+	                "featureType": "landscape",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 65
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "poi",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 51
+	                }, {
+	                    "visibility": "simplified"
+	                }]
+	            }, {
+	                "featureType": "road.highway",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "visibility": "simplified"
+	                }]
+	            }, {
+	                "featureType": "road.arterial",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 30
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "road.local",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "lightness": 40
+	                }, {
+	                    "visibility": "on"
+	                }]
+	            }, {
+	                "featureType": "transit",
+	                "stylers": [{
+	                    "saturation": -100
+	                }, {
+	                    "visibility": "simplified"
+	                }]
+	            }, {
+	                "featureType": "administrative.province",
+	                "stylers": [{
+	                    "visibility": "off"
+	                }]
+	            }, {
+	                "featureType": "water",
+	                "elementType": "labels",
+	                "stylers": [{
+	                    "visibility": "on"
+	                }, {
+	                    "lightness": -25
+	                }, {
+	                    "saturation": -100
+	                }]
+	            }, {
+	                "featureType": "water",
+	                "elementType": "geometry",
+	                "stylers": [{
+	                    "hue": "#ffff00"
+	                }, {
+	                    "lightness": -25
+	                }, {
+	                    "saturation": -97
+	                }]
+	            }]
 
-	    });
+	        });
 
-	    setTimeout(function () {
-	      var options = { bounds: mainMap.getBounds().toJSON(), query: {
-	          boro: this.state.boro,
-	          zipcode: this.state.zipcode,
-	          name: this.state.name,
-	          cuisine_type: this.state.cuisine_type
-	        }
-	      };
+	        setTimeout(function () {
+	            var options = { bounds: mainMap.getBounds().toJSON(), query: {
+	                    boro: this.state.boro,
+	                    zipcode: this.state.zipcode,
+	                    name: this.state.name,
+	                    cuisine_type: this.state.cuisine_type
+	                }
+	            };
 
-	      ApiUtil.fetchMainMap(options);
+	            ApiUtil.fetchMainMap(options);
 
-	      setTimeout(function () {
-	        this._onMapChange();
-	      }.bind(this), 10000);
-	    }.bind(this), 2000);
+	            setTimeout(function () {
+	                this._onMapChange();
+	            }.bind(this), 10000);
+	        }.bind(this), 2000);
 
-	    google.maps.event.addListener(mainMap, 'idle', function () {
-	      var options = { bounds: mainMap.getBounds().toJSON(), query: {
-	          boro: this.state.boro,
-	          zipcode: this.state.zipcode,
-	          name: this.state.name,
-	          cuisine_type: this.state.cuisine_type
-	        }
-	      };
-	      ApiUtil.fetchMainMap(options);
-	      setTimeout(function () {
-	        this._onMapChange();
-	      }.bind(this), 500);
-	    }.bind(this));
-	  },
+	        google.maps.event.addListener(mainMap, 'idle', function () {
+	            var options = { bounds: mainMap.getBounds().toJSON(), query: {
+	                    boro: this.state.boro,
+	                    zipcode: this.state.zipcode,
+	                    name: this.state.name,
+	                    cuisine_type: this.state.cuisine_type
+	                }
+	            };
+	            ApiUtil.fetchMainMap(options);
+	            setTimeout(function () {
+	                this._onMapChange();
+	            }.bind(this), 500);
+	        }.bind(this));
+	    },
 
-	  componentWillUnmount: function () {
-	    this.storeListener.remove();
-	    this.mapListener.remove();
-	  },
+	    componentWillUnmount: function () {
+	        this.storeListener.remove();
+	        this.mapListener.remove();
+	    },
 
-	  _onMapChange: function () {
+	    _onMapChange: function () {
 
-	    var newMarkers = [];
+	        var newMarkers = [];
 
-	    MapStore.getMainMap().forEach(function (marker) {
-	      var icon;
+	        MapStore.getMainMap().forEach(function (marker) {
+	            var icon;
 
-	      if (marker.calc.average <= 13) {
-	        icon = "http://i.imgur.com/E2oZQ4V.png";
-	      } else if (marker.calc.score <= 27) {
-	        icon = "http://i.imgur.com/h0qBo2q.png";
-	      } else {
-	        icon = "http://i.imgur.com/ejjOVXB.png";
-	      }
+	            if (marker.calc.average <= 13) {
+	                icon = "http://i.imgur.com/E2oZQ4V.png";
+	            } else if (marker.calc.score <= 27) {
+	                icon = "http://i.imgur.com/h0qBo2q.png";
+	            } else {
+	                icon = "http://i.imgur.com/ejjOVXB.png";
+	            }
 
-	      var coordinates = {
-	        lat: Number(marker.lat),
-	        lng: Number(marker.lng)
-	      };
+	            var coordinates = {
+	                lat: Number(marker.lat),
+	                lng: Number(marker.lng)
+	            };
 
-	      var newMarker = new google.maps.Marker({
-	        position: coordinates,
-	        map: mainMap,
-	        icon: icon,
-	        title: marker.name,
-	        id: marker.id
-	      });
+	            var newMarker = new google.maps.Marker({
+	                position: coordinates,
+	                map: mainMap,
+	                icon: icon,
+	                title: marker.name,
+	                id: marker.id
+	            });
 
-	      google.maps.event.addListener(newMarker, 'click', function () {
-	        this.history.pushState(null, "rest/" + newMarker.id, {});
-	      }.bind(this));
+	            google.maps.event.addListener(newMarker, 'click', function () {
+	                this.history.pushState(null, "rest/" + newMarker.id, {});
+	            }.bind(this));
 
-	      newMarkers.push(newMarker);
-	      this.setState({ searching: false });
-	    }.bind(this));
+	            newMarkers.push(newMarker);
+	            this.setState({ searching: false });
+	        }.bind(this));
 
-	    this.state.markers.forEach(function (marker) {
-	      marker.setMap(null);
-	    }.bind(this));
+	        this.state.markers.forEach(function (marker) {
+	            marker.setMap(null);
+	        }.bind(this));
 
-	    $('.main-map-wrapper > i').css("display", "none");
-	    $('#main-map').css("opacity", "1");
+	        $('.main-map-wrapper > i').css("display", "none");
+	        $('#main-map').css("opacity", "1");
 
-	    this.setState({ markers: newMarkers });
-	  },
+	        this.setState({ markers: newMarkers });
+	    },
 
-	  changeName: function (e) {
-	    this.setState({ name: e.currentTarget.value });
-	    this.mapUpdate();
-	  },
+	    changeName: function (e) {
+	        this.setState({ name: e.currentTarget.value });
+	        this.mapUpdate();
+	    },
 
-	  changeCuisine: function (e) {
-	    this.setState({ cuisine_type: e.currentTarget.value });
-	    this.mapUpdate();
-	  },
+	    changeCuisine: function (e) {
+	        this.setState({ cuisine_type: e.currentTarget.value });
+	        this.mapUpdate();
+	    },
 
-	  changeZipcode: function (e) {
-	    this.setState({ zipcode: e.currentTarget.value });
-	    this.mapUpdate();
-	  },
+	    changeZipcode: function (e) {
+	        this.setState({ zipcode: e.currentTarget.value });
+	        this.mapUpdate();
+	    },
 
-	  changeBoro: function (e) {
-	    this.setState({ boro: e.currentTarget.value });
-	    this.mapUpdate();
-	  },
+	    changeBoro: function (e) {
+	        this.setState({ boro: e.currentTarget.value });
+	        this.mapUpdate();
+	    },
 
-	  mapUpdate: function () {
-	    clearInterval(this.timeout);
-	    this.timeout = setInterval(function () {
-	      $('.main-map-wrapper > i').css("display", "block");
-	      $('#main-map').css("opacity", "0.8");
-	      var options = { bounds: mainMap.getBounds().toJSON(), query: {
-	          boro: this.state.boro,
-	          zipcode: this.state.zipcode,
-	          name: this.state.name,
-	          cuisine_type: this.state.cuisine_type
-	        } };
-	      ApiUtil.fetchMainMap(options);
-	      setTimeout(function () {
-	        this._onMapChange();
-	      }.bind(this), 1000);
-	      clearInterval(this.timeout);
-	    }.bind(this), 1000);
-	  },
+	    mapUpdate: function () {
+	        clearInterval(this.timeout);
+	        this.timeout = setInterval(function () {
+	            $('.main-map-wrapper > i').css("display", "block");
+	            $('#main-map').css("opacity", "0.8");
+	            var options = { bounds: mainMap.getBounds().toJSON(), query: {
+	                    boro: this.state.boro,
+	                    zipcode: this.state.zipcode,
+	                    name: this.state.name,
+	                    cuisine_type: this.state.cuisine_type
+	                } };
+	            ApiUtil.fetchMainMap(options);
+	            setTimeout(function () {
+	                this._onMapChange();
+	            }.bind(this), 1000);
+	            clearInterval(this.timeout);
+	        }.bind(this), 1000);
+	    },
 
-	  changeSettings: function (e) {
-	    this.setState({ markerSetting: e.currentTarget.id });
-	  },
+	    changeSettings: function (e) {
+	        this.setState({ markerSetting: e.currentTarget.id });
+	    },
 
-	  _onStoreChange: function () {},
+	    _onStoreChange: function () {},
 
-	  setRestaurants: function () {
-	    return MapStore.getMainMap().map(function (store) {
-	      return React.createElement(
-	        'div',
-	        { className: 'main-map-store' },
-	        React.createElement(
-	          'div',
-	          null,
-	          store.name,
-	          React.createElement('br', null),
-	          store.zipcode,
-	          ' ',
-	          store.boro
-	        ),
-	        React.createElement(
-	          'div',
-	          null,
-	          'AVG: ',
-	          store.calc.average,
-	          React.createElement('br', null),
-	          'FIRST AVG: ',
-	          store.calc.first_average
-	        )
-	      );
-	    });
-	  },
+	    setRestaurants: function () {
+	        return MapStore.getMainMap().map(function (store) {
+	            return React.createElement(
+	                'div',
+	                { className: 'main-map-store' },
+	                React.createElement(
+	                    'div',
+	                    null,
+	                    store.name,
+	                    React.createElement('br', null),
+	                    store.zipcode,
+	                    ' ',
+	                    store.boro
+	                ),
+	                React.createElement(
+	                    'div',
+	                    null,
+	                    'AVG: ',
+	                    store.calc.average,
+	                    React.createElement('br', null),
+	                    'FIRST AVG: ',
+	                    store.calc.first_average
+	                )
+	            );
+	        });
+	    },
 
-	  render: function () {
-	    var restaurants = this.setRestaurants();
+	    render: function () {
+	        var restaurants = this.setRestaurants();
 
-	    return React.createElement(
-	      'div',
-	      { className: 'main-page-holder' },
-	      React.createElement(
-	        'div',
-	        { className: 'options' },
-	        React.createElement('input', { type: 'text', placeholder: 'Name', onChange: this.changeName, value: this.state.name }),
-	        React.createElement('input', { type: 'text', placeholder: 'Cuisine', onChange: this.changeCuisine, value: this.state.cuisine_type }),
-	        React.createElement('input', { type: 'text', placeholder: 'Zipcode', onChange: this.changeZipcode, value: this.state.zipcode }),
-	        React.createElement('input', { type: 'text', placeholder: 'Boro', onChange: this.changeBoro, value: this.state.boro })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'main-map-wrapper' },
-	        React.createElement('i', { className: 'fa fa-circle-o-notch fa-pulse most-spin' }),
-	        React.createElement('div', { id: 'main-map' })
-	      )
-	    );
-	  }
+	        return React.createElement(
+	            'div',
+	            { className: 'main-page-holder' },
+	            React.createElement(
+	                'div',
+	                { className: 'options' },
+	                React.createElement('input', { type: 'text', placeholder: 'Name', onChange: this.changeName, value: this.state.name }),
+	                React.createElement('input', { type: 'text', placeholder: 'Cuisine', onChange: this.changeCuisine, value: this.state.cuisine_type }),
+	                React.createElement('input', { type: 'text', placeholder: 'Zipcode', onChange: this.changeZipcode, value: this.state.zipcode }),
+	                React.createElement('input', { type: 'text', placeholder: 'Boro', onChange: this.changeBoro, value: this.state.boro })
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: 'main-map-wrapper' },
+	                React.createElement('i', { className: 'fa fa-circle-o-notch fa-pulse most-spin' }),
+	                React.createElement('div', { id: 'main-map' })
+	            )
+	        );
+	    }
 	});
 
 	module.exports = Map;
@@ -37897,8 +37973,8 @@
 	    $(e.currentTarget.parentElement).find(".wrapper").css("display", "flex");
 	    $(e.currentTarget.parentElement).find(".fa-minus").css("display", "inline");
 	    $(e.currentTarget).css("display", "none");
-	    $(e.currentTarget.parentElement).find(".mini-chart").show();
-	    $(e.currentTarget.parentElement).find(".details").show(30);
+	    $(e.currentTarget.parentElement).find(".mini-chart").show(50);
+	    $(e.currentTarget.parentElement).find(".details").show(50);
 	    // .css("display", "block");
 	  },
 	  chartData: function (store) {

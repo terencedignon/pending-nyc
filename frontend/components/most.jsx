@@ -112,8 +112,8 @@ var Most = React.createClass({
     $(e.currentTarget.parentElement).find(".wrapper").css("display", "flex");
     $(e.currentTarget.parentElement).find(".fa-minus").css("display", "inline");
     $(e.currentTarget).css("display", "none");
-    $(e.currentTarget.parentElement).find(".mini-chart").show();
-    $(e.currentTarget.parentElement).find(".details").show(30);
+    $(e.currentTarget.parentElement).find(".mini-chart").show(50);
+    $(e.currentTarget.parentElement).find(".details").show(50);
     // .css("display", "block");
   },
   chartData: function (store) {
