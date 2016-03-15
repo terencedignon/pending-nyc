@@ -820,9 +820,9 @@ footer {
   top: 0;
 
   z-index: 9999;
-  height: 15px;
+  height: 14px;
   background: #fff;
-  color: #222;
+  color: #444;
   /*font-weight: bold;*/
   border: 1px solid transparent;
   outline-width: 0;
@@ -835,14 +835,14 @@ footer {
   padding: 10px;
   padding-left: 20px;
   width: 100px;
-  font-size: 20px;
+  font-size: 18px;
   /*background: #fff;*/
-  border: 2px solid #eee;
+  border: 2px solid #ccc;
   /*box-shadow: 2px 2px 2px 0 #f7f7f7;*/
   font-family: "Helvetica";
 }
 .options input:focus {
-  box-shadow: 2px 2px 2px 0 #eee;
+  border: 2px solid #444;
 }
 
 .show {
