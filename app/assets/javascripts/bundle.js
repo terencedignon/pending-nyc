@@ -37570,7 +37570,7 @@
 	                "stylers": [{
 	                    "saturation": -100
 	                }, {
-	                    "lightness": 65
+	                    "lightness": 100
 	                }, {
 	                    "visibility": "on"
 	                }]
@@ -37581,14 +37581,14 @@
 	                }, {
 	                    "lightness": 51
 	                }, {
-	                    "visibility": "simplified"
+	                    "visibility": "off"
 	                }]
 	            }, {
 	                "featureType": "road.highway",
 	                "stylers": [{
 	                    "saturation": -100
 	                }, {
-	                    "visibility": "simplified"
+	                    "visibility": "off"
 	                }]
 	            }, {
 	                "featureType": "road.arterial",
@@ -37597,7 +37597,7 @@
 	                }, {
 	                    "lightness": 30
 	                }, {
-	                    "visibility": "on"
+	                    "visibility": "off"
 	                }]
 	            }, {
 	                "featureType": "road.local",
@@ -37634,14 +37634,13 @@
 	                "featureType": "water",
 	                "elementType": "geometry",
 	                "stylers": [{
-	                    "hue": "#ffff00"
+	                    "hue": "steelblue"
 	                }, {
-	                    "lightness": -25
+	                    "lightness": 0
 	                }, {
-	                    "saturation": -97
+	                    "saturation": 100
 	                }]
 	            }]
-
 	        });
 
 	        setTimeout(function () {
@@ -37715,10 +37714,14 @@
 	                // $('.options-info').remove();
 	                // $('.main-page-holder').append("<div class=options-info><div>");
 	                var image;
+	                // $('.options-holder').animate(function () {
+
 	                if (newMarker.image) image = "<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">";
 	                if (!newMarker.image) image = "<img src=https://maps.googleapis.com/maps/api/streetview?size=500x500&location=" + newMarker.lat + "," + newMarker.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I />";
 	                // if (newMarker.image_url) {
-	                $('.options-info').html(image);
+	                $('.options-holder').html(image);
+	                $('.options-holder').append("<span class='options-info-text'>" + newMarker.title + "</span>");
+	                // });
 	                // } else {
 	                //   $('.options-info').html("")
 	                // }
@@ -37832,7 +37835,11 @@
 	                React.createElement('input', { type: 'text', placeholder: 'Zipcode', onChange: this.changeZipcode, value: this.state.zipcode }),
 	                React.createElement('input', { type: 'text', placeholder: 'Boro', onChange: this.changeBoro, value: this.state.boro })
 	            ),
-	            React.createElement('div', { className: 'options-info' }),
+	            React.createElement(
+	                'div',
+	                { className: 'options-info' },
+	                React.createElement('div', { className: 'options-holder' })
+	            ),
 	            React.createElement(
 	                'div',
 	                { className: 'main-map-wrapper' },

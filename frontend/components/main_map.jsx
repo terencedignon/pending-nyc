@@ -31,7 +31,7 @@ var Map = React.createClass({
                 "saturation": -100
             },
             {
-                "lightness": 65
+                "lightness": 100
             },
             {
                 "visibility": "on"
@@ -48,7 +48,7 @@ var Map = React.createClass({
                 "lightness": 51
             },
             {
-                "visibility": "simplified"
+                "visibility": "off"
             }
         ]
     },
@@ -59,7 +59,7 @@ var Map = React.createClass({
                 "saturation": -100
             },
             {
-                "visibility": "simplified"
+                "visibility": "off"
             }
         ]
     },
@@ -73,7 +73,7 @@ var Map = React.createClass({
                 "lightness": 30
             },
             {
-                "visibility": "on"
+                "visibility": "off"
             }
         ]
     },
@@ -130,18 +130,17 @@ var Map = React.createClass({
         "elementType": "geometry",
         "stylers": [
             {
-                "hue": "#ffff00"
+                "hue": "steelblue"
             },
             {
-                "lightness": -25
+                "lightness": 0
             },
             {
-                "saturation": -97
+                "saturation": 100
             }
         ]
     }
 ]
-
     });
 
     setTimeout(function() {
@@ -212,10 +211,14 @@ _onMapChange: function () {
       // $('.options-info').remove();
       // $('.main-page-holder').append("<div class=options-info><div>");
       var image;
+      // $('.options-holder').animate(function () {
+
       if (newMarker.image) image = "<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">";
       if (!newMarker.image) image = "<img src=https://maps.googleapis.com/maps/api/streetview?size=500x500&location=" + newMarker.lat + "," + newMarker.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I />";
       // if (newMarker.image_url) {
-      $('.options-info').html(image);
+      $('.options-holder').html(image);
+      $('.options-holder').append("<span class='options-info-text'>" + newMarker.title + "</span>");
+    // });
       // } else {
       //   $('.options-info').html("")
       // }
@@ -321,6 +324,8 @@ _onMapChange: function () {
           <input type="text" placeholder="Boro" onChange={this.changeBoro} value={this.state.boro}/>
     </div>
     <div className="options-info">
+      <div className="options-holder">
+      </div>
     </div>
         <div className="main-map-wrapper">
           <i className="fa fa-circle-o-notch fa-pulse most-spin"></i>
