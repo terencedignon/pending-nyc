@@ -727,7 +727,8 @@ footer {
 
 .options {
   background: #fff;
-
+  border: 1px solid #eee;
+  border-bottom: 0;
   position: absolute;
   z-index: 99;
   // width: 100%;
@@ -750,17 +751,18 @@ footer {
   // border-radius: 5%;
   min-width: 300px;
   max-width: 300px;
-  padding: 23px;
+  padding: 22px;
   // border: 1px solid #eee;
   overflow: hidden;
   min-height: 300px;
   max-height: 300px;
   position: absolute;
   z-index: 99;
-  border-left: 2px solid white;
+  // border-left: 3px solid #ccc;
+  border: 1px solid #eee;
   // background: transparent;
   background: #fff;
-  top: 125px;
+  top: 115px;
   left: 10px;
 }
 
@@ -900,12 +902,12 @@ footer {
   width: 120px;
   font-size: 18px;
   /*background: #fff;*/
-  border: 2px solid #eee;
+  border: 1px solid #eee;
   /*box-shadow: 2px 2px 2px 0 #f7f7f7;*/
   font-family: "Helvetica";
 }
 .options input:focus {
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
 }
 
 .show {
