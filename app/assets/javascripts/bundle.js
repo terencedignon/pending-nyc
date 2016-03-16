@@ -37712,16 +37712,33 @@
 	            });
 
 	            google.maps.event.addListener(newMarker, 'mouseover', function () {
-	                // $('.options-info').remove();
-	                // $('.main-page-holder').append("<div class=options-info><div>");
-	                var image;
-	                // $('.options-holder').animate(function () {
+	                clearTimeout(this.timeout);
 
-	                if (newMarker.image) image = "<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">";
-	                if (!newMarker.image) image = "<img src=https://maps.googleapis.com/maps/api/streetview?size=500x500&location=" + newMarker.lat + "," + newMarker.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I />";
-	                // if (newMarker.image_url) {
-	                $('.options-holder').html(image);
-	                $('.options-holder').append("<span class='options-info-text'>" + newMarker.title + "</span>");
+	                google.maps.event.addListener(newMarker, 'mouseout', function () {
+	                    clearInterval(this.timeout);
+	                }.bind(this));
+
+	                this.timeout = setTimeout(function () {
+	                    var image;
+
+	                    if (newMarker.image) image = "<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">";
+	                    if (!newMarker.image) image = "<img src=https://maps.googleapis.com/maps/api/streetview?size=500x500&location=" + newMarker.lat + "," + newMarker.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I />";
+
+	                    // opacity: 0
+	                    // height: "toggle",
+	                    // height: "toggle"
+	                    $('.options-holder').animate({
+	                        opacity: 0
+
+	                    }, 0);
+	                    $('.options-holder').animate({
+	                        opacity: 1
+	                    }, 200);
+	                    $('.options-holder').html(image);
+	                    $('.options-holder').append("<span class='options-info-text'>" + newMarker.title + "</span>");
+	                    // width: "100%",
+	                }.bind(this), 100);
+
 	                // });
 	                // } else {
 	                //   $('.options-info').html("")
