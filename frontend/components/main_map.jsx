@@ -186,11 +186,11 @@ _onMapChange: function () {
 
   MapStore.getMainMap().forEach(function(marker) {
 
-    var icon = "http://i.imgur.com/EVu7Pdy.png";
+    var icon = "http://i.imgur.com/SK6a2wZ.png";
 
-    if (marker.calc.average <= 13) { icon = "http://i.imgur.com/h3lCeOo.png"; } else
-    if (marker.calc.score <= 27) { icon = "http://i.imgur.com/T1XnXXP.png"; }
-    else { icon = "http://i.imgur.com/EVu7Pdy.png"; }
+    // if (marker.calc.average <= 13) { icon = "http://i.imgur.com/3uNIbP4.png"; } else
+    // if (marker.calc.score <= 27) { icon = "http://i.imgur.com/UsMdUyz.png"; }
+    // else { icon = "http://i.imgur.com/QjqYs0V.png"; }
 
     var coordinates = {
       lat: Number(marker.lat),
@@ -208,15 +208,28 @@ _onMapChange: function () {
       id: marker.id
     });
 
+    google.maps.event.addListener(newMarker, 'mouseout', function () {
+      this.hoverMarker.setMap(null);
+      clearInterval(this.timeout);
+    }.bind(this));
+
     google.maps.event.addListener(newMarker, 'mouseover', function () {
       clearTimeout(this.timeout);
 
-
-      google.maps.event.addListener(newMarker, 'mouseout', function () {
-        clearInterval(this.timeout);
-      }.bind(this));
+      var icon = "http://i.imgur.com/1G8BRsP.png";
 
       this.timeout = setTimeout(function () {
+        this.hoverMarker = new google.maps.Marker({
+          position: coordinates,
+          map: mainMap,
+          icon: icon,
+          lat: newMarker.lat,
+          lng: newMarker.lng,
+          image: newMarker.image_url,
+          title: newMarker.name,
+          id: newMarker.id
+        });
+
         var image;
 
 
@@ -236,7 +249,13 @@ _onMapChange: function () {
         $('.options-holder').html(image);
         $('.options-holder').append("<span class='options-info-text'>" + newMarker.title + "</span>");
         // width: "100%",
-    }.bind(this), 100);
+
+
+    }.bind(this), 200);
+
+
+
+
 
     // });
       // } else {
