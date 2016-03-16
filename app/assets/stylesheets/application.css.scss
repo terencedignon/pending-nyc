@@ -355,10 +355,12 @@ header {
 }
 
 .drop-down a, a:visited {
-  font-weight: bold;
-  font-family: "montserrat";
-  color: #222;
-  text-transform: uppercase;
+  // font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 2px;
+  font-family: "helvetica";
+  color: #333;
+  // text-transform: uppercase;
   text-decoration: none;
 }
 
@@ -718,13 +720,18 @@ footer {
   position: relative;
 }
 
+.options-wrapper {
+  z-index: 999999;
+  background: #fff;
+}
+
 .options {
   position: absolute;
   z-index: 99;
   width: 100%;
   // background: #fff;
-  left: 0;
-  top: 20px;
+  left: 10px;
+  top: 10px;
   padding: 10px;
   // /*margin-bottom: 20px;*/
   // left: 0px;
@@ -738,23 +745,23 @@ footer {
 
 .options-info {
   // border-radius: 5%;
-  min-width: 400px;
-  max-width: 400px;
+  min-width: 300px;
+  max-width: 300px;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #eee;
   overflow: hidden;
-  min-height: 400px;
-  max-height: 400px;
+  min-height: 300px;
+  max-height: 300px;
   position: absolute;
   z-index: 99;
   // background: transparent;
   background: #fff;
-  top: 70px;
-  left: 10px;
+  top: 100px;
+  left: 20px;
 }
 
 .options-info img {
-  opacity: 0.7;
+  opacity: 0.85;
   // border-radius: 5%;
   width: 100%;
   height: auto;
@@ -766,11 +773,11 @@ footer {
   position: absolute;
   font-size: 20px;
   padding: 10px 20px;
-  font-weight: bold;
+  // font-weight: bold;
   font-family: "helvetica";
   letter-spacing: 2px;
   text-align: center;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   background: rgba(255, 255, 255, 1);
   display: block;
   border: 1px solid white;
@@ -879,22 +886,22 @@ footer {
   border: 1px solid transparent;
   outline-width: 0;
   margin-top: -30px;
-  margin-right: 5px;
+  margin-right: 15px;
   margin-bottom: 20px;
-  margin-left: 5px;
+  // margin-left: 5px;
   /*margin-left: -120px;*/
   /*font-weight: bold;*/
   padding: 10px;
   padding-left: 20px;
-  width: 100px;
+  width: 120px;
   font-size: 18px;
   /*background: #fff;*/
-  border: 2px solid #ccc;
+  border: 1px solid #eee;
   /*box-shadow: 2px 2px 2px 0 #f7f7f7;*/
   font-family: "Helvetica";
 }
 .options input:focus {
-  border: 2px solid #444;
+  border: 1px solid #444;
 }
 
 .show {

@@ -36180,7 +36180,7 @@
 	                "stylers": [{
 	                    "saturation": -100
 	                }, {
-	                    "lightness": 65
+	                    "lightness": 100
 	                }, {
 	                    "visibility": "on"
 	                }]
@@ -36191,14 +36191,14 @@
 	                }, {
 	                    "lightness": 51
 	                }, {
-	                    "visibility": "simplified"
+	                    "visibility": "off"
 	                }]
 	            }, {
 	                "featureType": "road.highway",
 	                "stylers": [{
 	                    "saturation": -100
 	                }, {
-	                    "visibility": "simplified"
+	                    "visibility": "off"
 	                }]
 	            }, {
 	                "featureType": "road.arterial",
@@ -36207,7 +36207,7 @@
 	                }, {
 	                    "lightness": 30
 	                }, {
-	                    "visibility": "on"
+	                    "visibility": "off"
 	                }]
 	            }, {
 	                "featureType": "road.local",
@@ -36244,11 +36244,11 @@
 	                "featureType": "water",
 	                "elementType": "geometry",
 	                "stylers": [{
-	                    "hue": "#ffff00"
+	                    "hue": "steelblue"
 	                }, {
-	                    "lightness": -25
+	                    "lightness": 0
 	                }, {
-	                    "saturation": -97
+	                    "saturation": 100
 	                }]
 	            }],
 	            scroll: { x: $(window).scrollLeft(), y: $(window).scrollTop() }
@@ -37656,7 +37656,7 @@
 
 	            setTimeout(function () {
 	                this._onMapChange();
-	            }.bind(this), 100);
+	            }.bind(this), 300);
 	        }.bind(this), 2000);
 
 	        google.maps.event.addListener(mainMap, 'idle', function () {
@@ -37684,6 +37684,7 @@
 	        var newMarkers = [];
 
 	        MapStore.getMainMap().forEach(function (marker) {
+
 	            var icon;
 
 	            if (marker.calc.average <= 13) {
@@ -37698,7 +37699,7 @@
 	                lat: Number(marker.lat),
 	                lng: Number(marker.lng)
 	            };
-	            console.log(marker);
+
 	            var newMarker = new google.maps.Marker({
 	                position: coordinates,
 	                map: mainMap,
@@ -37727,8 +37728,6 @@
 	                // }
 	                //   $('.options-info').parallax({ imageSrc: marker.image_url.replace("ms.jpg", "348s.jpg"),
 	                // zIndex: 100, speed: 0.9});
-	                console.log(newMarker.image);
-	                console.log(newMarker.title);
 	            }.bind(this));
 
 	            google.maps.event.addListener(newMarker, 'click', function () {
@@ -37738,6 +37737,8 @@
 	            newMarkers.push(newMarker);
 	            this.setState({ searching: false });
 	        }.bind(this));
+
+	        // console.log(this.state.markers);
 
 	        this.state.markers.forEach(function (marker) {
 	            marker.setMap(null);
@@ -37829,16 +37830,22 @@
 	            { className: 'main-page-holder' },
 	            React.createElement(
 	                'div',
-	                { className: 'options' },
-	                React.createElement('input', { type: 'text', placeholder: 'Name', onChange: this.changeName, value: this.state.name }),
-	                React.createElement('input', { type: 'text', placeholder: 'Cuisine', onChange: this.changeCuisine, value: this.state.cuisine_type }),
-	                React.createElement('input', { type: 'text', placeholder: 'Zipcode', onChange: this.changeZipcode, value: this.state.zipcode }),
-	                React.createElement('input', { type: 'text', placeholder: 'Boro', onChange: this.changeBoro, value: this.state.boro })
-	            ),
-	            React.createElement(
-	                'div',
-	                { className: 'options-info' },
-	                React.createElement('div', { className: 'options-holder' })
+	                { className: 'options-wrapper' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'options-info' },
+	                    React.createElement('div', { className: 'options-holder' })
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { className: 'options' },
+	                    React.createElement('input', { type: 'text', placeholder: 'Name', onChange: this.changeName, value: this.state.name }),
+	                    React.createElement('input', { type: 'text', placeholder: 'Cuisine', onChange: this.changeCuisine, value: this.state.cuisine_type }),
+	                    React.createElement('br', null),
+	                    ' ',
+	                    React.createElement('input', { type: 'text', placeholder: 'Zipcode', onChange: this.changeZipcode, value: this.state.zipcode }),
+	                    React.createElement('input', { type: 'text', placeholder: 'Boro', onChange: this.changeBoro, value: this.state.boro })
+	                )
 	            ),
 	            React.createElement(
 	                'div',

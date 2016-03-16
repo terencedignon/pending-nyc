@@ -28,7 +28,7 @@ var Map = React.createClass({
                 "saturation": -100
             },
             {
-                "lightness": 65
+                "lightness": 100
             },
             {
                 "visibility": "on"
@@ -45,7 +45,7 @@ var Map = React.createClass({
                 "lightness": 51
             },
             {
-                "visibility": "simplified"
+                "visibility": "off"
             }
         ]
     },
@@ -56,7 +56,7 @@ var Map = React.createClass({
                 "saturation": -100
             },
             {
-                "visibility": "simplified"
+                "visibility": "off"
             }
         ]
     },
@@ -70,7 +70,7 @@ var Map = React.createClass({
                 "lightness": 30
             },
             {
-                "visibility": "on"
+                "visibility": "off"
             }
         ]
     },
@@ -127,13 +127,13 @@ var Map = React.createClass({
         "elementType": "geometry",
         "stylers": [
             {
-                "hue": "#ffff00"
+                "hue": "steelblue"
             },
             {
-                "lightness": -25
+                "lightness": 0
             },
             {
-                "saturation": -97
+                "saturation": 100
             }
         ]
     }

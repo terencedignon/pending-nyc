@@ -156,7 +156,7 @@ var Map = React.createClass({
 
     setTimeout(function() {
         this._onMapChange();
-      }.bind(this), 100);
+      }.bind(this), 300);
     }.bind(this), 2000);
 
     google.maps.event.addListener(mainMap, 'idle', function() {
@@ -185,6 +185,7 @@ _onMapChange: function () {
   var newMarkers = [];
 
   MapStore.getMainMap().forEach(function(marker) {
+
     var icon;
 
     if (marker.calc.average <= 13) { icon = "http://i.imgur.com/E2oZQ4V.png"; } else
@@ -195,7 +196,7 @@ _onMapChange: function () {
       lat: Number(marker.lat),
       lng: Number(marker.lng)
     };
-    console.log(marker);
+
     var newMarker = new google.maps.Marker({
       position: coordinates,
       map: mainMap,
@@ -224,8 +225,7 @@ _onMapChange: function () {
       // }
     //   $('.options-info').parallax({ imageSrc: marker.image_url.replace("ms.jpg", "348s.jpg"),
     // zIndex: 100, speed: 0.9});
-      console.log(newMarker.image);
-      console.log(newMarker.title);
+
     }.bind(this));
 
 
@@ -237,6 +237,8 @@ _onMapChange: function () {
     newMarkers.push(newMarker);
     this.setState({ searching: false })
   }.bind(this));
+
+  // console.log(this.state.markers);
 
   this.state.markers.forEach(function(marker) {
     marker.setMap(null)
@@ -317,16 +319,18 @@ _onMapChange: function () {
 
     return (
       <div className="main-page-holder">
+        <div className="options-wrapper">
+        <div className="options-info">
+          <div className="options-holder">
+          </div>
+        </div>
         <div className="options">
           <input type="text" placeholder="Name" onChange={this.changeName} value={this.state.name}/>
           <input type="text" placeholder="Cuisine" onChange={this.changeCuisine} value={this.state.cuisine_type} />
-          <input type="text" placeholder="Zipcode" onChange={this.changeZipcode} value={this.state.zipcode} />
+          <br/> <input type="text" placeholder="Zipcode" onChange={this.changeZipcode} value={this.state.zipcode} />
           <input type="text" placeholder="Boro" onChange={this.changeBoro} value={this.state.boro}/>
     </div>
-    <div className="options-info">
-      <div className="options-holder">
-      </div>
-    </div>
+  </div>
         <div className="main-map-wrapper">
           <i className="fa fa-circle-o-notch fa-pulse most-spin"></i>
           <div id="main-map">
