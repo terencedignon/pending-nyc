@@ -1375,13 +1375,19 @@ span.big-header:hover {
   margin-top: 10px;
   margin-bottom: 10px;
   color: #444;
-  font-size: 16px;
+  font-size: 15px;
   // display: none;
   padding: 5px 10px;
 
   // background: rgba(0, 0, 0, .1);
 
-  border: 1px solid #eee;
+  border: 1px solid #fff;
+  transition: 0.1s ease-in-out;
+}
+
+.wrapper:hover {
+  // background: #f7f7f7;
+  border: 1px solid #ccc;
 }
 
 .editable {

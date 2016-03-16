@@ -186,7 +186,7 @@ _onMapChange: function () {
 
   MapStore.getMainMap().forEach(function(marker) {
 
-    var icon = "http://i.imgur.com/SK6a2wZ.png";
+    var icon = "http://i.imgur.com/WlQ7B4O.png";
 
     // if (marker.calc.average <= 13) { icon = "http://i.imgur.com/3uNIbP4.png"; } else
     // if (marker.calc.score <= 27) { icon = "http://i.imgur.com/UsMdUyz.png"; }
@@ -208,46 +208,51 @@ _onMapChange: function () {
       id: marker.id
     });
 
-    google.maps.event.addListener(newMarker, 'mouseout', function () {
-      this.hoverMarker.setMap(null);
-      clearInterval(this.timeout);
-    }.bind(this));
 
     google.maps.event.addListener(newMarker, 'mouseover', function () {
       clearTimeout(this.timeout);
 
+      google.maps.event.addListener(newMarker, 'mouseout', function () {
+        if (typeof this.hoverMarker !== "undefined") this.hoverMarker.setMap(null);
+        clearInterval(this.timeout);
+      }.bind(this));
+
       var icon = "http://i.imgur.com/1G8BRsP.png";
 
       this.timeout = setTimeout(function () {
-        this.hoverMarker = new google.maps.Marker({
-          position: coordinates,
-          map: mainMap,
-          icon: icon,
-          lat: newMarker.lat,
-          lng: newMarker.lng,
-          image: newMarker.image_url,
-          title: newMarker.name,
-          id: newMarker.id
-        });
+        if (typeof this.hoverMarker === "undefined" || this.hoverMarker.lat !== newMarker.lat) {
+          // console.log("inside");
+          this.hoverMarker = new google.maps.Marker({
+            position: coordinates,
+            map: mainMap,
+            icon: icon,
+            lat: newMarker.lat,
+            lng: newMarker.lng,
+            image: newMarker.image_url,
+            title: newMarker.name,
+            id: newMarker.id
 
-        var image;
+          });
+
+          var image;
 
 
-        if (newMarker.image) image = "<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">";
-        if (!newMarker.image) image = "<img src=https://maps.googleapis.com/maps/api/streetview?size=500x500&location=" + newMarker.lat + "," + newMarker.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I />";
+          if (newMarker.image) image = "<img src=" + marker.image_url.replace("ms.jpg", "348s.jpg") + ">";
+          if (!newMarker.image) image = "<img src=https://maps.googleapis.com/maps/api/streetview?size=500x500&location=" + newMarker.lat + "," + newMarker.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I />";
 
-        // opacity: 0
-        // height: "toggle",
-        // height: "toggle"
-        $('.options-holder').animate({
-          opacity: 0,
+          // opacity: 0
+          // height: "toggle",
+          // height: "toggle"
+          $('.options-holder').animate({
+            opacity: 0,
 
-        }, 0);
-        $('.options-holder').animate({
-          opacity: 1
-        }, 200);
-        $('.options-holder').html(image);
-        $('.options-holder').append("<span class='options-info-text'>" + newMarker.title + "</span>");
+          }, 0);
+          $('.options-holder').html(image);
+          $('.options-holder').append("<span class='options-info-text'>" + newMarker.title + "</span>");
+          $('.options-holder').animate({
+            opacity: 1
+          }, 50);
+        }
         // width: "100%",
 
 
@@ -323,7 +328,7 @@ _onMapChange: function () {
       ApiUtil.fetchMainMap(options);
       setTimeout(function () {
         this._onMapChange();
-      }.bind(this), 1000);
+      }.bind(this), 1500);
       clearInterval(this.timeout);
     }.bind(this), 1000);
   },
