@@ -22,7 +22,7 @@ var Map = React.createClass({
     mainMap = new google.maps.Map(document.getElementById('main-map'), {
       center: coordinates,
       disableDefaultUI: true,
-      zoom: 12,
+      zoom: 14,
       styles: [
     {
         "featureType": "landscape",
