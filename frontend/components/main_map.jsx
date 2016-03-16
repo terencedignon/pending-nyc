@@ -186,11 +186,11 @@ _onMapChange: function () {
 
   MapStore.getMainMap().forEach(function(marker) {
 
-    var icon;
+    var icon = "http://i.imgur.com/EVu7Pdy.png";
 
-    if (marker.calc.average <= 13) { icon = "http://i.imgur.com/E2oZQ4V.png"; } else
-    if (marker.calc.score <= 27) { icon = "http://i.imgur.com/h0qBo2q.png"; }
-    else { icon = "http://i.imgur.com/ejjOVXB.png"; }
+    if (marker.calc.average <= 13) { icon = "http://i.imgur.com/h3lCeOo.png"; } else
+    if (marker.calc.score <= 27) { icon = "http://i.imgur.com/T1XnXXP.png"; }
+    else { icon = "http://i.imgur.com/EVu7Pdy.png"; }
 
     var coordinates = {
       lat: Number(marker.lat),
