@@ -24600,6 +24600,7 @@
 	    return { grade: "P", store: {}, hash: window.location.hash, mapKey: Math.random(), yelp: {}, key: "map", data: {} };
 	  },
 	  componentDidMount: function () {
+
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
 	    // this.backButtonListener = setInterval(function () {
 	    //   if (window.location.hash !== this.state.hash) {
@@ -24608,10 +24609,10 @@
 	    //     // this.forceUpdate();
 	    //   }
 	    // }.bind(this), 100);
+	    // $('.show-holder').remove();
 	    ApiUtil.fetchStore(this.props.params.id);
 	  },
 	  componentWillUnmount: function () {
-	    $('.show-holder').remove();
 	    // console.log("hey");
 	    clearInterval(this.backButtonListener);
 	    this.storeListener.remove();
@@ -37685,11 +37686,15 @@
 
 	        MapStore.getMainMap().forEach(function (marker) {
 
-	            var icon = "http://i.imgur.com/WlQ7B4O.png";
+	            // var icon = "http://i.imgur.com/QjqYs0V.png";
 
-	            // if (marker.calc.average <= 13) { icon = "http://i.imgur.com/3uNIbP4.png"; } else
-	            // if (marker.calc.score <= 27) { icon = "http://i.imgur.com/UsMdUyz.png"; }
-	            // else { icon = "http://i.imgur.com/QjqYs0V.png"; }
+	            if (marker.calc.average <= 13) {
+	                icon = "http://i.imgur.com/3uNIbP4.png";
+	            } else if (marker.calc.score <= 27) {
+	                icon = "http://i.imgur.com/UsMdUyz.png";
+	            } else {
+	                icon = "http://i.imgur.com/QjqYs0V.png";
+	            }
 
 	            var coordinates = {
 	                lat: Number(marker.lat),
@@ -37711,7 +37716,7 @@
 	                clearTimeout(this.timeout);
 
 	                google.maps.event.addListener(newMarker, 'mouseout', function () {
-	                    if (typeof this.hoverMarker !== "undefined") this.hoverMarker.setMap(null);
+	                    // if (typeof this.hoverMarker !== "undefined") this.hoverMarker.setMap(null);
 	                    clearInterval(this.timeout);
 	                }.bind(this));
 
@@ -37720,17 +37725,17 @@
 	                this.timeout = setTimeout(function () {
 	                    if (typeof this.hoverMarker === "undefined" || this.hoverMarker.lat !== newMarker.lat) {
 	                        // console.log("inside");
-	                        this.hoverMarker = new google.maps.Marker({
-	                            position: coordinates,
-	                            map: mainMap,
-	                            icon: icon,
-	                            lat: newMarker.lat,
-	                            lng: newMarker.lng,
-	                            image: newMarker.image_url,
-	                            title: newMarker.name,
-	                            id: newMarker.id
-
-	                        });
+	                        // this.hoverMarker = new google.maps.Marker({
+	                        //   position: coordinates,
+	                        //   map: mainMap,
+	                        //   icon: icon,
+	                        //   lat: newMarker.lat,
+	                        //   lng: newMarker.lng,
+	                        //   image: newMarker.image_url,
+	                        //   title: newMarker.name,
+	                        //   id: newMarker.id
+	                        //
+	                        // });
 
 	                        var image;
 

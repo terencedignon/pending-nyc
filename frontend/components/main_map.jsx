@@ -186,11 +186,11 @@ _onMapChange: function () {
 
   MapStore.getMainMap().forEach(function(marker) {
 
-    var icon = "http://i.imgur.com/WlQ7B4O.png";
+    // var icon = "http://i.imgur.com/QjqYs0V.png";
 
-    // if (marker.calc.average <= 13) { icon = "http://i.imgur.com/3uNIbP4.png"; } else
-    // if (marker.calc.score <= 27) { icon = "http://i.imgur.com/UsMdUyz.png"; }
-    // else { icon = "http://i.imgur.com/QjqYs0V.png"; }
+    if (marker.calc.average <= 13) { icon = "http://i.imgur.com/3uNIbP4.png"; } else
+    if (marker.calc.score <= 27) { icon = "http://i.imgur.com/UsMdUyz.png"; }
+    else { icon = "http://i.imgur.com/QjqYs0V.png"; }
 
     var coordinates = {
       lat: Number(marker.lat),
@@ -213,7 +213,7 @@ _onMapChange: function () {
       clearTimeout(this.timeout);
 
       google.maps.event.addListener(newMarker, 'mouseout', function () {
-        if (typeof this.hoverMarker !== "undefined") this.hoverMarker.setMap(null);
+        // if (typeof this.hoverMarker !== "undefined") this.hoverMarker.setMap(null);
         clearInterval(this.timeout);
       }.bind(this));
 
@@ -222,17 +222,17 @@ _onMapChange: function () {
       this.timeout = setTimeout(function () {
         if (typeof this.hoverMarker === "undefined" || this.hoverMarker.lat !== newMarker.lat) {
           // console.log("inside");
-          this.hoverMarker = new google.maps.Marker({
-            position: coordinates,
-            map: mainMap,
-            icon: icon,
-            lat: newMarker.lat,
-            lng: newMarker.lng,
-            image: newMarker.image_url,
-            title: newMarker.name,
-            id: newMarker.id
-
-          });
+          // this.hoverMarker = new google.maps.Marker({
+          //   position: coordinates,
+          //   map: mainMap,
+          //   icon: icon,
+          //   lat: newMarker.lat,
+          //   lng: newMarker.lng,
+          //   image: newMarker.image_url,
+          //   title: newMarker.name,
+          //   id: newMarker.id
+          //
+          // });
 
           var image;
 

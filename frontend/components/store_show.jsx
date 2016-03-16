@@ -15,6 +15,7 @@ var StoreShow = React.createClass({
     return { grade: "P", store: {}, hash: window.location.hash, mapKey: Math.random(), yelp: {}, key: "map",  data: {} };
   },
   componentDidMount: function () {
+
     this.storeListener = StoreStore.addListener(this._onStoreChange);
     // this.backButtonListener = setInterval(function () {
     //   if (window.location.hash !== this.state.hash) {
@@ -23,10 +24,10 @@ var StoreShow = React.createClass({
     //     // this.forceUpdate();
     //   }
     // }.bind(this), 100);
+    // $('.show-holder').remove();
     ApiUtil.fetchStore(this.props.params.id);
   },
   componentWillUnmount: function () {
-    $('.show-holder').remove();
     // console.log("hey");
     clearInterval(this.backButtonListener);
     this.storeListener.remove();
