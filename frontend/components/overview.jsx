@@ -3,41 +3,31 @@ var Map = require('./map.jsx');
 var Comparison = require('./comparison.jsx');
 
 var Overview = React.createClass({
-  formatName: function (string) {
-    return string.trim().toLowerCase().split(" +").map(function(word) {
-      return word[0].toUpperCase() + word.slice(1);
-    }.bind(this)).join(" ");
-  },
-  percentageCalc: function (num, div) {
-    return (num > 0 ? Math.round((num / div) * 100) + "%" : "0")
-  },
+
   translate: function (number) {
-    if (number <= 13) return "A";
-    if (number <= 27) return "B";
-    return "C";
+    if (number <= 13) { return "A"; } else
+    if (number <= 27) { return "B"; }
+    else { return "C"; }
   },
+
   propsData: function () {
     var calc = this.props.store.calc;
 
-    var data = {};
-    data.average = calc.average;
-    data.worst = calc.worst;
-    data.inspections = calc.inspections;
-    data.best = calc.best;
-    data.last = calc.last;
-    data.first_average = calc.first_average;
-    data.name = this.formatName(this.props.store.name);
-    data.bestDate = new Date(calc.best_date);
-    data.worstDate = new Date(calc.worst_date);
-    data.flies = calc.flies_percentage;
-    data.mice = calc.mice_percentage;
-    data.roaches = calc.roach_percentage;
-    // data.flies = this.percentageCalc(calc.flies, calc.inspections);
-    // data.mice = this.percentageCalc(calc.mice, calc.inspections);
-    // data.roaches = this.percentageCalc(calc.roaches, calc.inspections);
-
-
-    data.total = Math.round((data.last + data.average + data.worst + data.best + ((calc.flies / calc.inspections) * 100) + ((calc.mice / calc.inspections) * 100) + ((calc.roaches / calc.inspections) * 100) + data.first_average) / 8);
+    var data = {
+      average: calc.average,
+      worst: calc.worst,
+      inspections: calc.inspections,
+      best: calc.best,
+      last: calc.last,
+      first_average: calc.first_average,
+      name: this.props.store.name,
+      bestDate: new Date(calc.best_date),
+      worstDate: new Date(calc.worst_date),
+      flies: calc.flies_percentage,
+      mice: calc.mice_percentage,
+      roaches: calc.roach_percentage,
+      total: calc.score
+    };
 
     return data;
   },
@@ -45,11 +35,13 @@ var Overview = React.createClass({
   showUnannounced: function (e) {
     $(e.currentTarget).find('.unannounced').css("display", "block");
   },
+
   hideUnannounced: function (e) {
     $(e.currentTarget).find('.unannounced').css("display", "none");
   },
 
   formatPhone: function(n) {
+
     if (!n) return "";
     return [
       n.slice(0, 3),
@@ -58,76 +50,74 @@ var Overview = React.createClass({
     ].join("-")
   },
 
-
   iconParse: function (grade) {
-      if (grade <= 13) {
-        return "thumbs-o-up";
-      } else if (grade <= 27) {
-        return "minus";
-      } else {
-        return "thumbs-o-down";
-      }
+
+      if (grade <= 13) { return "thumbs-o-up"; } else
+      if (grade <= 27) { return "minus"; }
+      else { return "thumbs-o-down"; }
+
   },
 
   rankingsParse: function (array) {
-    var avg = 0;
 
+    var avg = 0;
     array.forEach(function(n) {
       avg += n;
     });
 
     avg = avg / array.length;
-    // console.log(avg);
-    if (avg >= 50) {
-      return "thumbs-o-up";
-    } else {
-      return "thumbs-o-down";
-    }
+
+    if (avg >= 50) { return "thumbs-o-up"; }
+    else { return "thumbs-o-down"; }
   },
 
   translateRankings: function (n) {
-    if (n >= 75) {
-      return "A";
-    } else if (n > 25) {
-      return "B";
-    } else {
-      return "C";
-    }
+
+    if (n >= 75) { return "A"; } else
+    if (n > 25) { return "B"; }
+    else { return "C"; }
+
   },
+
+  percentRank: function (store, group, category) {
+    return Math.round(100 - (group[category].indexOf(store) / group[category].length).toFixed(2) * 100)
+  },
+
   propsRankings: function () {
     var store = this.props.store;
     var calc = store.calc;
     var boro = store.boro_ranking;
-    var zip = store.zipcode_ranking;
+    var zipcode = store.zipcode_ranking;
     var cuisine = store.cuisine_ranking;
 
-    var data = {
-      boroRecent:  Math.round(100 - (boro.recent.indexOf(store.calc.last) / boro.recent.length).toFixed(2) * 100),
-      boroMice: Math.round(100 - (boro.mice.indexOf(calc.mice_percentage) / boro.mice.length).toFixed(2) * 100),
-      boroRoaches: Math.round(100 - (boro.roaches.indexOf(calc.roach_percentage) / boro.roaches.length).toFixed(2) * 100),
-      boroFlies: Math.round(100 - (boro.flies.indexOf(calc.flies_percentage) / boro.flies.length).toFixed(2) * 100),
-      boroWorst: Math.round(100 - (boro.worst.indexOf(calc.worst) / boro.worst.length).toFixed(2) * 100),
-      boroAverage: Math.round(100 - (boro.average.indexOf(calc.average) / boro.average.length).toFixed(2) * 100),
-      boroFirstAverage: Math.round(100 - (boro.first_average.indexOf(calc.first_average) / boro.first_average.length).toFixed(2) * 100),
-      boroScore: Math.round(100 - (boro.score.indexOf(calc.score) / boro.score.length).toFixed(2) * 100),
+      var data = {
+      boroRecent: this.percentRank(store.calc.last, boro, "recent"),
+      boroMice: this.percentRank(calc.mice_percentage, boro, "mice"),
+      boroRoaches: this.percentRank(calc.roach_percentage, boro, "roaches"),
+      boroFlies: this.percentRank(calc.flies_percentage, boro, "flies"),
+      boroWorst: this.percentRank(calc.worst, boro, "worst"),
+      boroAverage: this.percentRank(calc.average, boro, "average"),
+      boroFirstAverage: this.percentRank(calc.first_average, boro, "first_average"),
+      boroScore: this.percentRank(calc.score, boro, "score"),
 
-      zipcodeRecent:  Math.round(100 - (zip.recent.indexOf(store.calc.last) / zip.recent.length).toFixed(2) * 100),
-      zipcodeMice: Math.round(100 - (zip.mice.indexOf(store.calc.mice_percentage) / zip.mice.length).toFixed(2) * 100),
-      zipcodeRoaches: Math.round(100 - (zip.roaches.indexOf(store.calc.roach_percentage) / zip.roaches.length).toFixed(2) * 100),
-      zipcodeFlies: Math.round(100 - (zip.flies.indexOf(store.calc.flies_percentage) / zip.flies.length).toFixed(2) * 100),
-      zipcodeWorst: Math.round(100 - (zip.worst.indexOf(store.calc.worst) / zip.worst.length).toFixed(2) * 100),
-      zipcodeAverage: Math.round(100 - (zip.average.indexOf(store.calc.average) / zip.average.length).toFixed(2) * 100),
-      zipcodeFirstAverage: Math.round(100 - (zip.first_average.indexOf(store.calc.first_average) / zip.first_average.length).toFixed(2) * 100),
-      zipcodeScore: Math.round(100 - (zip.score.indexOf(calc.score) / zip.score.length).toFixed(2) * 100),
+      zipcodeRecent: this.percentRank(store.calc.last, zipcode, "recent"),
+      zipcodeMice: this.percentRank(calc.mice_percentage, zipcode, "mice"),
+      zipcodeRoaches: this.percentRank(calc.roach_percentage, zipcode, "roaches"),
+      zipcodeFlies: this.percentRank(calc.flies_percentage, zipcode, "flies"),
+      zipcodeWorst: this.percentRank(calc.worst, zipcode, "worst"),
+      zipcodeAverage: this.percentRank(calc.average, zipcode, "average"),
+      zipcodeFirstAverage: this.percentRank(calc.first_average, zipcode, "first_average"),
+      zipcodeScore: this.percentRank(calc.score, zipcode, "score"),
 
-      cuisineRecent:  Math.round(100 - (cuisine.recent.indexOf(store.calc.last) / cuisine.recent.length).toFixed(2) * 100),
-      cuisineMice: Math.round(100 - (cuisine.mice.indexOf(store.calc.mice_percentage) / cuisine.mice.length).toFixed(2) * 100),
-      cuisineRoaches: Math.round(100 - (cuisine.roaches.indexOf(store.calc.roach_percentage) / cuisine.roaches.length).toFixed(2) * 100),
-      cuisineFlies: Math.round(100 - (cuisine.flies.indexOf(store.calc.flies_percentage) / cuisine.flies.length).toFixed(2) * 100),
-      cuisineWorst: Math.round(100 - (cuisine.worst.indexOf(store.calc.worst) / cuisine.worst.length).toFixed(2) * 100),
-      cuisineAverage: Math.round(100 - (cuisine.average.indexOf(store.calc.average) / cuisine.average.length).toFixed(2) * 100),
-      cuisineFirstAverage: Math.round(100 - (cuisine.first_average.indexOf(store.calc.first_average) / cuisine.first_average.length).toFixed(2) * 100),
-      cuisineScore: Math.round(100 - (cuisine.score.indexOf(calc.score) / cuisine.score.length).toFixed(2) * 100)
+      cuisineRecent: this.percentRank(store.calc.last, cuisine, "recent"),
+      cuisineMice: this.percentRank(calc.mice_percentage, cuisine, "mice"),
+      cuisineRoaches: this.percentRank(calc.roach_percentage, cuisine, "roaches"),
+      cuisineFlies: this.percentRank(calc.flies_percentage, cuisine, "flies"),
+      cuisineWorst: this.percentRank(calc.worst, cuisine, "worst"),
+      cuisineAverage: this.percentRank(calc.average, cuisine, "average"),
+      cuisineFirstAverage: this.percentRank(calc.first_average, cuisine, "first_average"),
+      cuisineScore: this.percentRank(calc.score, cuisine, "score"),
+
     }
 
     return data;
@@ -150,7 +140,7 @@ var Overview = React.createClass({
         </span>
 
         <span className="store-name">Inspections Overview</span>
-        
+
       <table>
           <tbody>
             <tr>
