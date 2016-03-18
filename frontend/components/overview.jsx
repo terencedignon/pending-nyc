@@ -670,6 +670,9 @@ tooltipTemplate: "<%= value %>"
             <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroMice}
               <span className="table-details">
                 {rankings.boroMiceHover}
+                <span className="table-legend">
+
+                </span>
               </span>
             </span>
           </td>

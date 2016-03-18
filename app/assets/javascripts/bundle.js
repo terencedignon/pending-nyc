@@ -37315,7 +37315,8 @@
 	                React.createElement(
 	                  'span',
 	                  { className: 'table-details' },
-	                  rankings.boroMiceHover
+	                  rankings.boroMiceHover,
+	                  React.createElement('span', { className: 'table-legend' })
 	                )
 	              )
 	            ),
