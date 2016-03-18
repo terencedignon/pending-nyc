@@ -1379,7 +1379,7 @@ span.big-header:hover {
 
 
 .table-details {
-  z-index: 99;
+  z-index: 999;
   min-width: 250px;
   border: 1px solid #eee;
   font-size: 15px;
@@ -1390,7 +1390,7 @@ span.big-header:hover {
   top: -50px;
   left: 50px;
   // background: #fff;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 1);
   color: #444;
 
 }
@@ -1893,9 +1893,9 @@ span.big-header:hover {
 }
 .overview-holder td.A:hover, td.B:hover, td.C:hover {
   // background: #eee;
-  color: #eee!important;
+  // color: #eee!important;
   // color: #444;
-  // opacity: 0.75;
+  // opacity: 0.95;
 
   // border: 1px solid gold;
 }
