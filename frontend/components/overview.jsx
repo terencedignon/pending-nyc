@@ -96,8 +96,8 @@ var Overview = React.createClass({
     },
 
   tdMouseover: function (e) {
-
-    var reference = this.refs[e.currentTarget.children[1].children[0].id];
+    
+    var reference = this.refs[e.currentTarget.children[0].children[1].children[0].id];
 
     $(e.currentTarget).find('.table-legend').html(reference.generateLegend());
 
@@ -433,8 +433,8 @@ tooltipTemplate: "<%= value %>"
                 <td className="subject">
                   Most Recent
                 </td>
-                <td className="score" className={this.translateRankings(rankings.zipcodeRecent)}>
-                  <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeRecent}
+                <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="score" className={this.translateRankings(rankings.zipcodeRecent)}>
+                  <span className="table-info">{rankings.zipcodeRecent}
                     <span className="table-details">
                       {rankings.zipcodeRecentHover}
 
@@ -444,8 +444,8 @@ tooltipTemplate: "<%= value %>"
                     </span>
                   </span>
                 </td>
-                <td className={this.translateRankings(rankings.boroRecent)}>
-                  <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroRecent}
+                <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.boroRecent)}>
+                  <span className="table-info">{rankings.boroRecent}
                     <span className="table-details">
                       {rankings.boroRecentHover}
                       <span className="table-legend">
@@ -454,8 +454,8 @@ tooltipTemplate: "<%= value %>"
                     </span>
                   </span>
                  </td>
-                 <td className={this.translateRankings(rankings.cuisineRecent)}>
-                   <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineRecent}
+                 <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.cuisineRecent)}>
+                   <span className="table-info">{rankings.cuisineRecent}
                      <span className="table-details">
                        {rankings.cuisineRecentHover}
                        <span className="table-legend">
@@ -474,8 +474,8 @@ tooltipTemplate: "<%= value %>"
             <td className="subject">
                 Average of {data.inspections}
               </td>
-              <td className={this.translateRankings(rankings.zipcodeAverage)}>
-                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeAverage}
+              <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.zipcodeAverage)}>
+                <span className="table-info">{rankings.zipcodeAverage}
                   <span className="table-details">
                     {rankings.zipcodeAverageHover}
                     <span className="table-legend">
@@ -485,8 +485,8 @@ tooltipTemplate: "<%= value %>"
                 </span>
 
               </td>
-              <td className={this.translateRankings(rankings.boroAverage)}>
-                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroAverage}
+              <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.boroAverage)}>
+                <span className="table-info">{rankings.boroAverage}
                   <span className="table-details">
                     {rankings.boroAverageHover}
                     <span className="table-legend">
@@ -497,8 +497,8 @@ tooltipTemplate: "<%= value %>"
 
 
               </td>
-              <td className={this.translateRankings(rankings.cuisineAverage)}>
-                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineAverage}
+              <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.cuisineAverage)}>
+                <span className="table-info">{rankings.cuisineAverage}
                   <span className="table-details">
                     {rankings.cuisineAverageHover}
                     <span className="table-legend">
@@ -520,8 +520,8 @@ tooltipTemplate: "<%= value %>"
                 Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Surprise
                   <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span></span>&nbsp; &nbsp;
               </td>
-              <td className={this.translateRankings(rankings.zipcodeFirstAverage)}>
-                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeFirstAverage}
+              <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.zipcodeFirstAverage)}>
+                <span className="table-info">{rankings.zipcodeFirstAverage}
                   <span className="table-details">
                     {rankings.zipcodeFirstAverageHover}
                     <span className="table-legend">
@@ -531,8 +531,8 @@ tooltipTemplate: "<%= value %>"
                 </span>
 
               </td>
-              <td className={this.translateRankings(rankings.boroFirstAverage)}>
-                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroFirstAverage}
+              <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.boroFirstAverage)}>
+                <span className="table-info">{rankings.boroFirstAverage}
                   <span className="table-details">
                     {rankings.boroFirstAverageHover}
                     <span className="table-legend">
@@ -542,8 +542,8 @@ tooltipTemplate: "<%= value %>"
                 </span>
 
               </td>
-              <td className={this.translateRankings(rankings.cuisineFirstAverage)}>
-                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineFirstAverage}
+              <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.cuisineFirstAverage)}>
+                <span className="table-info">{rankings.cuisineFirstAverage}
                   <span className="table-details">
                     {rankings.cuisineFirstAverageHover}
                     <span className="table-legend">
@@ -565,8 +565,8 @@ tooltipTemplate: "<%= value %>"
             <td className="subject">
               Aggreg Score
             </td>
-            <td className={this.translateRankings(rankings.zipcodeScore)}>
-              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeScore}
+            <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.zipcodeScore)}>
+              <span className="table-info">{rankings.zipcodeScore}
                 <span className="table-details">
                   {rankings.zipcodeScoreHover}
                   <span className="table-legend">
@@ -576,8 +576,8 @@ tooltipTemplate: "<%= value %>"
               </span>
 
             </td>
-            <td className={this.translateRankings(rankings.boroScore)}>
-              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroScore}
+            <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.boroScore)}>
+              <span className="table-info">{rankings.boroScore}
                 <span className="table-details">
                   {rankings.boroScoreHover}
                   <span className="table-legend">
@@ -587,8 +587,8 @@ tooltipTemplate: "<%= value %>"
               </span>
 
             </td>
-            <td className={this.translateRankings(rankings.cuisineScore)}>
-              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineScore}
+            <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.cuisineScore)}>
+              <span className="table-info">{rankings.cuisineScore}
                 <span className="table-details">
                   {rankings.cuisineScoreHover}
                   <span className="table-legend">
@@ -608,8 +608,8 @@ tooltipTemplate: "<%= value %>"
             <td className="subject">
               Worst
             </td>
-            <td className={this.translateRankings(rankings.zipcodeWorst)}>
-              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeWorst}
+            <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.zipcodeWorst)}>
+              <span className="table-info">{rankings.zipcodeWorst}
                 <span className="table-details">
                   {rankings.zipcodeWorstHover}
                   <span className="table-legend">
@@ -619,8 +619,8 @@ tooltipTemplate: "<%= value %>"
               </span>
 
             </td>
-            <td className={this.translateRankings(rankings.boroWorst)}>
-              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroWorst}
+            <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.boroWorst)}>
+              <span className="table-info">{rankings.boroWorst}
                 <span className="table-details">
                   {rankings.boroWorstHover}
                   <span className="table-legend">
@@ -631,8 +631,8 @@ tooltipTemplate: "<%= value %>"
 
             </td>
 
-            <td className={this.translateRankings(rankings.cuisineWorst)}>
-              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineWorst}
+            <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.cuisineWorst)}>
+              <span className="table-info">{rankings.cuisineWorst}
                 <span className="table-details">
                   {rankings.cuisineWorstHover}
                   <span className="table-legend">
@@ -654,8 +654,8 @@ tooltipTemplate: "<%= value %>"
           <td className="subject">
               Pcnt. with Mice
           </td>
-          <td className={this.translateRankings(rankings.zipcodeMice)}>
-            <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeMice}
+          <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.zipcodeMice)}>
+            <span className="table-info">{rankings.zipcodeMice}
               <span className="table-details">
                 {rankings.zipcodeMiceHover}
                 <span className="table-legend">
@@ -666,8 +666,8 @@ tooltipTemplate: "<%= value %>"
 
 
           </td>
-          <td className={this.translateRankings(rankings.boroMice)}>
-            <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroMice}
+          <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.boroMice)}>
+            <span className="table-info">{rankings.boroMice}
               <span className="table-details">
                 {rankings.boroMiceHover}
                 <span className="table-legend">
@@ -676,8 +676,8 @@ tooltipTemplate: "<%= value %>"
               </span>
             </span>
           </td>
-          <td className={this.translateRankings(rankings.cuisineMice)}>
-            <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineMice}
+          <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.cuisineMice)}>
+            <span className="table-info">{rankings.cuisineMice}
               <span className="table-details">
                 {rankings.cuisineMiceHover}
                 <span className="table-legend">
@@ -696,8 +696,8 @@ tooltipTemplate: "<%= value %>"
         <td className="subject">
           Pcnt. with Flies
         </td>
-        <td className={this.translateRankings(rankings.zipcodeFlies)}>
-          <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeFlies}
+        <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.zipcodeFlies)}>
+          <span className="table-info">{rankings.zipcodeFlies}
             <span className="table-details">
               {rankings.zipcodeFliesHover}
               <span className="table-legend">
@@ -706,8 +706,8 @@ tooltipTemplate: "<%= value %>"
           </span>
 
         </td>
-        <td className={this.translateRankings(rankings.boroFlies)}>
-          <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroFlies}
+        <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.boroFlies)}>
+          <span className="table-info">{rankings.boroFlies}
             <span className="table-details">
               {rankings.boroFliesHover}
               <span className="table-legend">
@@ -715,8 +715,8 @@ tooltipTemplate: "<%= value %>"
             </span>
           </span>
         </td>
-        <td className={this.translateRankings(rankings.cuisineFlies)}>
-          <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineFlies}
+        <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.cuisineFlies)}>
+          <span className="table-info">{rankings.cuisineFlies}
             <span className="table-details">
               {rankings.cuisineFliesHover}
               <span className="table-legend">
@@ -737,8 +737,8 @@ tooltipTemplate: "<%= value %>"
       <td className="subject">
         Pcnt. with Roaches
       </td>
-      <td className={this.translateRankings(rankings.zipcodeRoaches)}>
-        <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeRoaches}
+      <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.zipcodeRoaches)}>
+        <span className="table-info">{rankings.zipcodeRoaches}
           <span className="table-details">
             {rankings.zipcodeRoachesHover}
             <span className="table-legend">
@@ -747,8 +747,8 @@ tooltipTemplate: "<%= value %>"
         </span>
 
       </td>
-      <td className={this.translateRankings(rankings.boroRoaches)}>
-        <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroRoaches}
+      <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.boroRoaches)}>
+        <span className="table-info">{rankings.boroRoaches}
           <span className="table-details">{rankings.boroRoachesHover}
             <span className="table-legend">
             </span>
@@ -757,8 +757,8 @@ tooltipTemplate: "<%= value %>"
 
 
       </td>
-      <td className={this.translateRankings(rankings.cuisineRoaches)}>
-        <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineRoaches}
+      <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.cuisineRoaches)}>
+        <span className="table-info">{rankings.cuisineRoaches}
           <span className="table-details">
             {rankings.cuisineRoachesHover}
             <span className="table-legend">
