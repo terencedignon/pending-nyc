@@ -30,6 +30,13 @@ var StoreActions = {
     });
   },
 
+  getChart: function (chart) {
+    Dispatcher.dispatch({
+      actionType: StoreConstants.GET_CHART,
+      data: chart
+    });
+  },
+
   getMost: function (data) {
     Dispatcher.dispatch({
       actionType: StoreConstants.GET_MOST,

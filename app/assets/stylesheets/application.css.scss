@@ -1361,6 +1361,7 @@ span.big-header:hover {
   height: 90px;
   // background: steelblue
   // margin-right: 10px;
+
   font-size: 40px;
   margin-top: 2px;
   // margin-bottom: 14px;
@@ -1369,6 +1370,72 @@ span.big-header:hover {
   // border-radius: 5%;
   overflow: hidden;
 }
+
+.table-info {
+  position: relative;
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
+}
+
+
+.table-details {
+  z-index: 99;
+  min-width: 250px;
+  border: 1px solid #eee;
+  font-size: 15px;
+  font-family: "helvetica";
+  padding: 10px;
+  // display: none;
+  position: absolute;
+  top: -50px;
+  left: 50px;
+  // background: #fff;
+  background: rgba(255, 255, 255, 0.95);
+  color: #444;
+
+}
+
+.pie-chart {
+  float: right;
+  background: white;
+  // border-radius: 50%;
+}
+
+.pie-legend  {
+
+  position: absolute;
+  top: -5px;
+  display: block;
+  // left: -30px;
+  padding: 10px;
+  // width: 100%;
+  text-align: left;
+  // padding: 0;
+  // border: 1px solid #ccc;
+  // background: #fff;
+  list-style: none;
+}
+
+.pie-legend li {
+  // padding: 0;
+  // margin: 0;
+  // float: right;
+  // width: 100%;
+}
+
+.pie-legend li span{
+    // text-align: right;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #eee;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+//
+// .pie-legend {
+//   color: #444;
+// }
 
 .wrapper {
   // margin-left: 15px;

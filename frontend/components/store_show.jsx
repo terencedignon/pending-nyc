@@ -12,7 +12,7 @@ var Violations = require('./violations.jsx');
 
 var StoreShow = React.createClass({
   getInitialState: function () {
-    return { grade: "P", store: {}, hash: window.location.hash, mapKey: Math.random(), yelp: {}, key: "map",  data: {} };
+    return { grade: "P", store: {}, pie: "", hash: window.location.hash, mapKey: Math.random(), yelp: {}, key: "map",  data: {} };
   },
   componentDidMount: function () {
 
@@ -57,10 +57,12 @@ var StoreShow = React.createClass({
 },
   _onStoreChange: function () {
     if (this.state.store !== StoreStore.getStore()) {
-      this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
+      this.setState({ comparisonKey: Math.random(), pie: StoreStore.getChart(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
       // this.setChart();
       this.chartUpdate();
-    };
+    }
+    
+
   },
   chartUpdate: function () {
     var chart = this.refs.chart.getChart();
@@ -229,6 +231,9 @@ var grade = <img src={this.selectGrade()}/>;
                 <div className="show-grade">
                   {grade}
                 </div>
+              </div>
+              <div className="pie-chart">
+                {this.state.pie}
               </div>
               <div className="load-map">
                 <span onClick={this.openMap} className="store-name-header">Load Map</span>

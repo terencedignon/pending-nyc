@@ -8,7 +8,8 @@ var StoreConstants = {
   GET_MOST_VISITED: "GET_MOST_VISITED",
   GET_TRENDING: "GET_TRENDING",
   GET_MOST: "GET_MOST",
-  USER_LOCATION: "USER_LOCATION"
+  USER_LOCATION: "USER_LOCATION",
+  GET_CHART: "GET_CHART"
 };
 
 module.exports = StoreConstants;

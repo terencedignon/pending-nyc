@@ -1,6 +1,9 @@
 var React = require('react');
 var Map = require('./map.jsx');
 var Comparison = require('./comparison.jsx');
+var PieChart = require('react-chartjs').Pie;
+var StoreActions = require('../actions/store_actions.js');
+
 
 var Overview = React.createClass({
 
@@ -83,51 +86,198 @@ var Overview = React.createClass({
     return Math.round(100 - (group[category].indexOf(store) / group[category].length).toFixed(2) * 100)
   },
 
+  numberRank: function (store, group, category, zone, phrase) {
+    var betterNum = group[category].length - group[category].indexOf(store);
+    var worseNum = group[category].length - betterNum;
+    // console.log("Of " + group[category].length + " restaurants in " + zone + ", " + this.props.store.name +
+    //   "is better than " + betterNum + " and worse than " + worseNum);
+    return "Of " + group[category].length + " restaurants in " + zone + ", " +
+      this.props.store.name + "'s' " + phrase + " is better than " + betterNum + " and worse than " + worseNum;
+    },
+
+  tdMouseover: function (e) {
+
+    var reference = this.refs[e.currentTarget.children[1].children[0].id];
+
+    $(e.currentTarget).find('.table-legend').html(reference.generateLegend());
+
+    $(e.currentTarget).find('.table-details').show(100);
+  },
+
+  tdMouseleave: function (e) {
+    $(e.currentTarget).find('.table-details').hide(100);
+  },
+
+  hoverPie: function (store, group, category, ref) {
+
+    var betterNum = group[category].length - group[category].indexOf(store);
+    var equalNum = group[category].filter(function(score) {
+      return score === store;
+    }).length;
+    var worseNum = group[category].length - betterNum;
+    var data = [
+      {
+        value: worseNum,
+        color: "rgba(128, 0, 0, 0.7)",
+        highlight: "maroon",
+        label: "Worse: " + worseNum,
+        labelColor: "#444444",
+        labelFontSize: "16"
+      },
+      {
+          value: betterNum - equalNum,
+          color: "rgba(128, 0, 0, 0.1)",
+          highlight: "steelblue",
+          label: "Better: &nbsp;" + (betterNum - equalNum),
+          labelColor: "#444444",
+          labelFontSize: "16"
+      },
+      {
+          value: equalNum,
+          color: "rgba(128, 0, 0, 0.4)",
+          highlight: "#eeeeee",
+          label: "Equal: &nbsp;" + equalNum + "&nbsp; &nbsp;",
+          labelColor: "#444444",
+          labelFontSize: "16"
+      }
+
+    ];
+
+
+    // console.log([worseNum, equalNum, betterNum]);
+    // setTimeout(function() {
+    //   StoreActions.getChart(<PieChart data={data}/>);
+    // }, 1000);
+    // segmentStrokeColor: "rgba(128, 0, 0, 0.7)"
+    // tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>kb"
+    var options = {
+      segmentShowStroke: false,
+      segmentStrokeWidth: 2,
+      segmentStrokeColor: "white",
+animateRotate: true,
+animateScale: true,
+percentageInnerCutout: 0,
+tooltipTemplate: "<%= value %>"
+    }
+
+
+
+    return <PieChart className="pie-chart" key={ref} ref={ref} id={ref} data={data} width={100} height={75} options={options} />
+
+},
+
+  setLegend: function (ref) {
+    setTimeout(function () {
+    if (typeof this.refs[ref] !== "undefined") return this.refs[ref].generateLegend();
+    return "";
+  }.bind(this), 200)
+  },
+
+
   propsRankings: function () {
+
     var store = this.props.store;
     var calc = store.calc;
     var boro = store.boro_ranking;
     var zipcode = store.zipcode_ranking;
     var cuisine = store.cuisine_ranking;
 
-      var data = {
+    // boroRecentHover: this.numberRank(store.calc.last, boro, "recent", store.boro, "last inspection"),
+    var data = {
+
       boroRecent: this.percentRank(store.calc.last, boro, "recent"),
+      boroRecentHover: this.hoverPie(store.calc.last, boro, "recent", Math.random()),
+
       boroMice: this.percentRank(calc.mice_percentage, boro, "mice"),
+      boroMiceHover: this.hoverPie(calc.mice_percentage, boro, "mice", Math.random()),
+
       boroRoaches: this.percentRank(calc.roach_percentage, boro, "roaches"),
+      boroRoachesHover: this.hoverPie(calc.roach_percentage, boro, "roaches", Math.random()),
+
       boroFlies: this.percentRank(calc.flies_percentage, boro, "flies"),
+      boroFliesHover: this.hoverPie(calc.flies_percentage, boro, "flies", Math.random()),
+
       boroWorst: this.percentRank(calc.worst, boro, "worst"),
+      boroWorstHover: this.hoverPie(calc.worst, boro, "worst", Math.random()),
+
       boroAverage: this.percentRank(calc.average, boro, "average"),
+      boroAverageHover: this.hoverPie(calc.average, boro, "average", Math.random()),
+
       boroFirstAverage: this.percentRank(calc.first_average, boro, "first_average"),
+      boroFirstAverageHover: this.hoverPie(calc.first_average, boro, "first_average", Math.random()),
+
       boroScore: this.percentRank(calc.score, boro, "score"),
+      boroScoreHover: this.hoverPie(calc.score, boro, "score", Math.random()),
 
       zipcodeRecent: this.percentRank(store.calc.last, zipcode, "recent"),
+      zipcodeRecentHover: this.hoverPie(store.calc.last, zipcode, "recent", Math.random()),
+
       zipcodeMice: this.percentRank(calc.mice_percentage, zipcode, "mice"),
+      zipcodeMiceHover: this.hoverPie(calc.mice_percentage, zipcode, "mice", Math.random()),
+
       zipcodeRoaches: this.percentRank(calc.roach_percentage, zipcode, "roaches"),
+      zipcodeRoachesHover: this.hoverPie(calc.roach_percentage, zipcode, "roaches", Math.random()),
+
+
       zipcodeFlies: this.percentRank(calc.flies_percentage, zipcode, "flies"),
+      zipcodeFliesHover: this.hoverPie(calc.flies_percentage, zipcode, "flies", Math.random()),
+
       zipcodeWorst: this.percentRank(calc.worst, zipcode, "worst"),
+      zipcodeWorstHover: this.hoverPie(calc.worst, zipcode, "worst", Math.random()),
+
+
       zipcodeAverage: this.percentRank(calc.average, zipcode, "average"),
+      zipcodeAverageHover: this.hoverPie(calc.average, zipcode, "average", Math.random()),
+
       zipcodeFirstAverage: this.percentRank(calc.first_average, zipcode, "first_average"),
+      zipcodeFirstAverageHover: this.hoverPie(calc.first_average, zipcode, "first_average", Math.random()),
+
       zipcodeScore: this.percentRank(calc.score, zipcode, "score"),
+      zipcodeScoreHover: this.hoverPie(calc.score, zipcode, "score", Math.random()),
+
 
       cuisineRecent: this.percentRank(store.calc.last, cuisine, "recent"),
+      cuisineRecentHover: this.hoverPie(calc.last, cuisine, "recent", Math.random()),
+
+
       cuisineMice: this.percentRank(calc.mice_percentage, cuisine, "mice"),
+      cuisineMiceHover: this.hoverPie(calc.mice_percentage, cuisine, "mice", Math.random()),
+
       cuisineRoaches: this.percentRank(calc.roach_percentage, cuisine, "roaches"),
+      cuisineRoachesHover: this.hoverPie(calc.roach_percentage, cuisine, "roaches", Math.random()),
+
       cuisineFlies: this.percentRank(calc.flies_percentage, cuisine, "flies"),
+      cuisineFliesHover: this.hoverPie(calc.flies_percentage, cuisine, "flies", Math.random()),
+
+
       cuisineWorst: this.percentRank(calc.worst, cuisine, "worst"),
+      cuisineWorstHover: this.hoverPie(calc.worst, cuisine, "worst", Math.random()),
+
       cuisineAverage: this.percentRank(calc.average, cuisine, "average"),
+      cuisineAverageHover: this.hoverPie(calc.average, cuisine, "average", Math.random()),
+
       cuisineFirstAverage: this.percentRank(calc.first_average, cuisine, "first_average"),
+      cuisineFirstAverageHover: this.hoverPie(calc.first_average, cuisine, "first_average", Math.random()),
+
       cuisineScore: this.percentRank(calc.score, cuisine, "score"),
+      cuisineScoreHover: this.hoverPie(calc.score, cuisine, "score", Math.random()),
+
 
     }
+
+    // console.log(data.cuisineRoachesHover);
 
     return data;
   },
 
   render: function () {
+    setTimeout(function () {
+      $('.table-details').hide();
+    });
 
+    var rankings = this.propsRankings();
     var data = this.propsData();
     var store = this.props.store;
-    var rankings = this.propsRankings();
 
     return (
       <span className="overview-holder">
@@ -284,13 +434,35 @@ var Overview = React.createClass({
                   Most Recent
                 </td>
                 <td className="score" className={this.translateRankings(rankings.zipcodeRecent)}>
-                  {rankings.zipcodeRecent}
+                  <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeRecent}
+                    <span className="table-details">
+                      {rankings.zipcodeRecentHover}
+
+                      <span className="table-legend">
+
+                      </span>
+                    </span>
+                  </span>
                 </td>
                 <td className={this.translateRankings(rankings.boroRecent)}>
-                  {rankings.boroRecent}
+                  <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroRecent}
+                    <span className="table-details">
+                      {rankings.boroRecentHover}
+                      <span className="table-legend">
+
+                      </span>
+                    </span>
+                  </span>
                  </td>
                  <td className={this.translateRankings(rankings.cuisineRecent)}>
-                   {rankings.cuisineRecent}
+                   <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineRecent}
+                     <span className="table-details">
+                       {rankings.cuisineRecentHover}
+                       <span className="table-legend">
+
+                       </span>
+                     </span>
+                   </span>
                  </td>
               </tr>
               <tr>
@@ -303,13 +475,39 @@ var Overview = React.createClass({
                 Average of {data.inspections}
               </td>
               <td className={this.translateRankings(rankings.zipcodeAverage)}>
-                {rankings.zipcodeAverage}
+                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeAverage}
+                  <span className="table-details">
+                    {rankings.zipcodeAverageHover}
+                    <span className="table-legend">
+
+                    </span>
+                  </span>
+                </span>
+
               </td>
               <td className={this.translateRankings(rankings.boroAverage)}>
-                {rankings.boroAverage}
+                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroAverage}
+                  <span className="table-details">
+                    {rankings.boroAverageHover}
+                    <span className="table-legend">
+
+                    </span>
+                  </span>
+                </span>
+
+
               </td>
               <td className={this.translateRankings(rankings.cuisineAverage)}>
-                {rankings.cuisineAverage}
+                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineAverage}
+                  <span className="table-details">
+                    {rankings.cuisineAverageHover}
+                    <span className="table-legend">
+
+                    </span>
+                  </span>
+                </span>
+
+
               </td>
             </tr>
             <tr>
@@ -323,13 +521,38 @@ var Overview = React.createClass({
                   <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span></span>&nbsp; &nbsp;
               </td>
               <td className={this.translateRankings(rankings.zipcodeFirstAverage)}>
-                {rankings.zipcodeFirstAverage}
+                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeFirstAverage}
+                  <span className="table-details">
+                    {rankings.zipcodeFirstAverageHover}
+                    <span className="table-legend">
+
+                    </span>
+                  </span>
+                </span>
+
               </td>
               <td className={this.translateRankings(rankings.boroFirstAverage)}>
-                {rankings.boroFirstAverage}
+                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroFirstAverage}
+                  <span className="table-details">
+                    {rankings.boroFirstAverageHover}
+                    <span className="table-legend">
+
+                    </span>
+                  </span>
+                </span>
+
               </td>
               <td className={this.translateRankings(rankings.cuisineFirstAverage)}>
-                {rankings.cuisineFirstAverage}
+                <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineFirstAverage}
+                  <span className="table-details">
+                    {rankings.cuisineFirstAverageHover}
+                    <span className="table-legend">
+
+                    </span>
+                  </span>
+                </span>
+
+
               </td>
 
           </tr>
@@ -343,13 +566,37 @@ var Overview = React.createClass({
               Aggreg Score
             </td>
             <td className={this.translateRankings(rankings.zipcodeScore)}>
-              {rankings.zipcodeScore}
+              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeScore}
+                <span className="table-details">
+                  {rankings.zipcodeScoreHover}
+                  <span className="table-legend">
+
+                  </span>
+                </span>
+              </span>
+
             </td>
             <td className={this.translateRankings(rankings.boroScore)}>
-              {rankings.boroScore}
+              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroScore}
+                <span className="table-details">
+                  {rankings.boroScoreHover}
+                  <span className="table-legend">
+
+                  </span>
+                </span>
+              </span>
+
             </td>
             <td className={this.translateRankings(rankings.cuisineScore)}>
-              {rankings.cuisineScore}
+              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineScore}
+                <span className="table-details">
+                  {rankings.cuisineScoreHover}
+                  <span className="table-legend">
+
+                  </span>
+                </span>
+              </span>
+
             </td>
         </tr>
           <tr>
@@ -362,15 +609,42 @@ var Overview = React.createClass({
               Worst
             </td>
             <td className={this.translateRankings(rankings.zipcodeWorst)}>
-              {rankings.zipcodeWorst}
+              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeWorst}
+                <span className="table-details">
+                  {rankings.zipcodeWorstHover}
+                  <span className="table-legend">
+
+                  </span>
+                </span>
+              </span>
+
             </td>
             <td className={this.translateRankings(rankings.boroWorst)}>
-              {rankings.boroWorst}
+              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroWorst}
+                <span className="table-details">
+                  {rankings.boroWorstHover}
+                  <span className="table-legend">
+
+                  </span>
+                </span>
+              </span>
+
             </td>
+
             <td className={this.translateRankings(rankings.cuisineWorst)}>
-              {rankings.cuisineWorst}
+              <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineWorst}
+                <span className="table-details">
+                  {rankings.cuisineWorstHover}
+                  <span className="table-legend">
+
+                  </span>
+                </span>
+              </span>
+
+
             </td>
         </tr>
+
         <tr>
           <td className="thumbs">
             <i className={"fa fa-" + this.rankingsParse([
@@ -381,13 +655,33 @@ var Overview = React.createClass({
               Pcnt. with Mice
           </td>
           <td className={this.translateRankings(rankings.zipcodeMice)}>
-            {rankings.zipcodeMice}
+            <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeMice}
+              <span className="table-details">
+                {rankings.zipcodeMiceHover}
+                <span className="table-legend">
+
+                </span>
+              </span>
+            </span>
+
+
           </td>
           <td className={this.translateRankings(rankings.boroMice)}>
-            {rankings.boroMice}
+            <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroMice}
+              <span className="table-details">
+                {rankings.boroMiceHover}
+              </span>
+            </span>
           </td>
           <td className={this.translateRankings(rankings.cuisineMice)}>
-            {rankings.cuisineMice}
+            <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineMice}
+              <span className="table-details">
+                {rankings.cuisineMiceHover}
+                <span className="table-legend">
+
+                </span>
+              </span>
+            </span>
           </td>
       </tr>
       <tr>
@@ -400,13 +694,32 @@ var Overview = React.createClass({
           Pcnt. with Flies
         </td>
         <td className={this.translateRankings(rankings.zipcodeFlies)}>
-          {rankings.zipcodeFlies}
+          <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeFlies}
+            <span className="table-details">
+              {rankings.zipcodeFliesHover}
+              <span className="table-legend">
+              </span>
+            </span>
+          </span>
+
         </td>
         <td className={this.translateRankings(rankings.boroFlies)}>
-          {rankings.boroFlies}
+          <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroFlies}
+            <span className="table-details">
+              {rankings.boroFliesHover}
+              <span className="table-legend">
+              </span>
+            </span>
+          </span>
         </td>
         <td className={this.translateRankings(rankings.cuisineFlies)}>
-          {rankings.cuisineFlies}
+          <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineFlies}
+            <span className="table-details">
+              {rankings.cuisineFliesHover}
+              <span className="table-legend">
+              </span>
+            </span>
+          </span>
         </td>
 
     </tr>
@@ -422,13 +735,34 @@ var Overview = React.createClass({
         Pcnt. with Roaches
       </td>
       <td className={this.translateRankings(rankings.zipcodeRoaches)}>
-        {rankings.zipcodeRoaches}
+        <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.zipcodeRoaches}
+          <span className="table-details">
+            {rankings.zipcodeRoachesHover}
+            <span className="table-legend">
+            </span>
+          </span>
+        </span>
+
       </td>
       <td className={this.translateRankings(rankings.boroRoaches)}>
-        {rankings.boroRoaches}
+        <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.boroRoaches}
+          <span className="table-details">{rankings.boroRoachesHover}
+            <span className="table-legend">
+            </span>
+          </span>
+        </span>
+
+
       </td>
       <td className={this.translateRankings(rankings.cuisineRoaches)}>
-        {rankings.cuisineRoaches}
+        <span onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className="table-info">{rankings.cuisineRoaches}
+          <span className="table-details">
+            {rankings.cuisineRoachesHover}
+            <span className="table-legend">
+            </span>
+          </span>
+        </span>
+
       </td>
 
   </tr>

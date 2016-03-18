@@ -24597,7 +24597,7 @@
 	  displayName: 'StoreShow',
 
 	  getInitialState: function () {
-	    return { grade: "P", store: {}, hash: window.location.hash, mapKey: Math.random(), yelp: {}, key: "map", data: {} };
+	    return { grade: "P", store: {}, pie: "", hash: window.location.hash, mapKey: Math.random(), yelp: {}, key: "map", data: {} };
 	  },
 	  componentDidMount: function () {
 
@@ -24640,10 +24640,10 @@
 	  },
 	  _onStoreChange: function () {
 	    if (this.state.store !== StoreStore.getStore()) {
-	      this.setState({ comparisonKey: Math.random(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
+	      this.setState({ comparisonKey: Math.random(), pie: StoreStore.getChart(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
 	      // this.setChart();
 	      this.chartUpdate();
-	    };
+	    }
 	  },
 	  chartUpdate: function () {
 	    var chart = this.refs.chart.getChart();
@@ -24822,6 +24822,11 @@
 	                { className: 'show-grade' },
 	                grade
 	              )
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'pie-chart' },
+	              this.state.pie
 	            ),
 	            React.createElement(
 	              'div',
@@ -25466,6 +25471,13 @@
 	    });
 	  },
 
+	  getChart: function (chart) {
+	    Dispatcher.dispatch({
+	      actionType: StoreConstants.GET_CHART,
+	      data: chart
+	    });
+	  },
+
 	  getMost: function (data) {
 	    Dispatcher.dispatch({
 	      actionType: StoreConstants.GET_MOST,
@@ -25525,6 +25537,7 @@
 	var StoreStore = new Store(AppDispatcher);
 
 	_location = {};
+	_chart = "";
 	_store = {};
 	_yelp = {};
 	_comparison = {};
@@ -25572,6 +25585,10 @@
 	  return _map;
 	};
 
+	StoreStore.getChart = function () {
+	  return _chart;
+	};
+
 	StoreStore.getYelp = function () {
 	  return _yelp;
 	};
@@ -25616,6 +25633,11 @@
 	      this.__emitChange();
 	      break;
 
+	    case StoreConstants.GET_CHART:
+	      _chart = payload.data;
+	      this.__emitChange();
+	      break;
+
 	    case StoreConstants.GET_FILTERS:
 	      _filters = payload.data;
 	      this.__emitChange();
@@ -25645,7 +25667,8 @@
 	  GET_MOST_VISITED: "GET_MOST_VISITED",
 	  GET_TRENDING: "GET_TRENDING",
 	  GET_MOST: "GET_MOST",
-	  USER_LOCATION: "USER_LOCATION"
+	  USER_LOCATION: "USER_LOCATION",
+	  GET_CHART: "GET_CHART"
 	};
 
 	module.exports = StoreConstants;
@@ -36395,6 +36418,8 @@
 	var React = __webpack_require__(147);
 	var Map = __webpack_require__(255);
 	var Comparison = __webpack_require__(253);
+	var PieChart = __webpack_require__(243).Pie;
+	var StoreActions = __webpack_require__(221);
 
 	var Overview = React.createClass({
 	  displayName: 'Overview',
@@ -36488,51 +36513,181 @@
 	    return Math.round(100 - (group[category].indexOf(store) / group[category].length).toFixed(2) * 100);
 	  },
 
+	  numberRank: function (store, group, category, zone, phrase) {
+	    var betterNum = group[category].length - group[category].indexOf(store);
+	    var worseNum = group[category].length - betterNum;
+	    // console.log("Of " + group[category].length + " restaurants in " + zone + ", " + this.props.store.name +
+	    //   "is better than " + betterNum + " and worse than " + worseNum);
+	    return "Of " + group[category].length + " restaurants in " + zone + ", " + this.props.store.name + "'s' " + phrase + " is better than " + betterNum + " and worse than " + worseNum;
+	  },
+
+	  tdMouseover: function (e) {
+
+	    var reference = this.refs[e.currentTarget.children[1].children[0].id];
+
+	    $(e.currentTarget).find('.table-legend').html(reference.generateLegend());
+
+	    $(e.currentTarget).find('.table-details').show(100);
+	  },
+
+	  tdMouseleave: function (e) {
+	    $(e.currentTarget).find('.table-details').hide(100);
+	  },
+
+	  hoverPie: function (store, group, category, ref) {
+
+	    var betterNum = group[category].length - group[category].indexOf(store);
+	    var equalNum = group[category].filter(function (score) {
+	      return score === store;
+	    }).length;
+	    var worseNum = group[category].length - betterNum;
+	    var data = [{
+	      value: worseNum,
+	      color: "rgba(128, 0, 0, 0.7)",
+	      highlight: "maroon",
+	      label: "Worse: " + worseNum,
+	      labelColor: "#444444",
+	      labelFontSize: "16"
+	    }, {
+	      value: betterNum - equalNum,
+	      color: "rgba(128, 0, 0, 0.1)",
+	      highlight: "steelblue",
+	      label: "Better: &nbsp;" + (betterNum - equalNum),
+	      labelColor: "#444444",
+	      labelFontSize: "16"
+	    }, {
+	      value: equalNum,
+	      color: "rgba(128, 0, 0, 0.4)",
+	      highlight: "#eeeeee",
+	      label: "Equal: &nbsp;" + equalNum + "&nbsp; &nbsp;",
+	      labelColor: "#444444",
+	      labelFontSize: "16"
+	    }];
+
+	    // console.log([worseNum, equalNum, betterNum]);
+	    // setTimeout(function() {
+	    //   StoreActions.getChart(<PieChart data={data}/>);
+	    // }, 1000);
+	    // segmentStrokeColor: "rgba(128, 0, 0, 0.7)"
+	    // tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>kb"
+	    var options = {
+	      segmentShowStroke: false,
+	      segmentStrokeWidth: 2,
+	      segmentStrokeColor: "white",
+	      animateRotate: true,
+	      animateScale: true,
+	      percentageInnerCutout: 0,
+	      tooltipTemplate: "<%= value %>"
+	    };
+
+	    return React.createElement(PieChart, { className: 'pie-chart', key: ref, ref: ref, id: ref, data: data, width: 100, height: 75, options: options });
+	  },
+
+	  setLegend: function (ref) {
+	    setTimeout(function () {
+	      if (typeof this.refs[ref] !== "undefined") return this.refs[ref].generateLegend();
+	      return "";
+	    }.bind(this), 200);
+	  },
+
 	  propsRankings: function () {
+
 	    var store = this.props.store;
 	    var calc = store.calc;
 	    var boro = store.boro_ranking;
 	    var zipcode = store.zipcode_ranking;
 	    var cuisine = store.cuisine_ranking;
 
+	    // boroRecentHover: this.numberRank(store.calc.last, boro, "recent", store.boro, "last inspection"),
 	    var data = {
+
 	      boroRecent: this.percentRank(store.calc.last, boro, "recent"),
+	      boroRecentHover: this.hoverPie(store.calc.last, boro, "recent", Math.random()),
+
 	      boroMice: this.percentRank(calc.mice_percentage, boro, "mice"),
+	      boroMiceHover: this.hoverPie(calc.mice_percentage, boro, "mice", Math.random()),
+
 	      boroRoaches: this.percentRank(calc.roach_percentage, boro, "roaches"),
+	      boroRoachesHover: this.hoverPie(calc.roach_percentage, boro, "roaches", Math.random()),
+
 	      boroFlies: this.percentRank(calc.flies_percentage, boro, "flies"),
+	      boroFliesHover: this.hoverPie(calc.flies_percentage, boro, "flies", Math.random()),
+
 	      boroWorst: this.percentRank(calc.worst, boro, "worst"),
+	      boroWorstHover: this.hoverPie(calc.worst, boro, "worst", Math.random()),
+
 	      boroAverage: this.percentRank(calc.average, boro, "average"),
+	      boroAverageHover: this.hoverPie(calc.average, boro, "average", Math.random()),
+
 	      boroFirstAverage: this.percentRank(calc.first_average, boro, "first_average"),
+	      boroFirstAverageHover: this.hoverPie(calc.first_average, boro, "first_average", Math.random()),
+
 	      boroScore: this.percentRank(calc.score, boro, "score"),
+	      boroScoreHover: this.hoverPie(calc.score, boro, "score", Math.random()),
 
 	      zipcodeRecent: this.percentRank(store.calc.last, zipcode, "recent"),
+	      zipcodeRecentHover: this.hoverPie(store.calc.last, zipcode, "recent", Math.random()),
+
 	      zipcodeMice: this.percentRank(calc.mice_percentage, zipcode, "mice"),
+	      zipcodeMiceHover: this.hoverPie(calc.mice_percentage, zipcode, "mice", Math.random()),
+
 	      zipcodeRoaches: this.percentRank(calc.roach_percentage, zipcode, "roaches"),
+	      zipcodeRoachesHover: this.hoverPie(calc.roach_percentage, zipcode, "roaches", Math.random()),
+
 	      zipcodeFlies: this.percentRank(calc.flies_percentage, zipcode, "flies"),
+	      zipcodeFliesHover: this.hoverPie(calc.flies_percentage, zipcode, "flies", Math.random()),
+
 	      zipcodeWorst: this.percentRank(calc.worst, zipcode, "worst"),
+	      zipcodeWorstHover: this.hoverPie(calc.worst, zipcode, "worst", Math.random()),
+
 	      zipcodeAverage: this.percentRank(calc.average, zipcode, "average"),
+	      zipcodeAverageHover: this.hoverPie(calc.average, zipcode, "average", Math.random()),
+
 	      zipcodeFirstAverage: this.percentRank(calc.first_average, zipcode, "first_average"),
+	      zipcodeFirstAverageHover: this.hoverPie(calc.first_average, zipcode, "first_average", Math.random()),
+
 	      zipcodeScore: this.percentRank(calc.score, zipcode, "score"),
+	      zipcodeScoreHover: this.hoverPie(calc.score, zipcode, "score", Math.random()),
 
 	      cuisineRecent: this.percentRank(store.calc.last, cuisine, "recent"),
+	      cuisineRecentHover: this.hoverPie(calc.last, cuisine, "recent", Math.random()),
+
 	      cuisineMice: this.percentRank(calc.mice_percentage, cuisine, "mice"),
+	      cuisineMiceHover: this.hoverPie(calc.mice_percentage, cuisine, "mice", Math.random()),
+
 	      cuisineRoaches: this.percentRank(calc.roach_percentage, cuisine, "roaches"),
+	      cuisineRoachesHover: this.hoverPie(calc.roach_percentage, cuisine, "roaches", Math.random()),
+
 	      cuisineFlies: this.percentRank(calc.flies_percentage, cuisine, "flies"),
+	      cuisineFliesHover: this.hoverPie(calc.flies_percentage, cuisine, "flies", Math.random()),
+
 	      cuisineWorst: this.percentRank(calc.worst, cuisine, "worst"),
+	      cuisineWorstHover: this.hoverPie(calc.worst, cuisine, "worst", Math.random()),
+
 	      cuisineAverage: this.percentRank(calc.average, cuisine, "average"),
+	      cuisineAverageHover: this.hoverPie(calc.average, cuisine, "average", Math.random()),
+
 	      cuisineFirstAverage: this.percentRank(calc.first_average, cuisine, "first_average"),
-	      cuisineScore: this.percentRank(calc.score, cuisine, "score")
+	      cuisineFirstAverageHover: this.hoverPie(calc.first_average, cuisine, "first_average", Math.random()),
+
+	      cuisineScore: this.percentRank(calc.score, cuisine, "score"),
+	      cuisineScoreHover: this.hoverPie(calc.score, cuisine, "score", Math.random())
 
 	    };
+
+	    // console.log(data.cuisineRoachesHover);
 
 	    return data;
 	  },
 
 	  render: function () {
+	    setTimeout(function () {
+	      $('.table-details').hide();
+	    });
 
+	    var rankings = this.propsRankings();
 	    var data = this.propsData();
 	    var store = this.props.store;
-	    var rankings = this.propsRankings();
 
 	    return React.createElement(
 	      'span',
@@ -36831,17 +36986,47 @@
 	            React.createElement(
 	              'td',
 	              { className: 'score', className: this.translateRankings(rankings.zipcodeRecent) },
-	              rankings.zipcodeRecent
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.zipcodeRecent,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.zipcodeRecentHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.boroRecent) },
-	              rankings.boroRecent
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.boroRecent,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.boroRecentHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.cuisineRecent) },
-	              rankings.cuisineRecent
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.cuisineRecent,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.cuisineRecentHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            )
 	          ),
 	          React.createElement(
@@ -36861,17 +37046,47 @@
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.zipcodeAverage) },
-	              rankings.zipcodeAverage
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.zipcodeAverage,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.zipcodeAverageHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.boroAverage) },
-	              rankings.boroAverage
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.boroAverage,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.boroAverageHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.cuisineAverage) },
-	              rankings.cuisineAverage
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.cuisineAverage,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.cuisineAverageHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            )
 	          ),
 	          React.createElement(
@@ -36901,17 +37116,47 @@
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.zipcodeFirstAverage) },
-	              rankings.zipcodeFirstAverage
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.zipcodeFirstAverage,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.zipcodeFirstAverageHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.boroFirstAverage) },
-	              rankings.boroFirstAverage
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.boroFirstAverage,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.boroFirstAverageHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.cuisineFirstAverage) },
-	              rankings.cuisineFirstAverage
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.cuisineFirstAverage,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.cuisineFirstAverageHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            )
 	          ),
 	          React.createElement(
@@ -36930,17 +37175,47 @@
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.zipcodeScore) },
-	              rankings.zipcodeScore
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.zipcodeScore,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.zipcodeScoreHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.boroScore) },
-	              rankings.boroScore
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.boroScore,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.boroScoreHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.cuisineScore) },
-	              rankings.cuisineScore
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.cuisineScore,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.cuisineScoreHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            )
 	          ),
 	          React.createElement(
@@ -36959,17 +37234,47 @@
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.zipcodeWorst) },
-	              rankings.zipcodeWorst
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.zipcodeWorst,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.zipcodeWorstHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.boroWorst) },
-	              rankings.boroWorst
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.boroWorst,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.boroWorstHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.cuisineWorst) },
-	              rankings.cuisineWorst
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.cuisineWorst,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.cuisineWorstHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            )
 	          ),
 	          React.createElement(
@@ -36988,17 +37293,46 @@
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.zipcodeMice) },
-	              rankings.zipcodeMice
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.zipcodeMice,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.zipcodeMiceHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.boroMice) },
-	              rankings.boroMice
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.boroMice,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.boroMiceHover
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.cuisineMice) },
-	              rankings.cuisineMice
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.cuisineMice,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.cuisineMiceHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            )
 	          ),
 	          React.createElement(
@@ -37017,17 +37351,47 @@
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.zipcodeFlies) },
-	              rankings.zipcodeFlies
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.zipcodeFlies,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.zipcodeFliesHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.boroFlies) },
-	              rankings.boroFlies
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.boroFlies,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.boroFliesHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.cuisineFlies) },
-	              rankings.cuisineFlies
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.cuisineFlies,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.cuisineFliesHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            )
 	          ),
 	          React.createElement(
@@ -37046,17 +37410,47 @@
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.zipcodeRoaches) },
-	              rankings.zipcodeRoaches
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.zipcodeRoaches,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.zipcodeRoachesHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.boroRoaches) },
-	              rankings.boroRoaches
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.boroRoaches,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.boroRoachesHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
 	              { className: this.translateRankings(rankings.cuisineRoaches) },
-	              rankings.cuisineRoaches
+	              React.createElement(
+	                'span',
+	                { onMouseOver: this.tdMouseover, onMouseLeave: this.tdMouseleave, className: 'table-info' },
+	                rankings.cuisineRoaches,
+	                React.createElement(
+	                  'span',
+	                  { className: 'table-details' },
+	                  rankings.cuisineRoachesHover,
+	                  React.createElement('span', { className: 'table-legend' })
+	                )
+	              )
 	            )
 	          )
 	        )

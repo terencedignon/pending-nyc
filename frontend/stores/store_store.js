@@ -4,6 +4,7 @@ var Store = require('flux/utils').Store;
 var StoreStore = new Store(AppDispatcher);
 
 _location = {};
+_chart = "";
 _store = {};
 _yelp = {};
 _comparison = {};
@@ -51,6 +52,10 @@ StoreStore.getMap = function () {
   return _map;
 };
 
+StoreStore.getChart = function () {
+  return _chart;
+};
+
 StoreStore.getYelp = function () {
   return _yelp;
 };
@@ -94,6 +99,11 @@ StoreStore.__onDispatch = function (payload) {
       _most = payload.data;
       this.__emitChange();
       break;
+
+      case StoreConstants.GET_CHART:
+        _chart = payload.data;
+        this.__emitChange();
+        break;
 
     case StoreConstants.GET_FILTERS:
       _filters = payload.data;
