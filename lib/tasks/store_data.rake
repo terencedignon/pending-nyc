@@ -1,6 +1,9 @@
 require 'open-uri'
 
 namespace :store_data do
+
+
+
   desc "Perform calculations on Store data"
 
   # task change_to_percent: :environment do
@@ -15,6 +18,15 @@ namespace :store_data do
   # end
 
   ###add function that removes errant stores
+
+
+  task yelp_sandbox: :environment do
+    Store.all.each do |store|
+      query = Yelp.client.phone_search(store.phone)
+      debugger
+    end
+
+  end
 
   task set_street_macro: :environment do
     streets = Store.all.map { |store| store.street }.uniq

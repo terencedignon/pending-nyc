@@ -96,16 +96,16 @@ var Overview = React.createClass({
     },
 
   tdMouseover: function (e) {
-    
+
     var reference = this.refs[e.currentTarget.children[0].children[1].children[0].id];
 
     $(e.currentTarget).find('.table-legend').html(reference.generateLegend());
 
-    $(e.currentTarget).find('.table-details').show(100);
+    $(e.currentTarget).find('.table-details').show(50);
   },
 
   tdMouseleave: function (e) {
-    $(e.currentTarget).find('.table-details').hide(100);
+    $(e.currentTarget).find('.table-details').hide(50);
   },
 
   hoverPie: function (store, group, category, ref) {
