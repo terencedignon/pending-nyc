@@ -36522,10 +36522,11 @@
 	  },
 
 	  tdMouseover: function (e) {
-
 	    var reference = this.refs[e.currentTarget.children[0].children[1].children[0].id];
+	    var description = e.currentTarget.parentElement.className.split(" ")[0];
 
-	    $(e.currentTarget).find('.table-legend').html(reference.generateLegend());
+	    $(e.currentTarget).find('.table-legend').html("<span class='legend-header'>" + description + "</span>");
+	    $(e.currentTarget).find('.table-legend').append(reference.generateLegend());
 
 	    $(e.currentTarget).find('.table-details').show(50);
 	  },
@@ -36972,7 +36973,7 @@
 	          ),
 	          React.createElement(
 	            'tr',
-	            { className: this.translate(data.last) },
+	            { className: "Recent " + this.translate(data.last) },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -37031,7 +37032,7 @@
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: 'Average' },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -37091,7 +37092,7 @@
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: 'Unannounced' },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -37161,7 +37162,7 @@
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: 'Aggregate' },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -37220,7 +37221,7 @@
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: 'Worst' },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -37279,7 +37280,7 @@
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: 'Mice' },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -37338,7 +37339,7 @@
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: 'Flies' },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
@@ -37397,7 +37398,7 @@
 	          ),
 	          React.createElement(
 	            'tr',
-	            null,
+	            { className: 'Roaches' },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },

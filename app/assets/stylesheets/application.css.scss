@@ -1385,6 +1385,8 @@ span.big-header:hover {
   font-size: 15px;
   font-family: "helvetica";
   padding: 10px;
+  // font-weight: bold;
+  // padding-left: 0;
   // display: none;
   position: absolute;
   top: -50px;
@@ -1393,6 +1395,17 @@ span.big-header:hover {
   background: rgba(255, 255, 255, 1);
   color: #444;
 
+}
+
+.legend-header {
+  // margin-left: -10px;
+  margin-left: 39px;
+  color: #444;
+  padding-bottom: 2px;
+  // border-bottom: 1px solid #eee;
+  // background: pink;
+  display: block;
+  text-align: left;
 }
 
 .pie-chart {
@@ -1404,11 +1417,13 @@ span.big-header:hover {
 .pie-legend  {
 
   position: absolute;
-  top: -5px;
+  top: 4px;
   display: block;
   // left: -30px;
   padding: 10px;
   // width: 100%;
+  // font-style: normal;
+  // font-weight: normal;
   text-align: left;
   // padding: 0;
   // border: 1px solid #ccc;

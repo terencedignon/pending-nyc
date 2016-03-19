@@ -96,10 +96,12 @@ var Overview = React.createClass({
     },
 
   tdMouseover: function (e) {
-
     var reference = this.refs[e.currentTarget.children[0].children[1].children[0].id];
+    var description = e.currentTarget.parentElement.className.split(" ")[0];
 
-    $(e.currentTarget).find('.table-legend').html(reference.generateLegend());
+
+    $(e.currentTarget).find('.table-legend').html("<span class='legend-header'>" + description + "</span>");
+    $(e.currentTarget).find('.table-legend').append(reference.generateLegend());
 
     $(e.currentTarget).find('.table-details').show(50);
   },
@@ -424,7 +426,7 @@ tooltipTemplate: "<%= value %>"
               <th>{store.boro}</th>
               <th>{store.cuisine_type}</th>
               </tr>
-              <tr className={this.translate(data.last)}>
+              <tr className={"Recent " + this.translate(data.last)}>
                 <td className="thumbs">
                   <i className={"fa fa-" + this.rankingsParse([
                       rankings.zipcodeRecent, rankings.boroRecent, rankings.cuisineRecent
@@ -465,7 +467,7 @@ tooltipTemplate: "<%= value %>"
                    </span>
                  </td>
               </tr>
-              <tr>
+              <tr className="Average">
               <td className="thumbs">
                 <i className={"fa fa-" + this.rankingsParse([
                     rankings.zipcodeAverage, rankings.boroAverage, rankings.cuisineAverage
@@ -510,7 +512,7 @@ tooltipTemplate: "<%= value %>"
 
               </td>
             </tr>
-            <tr>
+            <tr className="Unannounced">
               <td className="thumbs">
                 <i className={"fa fa-" + this.rankingsParse([
                     rankings.zipcodeFirstAverage, rankings.boroFirstAverage, rankings.cuisineFirstAverage
@@ -556,7 +558,7 @@ tooltipTemplate: "<%= value %>"
               </td>
 
           </tr>
-            <tr>
+            <tr className="Aggregate">
             <td className="thumbs">
               <i className={"fa fa-" + this.rankingsParse([
                   rankings.zipcodeScore, rankings.boroScore, rankings.cuisineScore
@@ -599,7 +601,7 @@ tooltipTemplate: "<%= value %>"
 
             </td>
         </tr>
-          <tr>
+          <tr className="Worst">
             <td className="thumbs">
               <i className={"fa fa-" + this.rankingsParse([
                   rankings.zipcodeWorst, rankings.boroWorst, rankings.cuisineWorst
@@ -645,7 +647,7 @@ tooltipTemplate: "<%= value %>"
             </td>
         </tr>
 
-        <tr>
+        <tr className="Mice">
           <td className="thumbs">
             <i className={"fa fa-" + this.rankingsParse([
                 rankings.zipcodeMice, rankings.boroMice, rankings.cuisineMice
@@ -687,7 +689,7 @@ tooltipTemplate: "<%= value %>"
             </span>
           </td>
       </tr>
-      <tr>
+      <tr className="Flies">
         <td className="thumbs">
             <i className={"fa fa-" + this.rankingsParse([
                 rankings.zipcodeFlies, rankings.boroFlies, rankings.cuisineFlies
@@ -726,7 +728,7 @@ tooltipTemplate: "<%= value %>"
         </td>
 
     </tr>
-    <tr>
+    <tr className="Roaches">
       <td className="thumbs">
 
         <i className={"fa fa-" + this.rankingsParse([
