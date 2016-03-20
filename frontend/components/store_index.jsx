@@ -106,7 +106,7 @@ var StoreIndex = React.createClass({
         {mostVisitedList}
         <div className="intro-header">
 
-          <span className="big-header">NYC restaurant grade analytics</span><p/>
+      <span className="big-header">nyc letter grades</span><p/>
 
           <div className="about">
 

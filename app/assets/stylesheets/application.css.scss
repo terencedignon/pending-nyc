@@ -446,7 +446,7 @@ hr {
   margin-bottom: 10px;
 }*/
 
-footer a {
+footer a, a:visited, a:active {
   color: steelblue;
   text-decoration: none;
 }
@@ -458,9 +458,10 @@ footer {
   width: 95%;
   font-size: 16px;
   margin-top: 20px;
-  text-align: right;
-  color: #777;
+  // text-align: right;
+  color: #444;
 }
+
 
 
 .violations {
@@ -1015,9 +1016,10 @@ hr.break {
 
 span.big-header {
   // width: 80%;
+  display: none;
   overflow: hidden;
-  display: block;
-  font-size: 100px;
+  // display: block;
+  font-size: 80px;
   // display: none;
   padding: 20px 50px;
   // width: 80%;
@@ -1026,13 +1028,14 @@ span.big-header {
   font-weight: bolder;
 
   // background: #2;
-  background: rgba(128, 0, 0, .1);
+  background: rgba(0, 0, 0, .1);
+  color: #fff;
   // text-align: center;
   border: 1px solid transparent;
   font-family: "Helvetica"!important;
   text-transform: uppercase;
-  letter-spacing: -5px;
-  color: #fff;
+  // letter-spacing: -5px;
+  // color: transparent;
   cursor: pointer;
   transition: 0.5s ease-in-out;
 }
@@ -1331,7 +1334,7 @@ span.underline {
 }
 .about h1 {
   // display: none;
-  font-size: 30px;
+  font-size: 50px;
   // text-align: center;
   // font-family: "lato";
   font-family: "helvetica";
@@ -1344,13 +1347,13 @@ span.underline {
   // width: 70%
   margin: 0 auto;
   margin-bottom: 10px;
-  letter-spacing: 5px;
+  letter-spacing: 2px;
   // opacity: 0.9;
   // text-align: center;
   border: 1px solid transparent;
-  // background: white;
-  // background : rgba(128, 0, 0, .3);
-  color: white;
+  background: white;
+  // background : rgba(255, 255, 255, .75);
+  color: #333;
   // padding: 20px;
   // opacity: 0.5;
   text-transform: uppercase;
@@ -1359,10 +1362,13 @@ span.underline {
 }
 
 .about h1:hover {
-  // border: 1px solid white;
-  background: rgba(255, 255, 255, 0.1);
+  // border: 1px solid #ccc;
+  background: rgba(255, 255, 255, .7);
+  color: #333;
+  // background: rgba(0, 0, 0, 0.5);
   // font-weight: bolder;
-  color: #fff;
+  // background: maroon;
+  // color: rgba(255, 255, 255, 0.5);
 }
 //
 span.big-header:hover {

@@ -24590,8 +24590,6 @@
 	var Map = __webpack_require__(255);
 	var Overview = __webpack_require__(257);
 	var Violations = __webpack_require__(258);
-	// var Parallax = require('react-parallax');
-	// var SparkScroll = require("react-spark-scroll-gsap");
 
 	var StoreShow = React.createClass({
 	  displayName: 'StoreShow',
@@ -24602,42 +24600,29 @@
 	  componentDidMount: function () {
 
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
-	    // this.backButtonListener = setInterval(function () {
-	    //   if (window.location.hash !== this.state.hash) {
-	    //     ApiUtil.fetchStore(this.props.params.id);
-	    //     this.setState({ hash: window.location.hash });
-	    //     // this.forceUpdate();
-	    //   }
-	    // }.bind(this), 100);
-	    // $('.show-holder').remove();
 	    ApiUtil.fetchStore(this.props.params.id);
 	  },
 	  componentWillUnmount: function () {
-	    // console.log("hey");
 	    clearInterval(this.backButtonListener);
 	    this.storeListener.remove();
-	    // console.log("hello");
 	  },
 	  setImage: function () {
 	    if (this.state.store.image_url !== null) {
-	      var url = this.state.store.image_url.replace("ms.jpg", "o.jpg");
 
+	      var url = this.state.store.image_url.replace("ms.jpg", "o.jpg");
 	      setTimeout(function () {
 	        $('.show-holder').parallax({ imageSrc: url, speed: 0.2 });
 	      }, 0);
-	      // return <img id="show-image" className="show-image" src={url} />;
 	    } else {
-	        setTimeout(function () {
-	          $('.show-holder').parallax({
-	            imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
-	            speed: 0.2
-	          });
-	          // var url = "http://www.publicdomainpictures.net/pictures/120000/nahled/blue-background-gradient-texture.jpg";
-	          // $('.show-holder').parallax({imageSrc: url, speed: 0.95 });
-	          //   return <div className="empty-image"></div>;
-	        }.bind(this), 0);
-	      }
+	      setTimeout(function () {
+	        $('.show-holder').parallax({
+	          imageSrc: "https://maps.googleapis.com/maps/api/streetview?size=1000x1000&location=" + this.state.store.lat + "," + this.state.store.lng + "&fov=90&heading=151.78&pitch=0&key=AIzaSyCeMPHcWvEYRmPBI5XyeBS9vPsAvqxLD7I",
+	          speed: 0.2
+	        });
+	      }.bind(this), 0);
+	    }
 	  },
+
 	  _onStoreChange: function () {
 	    if (this.state.store !== StoreStore.getStore()) {
 	      this.setState({ comparisonKey: Math.random(), pie: StoreStore.getChart(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
@@ -24645,6 +24630,7 @@
 	      this.chartUpdate();
 	    }
 	  },
+
 	  chartUpdate: function () {
 	    var chart = this.refs.chart.getChart();
 	    // this.setState({ legend: chart.generateLabels()})
@@ -37722,7 +37708,7 @@
 	          React.createElement(
 	            'span',
 	            { className: 'big-header' },
-	            'NYC restaurant grade analytics'
+	            'nyc letter grades'
 	          ),
 	          React.createElement('p', null),
 	          React.createElement(
