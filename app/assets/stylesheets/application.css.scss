@@ -1333,7 +1333,7 @@ span.underline {
   // text-align: center;
   border: 1px solid transparent;
   // background: white;
-  background: rgba(128, 0, 0, .3);
+  // background : rgba(128, 0, 0, .3);
   color: white;
   // padding: 20px;
   // opacity: 0.5;
@@ -1350,10 +1350,10 @@ span.underline {
 }
 //
 span.big-header:hover {
-  border: 1px solid transparent;
+  // border: 1px solid white;
   background: rgba(255, 255, 255, 0.2);
   // font-weight: bolder;
-  color: #fff;
+  // color: #fffbfff;
 }
 
 .google-image-holder {
