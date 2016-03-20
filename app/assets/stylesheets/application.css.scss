@@ -670,18 +670,18 @@ footer {
 
 .unannounced {
   display: none;
-  width: 300px;
+  width: 400px;
   height: auto;
   /*min-width: 200px;*/
   padding: 10px;
-  top: -30px;
+  top: -10px;
   z-index: 99999;
   left: 200px;
   position: absolute;
   border: 1px solid #ccc;
   background: white;
   font-size: 15px;
-  opacity: 0.95;
+  // opacity: 0.95;
   color: #444;
 }
 

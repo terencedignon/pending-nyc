@@ -36799,11 +36799,10 @@
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },
-	                  'The result of ',
+	                  'The score for ',
 	                  this.props.store.name,
-	                  '\'s most recent inspection (on ',
-	                  new Date(this.props.store.inspections[0].inspection_date).toDateString(),
-	                  ')'
+	                  '\'s most recent inspection, on ',
+	                  new Date(this.props.store.inspections[0].inspection_date).toDateString()
 	                )
 	              )
 	            ),
@@ -36837,12 +36836,9 @@
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },
-	                  this.props.store.name,
-	                  ' has had a total of ',
+	                  'Median of all ',
 	                  data.inspections,
-	                  ' inspections.  This score is derived from the average of all ',
-	                  data.inspections,
-	                  ' scores.'
+	                  ' inspections.'
 	                )
 	              )
 	            ),
@@ -36867,16 +36863,15 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'subject' },
-	              'Average  ',
+	              { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'subject' },
 	              React.createElement(
 	                'span',
-	                { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'question-highlight' },
-	                'Surprise',
+	                { className: 'question-highlight' },
+	                'Surprise Average',
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },
-	                  'The Health Department conducts unannounced inspections of restaurants at least once a year.  These scores are often a more accurate portrayal of the day-to-day cleanliness of the space.'
+	                  'The Health Department conducts unannounced inspections of restaurants at least once a year.  This is an average of all surprise inspections.  We believe this is a more accurate indicator of day-to-day cleanliness than total average. '
 	                )
 	              ),
 	              '  '
@@ -36902,8 +36897,19 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'subject' },
-	              'Best'
+	              { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'subject' },
+	              React.createElement(
+	                'span',
+	                { className: 'question-highlight' },
+	                'Best',
+	                React.createElement(
+	                  'span',
+	                  { className: 'unannounced' },
+	                  this.props.store.name,
+	                  '\'s single best inspection.'
+	                )
+	              ),
+	              '  '
 	            ),
 	            React.createElement(
 	              'td',
@@ -36935,7 +36941,7 @@
 	                  'span',
 	                  { className: 'unannounced' },
 	                  this.props.store.name,
-	                  '\'s worst inspection.'
+	                  '\'s single worst inspection.'
 	                )
 	              )
 	            ),
@@ -36960,8 +36966,17 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'subject' },
-	              'Pcnt. with Mice'
+	              { onMouseOver: this.showUnannounced, onMouseLeave: this.hideUnannounced, className: 'subject' },
+	              React.createElement(
+	                'span',
+	                { className: 'question-highlight' },
+	                'Pcnt. with Mice',
+	                React.createElement(
+	                  'span',
+	                  { className: 'unannounced' },
+	                  'The odds of finding mice on any given inspection.'
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
@@ -36984,8 +36999,17 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'subject' },
-	              'Pcnt. with Flies'
+	              { onMouseOver: this.showUnannounced, onMouseLeave: this.hideUnannounced, className: 'subject' },
+	              React.createElement(
+	                'span',
+	                { className: 'question-highlight' },
+	                'Pcnt. with Flies',
+	                React.createElement(
+	                  'span',
+	                  { className: 'unannounced' },
+	                  'The odds of finding flies on any given inspection.'
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
@@ -37008,8 +37032,17 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'subject' },
-	              'Pcnt. with Roaches'
+	              { onMouseOver: this.showUnannounced, onMouseLeave: this.hideUnannounced, className: 'subject' },
+	              React.createElement(
+	                'span',
+	                { className: 'question-highlight' },
+	                'Pcnt. with Roaches',
+	                React.createElement(
+	                  'span',
+	                  { className: 'unannounced' },
+	                  'The odds of finding roaches on any given inspection.'
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
@@ -37192,11 +37225,10 @@
 	            React.createElement(
 	              'td',
 	              { className: 'subject' },
-	              'Average  ',
 	              React.createElement(
 	                'span',
 	                { onMouseOver: this.showUnannounced, onMouseOut: this.hideUnannounced, className: 'question-highlight' },
-	                'Surprise',
+	                'Surprise Average',
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },

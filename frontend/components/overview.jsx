@@ -337,7 +337,7 @@ tooltipTemplate: "<%= value %>"
               </td>
               <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
                 <span className="question-highlight">Most Recent
-                <span className="unannounced">The result of {this.props.store.name}'s most recent inspection (on {new Date(this.props.store.inspections[0].inspection_date).toDateString()})</span></span>
+                <span className="unannounced">The score for {this.props.store.name}'s most recent inspection, on {new Date(this.props.store.inspections[0].inspection_date).toDateString()}</span></span>
               </td>
               <td className={"grade " + this.translate(data.last)}>
                 {data.last}
@@ -352,7 +352,7 @@ tooltipTemplate: "<%= value %>"
               </td>
               <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
                 <span className="question-highlight">Average of {data.inspections}
-                <span className="unannounced">{this.props.store.name} has had a total of {data.inspections} inspections.  This score is derived from the average of all {data.inspections} scores.</span></span>
+                <span className="unannounced">Median of all {data.inspections} inspections.</span></span>
               </td>
               <td className={"grade " + this.translate(data.average)}>
                 {data.average}
@@ -365,9 +365,9 @@ tooltipTemplate: "<%= value %>"
               <td className="thumbs">
                   <i className={"fa fa-" + this.iconParse(data.first_average)}></i>
               </td>
-              <td className="subject">
-                Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Surprise
-                <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.  These scores are often a more accurate portrayal of the day-to-day cleanliness of the space.</span></span> &nbsp;
+              <td onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="subject">
+                <span className="question-highlight">Surprise Average
+                <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.  This is an average of all surprise inspections.  We believe this is a more accurate indicator of day-to-day cleanliness than total average. </span></span> &nbsp;
               </td>
               <td className={"grade " + this.translate(data.first_average)}>
                 {data.first_average}
@@ -380,8 +380,10 @@ tooltipTemplate: "<%= value %>"
              <td className="thumbs">
                  <i className={"fa fa-" + this.iconParse(data.best)}></i>
              </td>
-             <td className="subject">
-               Best
+             <td onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="subject">
+               <span className="question-highlight">Best
+               <span className="unannounced">{this.props.store.name}'s single best inspection.</span></span> &nbsp;
+
              </td>
              <td className={"grade " + this.translate(data.best)}>
                {data.best}
@@ -396,7 +398,7 @@ tooltipTemplate: "<%= value %>"
              </td>
            <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
              <span className="question-highlight">Worst
-             <span className="unannounced">{this.props.store.name}'s worst inspection.</span></span>
+             <span className="unannounced">{this.props.store.name}'s single worst inspection.</span></span>
            </td>
            <td className={"grade " + this.translate(data.worst)}>
              {data.worst}
@@ -409,8 +411,10 @@ tooltipTemplate: "<%= value %>"
            <td className="thumbs">
                <i className={"fa fa-" + this.iconParse(data.mice)}></i>
            </td>
-           <td className="subject">
-             Pcnt. with Mice
+           <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
+             <span className="question-highlight">Pcnt. with Mice
+             <span className="unannounced">The odds of finding mice on any given inspection.</span></span>
+
            </td>
            <td className={"grade " + this.translate(data.mice)}>
              {data.mice}
@@ -423,8 +427,10 @@ tooltipTemplate: "<%= value %>"
           <td className="thumbs">
               <i className={"fa fa-" + this.iconParse(data.flies)}></i>
           </td>
-          <td className="subject">
-            Pcnt. with Flies
+          <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
+            <span className="question-highlight">Pcnt. with Flies
+            <span className="unannounced">The odds of finding flies on any given inspection.</span></span>
+
           </td>
           <td className={"grade " + this.translate(data.flies)}>
             {data.flies}
@@ -437,8 +443,10 @@ tooltipTemplate: "<%= value %>"
           <td className="thumbs">
               <i className={"fa fa-" + this.iconParse(data.roaches)}></i>
           </td>
-          <td className="subject">
-            Pcnt. with Roaches
+          <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
+            <span className="question-highlight">Pcnt. with Roaches
+            <span className="unannounced">The odds of finding roaches on any given inspection.</span></span>
+
           </td>
           <td className={"grade " + this.translate(data.roaches)}>
             {data.roaches}
@@ -558,7 +566,7 @@ tooltipTemplate: "<%= value %>"
                   ])}></i>
               </td>
               <td className="subject">
-                Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Surprise
+               <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Surprise Average
                   <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span></span>&nbsp; &nbsp;
               </td>
               <td onMouseOver={this.tdMouseover} onMouseLeave={this.tdMouseleave} className={this.translateRankings(rankings.zipcodeFirstAverage)}>
