@@ -138,23 +138,23 @@ var Map = React.createClass({
         ]
     }
 ],
-scroll:{x:$(window).scrollLeft(),y:$(window).scrollTop()}
     };
 
+    // scroll:{x:$(window).scrollLeft(),y:$(window).scrollTop()}
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
 
-    var offset=$(map.getDiv()).offset();
-      map.panBy(((mapOptions.scroll.x-offset.left)/30),((mapOptions.scroll.y-offset.top)/30));
-      google.maps.event.addDomListener(window, 'scroll', function(){
-        var scrollY=$(window).scrollTop() * -0.5,
-          scrollX=$(window).scrollLeft() * 0.5,
-          scroll=map.get('scroll');
-            if(scroll){
-                map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));
-              }
-              map.set('scroll',{x:scrollX,y:scrollY});
-    }.bind(this));
+    // var offset=$(map.getDiv()).offset();
+    //   map.panBy(((mapOptions.scroll.x-offset.left)/30),((mapOptions.scroll.y-offset.top)/30));
+    //   google.maps.event.addDomListener(window, 'scroll', function(){
+    //     var scrollY=$(window).scrollTop() * -0.5,
+    //       scrollX=$(window).scrollLeft() * 0.5,
+    //       scroll=map.get('scroll');
+    //         if(scroll){
+    //             map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));
+    //           }
+    //           map.set('scroll',{x:scrollX,y:scrollY});
+    // }.bind(this));
 
 
     this.idleListener = google.maps.event.addListener(map, 'idle', function() {
@@ -184,17 +184,12 @@ scroll:{x:$(window).scrollLeft(),y:$(window).scrollTop()}
     var newMarkers = [];
     MapStore.all().forEach(function(marker) {
       var icon;
-      if (marker.calc.average <= 13) {
-        icon = "http://i.imgur.com/E2oZQ4V.png";
+      if (marker.calc.average <= 13) { icon = "http://i.imgur.com/3uNIbP4.png"; } else
+      if (marker.calc.score <= 27) { icon = "http://i.imgur.com/UsMdUyz.png"; }
+      else { icon = "http://i.imgur.com/QjqYs0V.png"; }
 
-      } else if (marker.calc.score <= 27) {
-        icon = "http://i.imgur.com/h0qBo2q.png";
-
-      } else {
-        icon = "http://i.imgur.com/ejjOVXB.png";
-
-      }
       var coordinates = {lat: Number(marker.lat), lng: Number(marker.lng) };
+
       var newMarker = new google.maps.Marker({
         position: coordinates,
         map: map,

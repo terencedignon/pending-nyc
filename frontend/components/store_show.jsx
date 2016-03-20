@@ -17,11 +17,12 @@ var StoreShow = React.createClass({
     this.storeListener = StoreStore.addListener(this._onStoreChange);
     ApiUtil.fetchStore(this.props.params.id);
   },
+
   componentWillUnmount: function () {
     clearInterval(this.backButtonListener);
     this.storeListener.remove();
-
   },
+
   setImage: function () {
     if (this.state.store.image_url !== null) {
 
@@ -38,7 +39,7 @@ var StoreShow = React.createClass({
       }.bind(this), 0);
     }
   },
-  
+
   _onStoreChange: function () {
     if (this.state.store !== StoreStore.getStore()) {
       this.setState({ comparisonKey: Math.random(), pie: StoreStore.getChart(), mapKey: Math.random(), store: StoreStore.getStore(), yelp: StoreStore.getYelp() });
@@ -164,10 +165,11 @@ var StoreShow = React.createClass({
           tooltipFontFamily: "Helvetica",
 
         };
+
         // legend = <span dangerouslySetInnerHTML={{ __html: this.state.legend }} />;
-        barChart = <BarChart ref="chart" className="bar-chart" data={data} options={options} width={350} height={200} fill={'#3182bd'} />
-var grade = <img src={this.selectGrade()}/>;
-      var image = this.setImage();
+        barChart = <BarChart ref="chart" className="bar-chart" data={data} options={options} width={350} height={175} fill={'#3182bd'} />
+        var grade = <img src={this.selectGrade()}/>;
+        var image = this.setImage();
     }
     var address = <div></div>;
 

@@ -24602,10 +24602,12 @@
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
 	    ApiUtil.fetchStore(this.props.params.id);
 	  },
+
 	  componentWillUnmount: function () {
 	    clearInterval(this.backButtonListener);
 	    this.storeListener.remove();
 	  },
+
 	  setImage: function () {
 	    if (this.state.store.image_url !== null) {
 
@@ -24743,8 +24745,9 @@
 	        tooltipFontFamily: "Helvetica"
 
 	      };
+
 	      // legend = <span dangerouslySetInnerHTML={{ __html: this.state.legend }} />;
-	      barChart = React.createElement(BarChart, { ref: 'chart', className: 'bar-chart', data: data, options: options, width: 350, height: 200, fill: '#3182bd' });
+	      barChart = React.createElement(BarChart, { ref: 'chart', className: 'bar-chart', data: data, options: options, width: 350, height: 175, fill: '#3182bd' });
 	      var grade = React.createElement('img', { src: this.selectGrade() });
 	      var image = this.setImage();
 	    }
@@ -36260,23 +36263,23 @@
 	                }, {
 	                    "saturation": 100
 	                }]
-	            }],
-	            scroll: { x: $(window).scrollLeft(), y: $(window).scrollTop() }
+	            }]
 	        };
 
+	        // scroll:{x:$(window).scrollLeft(),y:$(window).scrollTop()}
 	        map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-	        var offset = $(map.getDiv()).offset();
-	        map.panBy((mapOptions.scroll.x - offset.left) / 30, (mapOptions.scroll.y - offset.top) / 30);
-	        google.maps.event.addDomListener(window, 'scroll', function () {
-	            var scrollY = $(window).scrollTop() * -0.5,
-	                scrollX = $(window).scrollLeft() * 0.5,
-	                scroll = map.get('scroll');
-	            if (scroll) {
-	                map.panBy(-((scroll.x - scrollX) / 3), -((scroll.y - scrollY) / 3));
-	            }
-	            map.set('scroll', { x: scrollX, y: scrollY });
-	        }.bind(this));
+	        // var offset=$(map.getDiv()).offset();
+	        //   map.panBy(((mapOptions.scroll.x-offset.left)/30),((mapOptions.scroll.y-offset.top)/30));
+	        //   google.maps.event.addDomListener(window, 'scroll', function(){
+	        //     var scrollY=$(window).scrollTop() * -0.5,
+	        //       scrollX=$(window).scrollLeft() * 0.5,
+	        //       scroll=map.get('scroll');
+	        //         if(scroll){
+	        //             map.panBy(-((scroll.x-scrollX)/3),-((scroll.y-scrollY)/3));
+	        //           }
+	        //           map.set('scroll',{x:scrollX,y:scrollY});
+	        // }.bind(this));
 
 	        this.idleListener = google.maps.event.addListener(map, 'idle', function () {
 	            clearInterval(this.mapInterval);
@@ -36304,13 +36307,15 @@
 	        MapStore.all().forEach(function (marker) {
 	            var icon;
 	            if (marker.calc.average <= 13) {
-	                icon = "http://i.imgur.com/E2oZQ4V.png";
+	                icon = "http://i.imgur.com/3uNIbP4.png";
 	            } else if (marker.calc.score <= 27) {
-	                icon = "http://i.imgur.com/h0qBo2q.png";
+	                icon = "http://i.imgur.com/UsMdUyz.png";
 	            } else {
-	                icon = "http://i.imgur.com/ejjOVXB.png";
+	                icon = "http://i.imgur.com/QjqYs0V.png";
 	            }
+
 	            var coordinates = { lat: Number(marker.lat), lng: Number(marker.lng) };
+
 	            var newMarker = new google.maps.Marker({
 	                position: coordinates,
 	                map: map,

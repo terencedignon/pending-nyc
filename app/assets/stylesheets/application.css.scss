@@ -426,7 +426,7 @@ header {
 .overview {
   font-family: "Helvetica";
   font-size: 16px;
-  border: 1px solid #eee;
+  border: 1px solid #ccc;
   // margin-left: 30px;
   /*width: 100%;*/
   min-height: 400px;
@@ -579,6 +579,7 @@ footer {
   // text-align: center;
   max-width: 450px;
   // border: 1px solid #eee;
+  border: 1px solid #ccc;
   border-left: 0;
   border-right: 0;
   // background: ivory;
@@ -586,7 +587,6 @@ footer {
   // font-weight: bold;
   font-family: "arial";
   font-size: 18px;
-  // border: 1px solid #eee;
 }
 
 .comparison-to {
@@ -689,7 +689,7 @@ footer {
   // border-radius: 5%;
   // margin-top: 30px;
   // margin-left: 50px;
-  height: 500px;
+  height: 800px;
   width: 500px;
 }
 /*
@@ -851,16 +851,18 @@ footer {
 .overview-address {
   display: block;
   margin: 0;
-  padding: 10px 25px;
+  padding: 15px 25px;
   max-width: 450px;
   // background: #fff;
-  // background: #f7f7f7;
-  border: 1px solid #eee;
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  // border-top: 0;
   // border-bottom: 0;
   // border-bottom: 2px solid #ccc;
   // border: 1px solid #eee;
   border-left: 0;
   border-right: 0;
+  border-bottom: 0;
   // background: brown;
   color: #444;
   // text-transform: uppercase;
@@ -999,9 +1001,11 @@ hr.break {
 }
 
 .toggle-button {
-  display: block;
+  // display: block;
+  display: none;
   width: 30%;
-  margin-left: 20px;
+  margin-right: 10%;
+  // margin-left: 100%;
   // background: pink;
   text-align: center;
   padding: 5px;
