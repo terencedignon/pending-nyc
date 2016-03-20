@@ -36519,13 +36519,13 @@
 	      $(e.currentTarget).find('.table-legend').html("<span class='legend-header'>" + description + "</span>");
 	      $(e.currentTarget).find('.table-legend').append(reference.generateLegend());
 
-	      $(e.currentTarget).find('.table-details').show(50);
+	      $(e.currentTarget).find('.table-details').show();
 	    }
 	  },
 
 	  tdMouseleave: function (e) {
 	    if ($('.toggle-button').html() === "Hide Details") {
-	      $(e.currentTarget).find('.table-details').hide(50);
+	      $(e.currentTarget).find('.table-details').hide();
 	    }
 	  },
 
@@ -36952,7 +36952,7 @@
 	      React.createElement(
 	        'span',
 	        { className: 'toggle-button', onClick: this.detailToggle },
-	        'Show Details'
+	        'Hide Details'
 	      ),
 	      React.createElement(
 	        'table',

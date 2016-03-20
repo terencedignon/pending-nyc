@@ -109,13 +109,13 @@ var Overview = React.createClass({
       $(e.currentTarget).find('.table-legend').html("<span class='legend-header'>" + description + "</span>");
       $(e.currentTarget).find('.table-legend').append(reference.generateLegend());
 
-      $(e.currentTarget).find('.table-details').show(50);
+      $(e.currentTarget).find('.table-details').show()
     }
   },
 
   tdMouseleave: function (e) {
     if ($('.toggle-button').html() === "Hide Details") {
-      $(e.currentTarget).find('.table-details').hide(50);
+      $(e.currentTarget).find('.table-details').hide();
     }
   },
 
@@ -433,7 +433,7 @@ tooltipTemplate: "<%= value %>"
 
 
     <span className="store-name">Percent of restaurants that {store.name} is greater than or equal to</span>
-        <span className="toggle-button" onClick={this.detailToggle}>Show Details</span>
+        <span className="toggle-button" onClick={this.detailToggle}>Hide Details</span>
         <table>
 
             <tbody>
