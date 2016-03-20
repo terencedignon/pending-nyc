@@ -997,6 +997,22 @@ hr.break {
   padding-bottom: 100px;
 }
 
+.toggle-button {
+  display: block;
+  width: 30%;
+  margin-left: 20px;
+  // background: pink;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #eee;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.toggle-button:hover {
+  border: 1px solid #ccc;
+}
+
 span.big-header {
   // width: 80%;
   overflow: hidden;

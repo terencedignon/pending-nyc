@@ -36425,6 +36425,10 @@
 	  displayName: 'Overview',
 
 
+	  getInitialState: function () {
+	    return {};
+	  },
+
 	  translate: function (number) {
 	    if (number <= 13) {
 	      return "A";
@@ -36522,17 +36526,21 @@
 	  },
 
 	  tdMouseover: function (e) {
-	    var reference = this.refs[e.currentTarget.children[0].children[1].children[0].id];
-	    var description = e.currentTarget.parentElement.className.split(" ")[0];
+	    if ($('.toggle-button').html() === "Hide Details") {
+	      var reference = this.refs[e.currentTarget.children[0].children[1].children[0].id];
+	      var description = e.currentTarget.parentElement.className.split(" ")[0];
 
-	    $(e.currentTarget).find('.table-legend').html("<span class='legend-header'>" + description + "</span>");
-	    $(e.currentTarget).find('.table-legend').append(reference.generateLegend());
+	      $(e.currentTarget).find('.table-legend').html("<span class='legend-header'>" + description + "</span>");
+	      $(e.currentTarget).find('.table-legend').append(reference.generateLegend());
 
-	    $(e.currentTarget).find('.table-details').show(50);
+	      $(e.currentTarget).find('.table-details').show(50);
+	    }
 	  },
 
 	  tdMouseleave: function (e) {
-	    $(e.currentTarget).find('.table-details').hide(50);
+	    if ($('.toggle-button').html() === "Hide Details") {
+	      $(e.currentTarget).find('.table-details').hide(50);
+	    }
 	  },
 
 	  hoverPie: function (store, group, category, ref) {
@@ -36679,6 +36687,16 @@
 	    // console.log(data.cuisineRoachesHover);
 
 	    return data;
+	  },
+
+	  detailToggle: function () {
+	    if ($('.toggle-button').html() === "Hide Details") {
+	      $('.toggle-button').html("Show Details");
+	      // this.setState({ detail: false });
+	    } else {
+	        $('.toggle-button').html("Hide Details");
+	        // this.setState({ detail: true });
+	      }
 	  },
 
 	  render: function () {
@@ -36944,6 +36962,11 @@
 	        'Percent of restaurants that ',
 	        store.name,
 	        ' is greater than or equal to'
+	      ),
+	      React.createElement(
+	        'span',
+	        { className: 'toggle-button', onClick: this.detailToggle },
+	        'Show Details'
 	      ),
 	      React.createElement(
 	        'table',
