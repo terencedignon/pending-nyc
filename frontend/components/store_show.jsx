@@ -10,7 +10,18 @@ var Violations = require('./violations.jsx');
 
 var StoreShow = React.createClass({
   getInitialState: function () {
-    return { grade: "P", store: {}, pie: "", hash: window.location.hash, mapKey: Math.random(), yelp: {}, key: "map",  data: {} };
+    return {
+      grade: "P",
+      store: {},
+      pie: "",
+      hash: window.location.hash,
+      mapKey: Math.random(),
+      yelp: {},
+      key: "map",
+      data: {},
+      annotations: false,
+      annotationText: "OFF"
+    };
   },
   componentDidMount: function () {
 
@@ -78,6 +89,12 @@ var StoreShow = React.createClass({
     }
   });
   chart.update();
+  },
+
+  handleAnnotations: function () {
+    var text = "ON";
+    if (this.state.annotations) text = "OFF";
+    this.setState({ annotations: !this.state.annotations, annotationText: text });
   },
 
   chartData: function () {
@@ -153,7 +170,7 @@ var StoreShow = React.createClass({
 
       // overview = this.createOverview();
       comparison = <Comparison key={this.state.comparisonKey} store={this.state.store} />;
-      overview = <Overview store={this.state.store}/>
+      overview = <Overview store={this.state.store} help={this.state.annotations}/>
       violations = <Violations key={Math.random()} inspections={this.state.store.inspections} />
         //CHART
         data = this.chartData();
@@ -197,6 +214,9 @@ var StoreShow = React.createClass({
   if (typeof this.state.store.calc !== "undefined") {
     showDisplay =
       <div>
+        <div className="show-options">
+          Annotations: <span onClick={this.handleAnnotations} className="worst">{this.state.annotationText}</span>
+        </div>
         <div className="show-row">
 
             <div className="overview">

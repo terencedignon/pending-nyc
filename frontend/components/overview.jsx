@@ -41,11 +41,15 @@ var Overview = React.createClass({
   },
 
   showUnannounced: function (e) {
-    $(e.currentTarget).find('.unannounced').css("display", "block");
+    if (this.props.help) {
+      $(e.currentTarget).find('.unannounced').css("display", "block");
+    }
   },
 
   hideUnannounced: function (e) {
+    if (this.props.help) {
     $(e.currentTarget).find('.unannounced').css("display", "none");
+    }
   },
 
   formatPhone: function(n) {
@@ -281,6 +285,15 @@ tooltipTemplate: "<%= value %>"
     return data;
   },
 
+  helpOver: function(e) {
+    debugger
+    $(e.currentTarget).find('span').css("display", "block");
+  },
+
+  helpLeave: function(e) {
+
+  },
+
   detailToggle: function () {
     if ($('.toggle-button').html() === "Hide Details") {
       $('.toggle-button').html("Show Details");
@@ -301,7 +314,10 @@ tooltipTemplate: "<%= value %>"
     var data = this.propsData();
     var store = this.props.store;
 
+    $('.subject').css("cursor", "pointer");
+
     return (
+
       <span className="overview-holder">
         <span className="store-name-header">{this.props.store.name} </span>
 
@@ -319,8 +335,9 @@ tooltipTemplate: "<%= value %>"
               <td className="thumbs">
                 <i className={"fa fa-" + this.iconParse(data.last)}></i>
               </td>
-              <td className="subject">
-                Most Recent
+              <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
+                <span className="question-highlight">Most Recent
+                <span className="unannounced">The result of {this.props.store.name}'s most recent inspection (on {new Date(this.props.store.inspections[0].inspection_date).toDateString()})</span></span>
               </td>
               <td className={"grade " + this.translate(data.last)}>
                 {data.last}
@@ -333,8 +350,9 @@ tooltipTemplate: "<%= value %>"
               <td className="thumbs">
                   <i className={"fa fa-" + this.iconParse(data.average)}></i>
               </td>
-              <td className="subject">
-              Average of {data.inspections}
+              <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
+                <span className="question-highlight">Average of {data.inspections}
+                <span className="unannounced">{this.props.store.name} has had a total of {data.inspections} inspections.  This score is derived from the average of all {data.inspections} scores.</span></span>
               </td>
               <td className={"grade " + this.translate(data.average)}>
                 {data.average}
@@ -349,7 +367,7 @@ tooltipTemplate: "<%= value %>"
               </td>
               <td className="subject">
                 Average  <span onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="question-highlight">Surprise
-                <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.</span></span> &nbsp;
+                <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.  These scores are often a more accurate portrayal of the day-to-day cleanliness of the space.</span></span> &nbsp;
               </td>
               <td className={"grade " + this.translate(data.first_average)}>
                 {data.first_average}
@@ -376,8 +394,9 @@ tooltipTemplate: "<%= value %>"
              <td className="thumbs">
                  <i className={"fa fa-" + this.iconParse(data.worst)}></i>
              </td>
-           <td className="subject">
-             Worst
+           <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
+             <span className="question-highlight">Worst
+             <span className="unannounced">{this.props.store.name}'s worst inspection.</span></span>
            </td>
            <td className={"grade " + this.translate(data.worst)}>
              {data.worst}

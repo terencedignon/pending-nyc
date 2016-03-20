@@ -24595,7 +24595,18 @@
 	  displayName: 'StoreShow',
 
 	  getInitialState: function () {
-	    return { grade: "P", store: {}, pie: "", hash: window.location.hash, mapKey: Math.random(), yelp: {}, key: "map", data: {} };
+	    return {
+	      grade: "P",
+	      store: {},
+	      pie: "",
+	      hash: window.location.hash,
+	      mapKey: Math.random(),
+	      yelp: {},
+	      key: "map",
+	      data: {},
+	      annotations: false,
+	      annotationText: "OFF"
+	    };
 	  },
 	  componentDidMount: function () {
 
@@ -24663,6 +24674,12 @@
 	      }
 	    });
 	    chart.update();
+	  },
+
+	  handleAnnotations: function () {
+	    var text = "ON";
+	    if (this.state.annotations) text = "OFF";
+	    this.setState({ annotations: !this.state.annotations, annotationText: text });
 	  },
 
 	  chartData: function () {
@@ -24733,7 +24750,7 @@
 
 	      // overview = this.createOverview();
 	      comparison = React.createElement(Comparison, { key: this.state.comparisonKey, store: this.state.store });
-	      overview = React.createElement(Overview, { store: this.state.store });
+	      overview = React.createElement(Overview, { store: this.state.store, help: this.state.annotations });
 	      violations = React.createElement(Violations, { key: Math.random(), inspections: this.state.store.inspections });
 	      //CHART
 	      data = this.chartData();
@@ -24783,6 +24800,16 @@
 	      showDisplay = React.createElement(
 	        'div',
 	        null,
+	        React.createElement(
+	          'div',
+	          { className: 'show-options' },
+	          'Annotations: ',
+	          React.createElement(
+	            'span',
+	            { onClick: this.handleAnnotations, className: 'worst' },
+	            this.state.annotationText
+	          )
+	        ),
 	        React.createElement(
 	          'div',
 	          { className: 'show-row' },
@@ -36453,11 +36480,15 @@
 	  },
 
 	  showUnannounced: function (e) {
-	    $(e.currentTarget).find('.unannounced').css("display", "block");
+	    if (this.props.help) {
+	      $(e.currentTarget).find('.unannounced').css("display", "block");
+	    }
 	  },
 
 	  hideUnannounced: function (e) {
-	    $(e.currentTarget).find('.unannounced').css("display", "none");
+	    if (this.props.help) {
+	      $(e.currentTarget).find('.unannounced').css("display", "none");
+	    }
 	  },
 
 	  formatPhone: function (n) {
@@ -36680,6 +36711,13 @@
 	    return data;
 	  },
 
+	  helpOver: function (e) {
+	    debugger;
+	    $(e.currentTarget).find('span').css("display", "block");
+	  },
+
+	  helpLeave: function (e) {},
+
 	  detailToggle: function () {
 	    if ($('.toggle-button').html() === "Hide Details") {
 	      $('.toggle-button').html("Show Details");
@@ -36698,6 +36736,8 @@
 	    var rankings = this.propsRankings();
 	    var data = this.propsData();
 	    var store = this.props.store;
+
+	    $('.subject').css("cursor", "pointer");
 
 	    return React.createElement(
 	      'span',
@@ -36751,8 +36791,21 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'subject' },
-	              'Most Recent'
+	              { onMouseOver: this.showUnannounced, onMouseLeave: this.hideUnannounced, className: 'subject' },
+	              React.createElement(
+	                'span',
+	                { className: 'question-highlight' },
+	                'Most Recent',
+	                React.createElement(
+	                  'span',
+	                  { className: 'unannounced' },
+	                  'The result of ',
+	                  this.props.store.name,
+	                  '\'s most recent inspection (on ',
+	                  new Date(this.props.store.inspections[0].inspection_date).toDateString(),
+	                  ')'
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
@@ -36775,9 +36828,23 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'subject' },
-	              'Average of ',
-	              data.inspections
+	              { onMouseOver: this.showUnannounced, onMouseLeave: this.hideUnannounced, className: 'subject' },
+	              React.createElement(
+	                'span',
+	                { className: 'question-highlight' },
+	                'Average of ',
+	                data.inspections,
+	                React.createElement(
+	                  'span',
+	                  { className: 'unannounced' },
+	                  this.props.store.name,
+	                  ' has had a total of ',
+	                  data.inspections,
+	                  ' inspections.  This score is derived from the average of all ',
+	                  data.inspections,
+	                  ' scores.'
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
@@ -36809,7 +36876,7 @@
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },
-	                  'The Health Department conducts unannounced inspections of restaurants at least once a year.'
+	                  'The Health Department conducts unannounced inspections of restaurants at least once a year.  These scores are often a more accurate portrayal of the day-to-day cleanliness of the space.'
 	                )
 	              ),
 	              '  '
@@ -36859,8 +36926,18 @@
 	            ),
 	            React.createElement(
 	              'td',
-	              { className: 'subject' },
-	              'Worst'
+	              { onMouseOver: this.showUnannounced, onMouseLeave: this.hideUnannounced, className: 'subject' },
+	              React.createElement(
+	                'span',
+	                { className: 'question-highlight' },
+	                'Worst',
+	                React.createElement(
+	                  'span',
+	                  { className: 'unannounced' },
+	                  this.props.store.name,
+	                  '\'s worst inspection.'
+	                )
+	              )
 	            ),
 	            React.createElement(
 	              'td',
