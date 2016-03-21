@@ -27,7 +27,12 @@ var StoreShow = React.createClass({
   },
   componentDidMount: function () {
 
-    debugger
+    if  (typeof localStorage.highlights === "undefined") {
+      localStorage.highlights = true;
+      localStorage.annotations = false; 
+    } else {
+      this.setState({ highlights: (localStorage.highLights === "true"), annotations: (localStorage.annotations === "true") });
+    }
 
     this.storeListener = StoreStore.addListener(this._onStoreChange);
     ApiUtil.fetchStore(this.props.params.id);
@@ -97,7 +102,11 @@ var StoreShow = React.createClass({
 
   handleAnnotations: function () {
     var text = "ON";
-    if (this.state.annotations) text = "OFF";
+    localStorage.annotations = "true";
+    if (this.state.annotations) {
+      text = "OFF";
+      localStorage.annotations = "false";
+    }
     this.setState({ annotations: !this.state.annotations, annotationText: text });
   },
 
@@ -154,8 +163,11 @@ var StoreShow = React.createClass({
 
   handleHighlights: function () {
     var text = "ON";
+    localStorage.highlights = "true";
+
     if (this.state.highlights) {
       text = "OFF";
+      localStorage.highlights = "false";
       $('.C').css("background", "white").css("color", "#444");
     } else {
       $('.C').css("background", "rgba(128, 0, 0, 0.75)").css("color", "#fff");
