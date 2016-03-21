@@ -37929,8 +37929,9 @@
 	          React.createElement(
 	            'span',
 	            { className: 'big-header' },
-	            'nyc letter grades'
+	            'nyc health analytics'
 	          ),
+	          React.createElement('p', null),
 	          React.createElement(
 	            'div',
 	            { className: 'about' },
