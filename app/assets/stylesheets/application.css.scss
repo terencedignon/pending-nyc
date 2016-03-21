@@ -1029,9 +1029,9 @@ hr.break {
 
 span.big-header {
   // width: 80%;
-  display: none;
+  // display: none;
   overflow: hidden;
-  // display: block;
+  display: block;
   font-size: 80px;
   // display: none;
   padding: 20px 50px;
@@ -1041,8 +1041,8 @@ span.big-header {
   font-weight: bolder;
 
   // background: #2;
-  background: rgba(0, 0, 0, .1);
-  color: #fff;
+  background: rgba(255, 255, 255, 1);
+  color: #333;
   // text-align: center;
   border: 1px solid transparent;
   font-family: "Helvetica"!important;
@@ -1386,7 +1386,7 @@ span.underline {
 //
 span.big-header:hover {
   // border: 1px solid white;
-  background: rgba(255, 255, 255, 0.2);
+  // background: rgba(255, 255, 255, 0.2);
   // font-weight: bolder;
   // color: #fffbfff;
 }
@@ -1968,6 +1968,10 @@ span.big-header:hover {
   display: none;
   // margin-left: -1px;
   margin: 0!important;
+}
+
+.overview-holder td {
+  transition: 0.2s ease-in-out!important;
 }
 
 .overview-holder td.thumbs {

@@ -37931,7 +37931,6 @@
 	            { className: 'big-header' },
 	            'nyc letter grades'
 	          ),
-	          React.createElement('p', null),
 	          React.createElement(
 	            'div',
 	            { className: 'about' },
