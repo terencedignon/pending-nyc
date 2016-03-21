@@ -22,7 +22,8 @@ var StoreShow = React.createClass({
       annotations: false,
       annotationText: "OFF",
       highlights: true,
-      highlightText: "ON"
+      highlightText: "ON",
+      highlightFill: "C"
     };
   },
   componentDidMount: function () {
@@ -42,6 +43,7 @@ var StoreShow = React.createClass({
       this.setState({ highlights: (localStorage.highlights === "true"),
           annotations: (localStorage.annotations === "true"),
           highlightText: highlightText,
+          highlightFill: localStorage.highlightFill,
           annotationText: annotationText
          });
     }
@@ -112,6 +114,33 @@ var StoreShow = React.createClass({
   chart.update();
   },
 
+  fillNone: function () {
+    $('td').css("background", "#fff").css("color", "#444");
+  },
+
+  fillC: function () {
+    $('.C').css("background", "rgba(128, 0, 0, 0.75)").css("color", "white");
+  },
+
+  fillAB: function () {
+    $('.B').css("background", "rgba(0, 100, 0, 0.9)").css("color", "#fff");
+    $('.A').css("background", "rgba(70, 130, 180, 0.9)").css("color", "#fff");
+  },
+
+  handleHighlightFill: function () {
+    var highlightFill = "ALL";
+    if (this.state.highlightFill === "ALL") {
+      highlightFill = "C";
+      localStorage.highlightFill = "C";
+    } else if (this.state.highlightFill === "C") {
+      highlightFill = "A & B";
+      localStorage.highlightFill = "A & B";
+    } else {
+      localStorage.highlightFill = "ALL";
+    }
+    this.setState({ highlightFill: highlightFill });
+  },
+
   handleAnnotations: function () {
     var text = "ON";
     localStorage.annotations = "true";
@@ -180,10 +209,22 @@ var StoreShow = React.createClass({
     if (this.state.highlights) {
       text = "OFF";
       localStorage.highlights = "false";
-      $('.C').css("background", "white").css("color", "#444");
+      $('td').css("background", "white").css("color", "#444");
+
     } else {
-      $('.C').css("background", "rgba(128, 0, 0, 0.75)").css("color", "#fff");
-    }
+      if (this.state.highlightFill === "ALL") {
+        $('.C').css("background", "rgba(128, 0, 0, 0.75)").css("color", "#fff");
+        $('.B').css("background", "rgba(0, 100, 0, 0.9)").css("color", "#fff");
+        $('.A').css("background", "rgba(70, 130, 180, 0.9)").css("color", "#fff");
+      } else if (this.state.highlightFill === "C") {
+        $('.C').css("background", "rgba(128, 0, 0, 0.75)").css("color", "#fff");
+      } else {
+        $('.B').css("background", "rgba(0, 100, 0, 0.9)").css("color", "#fff");
+        $('.A').css("background", "rgba(70, 130, 180, 0.9)").css("color", "#fff");
+      }
+
+  }
+
     this.setState({ highlights: !this.state.highlights, highlightText: text });
 
   },
@@ -252,14 +293,28 @@ var StoreShow = React.createClass({
 
   if (typeof this.state.store.calc !== "undefined") {
     setTimeout(function () {
-    if (!this.state.highlights) {
-        $('.C').css("background", "white").css("color", "#444");
+    if (!this.state.highlights) $('td').css("background", "white").css("color", "#444");
+    if (this.state.highlights) {
+      if (this.state.highlightFill === "A & B") {
+        this.fillNone();
+        this.fillAB();
+      } else if (this.state.highlightFill === "C") {
+        this.fillNone();
+        this.fillC();
+      } else {
+        this.fillAB();
+        this.fillC();
+      }
+
     }
+
   }.bind(this));
     showDisplay =
       <div>
         <div className="show-options">
-        Annotations <span onClick={this.handleAnnotations} className="worst">{this.state.annotationText}</span> Highlights <span onClick={this.handleHighlights} className="worst">{this.state.highlightText}</span>
+        Annotations <span onClick={this.handleAnnotations} className="worst">{this.state.annotationText}</span>
+        Highlights <span onClick={this.handleHighlights} className="worst">{this.state.highlightText}</span>
+      Fill <span onClick={this.handleHighlightFill} className="worst">{this.state.highlightFill}</span>
         </div>
         <div className="show-row">
 
