@@ -853,6 +853,7 @@ footer {
 
 .show-options {
   margin-bottom: -10px;
+  font-size: 14px;
 
 }
 
@@ -1902,18 +1903,18 @@ span.big-header:hover {
 //   // padding-right: 20px;
 // }
 
-// .overview-holder td.A {
-//   // border: 1px solid #eee;
-//   background: rgba(70, 130, 180, 0.75);
-//   color: white;
-//   text-align: center;
-// }
-//
-// .overview-holder td.B {
-//
-//   background: rgba(0, 100, 0, 1);
-//   color: white;
-// }
+.overview-holder td.A {
+  // border: 1px solid #eee;
+  background: rgba(70, 130, 180, 1);
+  color: white;
+  text-align: center;
+}
+
+.overview-holder td.B {
+
+  background: rgba(0, 100, 0, 1);
+  color: white;
+}
 
 
 .overview-holder td {
