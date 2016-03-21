@@ -29,9 +29,21 @@ var StoreShow = React.createClass({
 
     if  (typeof localStorage.highlights === "undefined") {
       localStorage.highlights = true;
-      localStorage.annotations = false; 
+      localStorage.annotations = false;
     } else {
-      this.setState({ highlights: (localStorage.highLights === "true"), annotations: (localStorage.annotations === "true") });
+      var annotationText = "OFF";
+      var highlightText = "ON";
+      if (localStorage.highlights === "false") {
+        highlightText = "OFF";
+      }
+      if (localStorage.annotations === "true") {
+        annotationText = "ON";
+      }
+      this.setState({ highlights: (localStorage.highlights === "true"),
+          annotations: (localStorage.annotations === "true"),
+          highlightText: highlightText,
+          annotationText: annotationText
+         });
     }
 
     this.storeListener = StoreStore.addListener(this._onStoreChange);
@@ -177,8 +189,7 @@ var StoreShow = React.createClass({
   },
 
   render: function () {
-
-
+    console.log(this.state.highlights);
     var data;
     this.map = <Map key={this.state.mapKey} camis={this.state.store.camis} cuisine_type={this.state.store.cuisine_type} name={this.state.store.name} lat={this.state.store.lat} lng={this.state.store.lng}/>;
     $('footer').hide();
@@ -192,6 +203,7 @@ var StoreShow = React.createClass({
 
     if (typeof this.state.store !== "undefined" && typeof this.state.store.calc !== "undefined") {
       $('footer').show();
+
 
       ///OVERVIEW
 
@@ -239,6 +251,11 @@ var StoreShow = React.createClass({
   var showDisplay =  <div className="most-loading"><i className="fa fa-circle-o-notch fa-pulse most-spin"></i></div>;
 
   if (typeof this.state.store.calc !== "undefined") {
+    setTimeout(function () {
+    if (!this.state.highlights) {
+        $('.C').css("background", "white").css("color", "#444");
+    }
+  }.bind(this));
     showDisplay =
       <div>
         <div className="show-options">

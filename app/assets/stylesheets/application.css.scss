@@ -31,7 +31,7 @@
 //     font-style: normal;
 // }
 
-@media (min-width: 100px) and (max-width: 800px) {
+@media (min-width: 100px) and (max-width: 600px) {
   /*.header-search input {
     top: 100px;
     display: absolute;
@@ -50,7 +50,10 @@
     display: none;
   }
 
-  .header-links {
+  .header-images {
+    display: none;
+  }
+  .logo {
     display: none;
   }
 
@@ -859,7 +862,7 @@ footer {
   padding: 15px 25px;
   max-width: 450px;
   // background: #fff;
-  background: #f7f7f7;
+  // background: #f7f7f7;
   border: 1px solid #eee;
   // border-top: 0;
   // border-bottom: 0;

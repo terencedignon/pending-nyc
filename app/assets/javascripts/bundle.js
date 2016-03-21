@@ -24616,7 +24616,19 @@
 	      localStorage.highlights = true;
 	      localStorage.annotations = false;
 	    } else {
-	      this.setState({ highlights: localStorage.highLights === "true", annotations: localStorage.annotations === "true" });
+	      var annotationText = "OFF";
+	      var highlightText = "ON";
+	      if (localStorage.highlights === "false") {
+	        highlightText = "OFF";
+	      }
+	      if (localStorage.annotations === "true") {
+	        annotationText = "ON";
+	      }
+	      this.setState({ highlights: localStorage.highlights === "true",
+	        annotations: localStorage.annotations === "true",
+	        highlightText: highlightText,
+	        annotationText: annotationText
+	      });
 	    }
 
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
@@ -24758,7 +24770,7 @@
 	  },
 
 	  render: function () {
-
+	    console.log(this.state.highlights);
 	    var data;
 	    this.map = React.createElement(Map, { key: this.state.mapKey, camis: this.state.store.camis, cuisine_type: this.state.store.cuisine_type, name: this.state.store.name, lat: this.state.store.lat, lng: this.state.store.lng });
 	    $('footer').hide();
@@ -24824,6 +24836,11 @@
 	    );
 
 	    if (typeof this.state.store.calc !== "undefined") {
+	      setTimeout(function () {
+	        if (!this.state.highlights) {
+	          $('.C').css("background", "white").css("color", "#444");
+	        }
+	      }.bind(this));
 	      showDisplay = React.createElement(
 	        'div',
 	        null,
