@@ -28,8 +28,9 @@ var StoreShow = React.createClass({
   },
   componentDidMount: function () {
 
-    if  (typeof localStorage.highlights === "undefined") {
+    if  (typeof localStorage.highlights === "undefined" || typeof localStorage.highlightFill === "undefined") {
       localStorage.highlights = true;
+      localStorage.highlightFill = "ALL";
       localStorage.annotations = false;
     } else {
       var annotationText = "OFF";
