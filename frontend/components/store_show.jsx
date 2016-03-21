@@ -20,10 +20,14 @@ var StoreShow = React.createClass({
       key: "map",
       data: {},
       annotations: false,
-      annotationText: "OFF"
+      annotationText: "OFF",
+      highlights: true,
+      highlightText: "ON"
     };
   },
   componentDidMount: function () {
+
+    debugger
 
     this.storeListener = StoreStore.addListener(this._onStoreChange);
     ApiUtil.fetchStore(this.props.params.id);
@@ -148,6 +152,17 @@ var StoreShow = React.createClass({
 
   },
 
+  handleHighlights: function () {
+    var text = "ON";
+    if (this.state.highlights) {
+      text = "OFF";
+      $('.C').css("background", "white").css("color", "#444");
+    } else {
+      $('.C').css("background", "rgba(128, 0, 0, 0.75)").css("color", "#fff");
+    }
+    this.setState({ highlights: !this.state.highlights, highlightText: text });
+
+  },
 
   render: function () {
 
@@ -215,7 +230,7 @@ var StoreShow = React.createClass({
     showDisplay =
       <div>
         <div className="show-options">
-          Annotations: <span onClick={this.handleAnnotations} className="worst">{this.state.annotationText}</span>
+        Annotations <span onClick={this.handleAnnotations} className="worst">{this.state.annotationText}</span> Highlights <span onClick={this.handleHighlights} className="worst">{this.state.highlightText}</span>
         </div>
         <div className="show-row">
 

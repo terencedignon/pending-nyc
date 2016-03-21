@@ -337,7 +337,7 @@ tooltipTemplate: "<%= value %>"
               </td>
               <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
                 <span className="question-highlight">Most Recent
-                <span className="unannounced">The score for {this.props.store.name}'s most recent inspection, on {new Date(this.props.store.inspections[0].inspection_date).toDateString()}</span></span>
+                <span className="unannounced">{this.props.store.name}'s most recent inspection, recorded on {new Date(this.props.store.inspections[0].inspection_date).toDateString()}</span></span>
               </td>
               <td className={"grade " + this.translate(data.last)}>
                 {data.last}
@@ -352,7 +352,7 @@ tooltipTemplate: "<%= value %>"
               </td>
               <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
                 <span className="question-highlight">Average of {data.inspections}
-                <span className="unannounced">Median of all {data.inspections} inspections.</span></span>
+                <span className="unannounced">Average for all {data.inspections} inspections.</span></span>
               </td>
               <td className={"grade " + this.translate(data.average)}>
                 {data.average}
@@ -367,7 +367,7 @@ tooltipTemplate: "<%= value %>"
               </td>
               <td onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="subject">
                 <span className="question-highlight">Surprise Average
-                <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.  This is an average of all surprise inspections.  We believe this is a more accurate indicator of day-to-day cleanliness than total average. </span></span> &nbsp;
+                <span className="unannounced">The Health Department conducts unannounced inspections of restaurants at least once a year.  This metric is an average of all surprise inspections.</span></span> &nbsp;
               </td>
               <td className={"grade " + this.translate(data.first_average)}>
                 {data.first_average}
@@ -382,7 +382,7 @@ tooltipTemplate: "<%= value %>"
              </td>
              <td onMouseOver={this.showUnannounced} onMouseOut={this.hideUnannounced} className="subject">
                <span className="question-highlight">Best
-               <span className="unannounced">{this.props.store.name}'s single best inspection.</span></span> &nbsp;
+               <span className="unannounced">{this.props.store.name}'s single best inspection, recorded on {new Date(this.props.store.calc.best_date).toDateString()}</span></span> &nbsp;
 
              </td>
              <td className={"grade " + this.translate(data.best)}>
@@ -398,7 +398,7 @@ tooltipTemplate: "<%= value %>"
              </td>
            <td onMouseOver={this.showUnannounced} onMouseLeave={this.hideUnannounced} className="subject">
              <span className="question-highlight">Worst
-             <span className="unannounced">{this.props.store.name}'s single worst inspection.</span></span>
+             <span className="unannounced">{this.props.store.name}'s single worst inspection, recorded on {new Date(this.props.store.calc.worst_date).toDateString()}</span></span>
            </td>
            <td className={"grade " + this.translate(data.worst)}>
              {data.worst}
@@ -473,7 +473,7 @@ tooltipTemplate: "<%= value %>"
               <th>{store.boro}</th>
               <th>{store.cuisine_type}</th>
               </tr>
-              <tr className={"Recent " + this.translate(data.last)}>
+              <tr className="Recent">
                 <td className="thumbs">
                   <i className={"fa fa-" + this.rankingsParse([
                       rankings.zipcodeRecent, rankings.boroRecent, rankings.cuisineRecent

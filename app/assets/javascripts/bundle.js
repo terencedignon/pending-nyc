@@ -24605,10 +24605,14 @@
 	      key: "map",
 	      data: {},
 	      annotations: false,
-	      annotationText: "OFF"
+	      annotationText: "OFF",
+	      highlights: true,
+	      highlightText: "ON"
 	    };
 	  },
 	  componentDidMount: function () {
+
+	    debugger;
 
 	    this.storeListener = StoreStore.addListener(this._onStoreChange);
 	    ApiUtil.fetchStore(this.props.params.id);
@@ -24730,6 +24734,17 @@
 	    return imageObject[this.state.store.calc.grade];
 	  },
 
+	  handleHighlights: function () {
+	    var text = "ON";
+	    if (this.state.highlights) {
+	      text = "OFF";
+	      $('.C').css("background", "white").css("color", "#444");
+	    } else {
+	      $('.C').css("background", "rgba(128, 0, 0, 0.75)").css("color", "#fff");
+	    }
+	    this.setState({ highlights: !this.state.highlights, highlightText: text });
+	  },
+
 	  render: function () {
 
 	    var data;
@@ -24803,11 +24818,17 @@
 	        React.createElement(
 	          'div',
 	          { className: 'show-options' },
-	          'Annotations: ',
+	          'Annotations ',
 	          React.createElement(
 	            'span',
 	            { onClick: this.handleAnnotations, className: 'worst' },
 	            this.state.annotationText
+	          ),
+	          ' Highlights ',
+	          React.createElement(
+	            'span',
+	            { onClick: this.handleHighlights, className: 'worst' },
+	            this.state.highlightText
 	          )
 	        ),
 	        React.createElement(
@@ -36799,9 +36820,8 @@
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },
-	                  'The score for ',
 	                  this.props.store.name,
-	                  '\'s most recent inspection, on ',
+	                  '\'s most recent inspection, recorded on ',
 	                  new Date(this.props.store.inspections[0].inspection_date).toDateString()
 	                )
 	              )
@@ -36836,7 +36856,7 @@
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },
-	                  'Median of all ',
+	                  'Average for all ',
 	                  data.inspections,
 	                  ' inspections.'
 	                )
@@ -36871,7 +36891,7 @@
 	                React.createElement(
 	                  'span',
 	                  { className: 'unannounced' },
-	                  'The Health Department conducts unannounced inspections of restaurants at least once a year.  This is an average of all surprise inspections.  We believe this is a more accurate indicator of day-to-day cleanliness than total average. '
+	                  'The Health Department conducts unannounced inspections of restaurants at least once a year.  This metric is an average of all surprise inspections.'
 	                )
 	              ),
 	              '  '
@@ -36906,7 +36926,8 @@
 	                  'span',
 	                  { className: 'unannounced' },
 	                  this.props.store.name,
-	                  '\'s single best inspection.'
+	                  '\'s single best inspection, recorded on ',
+	                  new Date(this.props.store.calc.best_date).toDateString()
 	                )
 	              ),
 	              '  '
@@ -36941,7 +36962,8 @@
 	                  'span',
 	                  { className: 'unannounced' },
 	                  this.props.store.name,
-	                  '\'s single worst inspection.'
+	                  '\'s single worst inspection, recorded on ',
+	                  new Date(this.props.store.calc.worst_date).toDateString()
 	                )
 	              )
 	            ),
@@ -37097,7 +37119,7 @@
 	          ),
 	          React.createElement(
 	            'tr',
-	            { className: "Recent " + this.translate(data.last) },
+	            { className: 'Recent' },
 	            React.createElement(
 	              'td',
 	              { className: 'thumbs' },
