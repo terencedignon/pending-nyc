@@ -1348,53 +1348,38 @@ span.underline {
   // color: #222;
 }
 .about h1 {
-  // display: none;
+
   font-size: 30px;
-  // text-align: center;
-  // font-family: "lato";
+
   font-family: "helvetica";
-  // box-shadow: 5px 5px 1px 2px #ccc;
+
   padding: 25px 30px;
-  // display: none;
-  // width: 80%;
-  // font-weight: bolder;
+
   cursor: pointer;
-  // width: 70%
   margin: 0 auto;
   margin-bottom: 10px;
   letter-spacing: 2px;
-  // opacity: 0.9;
-  // text-align: center;
+
   border: 1px solid transparent;
-  // background: white;
+
   color: #333;
   background: rgba(255, 255, 255, 1);
-  // color: #000;
-  // padding: 20px;
-  // opacity: 0.5;
+
   text-transform: uppercase;
   transition: 0.1s ease-in-out;
-  // font-weight: normal;
+
 }
 
 .about h1:hover {
-  // border: 1px solid #ccc;
+
   background: #222;
-  // background: rgba(0, 0, 0, 1);
+
   color: #fff;
-  // background: rgba(0, 0, 0, 0.5);
-  // font-weight: bolder;
-  // background: maroon;
-  // color: rgba(255, 255, 255, 0.5);
+
 }
 //
 span.big-header:hover {
-  // border: 1px solid black;
-  // font-size: 121px;
-  // background: rgba(0, 0, 0, 1);
-  // color: #fff;
-  // font-weight: bolder;
-  // color: #222;
+
 }
 
 .google-image-holder {
@@ -1405,10 +1390,7 @@ span.big-header:hover {
 
   font-size: 40px;
   margin-top: 2px;
-  // margin-bottom: 14px;
-  // box-shadow: 2px 2px 0 0 #f7f7f7;
-  // margin-right: 5px;
-  // border-radius: 5%;
+
   overflow: hidden;
 }
 
