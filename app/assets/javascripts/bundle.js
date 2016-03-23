@@ -24767,7 +24767,7 @@
 	  },
 
 	  openMap: function () {
-	    $('.load-map').hide();
+	    // $('.load-map').hide();
 	    $('.map-holder').css("height", "1000");
 	    // this.forceUpdate();
 	  },
@@ -24810,6 +24810,9 @@
 	  },
 
 	  render: function () {
+	    // <div className="load-map">
+	    //   <span onClick={this.openMap} className="store-name-header">Load Map</span>
+	    // </div>
 	    console.log(this.state.highlights);
 	    var data;
 	    this.map = React.createElement(Map, { key: this.state.mapKey, camis: this.state.store.camis, cuisine_type: this.state.store.cuisine_type, name: this.state.store.name, lat: this.state.store.lat, lng: this.state.store.lng });
@@ -24949,15 +24952,6 @@
 	              'div',
 	              { className: 'pie-chart' },
 	              this.state.pie
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'load-map' },
-	              React.createElement(
-	                'span',
-	                { onClick: this.openMap, className: 'store-name-header' },
-	                'Load Map'
-	              )
 	            ),
 	            React.createElement(
 	              'div',
