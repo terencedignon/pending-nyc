@@ -1330,7 +1330,7 @@ span.underline {
 }
 
 .filter-links a:hover {
-  // text-decoration: underline;
+
   opacity: 1;
 }
 
@@ -1385,8 +1385,7 @@ span.big-header:hover {
 .google-image-holder {
   width: 90px;
   height: 90px;
-  // background: steelblue
-  // margin-right: 10px;
+
 
   font-size: 40px;
   margin-top: 2px;
@@ -1435,7 +1434,7 @@ span.big-header:hover {
 .pie-chart {
   float: right;
   background: white;
-  // border-radius: 50%;
+
 }
 
 .pie-legend  {
@@ -1445,13 +1444,9 @@ span.big-header:hover {
   display: block;
   // left: -30px;
   padding: 10px;
-  // width: 100%;
-  // font-style: normal;
-  // font-weight: normal;
+
   text-align: left;
-  // padding: 0;
-  // border: 1px solid #ccc;
-  // background: #fff;
+
   list-style: none;
 }
 
@@ -1492,14 +1487,14 @@ span.big-header:hover {
 }
 
 .wrapper:hover {
-  // background: #f7f7f7;
+
   border: 1px solid #ccc;
 }
 
 .editable {
   display: inline-block;
   width: 30px;
-  // max-width: 30px;
+
   overflow: hidden;
   text-align: center;
   color: steelblue;
