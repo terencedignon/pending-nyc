@@ -36704,6 +36704,7 @@
 	    var options = {
 	      segmentShowStroke: false,
 	      segmentStrokeWidth: 2,
+	      responsive: false,
 	      segmentStrokeColor: "white",
 	      animateRotate: true,
 	      animateScale: true,
@@ -36838,7 +36839,8 @@
 	    var store = this.props.store;
 
 	    $('.subject').css("cursor", "pointer");
-
+	    console.log(rankings);
+	    $('.table-details').show(0);
 	    return React.createElement(
 	      'span',
 	      { className: 'overview-holder' },

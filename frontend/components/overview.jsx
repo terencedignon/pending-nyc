@@ -168,6 +168,7 @@ var Overview = React.createClass({
     var options = {
       segmentShowStroke: false,
       segmentStrokeWidth: 2,
+      responsive: false,
       segmentStrokeColor: "white",
 animateRotate: true,
 animateScale: true,
@@ -315,7 +316,8 @@ tooltipTemplate: "<%= value %>"
     var store = this.props.store;
 
     $('.subject').css("cursor", "pointer");
-
+    console.log(rankings);
+    $('.table-details').show(0);
     return (
 
       <span className="overview-holder">
