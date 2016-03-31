@@ -234,7 +234,7 @@ var StoreShow = React.createClass({
     // <div className="load-map">
     //   <span onClick={this.openMap} className="store-name-header">Load Map</span>
     // </div>
-    console.log(this.state.highlights);
+    // console.log(this.state.highlights);
     var data;
     this.map = <Map key={this.state.mapKey} camis={this.state.store.camis} cuisine_type={this.state.store.cuisine_type} name={this.state.store.name} lat={this.state.store.lat} lng={this.state.store.lng}/>;
     $('footer').hide();
